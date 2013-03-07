@@ -132,11 +132,4 @@ jQueryScrollSlider.prototype.createScrollSliderElements = function(){
 }
 
 
-window.onload = function(){
-	var args = {
-	  	id: "sS_A",
-	  	parent: document.body,
-	  	contents: imageScans,	
-  	}
-	a = new jQueryScrollSlider(args);
-}
+

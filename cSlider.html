@@ -16,4 +16,30 @@
 </body>
 <script src="./scripts/imageScans.js"></script>
 <script src="./scripts/cSlider.js"></script>
+<script src="./scripts/sliderScrollPane.js"></script>
+<script>
+window.onload = function(){
+	var args = {
+	  	id: "sliderScroller",			//def "sliderScroller"
+	  	parent: document.body,			//def document.body
+	  	contents: imageScans,			//def []
+	  	width: 400,						//def 500
+	  	height: 200,					//def 200
+	  	top: 20,						//def 0
+	  	left: 20,						//def 0
+	  	position: "absolute",			//def absolute
+	  	handleHeight: 30,				//def 16
+	  	handleWidth: 50,				//def 8
+	  	sliderHeight: 30,				//def 10
+	  	sliderLayout: "constrained",	//def centered
+	  	constrainMargin: 10,				//def 3
+	  	sliderBorderWidth: 1,			//def 1
+	  	handleBorderWidth: 1,			//def 1
+	  	sliderMin: 0,			//def 1
+	  	sliderMax: 100,			//def 1
+  	}
+	//a = new jQueryScrollSlider(args);
+	a = new sliderScroller(args);
+}
+</script>
 </html>
