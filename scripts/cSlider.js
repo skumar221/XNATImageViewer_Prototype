@@ -1,12 +1,5 @@
-function mergeArgs(obj1,obj2){
-    var obj3 = {};
-    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-    return obj3;
-}
-
 var jQueryScrollSlider= function(args){
-  this.args = args;
+  this.args = mergeArgs(this.defaultArgs, args);
   this.createScrollSliderElements();
   
   $(function() {
@@ -34,7 +27,7 @@ var jQueryScrollSlider= function(args){
     .mouseup(function() {
       scrollbar.width( "100%" );
     })
-    .append( "<span class='ui-icon ui-icon-grip-dotted-vertical'></span>" )
+    //.append( "<span class='ui-icon ui-icon-grip-dotted-vertical'></span>" )
     .wrap( "<div class='ui-handle-helper-parent'></div>" ).parent();
  
     //change overflow to hidden now that slider handles the scrolling
@@ -44,11 +37,16 @@ var jQueryScrollSlider= function(args){
     function sizeScrollbar() {
       var remainder = scrollContent.width() - scrollPane.width();
       var proportion = remainder / scrollContent.width();
-      var handleSize = scrollPane.width() - ( proportion * scrollPane.width() );
+      
+      var handleSize = 0//this.args["handleWidth"];//scrollPane.width() - ( proportion * scrollPane.width() );
+      
+      /*
       scrollbar.find( ".ui-slider-handle" ).css({
         width: handleSize,
         "margin-left": -handleSize / 2
       });
+      */
+     
       handleHelper.width( "" ).width( scrollbar.width() - handleSize );
     }
  
@@ -81,28 +79,117 @@ var jQueryScrollSlider= function(args){
   });
 }
 
+jQueryScrollSlider.prototype.defaultArgs = {
+	handleColor: "rgba(50, 50, 50, 1)",
+	id: "slider",
+  	parent: document.body,
+  	width: 600,
+  	height: 200,	
+  	thumbWidth: 100,
+  	thumbHeight: 100,
+  	thumbMargin: 6,
+  	borderWidth: 1,
+  	borderRadius: 0,
+  	handleHeight: 10,
+  	handleWidth: 5,
+  	sliderHeight: 5
+}
+
+jQueryScrollSlider.prototype.getAndSetCSS = function() {
+	    // Code borrowed from http://jqueryui.com/slider/#side-scroll 
+	  var contentWidth = 0;
+	  for (var i=0;i<this.args["contents"].length;i++){
+	  	contentWidth  += this.args["thumbWidth"] + this.args["thumbMargin"]*2;
+	  } 
+	  contentWidth += this.args["thumbMargin"] + (2*this.args["borderWidth"])*this.args["contents"].length;
+  
+	  var styleStrs = new Array(8);
+	  
+	  styleStrs[0] = _css(".scroll-pane", { 
+		 'overflow': 	"auto", 
+		 'width':  		_px(this.args["width"]), 
+		 'float': 		"left",  
+		 "border-radius" : _px(this.args["borderRadius"]),
+	  });
+	                  
+	  styleStrs[1] = _css(".scroll-content",  { 
+		 'width' : 		_px(contentWidth), 
+		 'float' : 		"left", 
+	  });
+	  				 
+	  styleStrs[2] = _css(".scroll-content-item",{ 
+		 'width' : 		_px(this.args["thumbWidth"]), 
+		 'height' : 	_px(this.args["thumbHeight"]), 
+		 'float' : 		"left", 
+		 'margin' : 	_px(this.args["thumbMargin"]), 
+		 'font-size' : 	"3em",
+		 'line-height': "96px", 
+		 'text-align' : "center",
+		});
+	
+	  styleStrs[3] = _css(".scroll-bar-wrap", { 
+	   	 'clear': 		"left", 
+	   	 'padding': 	"0 2px 0 2px", 
+	   	 'margin': 		"0 -1px -1px -1px",
+	  });
+	  
+	  styleStrs[4] = _css(".scroll-bar-wrap .ui-slider", { 
+		'background': 	"none", 
+		'border': 		"0", 
+		'height': 		_px(this.args["sliderHeight"]), 
+		'margin': 		"0 auto",
+		'border-radius': "0px"
+	  });
+	    
+	  styleStrs[5] = _css(".scroll-bar-wrap .ui-handle-helper-parent", { 
+	  	'position': 	"relative", 
+	  	'width': 		"100%", 
+	  	'height': 		"100%", 
+	  	'margin': 		"0 auto", 
+	  });
+	  
+	  styleStrs[6] = _css(".scroll-bar-wrap .ui-slider-handle", { 
+		"height"     : _px(this.args["handleHeight"]),
+		"width"     : _px(this.args["handleWidth"]),
+	  });
+	  
+	  styleStrs.push( _css(".ui-corner-all", { 
+	  	"border-radius" : _px(this.args["borderRadius"]),
+	  }));
+	  
+	  styleStrs.push( _css(".ui-slider-handle", { 
+	  	"background" : this.args["handleColor"],
+	  }));
+	  
+	  styleStrs.push( _css(".ui-state-default", { 
+	  	"background" : "none",
+	  	"background-color" : "none",
+	  }));
+
+	  styleStrs.push( _css(".ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default", { 
+	  	"background" : this.args["handleColor"],
+	    "border-color" : "rgba(0,0,0,0)",
+	  }));
+	  
+	  styleStrs.push( _css(".ui-slider-horizontal .ui-slider-handle", {
+	    "top": _px(-this.args["handleHeight"] + this.args["sliderWidth"]/2),
+	    "margin-left": "-0px",
+	  }));
+
+	  styleStrs = styleStrs.map(function(a){return "<style type='text/css'>" + a + "</style>"});
+	for (var i=0;i<styleStrs.length;i++){
+		$(styleStrs[i]).appendTo("head");
+	} 
+}
+
 jQueryScrollSlider.prototype.createScrollSliderElements = function(){
   
   parent = (!this.args["parent"]) ? document.body: this.args["parent"];
   id = (!this.args["id"]) ? "genericScrollSlider": this.args["id"];
-  
-  // Code borrowed from here: http://jqueryui.com/slider/#side-scroll
-  var styleStrs = new Array(8)  
-  styleStrs[0] = ".scroll-pane { overflow: auto; width: 200px; float:left; }";
-  styleStrs[1] = ".scroll-content { width: 2900px; float: left; }";
-  styleStrs[2] = ".scroll-content-item { width: 100px; height: 100px; float: left; margin: 10px; font-size: 3em; line-height: 96px; text-align: center; }";
-  styleStrs[3] = ".scroll-bar-wrap { clear: left; padding: 0 4px 0 2px; margin: 0 -1px -1px -1px; }";
-  styleStrs[4] = ".scroll-bar-wrap .ui-slider { background: none; border:0; height: 2em; margin: 0 auto;  }";
-  styleStrs[5] = ".scroll-bar-wrap .ui-handle-helper-parent { position: relative; width: 100%; height: 100%; margin: 0 auto; }";
-  styleStrs[6] = ".scroll-bar-wrap .ui-slider-handle { top:.2em; height: 1.5em; }";
-  styleStrs[7] = ".scroll-bar-wrap .ui-slider-handle .ui-icon { margin: -8px auto 0; position: relative; top: 50%; }";
-  for (var i=0;i<styleStrs.length;i++){
-   	$("<style type='text/css'>" + styleStrs[i] + "</style>").appendTo("head");
-  } 
    
   var sS = document.createElement("div");
   sS.setAttribute("id", id);
-  sS.className = "scroll-pane ui-widget ui-widget-header ui-corner-all";
+  sS.className = "scroll-pane ui-widget ui-widget-header";
   parent.appendChild(sS);
   
   sC = document.createElement("div");
@@ -129,6 +216,8 @@ jQueryScrollSlider.prototype.createScrollSliderElements = function(){
   sBb.setAttribute("id",   sB.getAttribute("id") + "_scrollBarb");
   sBb.className = "scroll-bar";
   sB.appendChild(sBb);
+  
+  this.getAndSetCSS();
 }
 
 
@@ -136,7 +225,18 @@ window.onload = function(){
 	var args = {
 	  	id: "sS_A",
 	  	parent: document.body,
-	  	contents: imageScans,	
+	  	contents: imageScans,
+	  	width: 600,
+	  	height: 200,	
+	  	thumbWidth: 100,
+	  	thumbHeight: 100,
+	  	thumbMargin: 6,
+	  	borderWidth: 1,
+	  	borderRadius: 0,
+	  	handleHeight: 20,
+	  	handleWidth: 8,
+	  	sliderHeight: 10
   	}
 	a = new jQueryScrollSlider(args);
+	//console.log(_px(1))
 }
