@@ -59,7 +59,7 @@ skSlider.prototype.restyle = function(){
 	this.widget.style.backgroundColor = "rgba(255,0,0,.5)";
 
 	//correctly compute the height of the slider + handle
-	var totalSliderHeight = this.args["sliderHeight"] + 2*this.args["sliderBorderWidth"];
+	var totalSliderHeight = this.args["height"] + 2*this.args["sliderBorderWidth"];
 	var totalHandleHeight = this.args["handleHeight"] + 2*this.args["handleBorderWidth"];
 	
 	// determine whether the handle+borders or the slider+borders is taller
@@ -68,11 +68,11 @@ skSlider.prototype.restyle = function(){
 	
 	if (totalSliderHeight < totalHandleHeight){
 		heightAdj = totalHandleHeight/2 + totalSliderHeight/2;
-		handleTopMarginAdj = -(totalHandleHeight/2 - this.args["sliderHeight"]/2);
+		handleTopMarginAdj = -(totalHandleHeight/2 - this.args["height"]/2);
 	}
 	else{
 		heightAdj = totalSliderHeight;
-		handleTopMarginAdj = this.args["sliderHeight"]/2 - totalHandleHeight/2; 
+		handleTopMarginAdj = this.args["height"]/2 - totalHandleHeight/2; 
 		
 	}
 	//Top position of the entire slider relative to the widget
@@ -83,7 +83,7 @@ skSlider.prototype.restyle = function(){
 	this.slider.style.borderRadius = "0px";
 	this.slider.style.borderColor = this.args["sliderBorderColor"];
 	this.slider.style.background = this.args["sliderBGColor"];
-	this.slider.style.height = _px(this.args["sliderHeight"]);
+	this.slider.style.height = _px(this.args["height"]);
 	this.slider.style.borderWidth =  _px(this.args["sliderBorderWidth"]);
 	
 	this.sliderHandle.style.borderRadius = "0px";
@@ -120,9 +120,9 @@ skSlider.prototype.restyle = function(){
 	    this.sliderBounds.style.position= "absolute";
 
 	  	this.sliderBounds.style.left= _px(0);
-	  	this.sliderBounds.style.top= _px(this.args["height"] - this.args["sliderHeight"] - this.args["sliderBorderWidth"]*2);
+	  	this.sliderBounds.style.top= _px(this.args["height"] - this.args["height"] - this.args["sliderBorderWidth"]*2);
 	  	this.sliderBounds.style.width= _px(this.args["width"]-this.args["sliderBorderWidth"]*2);
-	  	this.sliderBounds.style.height= _px(this.args["sliderHeight"]);
+	  	this.sliderBounds.style.height= _px(this.args["height"]);
 	  	this.sliderBounds.style.backgroundColor = "rgba(0,100,0,.5)";
 	  	this.sliderBounds.style.border = "solid rgba(0,0,0,1)";
 	  	this.sliderBounds.style.borderWidth = _px(this.args["sliderBorderWidth"]);

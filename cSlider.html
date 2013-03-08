@@ -25,22 +25,25 @@ window.onload = function(){
 	  	parent: document.body,			//def document.body
 	  	contents: imageScans,			//def []
 	  	width: 400,						//def 500
-	  	height: 200,					//def 200
-	  	top: 20,						//def 0
-	  	left: 20,						//def 0
+	  	height: 30,					//def 200
+	  	top: 200,						//def 0
+	  	left: 200,						//def 0
 	  	position: "absolute",			//def absolute
-	  	handleHeight: 30,				//def 16
-	  	handleWidth: 50,				//def 8
-	  	sliderHeight: 30,				//def 10
-	  	sliderLayout: "constrained",	//def centered
-	  	constrainMargin: 10,				//def 3
-	  	sliderBorderWidth: 1,			//def 1
+	  	handleHeight: 20,				//def 16
+	  	handleWidth: 30,				//def 8
+	  	sliderLayout: "constrained",//,	//def centered
+	  	constrainMargin: 3,				//def 3
+	  	sliderBorderWidth: 2,			//def 1
 	  	handleBorderWidth: 1,			//def 1
 	  	sliderMin: 0,			//def 1
 	  	sliderMax: 100,			//def 1
+	  	handleBorderColor: "rgba(0,155,155,1)",			//def 1
+	  	sliderBorderColor: "rgba(255,0,255,1)",			//def 1
+	  	sliderBGColor: "rgba(255,0,255,0)",			//def 1
+	  	handleBGColor: "rgba(255,0,255,1)",			//def 1
   	}
 	//a = new jQueryScrollSlider(args);
-	a = new sliderScroller(args);
+	a = new skSlider(args);
 }
 </script>
 </html>
