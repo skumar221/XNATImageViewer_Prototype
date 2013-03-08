@@ -221,26 +221,3 @@ jQueryScrollSlider.prototype.createScrollSliderElements = function(){
 }
 
 
-<<<<<<< HEAD
-
-=======
-window.onload = function(){
-	var args = {
-	  	id: "sS_A",
-	  	parent: document.body,
-	  	contents: imageScans,
-	  	width: 600,
-	  	height: 200,	
-	  	thumbWidth: 100,
-	  	thumbHeight: 100,
-	  	thumbMargin: 6,
-	  	borderWidth: 1,
-	  	borderRadius: 0,
-	  	handleHeight: 20,
-	  	handleWidth: 8,
-	  	sliderHeight: 10
-  	}
-	a = new jQueryScrollSlider(args);
-	//console.log(_px(1))
-}
->>>>>>> Updated

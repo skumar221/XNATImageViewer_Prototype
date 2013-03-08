@@ -11,7 +11,7 @@ function _i(val){
 }
 
 
-function sliderScroller(args){
+function skSlider(args){
 	this.args = args;
   	
   	this.widget = document.createElement("div");
@@ -21,42 +21,35 @@ function sliderScroller(args){
   	this.slider = document.createElement("div");
   	this.slider.setAttribute("id", this.args["id"] + "_slider");
   	this.widget.appendChild(this.slider);
-     
-    this.constrainPct = 1;
-	if (this.args["sliderLayout"] == "constrained"){
-		this.constrainPct = this.args["constrainMargin"] / this.args["width"];
-	 }
-	 console.log("CONSTRAINOCT: " + this.constrainPct);
-	 console.log("MIN: " + (this.args["sliderMin"] - this.args["sliderMax"]*this.constrainPct));
-	 console.log("MAX: " + (this.args["sliderMax"] + this.args["sliderMax"]*this.constrainPct));
-  	that = this;
+  
+    
+    that = this;
 	$(this.slider).slider({
-		  min: that.args["sliderMin"] - that.args["sliderMax"]*that.constrainPct,
-          max: that.args["sliderMax"] + that.args["sliderMax"]*that.constrainPct,
-          value: 0,  // start here tomorrow
-         slide: function(e,ui){
-		     console.log(ui.value)
-			   if (that.args["sliderLayout"] == "constrained"){
-			   		if(ui.value < that.args["sliderMin"]){//Note the value of ui.value is between 0 to 99
-		          		return false;
-		       		}
-			   		else if(ui.value > that.args["sliderMax"]){//Note the value of ui.value is between 0 to 99
-		          		return false;
-		       		}
-			   }
-         }
+		  min: 0,
+          max: this.args["sliderMax"],
+          value: 0,
+          slide: function(e,ui){
+			   that.slide(e, ui)
+          },
+
 	});
 	
+
+	this.sliderHandle = Array.prototype.slice.call(document.getElementsByClassName("ui-slider-handle"))[0];
+	this.slider= this.slider;
+
 	this.scroller = document.createElement("div");
   	this.scroller.setAttribute("id", this.args["id"] + "_scroller");
   	this.widget.appendChild(this.scroller);
-  	
+
   	this.restyle();
 }
 
-sliderScroller.prototype.restyle = function(){
-	
+skSlider.prototype.slide = function(e, ui){
+	//console.log("v: " + ui.value)
+}
 
+skSlider.prototype.restyle = function(){
 	
 	this.widget.style.position = (this.args["position"]);
 	this.widget.style.width = _px(this.args["width"]);
@@ -64,8 +57,7 @@ sliderScroller.prototype.restyle = function(){
 	this.widget.style.left = _px(this.args["left"]);
 	this.widget.style.top = _px(this.args["top"]);
 	this.widget.style.backgroundColor = "rgba(255,0,0,.5)";
-	
-	
+
 	//correctly compute the height of the slider + handle
 	var totalSliderHeight = this.args["sliderHeight"] + 2*this.args["sliderBorderWidth"];
 	var totalHandleHeight = this.args["handleHeight"] + 2*this.args["handleBorderWidth"];
@@ -87,29 +79,58 @@ sliderScroller.prototype.restyle = function(){
 	this.slider.style.marginTop = _px(this.args["height"] - heightAdj);
 	
 	$(".ui-slider-horizontal .ui-slider-handle").css("top", "0px");
-	
-	$(".ui-slider-horizontal").css("border-radius", "0px");
-	$(".ui-slider-horizontal").css("border-color", "#000000");
-	$(".ui-slider-horizontal").css("background", "rgba(0,255,20,0)");
-	$(".ui-slider-horizontal").css("color", "rgba(0,0,20,.1)");
-	$(".ui-slider-horizontal").css("height", _px(this.args["sliderHeight"]));
-	$(".ui-slider-horizontal").css("border-width", _px(this.args["sliderBorderWidth"]));
-	
-	$(".ui-slider-handle").css("border-radius", "0px");
-	$(".ui-slider-handle").css("width", _px(this.args["handleWidth"]));
-	
-	// Keeps handled centered on the ends. 
-	$(".ui-slider-handle").css("margin-left", "-" + _px((this.args["handleWidth"] + 2*this.args["handleBorderWidth"])/2));
-	$(".ui-slider-handle").css("height", _px(this.args["handleHeight"]));
-	
-	$(".ui-slider-handle").css("margin-top",  _px(handleTopMarginAdj));
-	$(".ui-slider-handle").css("border-color", "#000000");
-	$(".ui-slider-handle").css("background", "#000000");
-	$(".ui-slider-handle").css("border-width", _px(this.args["handleBorderWidth"]));
 
-	if (this.args["sliderLayout"] == "constrained"){
+	this.slider.style.borderRadius = "0px";
+	this.slider.style.borderColor = this.args["sliderBorderColor"];
+	this.slider.style.background = this.args["sliderBGColor"];
+	this.slider.style.height = _px(this.args["sliderHeight"]);
+	this.slider.style.borderWidth =  _px(this.args["sliderBorderWidth"]);
+	
+	this.sliderHandle.style.borderRadius = "0px";
+	this.sliderHandle.style.width = _px(this.args["handleWidth"]);
+	this.sliderHandle.style.marginLeft =  "-" + _px((this.args["handleWidth"] + 2*this.args["handleBorderWidth"])/2);
+	this.sliderHandle.style.height = _px(this.args["handleHeight"]);
+	this.sliderHandle.style.marginTop =   _px(handleTopMarginAdj);
+	this.sliderHandle.style.borderColor = this.args["handleBorderColor"];
+	this.sliderHandle.style.background = this.args["handleBGColor"];
+	this.sliderHandle.style.borderWidth = _px(this.args["handleBorderWidth"]);	
+	
+	if (this.args["sliderLayout"] == 'constrained'){
+		if (!document.getElementById(this.args["id"] + "_sliderConstrainer")){
+	  		this.sliderConstrainer= document.createElement("div");
+		  	this.sliderConstrainer.setAttribute("id", this.args["id"] + "_sliderConstrainer");
+		  	this.widget.removeChild(this.slider);
+		  	this.sliderConstrainer.appendChild(this.slider);
+		  	this.widget.appendChild(this.sliderConstrainer);
+		}
 		
-	}
+		if (!document.getElementById(this.args["id"] + "_sliderBounds")){
+	  		this.sliderBounds= document.createElement("div");
+		  	this.sliderBounds.setAttribute("id", this.args["id"] + "_sliderBounds");
+		  	this.widget.appendChild(this.sliderBounds);
+		}
+		
+  		var startPx = this.args["constrainMargin"] + (this.args["handleWidth"])/2 
+	  									  - this.args["sliderBorderWidth"] + this.args["handleBorderWidth"];	  	
+	  	this.sliderConstrainer.style.width = _px(this.args["width"]-startPx*2 - this.args["constrainMargin"]*2);
+	  	this.sliderConstrainer.style.position= "relative";
+	  	this.sliderConstrainer.style.left= _px(startPx + this.args["constrainMargin"]);
+	  	
+
+	    this.sliderBounds.style.position= "absolute";
+
+	  	this.sliderBounds.style.left= _px(0);
+	  	this.sliderBounds.style.top= _px(this.args["height"] - this.args["sliderHeight"] - this.args["sliderBorderWidth"]*2);
+	  	this.sliderBounds.style.width= _px(this.args["width"]-this.args["sliderBorderWidth"]*2);
+	  	this.sliderBounds.style.height= _px(this.args["sliderHeight"]);
+	  	this.sliderBounds.style.backgroundColor = "rgba(0,100,0,.5)";
+	  	this.sliderBounds.style.border = "solid rgba(0,0,0,1)";
+	  	this.sliderBounds.style.borderWidth = _px(this.args["sliderBorderWidth"]);
+	  	
+	    this.slider.style.borderColor =  "rgba(0,0,0,0)";
+	    this.sliderHandle.style.marginLeft  =  "-" + _px((this.args["handleWidth"] + 2*this.args["handleBorderWidth"])/2);
+	  	
+  	}
 
 }
 
