@@ -30,3 +30,17 @@ function _css(className, args){
 		throw("Must pass objects to createCssClass!");
 	}
 }
+
+
+//from: http://www.webdeveloper.com/forum/showthread.php?130717-How-to-create-CSS-styles-from-within-javascript
+function newStyle(str){
+	var pa= document.getElementsByTagName('head')[0] ;
+	var el= document.createElement('style');
+	el.type= 'text/css';
+	el.media= 'screen';
+	if(el.styleSheet) el.styleSheet.cssText= str;// IE method
+	else el.appendChild(document.createTextNode(str));// others
+	pa.appendChild(el);
+	return el;
+}
+
