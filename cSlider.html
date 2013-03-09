@@ -41,9 +41,21 @@ window.onload = function(){
 	  	sliderBorderColor: "rgba(255,0,255,1)",			//def 1
 	  	sliderBGColor: "rgba(255,0,255,0)",			//def 1
 	  	handleBGColor: "rgba(255,0,255,1)",			//def 1
+	  	orientation: "horizontal",			//def 1
   	}
 	//a = new jQueryScrollSlider(args);
 	a = new skSlider(args);
+	
+	var args2 = mergeArgs(args, {
+		id:"scroller2",
+		top: 400,
+		height: 400,
+		width: 30,
+		orientation: "vertical"	,
+		constrainMargin: 10
+	});
+	
+	b = new skSlider(args2)
 }
 </script>
 </html>
