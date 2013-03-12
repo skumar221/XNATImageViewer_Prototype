@@ -27,16 +27,16 @@ window.onload = function(){
 	  	contents: imageScans,			//def []
 	  	width: 400,						//def 500
 	  	height: 30,					//def 200
-	  	top: 200,						//def 0
-	  	left: 200,						//def 0
+	  	top: 50,						//def 0
+	  	left: 50,						//def 0
 	  	position: "absolute",			//def absolute
 	  	handleHeight: 20,				//def 16
 	  	handleWidth: 30,				//def 8
 	  	constrainMargin: 3,				//def 3
 	  	sliderBorderWidth: 3,			//def 1
 	  	handleBorderWidth: 3,			//def 1
-	  	sliderMin: 0,			//def 1
-	  	sliderMax: 100,			//def 1
+	  	sliderMin: 1,			//def 1
+	  	sliderMax: 160,			//def 1
 	  	handleBorderColor: "rgba(0,155,155,1)",			//def 1
 	  	sliderBorderColor: "rgba(255,0,0,1)",			//def 1
 	  	sliderBGColor: "rgba(0,0,255,.5)",			//def 1
@@ -44,6 +44,8 @@ window.onload = function(){
 	  	orientation: "horizontal",			//def 1
 	  	sliderBorderRadius: 5,			//def 1
 	  	handleBorderRadius: 10,			//def 1
+	  	step: 1,			//def 1
+	  	showValueDisplay: true,
   	}
 	//a = new jQueryScrollSlider(args);
 	a = new skSlider(args);

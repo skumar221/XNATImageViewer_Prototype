@@ -11,31 +11,87 @@ function _i(val){
 }
 
 
+var mouseWheelScroll = function(e, that){
+	  	//if (!that.mouseOver) return false;
+	    var delta = 0, element = $(that.slider), value, result, oe;
+	    oe = e.originalEvent; // for jQuery >=1.7
+	    value = element.slider('value');
+	
+		var multiplier = (that.args["orientation"] == "horizontal") ? -1: 1;
+		
+
+		
+	    if (oe.wheelDelta) {
+	        delta -= oe.wheelDelta;
+
+	    }
+	    if (oe.detail) {
+	        delta = oe.detail * 40;
+	    }
+		
+	    value -= multiplier * delta / 40 * that.args["step"];
+
+	    if (value > that.args["sliderMax"]) {
+	        value = that.args["sliderMax"];
+	    }
+	    if (value < that.args["sliderMin"]) {
+	        value = that.args["sliderMin"];
+	    }
+	
+	    result = element.slider('option', 'slide').call(element, e, { value: value });
+	    if (result !== false) {
+	        element.slider('value', value);
+	    }
+}
+
+skSlider.prototype.bindMouseWheel = function(that, otherElements){
+	 // From: http://stackoverflow.com/questions/5722949/ui-slider-mousewheel/5723291#5723291
+	 	var that = that;
+	  	$(this.widget).bind('mousewheel DOMMouseScroll', function(e){mouseWheelScroll(e, that)});
+}
+
 function skSlider(args){
 	this.args = args;
   	
   	this.widget = document.createElement("div");
   	this.widget.setAttribute("id", this.args["id"]);
+  	//this.widget.style.cursor = "pointer";
   	this.args["parent"].appendChild(this.widget);
 
   	this.slider = document.createElement("div");
   	this.slider.setAttribute("id", this.args["id"] + "_slider");
   	this.widget.appendChild(this.slider);
     
-    that = this;
+    var that = this;
+    this.currValue = (this.args["orientation"] == "horizontal") ? 
+    				 this.args["sliderMin"] : this.args["sliderMax"];
+    				 
+    
+    this.mouseOver = false;
+
 	$(this.slider).slider({
 		  orientation: this.args["orientation"],
-		  min: 0,
+		  min: this.args["sliderMin"],
           max: this.args["sliderMax"],
-          value: this.args["sliderMax"],
+          value: this.currValue,
+          step: this.args["step"],
           slide: function(e,ui){
-			   that.slide(e, ui)
+          	  //console.log(that["args"]["id"])
+          	   if (that.args["slideFunc"]) that.args["slideFunc"](that, e, ui);
+			   else that.slide(e, ui)
           },
-
 	});
 	
-
-	this.slider= this.slider;
+	this.widget.onmouseover=function(){
+		//console.log("MOUSEOVER! " + that.args["id"]); 
+		this.mouseOver = true;
+	}
+	
+	this.widget.onmouseout=function(){
+		//console.log("MOUSEOUT! " + that.args["id"]); 
+		this.mouseOver = false;
+	}	
+	
 	this.sliderHandle = this.slider.getElementsByTagName('a')[0];
 	this.sliderHandle.setAttribute("id", this.args["id"] + "_handle");
 	
@@ -48,14 +104,26 @@ function skSlider(args){
   	this.widget.removeChild(this.slider);  	
   	this.sliderConstrainer.appendChild(this.slider);
   	this.widget.appendChild(this.sliderConstrainer);
-
-
-  	this.restyle();
   	
-  	this.slide = function(e,ui){
-  		////console.log(ui.value)
-  	}
-}
+  	this.valueDisplay = document.createElement("div");
+  	this.valueDisplay.setAttribute("id", this.args["id"] + "_valueDisplay");
+  	this.valueDisplay.innerHTML = (this.currValue);
+  	this.valueDisplay.style.textAlign = "center";
+  	if (!this.args["showValueDisplay"]) this.valueDisplay.style.display = "none";
+  	this.args["parent"].appendChild(this.valueDisplay);
+
+	this.restyle();
+  	
+ 	this.slide = function(e,ui){
+ 		//console.log("this.id: " + this.args["id"])
+		this.currValue = (this.args["orientation"] == "horizontal") ? 
+						  ui.value : this.args["sliderMax"] - ui.value + 1;
+		this.valueDisplay.innerHTML = (this.currValue);
+	}
+	
+	this.bindMouseWheel(this);
+} 
+
 
 
 
@@ -67,6 +135,9 @@ skSlider.prototype.restyle = function(){
 	this.widget.style.top = _px(this.args["top"]);
 	//this.widget.style.backgroundColor = "rgba(255,0,0,.5)";
 
+	this.valueDisplay.style.position = (this.args["position"]);
+	this.valueDisplay.style.top =  _px(this.args["top"] + this.args["height"] + 20);
+	this.valueDisplay.style.left =  _px(this.args["left"]);
 	//correctly compute the height of the slider + handle
 	var totalSliderHeight = this.args["height"] + 2*this.args["sliderBorderWidth"];
 	var totalHandleHeight = this.args["handleHeight"] + 2*this.args["handleBorderWidth"];
@@ -93,8 +164,6 @@ skSlider.prototype.restyle = function(){
 	var totalHandleHeight = this.args["handleHeight"] + this.args["handleBorderWidth"]*2;
 	var deltaHeight = totalHandleHeight - totalSliderHeight;
 	
-
-
 	$(this.sliderHandle).css({
 		"border-radius": this.args["handleBorderRadius"],
 		"width": _px(this.args["handleWidth"]),
@@ -135,27 +204,24 @@ skSlider.prototype.restyle = function(){
   	});	
 
 	if (this.args["orientation"] == "horizontal"){	  			    
-	  	//******************************************************
-	  	// HEIGHT:
-	  	//  You shouldn't need a hieght for this as it will adopt 
-	  	//  to the default height of the slider, which is irrelevant.
-	  	// "height": _px(this.args["height"]),
-	  	//*******************************************************	
 	  	constrainWidth = this.args["width"]-(this.args["constrainMargin"]*2) - 	(this.args["handleWidth"]);						  
 	  	$(this.sliderConstrainer).css({
 	  		"position": "relative",
 		  	"width" : _px(constrainWidth),
+		  	"height" : _px(this.args["height"]),
 		  	"left": _px(0),
 		  	"top": _px(0), // basically puts the slider at the top of the widget
 		  				   // no big deal, because handle's top is adjusted
-			"background-color": "rgba(255,120,255,0)",
+			"backgroundColor" : "rgba(0,255,0,.5)",	 
 			"margin" : "0px auto",	//aligns the slider and handle to the middle
 	  	});	
 	  	
 	  	// for debugging
-	  	// $(this.slider).css({  		
-		  	// "background-color": "rgba(0,0,0,1)",
-	  	// });	 
+	  	$(this.slider).css({  	
+	  		"height" : _px($(this.sliderConstrainer).css("height")),	
+		  	"width" : _px($(this.sliderConstrainer).css("width")),		
+		  	"backgroundColor" : "rgba(0,255,0,.5)",	 
+	  	});	 
 	  	 	
 		$(this.sliderHandle).css({
 			// NOTE: margin-left is good -- the handle is centered by default.
@@ -175,7 +241,7 @@ skSlider.prototype.restyle = function(){
 		  	// no vertical align, so have to use this
 		  	"top": _px((this.args["height"] - constrainHeight)/2),
 		  	"left": _px(0),
-		  	//"backgroundColor" : "rgba(0,255,0,.5)",	  		  		 		  		
+		  	"backgroundColor" : "rgba(0,255,0,.5)",	  		  		 		  		
 	  	});	
 	  	
 
@@ -183,7 +249,8 @@ skSlider.prototype.restyle = function(){
 	  		// For whatever reason the slider hieght does not 
 	  		// borrow from the slider container
 		  	"height" : _px($(this.sliderConstrainer).css("height")),	
-		  	//"backgroundColor" : "rgba(0,255,0,.5)",		  		
+		  	"width" : _px($(this.sliderConstrainer).css("width")),	
+		  	"backgroundColor" : "rgba(0,255,0,.5)",		  		
 	  	});	
 
 			
@@ -193,6 +260,7 @@ skSlider.prototype.restyle = function(){
 		  	// mess with margin-top instdead
 		  	//"top" : _px(0), 
 		  	"margin-bottom" : _px(-totalHandleHeight/2), 
+		  	"margin-top" : _px(0), 
 		  	"margin-left" : _px(0), 
 		});
   }
