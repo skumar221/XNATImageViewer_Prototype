@@ -29,7 +29,10 @@ var mouseWheelScroll = function(e, that){
 	        delta = oe.detail * 40;
 	    }
 		
-	    value -= multiplier * delta / 40 * that.args["step"];
+		// Delta varies depending on the browser
+		// We just need the sign (.i.e. the direction of the mouse scroll)
+		var d = (delta< 0)? -1: 1 
+	    value -= multiplier * d * that.args["step"];
 
 	    if (value > that.args["sliderMax"]) {
 	        value = that.args["sliderMax"];
@@ -49,6 +52,8 @@ skSlider.prototype.bindMouseWheel = function(that, otherElements){
 	 	var that = that;
 	  	$(this.widget).bind('mousewheel DOMMouseScroll', function(e){mouseWheelScroll(e, that)});
 }
+
+
 
 function skSlider(args){
 	this.args = args;
@@ -125,7 +130,9 @@ function skSlider(args){
 } 
 
 
-
+skSlider.prototype.setSliderFunction = function(func){
+	this.slide = func;
+}
 
 skSlider.prototype.restyle = function(){	
 	this.widget.style.position = (this.args["position"]);

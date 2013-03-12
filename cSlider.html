@@ -65,8 +65,7 @@ window.onload = function(){
 	
 	b = new skSlider(args2)
 	
-	makePropertySliderSet("1", b, [	
-	
+	makePropertySliderSet("1", b, [		
 		//["orientation", 0, 1, 1],
 		["constrainMargin", 0, 40, 1, 5],		
 		["sliderBorderWidth", 0, 20, 1, 6],
@@ -83,9 +82,6 @@ window.onload = function(){
 		
 		["sliderBorderRadius", 0, 20],
 		["handleBorderRadius", 0, 20],
-
-
-		
 		
 		["sliderBorderR", 0, 255],
 		["sliderBorderG", 0, 255],
@@ -109,7 +105,33 @@ window.onload = function(){
 		["handleBGColor_A", 0, 1, .1],
 	]);
 	b.restyle();
-
+	 
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute("id", "testCanvas");
+  canvas.height = 300;
+  canvas.width = 300;
+  document.body.appendChild(canvas)
+  canvas.style.position = "relative";
+  canvas.style.left = _px(300);
+  canvas.style.top = _px(400);
+  var context = canvas.getContext('2d');
+  var scan = new Array(imageScans.length);
+  for (var i=imageScans.length;i>=0;i--){
+  	var k = new Image();
+  	k.onload = function() {
+    	context.drawImage(k, 0, 0, canvas.width, canvas.height);
+  	};
+  	k.src = imageScans[i]
+  	scan[i] = k;
+  }
+  
+  
+  a.setSliderFunction(function(e,ui){
+ 		console.log("this.id: " + this.args["id"])
+		this.currValue = (this.args["orientation"] == "horizontal") ? 
+						  ui.value : this.args["sliderMax"] - ui.value + 1;
+		this.valueDisplay.innerHTML = (this.currValue);
+  });
 }
 </script>
 </html>
