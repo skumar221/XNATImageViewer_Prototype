@@ -30,9 +30,9 @@ function makePropertySliderSet(id, bindObj, args){
 		this.setTable.cellPadding =_px(12);
 		this.sliderSet.appendChild(this.setTable)
 		
-		//var content = "<table>"
-		resultIDs = []
-		sliderIDs = []
+		var content = "";
+		resultIDs = [];
+		sliderIDs = [];
 		for(var i=0; i<args.length; i++){
 			resultIDs.push(this.setTable.id + "_" + args[i][0] + "_result_" + i.toString());
 			sliderIDs.push(this.setTable.id + "_" + args[i][0] + "_slider_" + i.toString());

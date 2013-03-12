@@ -63,15 +63,18 @@ window.onload = function(){
 	
 	b = new skSlider(args2)
 	
-	makePropertySliderSet("1", a, [	
+	makePropertySliderSet("1", b, [	
 	
 		//["orientation", 0, 1, 1],
+		["constrainMargin", 0, 40, 1, 5],		
+		["sliderBorderWidth", 0, 20, 1, 6],
+		["handleBorderWidth", 0, 20, 1, 6],	
 		
 		["top", 0, 1000, 1, 100],
 		["left", 0, 1000, 1, 100],
 		
-		["height", 0, 500, 1, 40],
-		["width", 0, 500, 1, 400],
+		["height", 0, 500, 1, 400],
+		["width", 0, 500, 1, 40],
 		
 		["handleHeight", 0, 500, 1, 20],
 		["handleWidth", 0, 500, 1, 20],
@@ -79,10 +82,7 @@ window.onload = function(){
 		["sliderBorderRadius", 0, 20],
 		["handleBorderRadius", 0, 20],
 
-		["constrainMargin", 0, 20, 1, 5],
-		
-		["sliderBorderWidth", 0, 20, 1, 6],
-		["handleBorderWidth", 0, 20, 1, 6],	
+
 		
 		
 		["sliderBorderR", 0, 255],
