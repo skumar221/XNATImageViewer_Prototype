@@ -36,7 +36,7 @@ window.onload = function(){
 	  	sliderBorderWidth: 3,			//def 1
 	  	handleBorderWidth: 3,			//def 1
 	  	sliderMin: 1,			//def 1
-	  	sliderMax: 160,			//def 1
+	  	sliderMax: imageScans.length,			//def 1
 	  	handleBorderColor: "rgba(0,155,155,1)",			//def 1
 	  	sliderBorderColor: "rgba(255,0,0,1)",			//def 1
 	  	sliderBGColor: "rgba(0,0,255,.5)",			//def 1
@@ -45,6 +45,7 @@ window.onload = function(){
 	  	sliderBorderRadius: 5,			//def 1
 	  	handleBorderRadius: 10,			//def 1
 	  	step: 1,			//def 1
+	  	startValue: Math.round(imageScans.length/2),
 	  	showValueDisplay: true,
   	}
 	//a = new jQueryScrollSlider(args);
@@ -65,7 +66,7 @@ window.onload = function(){
 	
 	b = new skSlider(args2)
 	
-	makePropertySliderSet("1", b, [		
+	makePropertySliderSet("1", a, [		
 		//["orientation", 0, 1, 1],
 		["constrainMargin", 0, 40, 1, 5],		
 		["sliderBorderWidth", 0, 20, 1, 6],
@@ -74,8 +75,8 @@ window.onload = function(){
 		["top", 0, 1000, 1, 100],
 		["left", 0, 1000, 1, 100],
 		
-		["height", 0, 500, 1, 400],
-		["width", 0, 500, 1, 40],
+		["height", 0, 500, 1, 40],
+		["width", 0, 500, 1, 400],
 		
 		["handleHeight", 0, 500, 1, 20],
 		["handleWidth", 0, 500, 1, 20],
@@ -113,24 +114,24 @@ window.onload = function(){
   document.body.appendChild(canvas)
   canvas.style.position = "relative";
   canvas.style.left = _px(300);
-  canvas.style.top = _px(400);
+  canvas.style.top = _px(200);
   var context = canvas.getContext('2d');
   var scan = new Array(imageScans.length);
   for (var i=imageScans.length;i>=0;i--){
   	var k = new Image();
   	k.onload = function() {
-    	context.drawImage(k, 0, 0, canvas.width, canvas.height);
+    	//context.drawImage(k, 0, 0, canvas.width, canvas.height);
+   		if (i==0){
+   			context.drawImage(a.args["startValue"], 0, 0, canvas.width, canvas.height);	
+   		}
   	};
   	k.src = imageScans[i]
   	scan[i] = k;
   }
   
-  
-  a.setSliderFunction(function(e,ui){
- 		console.log("this.id: " + this.args["id"])
-		this.currValue = (this.args["orientation"] == "horizontal") ? 
-						  ui.value : this.args["sliderMax"] - ui.value + 1;
-		this.valueDisplay.innerHTML = (this.currValue);
+  a.addSliderFunction(function(_slider){
+  		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
+		context.drawImage(scan[_slider.currValue-subtractor], 0, 0, canvas.width, canvas.height);
   });
 }
 </script>

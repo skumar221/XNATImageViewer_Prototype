@@ -68,22 +68,28 @@ function skSlider(args){
   	this.widget.appendChild(this.slider);
     
     var that = this;
-    this.currValue = (this.args["orientation"] == "horizontal") ? 
-    				 this.args["sliderMin"] : this.args["sliderMax"];
+    //this.currValue = (this.args["orientation"] == "horizontal") ? this.args["sliderMin"] : this.args["sliderMax"];
+    this.currValue = this.args["startValue"];
     				 
     
     this.mouseOver = false;
+    
+    this.sliderFunctions = [];
 
 	$(this.slider).slider({
 		  orientation: this.args["orientation"],
 		  min: this.args["sliderMin"],
           max: this.args["sliderMax"],
-          value: this.currValue,
+          value: this.args["startValue"],
           step: this.args["step"],
-          slide: function(e,ui){
-          	  //console.log(that["args"]["id"])
-          	   if (that.args["slideFunc"]) that.args["slideFunc"](that, e, ui);
-			   else that.slide(e, ui)
+          slide: function(e,ui, _that){
+          	  //console.log(e);
+          	  //console.log(ui);
+          	  if (_that) {
+          	  	//console.log(_that);
+          	  	_that.slide(e, ui);
+          	  }
+          	  that.slide(e, ui);
           },
 	});
 	
@@ -119,22 +125,36 @@ function skSlider(args){
 
 	this.restyle();
   	
- 	this.slide = function(e,ui){
- 		//console.log("this.id: " + this.args["id"])
-		this.currValue = (this.args["orientation"] == "horizontal") ? 
-						  ui.value : this.args["sliderMax"] - ui.value + 1;
-		this.valueDisplay.innerHTML = (this.currValue);
-	}
 	
 	this.bindMouseWheel(this);
 } 
 
+skSlider.prototype.slide = function(e,ui){
+	//console.log("this.id: " + this.args["id"])
+	this.currValue = (this.args["orientation"] == "horizontal") ? 
+					  ui.value : this.args["sliderMax"] - ui.value + 1;
+	this.valueDisplay.innerHTML = (this.currValue);
+	otherSliderFunctions(this);
+}
+	
+skSlider.prototype.addSliderFunction = function(func){
+	//console.log("add slider function: " + this.currValue);
+	this.sliderFunctions.push(func);
+	var dummy;
+	//this.slide(dummy, this.currValue);
+	$(this.slider).slider('option', 'slide').call(this.slider, this.slider, {value: this.currValue});
+}
 
-skSlider.prototype.setSliderFunction = function(func){
-	this.slide = func;
+var otherSliderFunctions = function(that){
+	//this.slide = func;
+	//console.log("performing other slider functions");
+	for (var i=0; i<that.sliderFunctions.length; i++){
+		that.sliderFunctions[i](that);
+	}
 }
 
 skSlider.prototype.restyle = function(){	
+	//console.log("RESTYLE");
 	this.widget.style.position = (this.args["position"]);
 	this.widget.style.width = _px(this.args["width"]);
 	this.widget.style.height = _px(this.args["height"]);
@@ -271,6 +291,8 @@ skSlider.prototype.restyle = function(){
 		  	"margin-left" : _px(0), 
 		});
   }
+
+	$(this.slider).slider('value', this.currValue);
   	
 }
 
