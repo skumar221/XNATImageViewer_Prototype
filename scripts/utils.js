@@ -1,4 +1,5 @@
 function mergeArgs(obj1,obj2){
+	// obj2 gets the priority
     var obj3 = {};
     for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
     for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
@@ -31,7 +32,6 @@ function _css(className, args){
 	}
 }
 
-
 //from: http://www.webdeveloper.com/forum/showthread.php?130717-How-to-create-CSS-styles-from-within-javascript
 function newStyle(str){
 	var pa= document.getElementsByTagName('head')[0] ;
@@ -44,3 +44,6 @@ function newStyle(str){
 	return el;
 }
 
+function _i(val){
+	return parseInt(val, 10);
+}

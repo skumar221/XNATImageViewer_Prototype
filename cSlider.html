@@ -17,95 +17,69 @@
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/imageScans.js"></script>
 <script src="./scripts/cSlider.js"></script>
-<script src="./scripts/sliderScrollPane.js"></script>
-<script src="./scripts/propertySliders.js"></script>
+<script src="./scripts/modSlider.js"></script>
+<script src="./scripts/sliderSet.js"></script>
 <script>
 window.onload = function(){
-	var args = {
-	  	id: "sliderScroller",			//def "sliderScroller"
-	  	parent: document.body,			//def document.body
-	  	contents: imageScans,			//def []
-	  	width: 400,						//def 500
-	  	height: 30,					//def 200
-	  	top: 50,						//def 0
-	  	left: 50,						//def 0
-	  	position: "absolute",			//def absolute
-	  	handleHeight: 20,				//def 16
-	  	handleWidth: 30,				//def 8
-	  	constrainMargin: 3,				//def 3
-	  	sliderBorderWidth: 3,			//def 1
-	  	handleBorderWidth: 3,			//def 1
-	  	sliderMin: 1,			//def 1
-	  	sliderMax: imageScans.length,			//def 1
-	  	handleBorderColor: "rgba(0,155,155,1)",			//def 1
-	  	sliderBorderColor: "rgba(255,0,0,1)",			//def 1
-	  	sliderBGColor: "rgba(0,0,255,.5)",			//def 1
-	  	handleBGColor: "rgba(255,0,255,.5)",			//def 1
-	  	orientation: "horizontal",			//def 1
-	  	sliderBorderRadius: 5,			//def 1
-	  	handleBorderRadius: 10,			//def 1
-	  	step: 1,			//def 1
-	  	startValue: Math.round(imageScans.length/2),
-	  	showValueDisplay: true,
-  	}
+
 	//a = new jQueryScrollSlider(args);
-	a = new skSlider(args);
+
+
+	a = new modSlider({
+		id: "modSlider1", 
+		top: 340, 
+		left: 10, 
+		width: 300, 
+		value: Math.round(imageScans.length/2),
+		max: imageScans.length,
+		min: 0,
 	
-	var args2 = mergeArgs(args, {
-		id:"scroller2",
-		top: 400,
-		height: 400,
-		width: 20,
-		orientation: "vertical"	,
-		constrainMargin: -20,
-		handleWidth : 50,
-		handleHeight : 40,
-		handleBorderWidth: 3,			//def 1
-		sliderBorderWidth: 3,			//def 1
 	});
 	
-	b = new skSlider(args2)
+	modSlider.prototype.styleBind = function(label, value){
+		this.args[label] = value;
+		this.restyle();
+	}
 	
-	makePropertySliderSet("1", a, [		
-		//["orientation", 0, 1, 1],
-		["constrainMargin", 0, 40, 1, 5],		
-		["sliderBorderWidth", 0, 20, 1, 6],
-		["handleBorderWidth", 0, 20, 1, 6],	
-		
-		["top", 0, 1000, 1, 100],
-		["left", 0, 1000, 1, 100],
-		
-		["height", 0, 500, 1, 40],
-		["width", 0, 500, 1, 400],
-		
-		["handleHeight", 0, 500, 1, 20],
-		["handleWidth", 0, 500, 1, 20],
-		
-		["sliderBorderRadius", 0, 20],
-		["handleBorderRadius", 0, 20],
-		
-		["sliderBorderR", 0, 255],
-		["sliderBorderG", 0, 255],
-		["sliderBorderB", 0, 255],
-		["sliderBorderA", 0, 1, .1],
-
+	var _a = {
+		min: 0,
+		max: 100,
+		step: 1, 
+		value: 5,
+		bindFunction: a.modSlider,
+		styleType: "defaultJQuery"
+	}
 	
-		["handleBorderR", 0, 255],
-		["handleBorderG", 0, 255],
-		["handleBorderB", 0, 255],
-		["handleBorderA", 0, 1, .1],
-		
-		["sliderBGColor_R", 0, 255],
-		["sliderBGColor_G", 0, 255],
-		["sliderBGColor_B", 0, 255],
-		["sliderBGColor_A", 0, 1, .1],
-		
-		["handleBGColor_R", 0, 255],
-		["handleBGColor_G", 0, 255],
-		["handleBGColor_B", 0, 255],
-		["handleBGColor_A", 0, 1, .1],
+	var ssArgs = {
+		id: a.args.id + "_styleSliderSet",
+		_css:{
+				"top": 20,
+				"left": 500,
+				//"height": 500,
+				//"width": 500,				
+			  }
+	}
+	
+	var ss = new sliderSet(ssArgs, [		
+		mergeArgs(_a, {id:"constrainMargin",	 	min: 0, max: 40, step: 1, value: 0}),
+		mergeArgs(_a, {id:"borderWidth_slider", 	min: 0, max: 40, step: 1, value: 1}),
+		mergeArgs(_a, {id:"borderWidth_handle", 	min: 0, max: 40, step: 1, value: 1}),
+		mergeArgs(_a, {id:"top", 					min: 0, max: 1000, step: 1, value: 327}),
+		mergeArgs(_a, {id:"left", 					min: 0, max: 1000, step: 1, value: 10}),
+		mergeArgs(_a, {id:"height", 				min: 0, max: 100, step: 1, value: 10}),
+		mergeArgs(_a, {id:"width", 					min: 0, max: 600, step: 1, value: 300}),
+		mergeArgs(_a, {id:"height_handle",			min: 0, max: 500, step: 1, value: 20}),
+		mergeArgs(_a, {id:"width_handle", 			min: 0, max: 500, step: 1, value: 20}),
+		mergeArgs(_a, {id:"borderRadius_slider", 	min: 0, max: 40, value:0}),
+		mergeArgs(_a, {id:"borderRadius_handle", 	min: 0, max: 40, value:0}),
 	]);
-	b.restyle();
+
+	//var ad = document.createElement('div');
+	//ad.style.position = "absolute";
+//	ad.style.width = "100px";
+	//ad.style.height = "100px";
+	//ad.style.backgroundColor = "rgba(200,100,200,1)";
+	//document.body.appendChild(ad);
 	 
   var canvas = document.createElement('canvas');
   canvas.setAttribute("id", "testCanvas");
@@ -113,8 +87,8 @@ window.onload = function(){
   canvas.width = 300;
   document.body.appendChild(canvas)
   canvas.style.position = "relative";
-  canvas.style.left = _px(300);
-  canvas.style.top = _px(200);
+  canvas.style.left = _px(10);
+  canvas.style.top = _px(10);
   var context = canvas.getContext('2d');
   var scan = new Array(imageScans.length);
   for (var i=imageScans.length;i>=0;i--){
@@ -129,10 +103,19 @@ window.onload = function(){
   	scan[i] = k;
   }
   
-  a.addSliderFunction(function(_slider){
+  a.addSlideFunction(function(_slider){
   		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
 		context.drawImage(scan[_slider.currValue-subtractor], 0, 0, canvas.width, canvas.height);
   });
+  
+  for (var j=0;j<ss.sliders.length;j++){
+  	ss.sliders[j].addSlideFunction(function(_slider){
+	  	a.args[_slider.args["corollary"]] = _slider.currValue;
+	  	a.restyle();
+	});
+  }
+  a.bindToMouseWheel(canvas);
+  
 }
 </script>
 </html>
