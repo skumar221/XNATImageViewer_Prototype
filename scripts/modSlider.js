@@ -164,7 +164,7 @@ function modSlider(args){
 } 
 
 modSlider.prototype.slide = function(e,ui){
-	//console.log("this.id: " + this.args["id"])
+	//console.log("this.id: " + this.args["id"] + " " + ui.value)
 	this.currValue = (this.args["orientation"] == "horizontal") ? 
 					  ui.value : this.args["max"] - ui.value + 1;
 	this.valueDisplay.innerHTML = (this.currValue);

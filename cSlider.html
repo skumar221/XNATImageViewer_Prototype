@@ -20,6 +20,91 @@
 <script src="./scripts/modSlider.js"></script>
 <script src="./scripts/sliderSet.js"></script>
 <script>
+function adjustContrast(canvas, value) {
+	
+	if (value==0) return;
+	var context = canvas.getContext('2d');
+	var imageX = canvas.width;
+	var imageY = canvas.height;
+	var imageWidth = canvas.width;
+	var imageHeight = canvas.height;
+	
+	//context.drawImage(imageObj, imageX, imageY);
+	
+	var imageData = context.getImageData(0, 0, imageWidth, imageHeight);
+	console.log
+	var data = imageData.data;
+	
+	value = (100.0 + value) / 100.0;
+    value *= value;
+    
+    
+    //var threshold = .5;
+    var threshold = .15;
+
+	// quickly iterate over all pixels
+	for(var i = 0, n = data.length; i < n; i += 4) {
+	//for(var i = 0, n = 100; i < n; i += 4) {
+		
+		var red = data[i];
+		var green = data[i + 1];
+		var blue = data[i + 2];
+		var alpha = data[i + 3];
+	  
+	  	//if (red >0 || green>0 || blue>0) console.log("value: " + value + "****b: " + red + " " + green + " " + blue + "****a: " + iR + " " + iG + " " + iB)
+
+	  	//from http://stackoverflow.com/questions/3115076/adjust-the-contrast-of-an-image-in-c-sharp-efficiently/3115178#3115178
+	  	
+		var Red = red / 255;
+		var Green = green / 255;
+		var Blue = blue / 255;
+		Red =   (((Red - threshold) * value/1.2) + threshold) * 255;
+		Green = (((Green - threshold) * value/1.2) + threshold) * 255;
+		Blue =  (((Blue - threshold) * value/1.2) + threshold) * 255;
+		
+		var iR = Red;
+		iR = (iR > 255) ? 255 : iR;
+		iR = (iR < 0) ? 0 : iR;
+		
+		var iG = Green;
+		iG = (iG > 255) ? 255 : iG;
+		iG = (iG < 0) ? 0 : iG;
+		
+		var iB = Blue;
+		iB = (iB > 255) ? 255 : iB;
+		iB = (iB < 0) ? 0 : iB;
+		
+		
+		
+		imageData.data[i] = Math.round(iR);
+		imageData.data[i+1] = Math.round(iG);
+		imageData.data[i+2] = Math.round(iB);
+		
+		
+		// This would be close to the brightness algorithm
+		// data[i] += value;
+		// data[i+1] += value;
+		// data[i+2] += value;
+	}
+	
+	/*
+	// or iterate over all pixels based on x and y coordinates.
+	// loop through each row
+	for(var y = 0; y < sourceHeight; y++) {
+	  // loop through each column
+	  for(var x = 0; x < sourceWidth; x++) {
+	    var red = data[((sourceWidth * y) + x) * 4];
+	    var green = data[((sourceWidth * y) + x) * 4 + 1];
+	    var blue = data[((sourceWidth * y) + x) * 4 + 2];
+	    var alpha = data[((sourceWidth * y) + x) * 4 + 3];
+	  }
+	}
+	*/
+	
+	// draw the new image with the modified image data
+	context.putImageData(imageData, 0, 0);
+}
+
 window.onload = function(){
 
 	//a = new jQueryScrollSlider(args);
@@ -27,19 +112,28 @@ window.onload = function(){
 
 	a = new modSlider({
 		id: "modSlider1", 
-		top: 340, 
-		left: 10, 
-		width: 300, 
 		value: Math.round(imageScans.length/2),
 		max: imageScans.length,
 		min: 0,
+		constrainMargin : 0,
+		borderWidth_slider : 1,
+		borderWidth_handle : 1,
+		top : 327,
+		left : 10,
+		height : 7,
+		width : 297,
+		height_handle : 9,
+		width_handle : 12,
+		borderRadius_slider : 3,
+		borderRadius_handle : 4,
 	
 	});
-	
-	modSlider.prototype.styleBind = function(label, value){
+	a.styleBind = function(label, value){
 		this.args[label] = value;
 		this.restyle();
 	}
+	
+	b = new modSlider(mergeArgs(a.args,{id: "modSlider2", top: 350, min:-100, max: 100, value:0, "sliderBGColor":"rgba(0, 180, 60, .9)" }));
 	
 	var _a = {
 		min: 0,
@@ -108,14 +202,22 @@ window.onload = function(){
 		context.drawImage(scan[_slider.currValue-subtractor], 0, 0, canvas.width, canvas.height);
   });
   
+  b.addSlideFunction(function(_slider){
+  		adjustContrast(canvas, _slider.currValue);
+  });
+  /*
   for (var j=0;j<ss.sliders.length;j++){
   	ss.sliders[j].addSlideFunction(function(_slider){
 	  	a.args[_slider.args["corollary"]] = _slider.currValue;
 	  	a.restyle();
 	});
   }
+  */
   a.bindToMouseWheel(canvas);
   
 }
+
+
+
 </script>
 </html>
