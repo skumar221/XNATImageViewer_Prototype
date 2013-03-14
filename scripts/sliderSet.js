@@ -28,7 +28,6 @@ var defaultArgs_sliderSet = {
 function sliderSet(args, sliderArgs){
 
 	this.args = mergeArgs(defaultArgs_sliderSet, args);
-	this.args._css = mergeArgs(defaultArgs_sliderSet._css, args._css);
 	this._css = this.args._css;
 
 //	console.log("SLDIER SET ID: " + this.args["id"])

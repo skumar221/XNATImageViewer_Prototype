@@ -75,6 +75,7 @@ modSlider.prototype.bindToMouseWheel = function(elt){
 	if (!eltFound){
 		this.mouseWheelBindElements.push(elt);
 		$(elt).bind('mousewheel DOMMouseScroll', function(e){mouseWheelScroll(e, that)});
+		$(this.slider).slider('value', this.currValue);
 	}
 }
 

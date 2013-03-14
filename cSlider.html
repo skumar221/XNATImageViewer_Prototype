@@ -19,91 +19,10 @@
 <script src="./scripts/cSlider.js"></script>
 <script src="./scripts/modSlider.js"></script>
 <script src="./scripts/sliderSet.js"></script>
+<script src="./scripts/frameViewer.js"></script>
+<script src="./scripts/imageManip.js"></script>
 <script>
-function adjustContrast(canvas, value) {
-	
-	if (value==0) return;
-	var context = canvas.getContext('2d');
-	var imageX = canvas.width;
-	var imageY = canvas.height;
-	var imageWidth = canvas.width;
-	var imageHeight = canvas.height;
-	
-	//context.drawImage(imageObj, imageX, imageY);
-	
-	var imageData = context.getImageData(0, 0, imageWidth, imageHeight);
-	console.log
-	var data = imageData.data;
-	
-	value = (100.0 + value) / 100.0;
-    value *= value;
-    
-    
-    //var threshold = .5;
-    var threshold = .15;
 
-	// quickly iterate over all pixels
-	for(var i = 0, n = data.length; i < n; i += 4) {
-	//for(var i = 0, n = 100; i < n; i += 4) {
-		
-		var red = data[i];
-		var green = data[i + 1];
-		var blue = data[i + 2];
-		var alpha = data[i + 3];
-	  
-	  	//if (red >0 || green>0 || blue>0) console.log("value: " + value + "****b: " + red + " " + green + " " + blue + "****a: " + iR + " " + iG + " " + iB)
-
-	  	//from http://stackoverflow.com/questions/3115076/adjust-the-contrast-of-an-image-in-c-sharp-efficiently/3115178#3115178
-	  	
-		var Red = red / 255;
-		var Green = green / 255;
-		var Blue = blue / 255;
-		Red =   (((Red - threshold) * value/1.2) + threshold) * 255;
-		Green = (((Green - threshold) * value/1.2) + threshold) * 255;
-		Blue =  (((Blue - threshold) * value/1.2) + threshold) * 255;
-		
-		var iR = Red;
-		iR = (iR > 255) ? 255 : iR;
-		iR = (iR < 0) ? 0 : iR;
-		
-		var iG = Green;
-		iG = (iG > 255) ? 255 : iG;
-		iG = (iG < 0) ? 0 : iG;
-		
-		var iB = Blue;
-		iB = (iB > 255) ? 255 : iB;
-		iB = (iB < 0) ? 0 : iB;
-		
-		
-		
-		imageData.data[i] = Math.round(iR);
-		imageData.data[i+1] = Math.round(iG);
-		imageData.data[i+2] = Math.round(iB);
-		
-		
-		// This would be close to the brightness algorithm
-		// data[i] += value;
-		// data[i+1] += value;
-		// data[i+2] += value;
-	}
-	
-	/*
-	// or iterate over all pixels based on x and y coordinates.
-	// loop through each row
-	for(var y = 0; y < sourceHeight; y++) {
-	  // loop through each column
-	  for(var x = 0; x < sourceWidth; x++) {
-	    var red = data[((sourceWidth * y) + x) * 4];
-	    var green = data[((sourceWidth * y) + x) * 4 + 1];
-	    var blue = data[((sourceWidth * y) + x) * 4 + 2];
-	    var alpha = data[((sourceWidth * y) + x) * 4 + 3];
-	  }
-	}
-	*/
-	
-	// draw the new image with the modified image data
-	context.putImageData(imageData, 0, 0);
-}
 
 window.onload = function(){
 
@@ -133,7 +52,7 @@ window.onload = function(){
 		this.restyle();
 	}
 	
-	b = new modSlider(mergeArgs(a.args,{id: "modSlider2", top: 350, min:-100, max: 100, value:0, "sliderBGColor":"rgba(0, 180, 60, .9)" }));
+
 	
 	var _a = {
 		min: 0,
@@ -148,9 +67,7 @@ window.onload = function(){
 		id: a.args.id + "_styleSliderSet",
 		_css:{
 				"top": 20,
-				"left": 500,
-				//"height": 500,
-				//"width": 500,				
+				"left": 500,		
 			  }
 	}
 	
@@ -170,41 +87,10 @@ window.onload = function(){
 
 	//var ad = document.createElement('div');
 	//ad.style.position = "absolute";
-//	ad.style.width = "100px";
+	//ad.style.width = "100px";
 	//ad.style.height = "100px";
 	//ad.style.backgroundColor = "rgba(200,100,200,1)";
 	//document.body.appendChild(ad);
-	 
-  var canvas = document.createElement('canvas');
-  canvas.setAttribute("id", "testCanvas");
-  canvas.height = 300;
-  canvas.width = 300;
-  document.body.appendChild(canvas)
-  canvas.style.position = "relative";
-  canvas.style.left = _px(10);
-  canvas.style.top = _px(10);
-  var context = canvas.getContext('2d');
-  var scan = new Array(imageScans.length);
-  for (var i=imageScans.length;i>=0;i--){
-  	var k = new Image();
-  	k.onload = function() {
-    	//context.drawImage(k, 0, 0, canvas.width, canvas.height);
-   		if (i==0){
-   			context.drawImage(a.args["startValue"], 0, 0, canvas.width, canvas.height);	
-   		}
-  	};
-  	k.src = imageScans[i]
-  	scan[i] = k;
-  }
-  
-  a.addSlideFunction(function(_slider){
-  		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
-		context.drawImage(scan[_slider.currValue-subtractor], 0, 0, canvas.width, canvas.height);
-  });
-  
-  b.addSlideFunction(function(_slider){
-  		adjustContrast(canvas, _slider.currValue);
-  });
   /*
   for (var j=0;j<ss.sliders.length;j++){
   	ss.sliders[j].addSlideFunction(function(_slider){
@@ -212,9 +98,27 @@ window.onload = function(){
 	  	a.restyle();
 	});
   }
-  */
-  a.bindToMouseWheel(canvas);
+  */	  
+  var fv = new frameViewer();
   
+  fv.addOnloadCallback(function(){
+  	a.addSlideFunction(function(_slider){
+  		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
+  		fv.drawFrame(_slider.currValue-subtractor, true); 
+	  });
+	  a.bindToMouseWheel(fv.canvas);
+	  
+  });
+  
+  contrastSlider = new modSlider(mergeArgs(a.args,{id: "constrastSlider", top: 350, min:1, max: 50, value:1, step: 1, "sliderBGColor":"rgba(0, 180, 60, .9)" }));
+  contrastSlider.addSlideFunction(function(_slider){  		
+  		fv.imageAdjust("contrast", _slider.currValue);
+  });
+  
+  brightnessSlider = new modSlider(mergeArgs(a.args,{id: "brightnessSlider", top: 375, min:0, max: 255, value:0, step: 1, "sliderBGColor":"rgba(180, 0, 60, .9)" }));
+  brightnessSlider.addSlideFunction(function(_slider){
+  		fv.imageAdjust("brightness", _slider.currValue);
+  });  
 }
 
 
