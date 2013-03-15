@@ -59,3 +59,29 @@ function newStyle(str){
 function _i(val){
 	return parseInt(val, 10);
 }
+
+function swap(darr){
+	var holder = darr[0];
+	darr[0] = darr[1];
+	darr[1] = holder;
+	return darr;
+}
+
+function _remap1D(n, dold, dnew){
+
+	if (dold[0] == dold[1]){
+		throw ("Remap: initial domain is equal!");
+	}
+	else if (dold[0] > dold[1]){
+		dold = swap(dold);
+	}
+	
+	if (dnew[0] == dnew[1]){
+		throw ("Remap: map domain is equal!");
+	}
+	else if (dnew[0] > dnew[1]){
+		dold = swap(dold);
+	}
+
+	return Math.round((n/(dold[1]-dold[0])) * ((dnew[1]-dnew[0])));
+}

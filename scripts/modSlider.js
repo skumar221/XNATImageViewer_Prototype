@@ -14,7 +14,7 @@ var defaultArgs_modSlider = {
   	constrainMargin: 0,				//def 3
   	borderWidth_slider: 1,			//def 1
   	borderWidth_handle: 1,			//def 1
-  	min: 1,			//def 1
+  	min: 0,			//def 1
   	max: 100,			//def 1
   	handleBorderColor: "rgba(55,55,55,1)",			//def 1
   	sliderBorderColor: "rgba(55,55,55,1)",			//def 1
@@ -159,22 +159,34 @@ function modSlider(args){
   		document.documentElement.style.overflowY = 'hidden';
   	}
   	
-  	this.addSlideFunction = function(func){
-  		addSlideFunction(that, func);
+  	this.addSlideFunction = function(func, mapValueToSlider){
+  		addSlideFunction(that, func, mapValueToSlider);
   	}
 } 
 
 modSlider.prototype.slide = function(e,ui){
-	//console.log("this.id: " + this.args["id"] + " " + ui.value)
+	//console.log("this.id: " + this.args["id"] + " " + ui.value);
 	this.currValue = (this.args["orientation"] == "horizontal") ? 
-					  ui.value : this.args["max"] - ui.value + 1;
+					  ui.value : this.args["max"] - ui.value;
 	this.valueDisplay.innerHTML = (this.currValue);
 	otherSliderFunctions(this);
 }
 	
-var addSlideFunction = function(that, func){
+var addSlideFunction = function(that, func, mapValueToSlider){
 	//console.log("add slider function: " + func);
+	that.currValue = (mapValueToSlider) ? mapValueToSlider : that.currValue
+
+	
+	if (that.currValue > that.args.max){
+		$(that.slider).slider({max:that.currValue});
+	}
+	else if (that.currValue < that.args.min){
+		$(that.slider).slider({min:that.currValue});
+	}
+	
+	$(that.slider).slider({value: that.currValue});
 	that.sliderFunctions.push(func);
+	
 	$(that.slider).slider('option', 'slide').call(that.slider, that.slider, {value: that.currValue});
 }
 
@@ -198,8 +210,8 @@ modSlider.prototype.positionWidget = function(){
 		"border" : "solid",
 		"border-color": this.args["sliderBorderColor"],
 	  	"background-color" : this.args["sliderBGColor"],
-	  	"border-width" : _px(this.args["borderWidth_slider"]),
-	  	"border-radius": _px(this.args["borderRadius_slider"]),	  		
+	  	"border-width" : (this.args["borderWidth_slider"]),
+	  	"border-radius": (this.args["borderRadius_slider"]),	  		
 	});
 }
 
@@ -243,13 +255,13 @@ modSlider.prototype.restyle = function(){
 	
 	$(this.sliderHandle).css({
 		"border-radius": this.args["borderRadius_handle"],
-		"width": _px(this.args["width_handle"]),
-		"margin-left":  "-" + _px((this.args["width_handle"] + 2*this.args["borderWidth_handle"])/2),
-		"height" : _px(this.args["height_handle"]),
-		"margin-top" :   _px(handleTopMarginAdj),
+		"width": (this.args["width_handle"]),
+		"margin-left":  "-" + ((this.args["width_handle"] + 2*this.args["borderWidth_handle"])/2),
+		"height" : (this.args["height_handle"]),
+		"margin-top" :   (handleTopMarginAdj),
 		"border-color" : this.args["handleBorderColor"],
 		"background" : this.args["handleBGColor"],
-		"border-width" : _px(this.args["borderWidth_handle"]),	
+		"border-width" : (this.args["borderWidth_handle"]),	
 		"font" : "none",
 		"font-size" : "0px",
 		"z-index": "500",
@@ -264,10 +276,10 @@ modSlider.prototype.restyle = function(){
 		"border" : "solid",
 		"border-color": this.args["sliderBorderColor"],
 	  	"background-color" : this.args["sliderBGColor"],
-	  	"border-width" : _px(this.args["borderWidth_slider"]),
-	  	"border-radius": _px(this.args["borderRadius_slider"]),	  		
+	  	"border-width" : (this.args["borderWidth_slider"]),
+	  	"border-radius": (this.args["borderRadius_slider"]),	  		
 	});
-	//*********************************************
+		//*********************************************
 	//	Remove Default Styling
 	//*********************************************	
   	$(this.slider).css({  		
@@ -275,14 +287,15 @@ modSlider.prototype.restyle = function(){
 	  	"border": "none",
   	});	
 
-	if (this.args["orientation"] == "horizontal"){	  			    
+	if (this.args["orientation"] == "horizontal"){	  
+		//console.log("H: " + this.args.id);			    
 	  	constrainWidth = this.args["width"]-(this.args["constrainMargin"]*2) - 	(this.args["width_handle"]);						  
 	  	$(this.sliderConstrainer).css({
 	  		"position": "relative",
-		  	"width" : _px(constrainWidth),
-		  	"height" : _px(this.args["height"]),
-		  	"left": _px(0),
-		  	"top": _px(0), // basically puts the slider at the top of the widget
+		  	"width" : (constrainWidth),
+		  	"height" : (this.args["height"]),
+		  	"left": (0),
+		  	"top": (0), // basically puts the slider at the top of the widget
 		  				   // no big deal, because handle's top is adjusted
 			//"backgroundColor" : "rgba(0,255,0,.5)",	 
 			"margin" : "0px auto",	//aligns the slider and handle to the middle
@@ -290,50 +303,50 @@ modSlider.prototype.restyle = function(){
 	  	
 	  	// for debugging
 	  	$(this.slider).css({  	
-	  		"height" : _px($(this.sliderConstrainer).css("height")),	
-		  	"width" : _px($(this.sliderConstrainer).css("width")),		
+	  		"height" :($(this.sliderConstrainer).css("height")),	
+		  	"width" : ($(this.sliderConstrainer).css("width")),		
 		  	//"backgroundColor" : "rgba(0,255,0,.5)",	 
 	  	});	 
 	  	 	
 		$(this.sliderHandle).css({
 			// NOTE: margin-left is good -- the handle is centered by default.
 			//       Don't mess with it.
-		  	"left" : _px(0), // minor tweak
-		  	"margin-top" : _px(0), 
-		  	"top" : _px(this.args["height"]/2 - totalheight_handle/2),
+		  	"left" : (0), // minor tweak
+		  	"margin-top" : (0), 
+		  	"top" : (this.args["height"]/2 - totalheight_handle/2),
 		});
 		
   }
-  else if (this.args["orientation"] == "vertical"){
-  						
+  else if (this.args["orientation"] == "vertical"){	
   		constrainHeight = this.args["height"]-(this.args["constrainMargin"]*2) - (this.args["height_handle"]);			  
 	  	$(this.sliderConstrainer).css({
 	  		"position" : "relative",
-		  	"height" : _px(constrainHeight),
+		  	"height" : (constrainHeight),
 		  	// no vertical align, so have to use this
-		  	"top": _px((this.args["height"] - constrainHeight)/2),
-		  	"left": _px(0),
+		  	"top": ((this.args["height"] - constrainHeight)/2),
+		  	"left": (0),
 		  	//"backgroundColor" : "rgba(0,255,0,.5)",	  		  		 		  		
 	  	});	
-	  	
 
 	  	$(this.slider).css({
 	  		// For whatever reason the slider hieght does not 
 	  		// borrow from the slider container
-		  	"height" : _px($(this.sliderConstrainer).css("height")),	
-		  	"width" : _px($(this.sliderConstrainer).css("width")),	
+		  	"height" : $(this.sliderConstrainer).css("height"),	
+		  	"width" : $(this.sliderConstrainer).css("width"),	
+		  	//"height" : (0),	
+		  	//"width" : (0),	
 		  	//"backgroundColor" : "rgba(0,255,0,.5)",		  		
 	  	});	
 
 			
 	    $(this.sliderHandle).css({
-		  	"left" : _px(this.args["width"]/2 - totalwidth_handle/2),
+		  	"left" : (Math.floor(this.args["width"]/2 - totalwidth_handle/2)),
 		  	// Don't mess with top, as that is how it slides.
 		  	// mess with margin-top instdead
-		  	//"top" : _px(0), 
-		  	"margin-bottom" : _px(-totalheight_handle/2), 
-		  	"margin-top" : _px(0), 
-		  	"margin-left" : _px(0), 
+		  	//"top" : (0), 
+		  	"margin-bottom" : (-totalheight_handle/2), 
+		  	"margin-top" : (0), 
+		  	"margin-left" : (0), 
 		});
   }
 
