@@ -21,19 +21,17 @@
 <script src="./scripts/sliderSet.js"></script>
 <script src="./scripts/frameViewer.js"></script>
 <script src="./scripts/imageManip.js"></script>
+<script src="./scripts/scanThumbnail.js"></script>
 <script>
 
 
 window.onload = function(){
-
-	//a = new jQueryScrollSlider(args);
-
-
-	a = new modSlider({
+	
+	frameSlider = new modSlider({
 		id: "modSlider1", 
 		value: Math.round(imageScans.length/2),
-		max: imageScans.length,
-		min: 0,
+		max: imageScans.length-1,
+		min: 1,
 		constrainMargin : 0,
 		borderWidth_slider : 1,
 		borderWidth_handle : 1,
@@ -41,49 +39,32 @@ window.onload = function(){
 		left : 10,
 		height : 7,
 		width : 297,
-		height_handle : 9,
-		width_handle : 12,
+		height_handle : 5,
+		width_handle : 25,
 		borderRadius_slider : 3,
 		borderRadius_handle : 4,
 	
 	});
-	a.styleBind = function(label, value){
+	frameSlider.styleBind = function(label, value){
 		this.args[label] = value;
 		this.restyle();
 	}
-	
-
-	//var ad = document.createElement('div');
-	//ad.style.position = "absolute";
-	//ad.style.width = "100px";
-	//ad.style.height = "100px";
-	//ad.style.backgroundColor = "rgba(200,100,200,1)";
-	//document.body.appendChild(ad);
-  /*
-  for (var j=0;j<ss.sliders.length;j++){
-  	ss.sliders[j].addSlideFunction(function(_slider){
-	  	a.args[_slider.args["corollary"]] = _slider.currValue;
-	  	a.restyle();
-	});
-  }
-  */	  
-  var fv = new frameViewer();
   
+  var fv = new frameViewer();  
   fv.addOnloadCallback(function(){
-  	a.addSlideFunction(function(_slider){
+  	frameSlider.addSlideFunction(function(_slider){
   		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
   		fv.drawFrame(_slider.currValue-subtractor, true); 
 	  });
-	  a.bindToMouseWheel(fv.canvas);
-	  
+	  frameSlider.bindToMouseWheel(fv.canvas);
   });
   
-  contrastSlider = new modSlider(mergeArgs(a.args,{id: "constrastSlider", top: 350, min:1, max: 50, value:1, step: 1, "sliderBGColor":"rgba(0, 180, 60, .9)" }));
+  contrastSlider = new modSlider(mergeArgs(frameSlider.args,{id: "constrastSlider", top: 350, min:1, max: 50, value:1, step: 1, "sliderBGColor":"rgba(0, 180, 60, .9)" }));
   contrastSlider.addSlideFunction(function(_slider){  		
   		fv.imageAdjust("contrast", _slider.currValue);
   });
   
-  brightnessSlider = new modSlider(mergeArgs(a.args,{id: "brightnessSlider", top: 375, min:0, max: 255, value:0, step: 1, "sliderBGColor":"rgba(180, 0, 60, .9)" }));
+  brightnessSlider = new modSlider(mergeArgs(frameSlider.args,{id: "brightnessSlider", top: 375, min:0, max: 255, value:0, step: 1, "sliderBGColor":"rgba(180, 0, 60, .9)" }));
   brightnessSlider.addSlideFunction(function(_slider){
   		fv.imageAdjust("brightness", _slider.currValue);
   });  
@@ -107,22 +88,22 @@ window.onload = function(){
   scrollBounds.appendChild(scrollContent);
 
   var scrollMarginY = 20;
+  var scrollMarginX = 20;
   var thumbSpacing = scrollMarginY;
   var totalHeight = 0;
+  
   for (var i=0; i<10; i++){
-	  var dragElt2 = document.createElement("div")
+  	
+	  var h = i*_i(100) + thumbSpacing*i + scrollMarginY;  	
+  	  var a = new scanThumbnail({
+  	  	id: "scrollContent_" + i.toString(),
+  	  	parent: scrollContent,
+  	  	_css: {
+  	  		top: h, 
+  	  		left: scrollMarginX,
+  	  	}
+  	  });
 
-	  dragElt2.style.position = "absolute";
-	  dragElt2.style.height = "100px";
-	  dragElt2.style.width = "100px";
-	  var h = i*_i(dragElt2.style.height) + thumbSpacing*i + scrollMarginY;
-	  dragElt2.style.top = _px(h);
-	  dragElt2.style.left = "20px";
-	  dragElt2.style.backgroundColor = "rgba(200, 100, 10, 1)";
-	  scrollContent.appendChild(dragElt2);
-	  $(function() {
-	    $(dragElt2).draggable({ scroll: false});
-	  }); 	
 	  totalHeight += h;
   }
 
@@ -131,7 +112,7 @@ window.onload = function(){
   
   
 	var sliderSetArgs = {
-		id: a.args.id + "_styleSliderSet",
+		id: frameSlider.args.id + "_styleSliderSet",
 		_css:{
 				"top": 20,
 				"left": 500,		
@@ -173,12 +154,14 @@ window.onload = function(){
 	}, contentSlider.args[sl.args["corollary"]]);
   }
   
-  console.log("bounds height: " + $(scrollBounds).height() + " content height: " + $(scrollContent).height())
-   contentSlider.addSlideFunction(function(_slider){
+//  console.log("bounds height: " + $(scrollBounds).height() + " content height: " + $(scrollContent).height())
+
+  contentSlider.addSlideFunction(function(_slider){
   		$(scrollContent).css({
   			top: -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, $(scrollContent).height() - $(scrollBounds).height() - scrollMarginY])
   		});
   });  
+  contentSlider.bindToMouseWheel(scrollBounds);
 
 }
 

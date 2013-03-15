@@ -80,7 +80,7 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 	
 	if (frameNumber < 0) frameNumber = 0;
 	else if (frameNumber > this.frames.length) frameNumber = this.frames.length -1;
-	
+
 	this.currFrame = frameNumber;
 	this.context.drawImage(this.frames[frameNumber], 0, 0, this.canvas.width, this.canvas.height);
 	
