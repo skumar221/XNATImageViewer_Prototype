@@ -1,3 +1,11 @@
+var _MOUSEX = 0;
+var _MOUSEY = 0;
+
+$(document).mousemove(function(e){
+	_MOUSEX = e.pageX;
+	_MOUSEY = e.pageY;
+});
+
 function mergeArgs(obj1,obj2, recursionDepth){
 	var recDepth = (recursionDepth) ? recursionDepth : 2; 
 	// obj2 gets the priority
@@ -84,4 +92,33 @@ function _remap1D(n, dold, dnew){
 	}
 
 	return Math.round((n/(dold[1]-dold[0])) * ((dnew[1]-dnew[0])));
+}
+
+var _genericElementArgs = {
+  	position: "absolute",
+  	top: 100,
+  	left: 100,
+  	height: 200,
+  	width: 200,
+  	backgroundColor: "rgba(200,200,200,1)",
+  	"border": "solid rgba(0,0,0,1) 1px",
+}
+  
+function elementMaker(type, parent, id, css){
+	if (!type || !parent || !id){
+		throw "Need more parameters to make element!";
+	}
+	
+  var e = document.createElement("div");
+  e.setAttribute("id", id);
+  parent.appendChild(e);
+  
+  var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
+  $(e).css(_cssargs);
+ 
+  return e;
+}
+
+function dimCSS(object){
+	console.log("DIMCSS: " + (typeof object).toString())
 }

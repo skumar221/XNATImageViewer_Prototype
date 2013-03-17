@@ -29,6 +29,8 @@ function scanThumbnail(args){
 	this._css = this.args._css;
 	var that = this;
 	
+	this.mouseDown = false;
+	
 	this.widget = document.createElement("div");
 	this.widget.setAttribute("id", this.args.id);
 	this.args.parent.appendChild(this.widget);
@@ -48,6 +50,10 @@ function scanThumbnail(args){
 	this.widget.onmousedown = function(){
 		that.onmousedown(that);
 	};
+	
+	this.draggable.onmousemove = function(){
+		that.onmousemove(that);
+	};
 	//this.widget.onmouseup = function(){that.onmouseup(that);};
 	
 
@@ -55,7 +61,16 @@ function scanThumbnail(args){
 	this.restyle();
 }
 
+scanThumbnail.prototype.onmousemove = function(that){
+	if (that.mouseDown){
+		for (var i=0; i<this.dropZones.length; i++){
+			this.dropZones[i].highlightHover();
+		}
+	}
+}
+
 scanThumbnail.prototype.onmousedown = function(that){
+	that.mouseDown = true;
 	that.args.draggableParent.appendChild(that.draggable);
 	$(that.draggable).css({
 		top: $(that.widget).offset().top,
@@ -66,22 +81,29 @@ scanThumbnail.prototype.onmousedown = function(that){
 	$(that.draggable).draggable({
 		scroll: false
 	})
-	that.args.draggableParent.onmouseup = function(){
+	that.args.draggableParent.onmouseup = function(){	
 		var wPos = $(that.widget).offset();
 		var dPos = $(that.draggable).offset();
-		var maxTime = that.args.returnAnimMax;
-		$(that.draggable).animate({
-			left: "+=" + (wPos.left - dPos.left).toString(),
-			top: "+=" + (wPos.top - dPos.top).toString(),
-		}, maxTime, function(){
-			that.widget.appendChild(that.draggable);
+		that.mouseDown = false;
+		// If hovering over a drop zone...
+		var dz = that.getDropZone();
+		if (dz > -1){
 			$(that.draggable).css({
 				opacity: 0,
 				top: 0,
 				left: 0
-			});
-			that.args.draggableParent.onmouseup = function(){};
-		})
+			});		
+			that.resetDrag();
+			that.dropZones[dz].dropEvent(that);	
+		}
+		// Otherwise animate/move back to position
+		else{
+			var animTime = that.args.returnAnimMax;
+			$(that.draggable).animate({
+				left: "+=" + (wPos.left - dPos.left).toString(),
+				top: "+=" + (wPos.top - dPos.top).toString(),
+			}, animTime, function(){that.resetDrag(that)})		
+		}
 	}
 }
 
@@ -96,6 +118,50 @@ scanThumbnail.prototype.restyle = function(){
 		backgroundColor : "rgba(0,50,230,.5)",
 		opacity: 0
 	});	
+}
+
+scanThumbnail.prototype.resetDrag = function(that){
+	if (!that){
+		that = this;
+	}
+	that.widget.appendChild(that.draggable);
+	$(that.draggable).css({
+		opacity: 0,
+		top: 0,
+		left: 0
+	});
+	that.args.draggableParent.onmouseup = function(){};
+}
+
+scanThumbnail.prototype.addDropZone = function(dz){
+	if (!this.dropZones){
+		this.dropZones = [];
+	}
+	else{
+		for (var i=0; i<this.dropZones.length; i++){
+			if (this.dropZones[i] == dz){
+				console.log("Already tracking drop zone: " + dz.args["id"]);
+				return false;
+			}
+		}
+	}
+	this.dropZones.push(dz);
+	return true;
+}
+
+scanThumbnail.prototype.getDropZone = function(){
+	var retVals = []
+	for (var i=0; i<this.dropZones.length; i++){
+		//console.log("get drop zone: " + this.dropZones[i].args.id)
+		if (this.dropZones[i].checkMouseOver()){
+			//console.log("found Drop Zone: " + i.toString() + " " + this.dropZones[i].args.id)
+			retVals.push(i)
+		}
+	}
+	if (retVals.length > 0){
+		return (retVals.length > 1) ? retVals : retVals[0];
+	}
+	return -1;
 }
 
 

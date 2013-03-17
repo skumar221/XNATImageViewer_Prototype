@@ -14,7 +14,7 @@ function linearBrightness(data, value){
 
 
 function linearContrast(data, value){
-	var threshold = .15;
+	var threshold = .05;
 	
 	for(var i = 0, n = data.length; i < n; i += 4) {
 	

@@ -22,6 +22,7 @@
 <script src="./scripts/frameViewer.js"></script>
 <script src="./scripts/imageManip.js"></script>
 <script src="./scripts/scanThumbnail.js"></script>
+<script src="./scripts/dropZone.js"></script>
 <script>
 
 
@@ -50,7 +51,11 @@ window.onload = function(){
 		this.restyle();
 	}
   
+  
   var fv = new frameViewer();  
+  
+  
+  
   fv.addOnloadCallback(function(){
   	frameSlider.addSlideFunction(function(_slider){
   		var subtractor = (_slider.args["sliderMin"] > 0) ? _slider.args["sliderMin"] : 0;
@@ -69,11 +74,14 @@ window.onload = function(){
   		fv.imageAdjust("brightness", _slider.currValue);
   });  
 
+
+  var _dropZone = new dropZone();
+  
   var scrollBounds = document.createElement("div");
   scrollBounds.setAttribute("id", "scrollBounds");
   scrollBounds.style.position = "absolute";
-  scrollBounds.style.top = "450px";
-  scrollBounds.style.left = "80px";
+  scrollBounds.style.top = "20px";
+  scrollBounds.style.left = "500px";
   scrollBounds.style.height = "300px";
   scrollBounds.style.width = "140px";
   scrollBounds.style.border = "solid rgb(0,0,0)";
@@ -93,7 +101,6 @@ window.onload = function(){
   var totalHeight = 0;
   
   for (var i=0; i<10; i++){
-  	
 	  var h = i*_i(100) + thumbSpacing*i + scrollMarginY;  	
   	  var a = new scanThumbnail({
   	  	id: "scrollContent_" + i.toString(),
@@ -103,14 +110,14 @@ window.onload = function(){
   	  		left: scrollMarginX,
   	  	}
   	  });
-
+	  a.addDropZone(_dropZone);
 	  totalHeight += h;
   }
 
   //scrollContent.style.height = _px(totalHeight);
   scrollContent.style.backgroundColor= "rgba(10, 200, 2, .4)";
   
-  
+   /*
 	var sliderSetArgs = {
 		id: frameSlider.args.id + "_styleSliderSet",
 		_css:{
@@ -132,11 +139,12 @@ window.onload = function(){
 		{id:"borderRadius_slider", 	min: 0, max: 40, value:0},
 		{id:"borderRadius_handle", 	min: 0, max: 40, value:0},
 	]);    
-
+	*/
+	
 	contentSlider = new modSlider({
 		id: "contentSlider", 
 		constrainMargin: 2, 
-		top: 450, left: 20, 
+		top: 20, left: 450, 
 		orientation: "vertical",  
 		value:100, step: 1, 
 		height: 300, width: 12, 
@@ -146,6 +154,7 @@ window.onload = function(){
 		"sliderBGColor":"rgba(0, 0, 200, .3)" 
 	});
   
+  /* Slider Set
   for (var j=0;j<ss.sliders.length;j++){
   	var sl = ss.sliders[j];
   	sl.addSlideFunction(function(_slider){
@@ -153,6 +162,7 @@ window.onload = function(){
 	  	contentSlider.restyle();
 	}, contentSlider.args[sl.args["corollary"]]);
   }
+  */
   
 //  console.log("bounds height: " + $(scrollBounds).height() + " content height: " + $(scrollContent).height())
 
@@ -162,6 +172,9 @@ window.onload = function(){
   		});
   });  
   contentSlider.bindToMouseWheel(scrollBounds);
+  
+  
+
 
 }
 
