@@ -96,12 +96,11 @@ function _remap1D(n, dold, dnew){
 
 var _genericElementArgs = {
   	position: "absolute",
-  	top: 100,
-  	left: 100,
+  	top: 0,
+  	left: 0,
   	height: 200,
   	width: 200,
   	backgroundColor: "rgba(200,200,200,1)",
-  	"border": "solid rgba(0,0,0,1) 1px",
 }
   
 function elementMaker(type, parent, id, css){
@@ -109,7 +108,7 @@ function elementMaker(type, parent, id, css){
 		throw "Need more parameters to make element!";
 	}
 	
-  var e = document.createElement("div");
+  var e = document.createElement(type);
   e.setAttribute("id", id);
   parent.appendChild(e);
   
@@ -122,3 +121,23 @@ function elementMaker(type, parent, id, css){
 function dimCSS(object){
 	console.log("DIMCSS: " + (typeof object).toString())
 }
+
+
+// from: http://phrogz.net/JS/classes/OOPinJS2.html
+Function.prototype.inheritsFrom = function( parentClassOrObject ){ 
+	if ( parentClassOrObject.constructor == Function ) 
+	{ 
+		//Normal Inheritance 
+		this.prototype = new parentClassOrObject;
+		this.prototype.constructor = this;
+		this.prototype.parent = parentClassOrObject.prototype;
+	} 
+	else 
+	{ 
+		//Pure Virtual Inheritance 
+		this.prototype = parentClassOrObject;
+		this.prototype.constructor = this;
+		this.prototype.parent = parentClassOrObject;
+	} 
+	return this;
+} 

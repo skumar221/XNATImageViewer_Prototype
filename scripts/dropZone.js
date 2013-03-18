@@ -1,67 +1,83 @@
 
+var dropZoneHightlightBorderWidth = 2;
 
 defaultArgs_dropZone = {
-	id: "dropZone",
+	id: "_dropZone",
 	parent: document.body,
-	highlightTime: 150,
+	highlightTime: 100,
 	_highlightcss: {
-		left: "-=" + _px(3),
-		top: "-=" + _px(3),
+		left: -dropZoneHightlightBorderWidth,
+		top: -dropZoneHightlightBorderWidth,
 		"border": "solid",
-		borderWidth: 3, 
-		borderColor: "rgba(0,0,0,1)", 
-		backgroundColor: "rgba(0,0,0, .5)"
+		borderWidth: dropZoneHightlightBorderWidth, 
+		width: 300,
+		height: 300,
+		borderColor: "rgba(255,0,0,1)", 
+		backgroundColor: "rgba(255,255,255, .5)",
+		zIndex: 200
 	},
 	_css: {
 		position: "absolute",
-		top: 20,
-		left: 700,
+		top: 0,
+		left: 0,
 		height: 300,
 		width: 300,
-		backgroundColor: "rgba(20,100,250, .3)",
-		"border": "solid",
-		borderColor: "rgba(0,0,0,1)",
-		borderWidth: 1,
+		backgroundColor: "rgba(0,0,0, .25)",
 	}	
 }
+
 
 function dropZone(args){
 	this.args = (args) ? mergeArgs(defaultArgs_dropZone, args): defaultArgs_dropZone;
 	this._css = this.args._css;
 	this._defaultStateSwitch = false;
+	this.hovering = false;
 	this._hovered = false;
-	var that = this;
-
-	this.widget = elementMaker("div", this.args.parent, this.args.id, this._css);
+	this.dropMethods = [];
 	
-	this.checkMouseOver = function(){
-  		var lmin = $(that.widget).offset().left;
-  		var lmax = $(that.widget).offset().left + $(that.widget).width();
-  		var tmin = $(that.widget).offset().top;
-  		var tmax = $(that.widget).offset().top + $(that.widget).height();
-  		if ((_MOUSEX > lmin) && (_MOUSEX < lmax) &&
-  		   		(_MOUSEY > tmin) && (_MOUSEY < tmax)){
-			//$(that.widget).animate(that._css, 100, function(){});	
-  			return true;
-  		}
-   		return false;
-	}
-}
-
-dropZone.prototype.dropEvent = function(){
-	$(this.widget).animate(this.args._css, this.args.highlightTime, function(){});	
-}
-
-dropZone.prototype.highlightHover = function(){
 	var that = this;
-	if (this.checkMouseOver()){
-		if (!that.hovered){
-			this.hovered = true;
-			$(this.widget).stop().animate(this.args._highlightcss, that.args.highlightTime, function(){});				
-		}	
+	
+	var defaultID = defaultArgs_dropZone.id;
+	this.args.id = (this.args.id.search(defaultID) == -1) ? (this.args.id + defaultID) : this.args.id;
+	
+	this.widget = elementMaker("div", this.args.parent, this.args.id, mergeArgs(this._css,{
+		top: this.args._css.top,
+		left: this.args._css.left,
+		margin: "0 auto",
+		overflow: "visible",
+		border: "none"
+	}));
+
+	this.highlightDiv = elementMaker("div", this.widget, this.args.id + "_highlight", mergeArgs(this.args._highlightcss,{
+		margin: "0 auto"
+	}));
+	
+	$(this.highlightDiv).fadeTo(0,0);
+	
+	this.addDropMethod = function(de){
+		this.dropMethods.push(de)
 	}
-	else if (this.hovered && !this.checkMouseOver()){
-		$(this.widget).stop().animate(this.args._css, that.args.highlightTime, function(){});
-		this.hovered = false;
+}
+
+dropZone.prototype.dropEvent = function(dropable){
+	for (var i=0;i<this.dropMethods.length;i++){
+		this.dropMethods[i](dropable);
 	}
+}
+
+dropZone.prototype.startHoverListener = function(){
+	var that = this;
+	$(this.widget).mouseenter(function(){
+		that.hovering=true;
+		$(that.highlightDiv).stop().fadeTo(200,1);	
+	}).mouseleave(function(){
+		that.hovering=false;
+		$(that.highlightDiv).stop().fadeTo(200,0);	
+	});
+}
+
+dropZone.prototype.stopHoverListener = function(){
+	var that = this;
+	$(that.highlightDiv).stop().fadeTo(200,0);	
+	$(that.widget).unbind('mouseenter mouseleave');	
 }

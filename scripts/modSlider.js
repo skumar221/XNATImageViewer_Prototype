@@ -74,6 +74,7 @@ var mouseWheelScroll = function(e, that){
 }
 
 modSlider.prototype.bindToMouseWheel = function(elt){
+	console.log(this.args.id)
  	var that = this;
     var eltFound = false;
     for (var i=0;i<this.mouseWheelBindElements.length;i++){
@@ -182,6 +183,24 @@ modSlider.prototype.slide = function(e,ui){
 	this.valueDisplay.innerHTML = (this.currValue);
 	otherSliderFunctions(this);
 }
+
+modSlider.prototype.adjustSliderDims = function(args){
+	
+	console.log("OLD SLIDER DIMS: ")
+	console.log($(this.slider).slider("option", "min"));
+	console.log($(this.slider).slider("option", "max"));
+	if (args["min"]) $(this.slider).slider("option", "min",   args["min"]);
+	if (args["max"]) $(this.slider).slider("option", "max",   args["max"]);
+	if (args["step"]) $(this.slider).slider("option", "step",  args["step"]);
+	if (args["value"]) {
+		$(this.slider).slider("option", "value", args["value"]);
+		this.currValue = args["value"]
+	}
+
+	console.log("NEW SLIDER DIMS: ")
+	console.log($(this.slider).slider("option", "min"));
+	console.log($(this.slider).slider("option", "max"));
+}
 	
 var addSlideFunction = function(that, func, mapValueToSlider){
 	//console.log("add slider function: " + func);
@@ -200,8 +219,8 @@ var addSlideFunction = function(that, func, mapValueToSlider){
 
 	$(that.slider).slider('option', 'slide').call(that.slider, that.slider, {value: that.currValue});
 	that.currValue = $(that.slider).slider("option", "value");
-
 }
+
 
 var otherSliderFunctions = function(that){
 	//this.slide = func;
