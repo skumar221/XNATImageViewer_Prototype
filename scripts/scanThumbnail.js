@@ -33,7 +33,11 @@ function scanThumbnail(args){
 	
 	this.widget = elementMaker("div", this.args.parent, this.args.id, this._css);
 	
-	this.image = new Image();
+	this.image = elementMaker("img", this.widget, this.args.id + "_image", mergeArgs(this._css,{
+		top: 0,
+		left: 0
+	}));
+	this.image.src = "./imageScans/ICBM_UCLA_1297_MR_SAG_MPRAGE_8_CHANNEL_br_raw_20060720120938860_80.jpg"; 
 	
 	this.hover = document.createElement("div");
 	this.highlight = document.createElement("div");

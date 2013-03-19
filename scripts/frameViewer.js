@@ -4,6 +4,7 @@ var defaultArgs_frameViewer = {
 	framePaths: imageScans,
 	onloadFrame: 0,//Math.round(imageScans.length/2),
 	blankMsg : "Drop thumbnail here",
+	contrastThreshold: .1,
 	_css: {
 			position: 'absolute',
 			top: 15,
@@ -32,7 +33,6 @@ function frameViewer(args){
 	this.currFrame = this.args.onloadFrame;
 	
 	this.widget = elementMaker("div", this.args.parent, this.args.id, this._css);
-
 	this.canvas = elementMaker("canvas", this.widget, this.args.id + "_canvas", {
 		height: this._css.height,
 		width: this._css.width,
@@ -41,7 +41,7 @@ function frameViewer(args){
 	});
 	this.canvas.height = this._css.height;
 	this.canvas.width = this._css.width;
-	console.log("this._css.height: " + this._css.height)
+//	console.log("this._css.height: " + this._css.height)
 
 	this.dropZone = new dropZone(mergeArgs(this.args, {
 		parent: this.widget,
@@ -61,7 +61,6 @@ function frameViewer(args){
 	//this.context.fillText("y", 58, 165);
 	
 	this.frames = [];
-	
 	var that = this;
 	var loadDropable = function(dropable){
 		if (dropable.frames){
@@ -98,6 +97,13 @@ frameViewer.prototype.loadFrames = function(frames){
 	    img.onload = function() {
 	    	if (this == that.endImage){
 	   			that.context.drawImage(that.frames[that.currFrame], 0, 0, that.canvas.width, that.canvas.height);
+	   			
+	   			// Need to get the appropriate contrast 
+	   			// threshold for the data set.
+	   			var imageData = that.context.getImageData(0, 0, that.canvas.width, that.canvas.height);	
+	   			that.args.contrastThreshold = thresholdAutoDetect(imageData.data);
+	   			
+	   			// Run any callbacks once everything is loaded
 	   			for (var k=0; k<that.onloadCallbacks.length; k++){
 	   				that.onloadCallbacks[k]();
 	   			}		    		
@@ -106,6 +112,8 @@ frameViewer.prototype.loadFrames = function(frames){
 	  	img.src = framePaths[i];
 	  	this.frames.push(img);
 	 }
+
+	
 }
 
 frameViewer.prototype.drawFrame = function(frameNumber, adjustments){		
@@ -125,14 +133,17 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 	}	
 }
 
-frameViewer.prototype.imageAdjust = function(_t, value){
+//
+//
+//
+frameViewer.prototype.imageAdjust = function(methodType, value){
 
 	//***********************************************
-	//When you pass a parameter through, we need to save 
-	//the associated value for refresh
-		
-	if (_t){
-		this.adjustMethods[_t] = value;
+	// Arguments are only needed for initializing the
+	// imageAdjust database.  Otherwise, none are 
+	// needed.
+	if (methodType && value){
+		this.adjustMethods[methodType] = value;
 	}
 	
 	//***********************************************
@@ -152,11 +163,12 @@ frameViewer.prototype.imageAdjust = function(_t, value){
 				imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
 				break;
 			case "contrast":
-				imageData.data = linearContrast(imageData.data, this.adjustMethods[i]);		
+				imageData.data = linearContrast(imageData.data, 
+											    this.adjustMethods[i], 
+											    this.args.contrastThreshold);
 				break;
 		}
 	}
-	
 	//Put data back into canvas
 	this.context.putImageData(imageData, 0, 0);
 }

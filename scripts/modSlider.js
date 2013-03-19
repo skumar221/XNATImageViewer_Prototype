@@ -58,14 +58,16 @@ var mouseWheelScroll = function(e, that){
 		var d = (delta< 0)? -1: 1 
 	    value -= multiplier * d * that.args["step"];
 
-	    if (value > that.args["max"]) {
-	        value = that.args["max"];
+	    if (value > $(this.slider).slider("option", "max")) {
+	        value = $(this.slider).slider("option", "max");
 	    }
-	    if (value < that.args["min"]) {
-	        value = that.args["min"];
+	    if (value < $(this.slider).slider("option", "min")) {
+	        value = $(this.slider).slider("option", "min");
 	    }
 	
 	    result = element.slider('option', 'slide').call(element, e, { value: value });
+	    that.currValue = value;
+	    //console.log("value: " + that.currValue)
 	    if (result !== false) {
 	        element.slider('value', value);
 	    }
@@ -74,7 +76,7 @@ var mouseWheelScroll = function(e, that){
 }
 
 modSlider.prototype.bindToMouseWheel = function(elt){
-	console.log(this.args.id)
+//	console.log(this.args.id)
  	var that = this;
     var eltFound = false;
     for (var i=0;i<this.mouseWheelBindElements.length;i++){
@@ -186,9 +188,10 @@ modSlider.prototype.slide = function(e,ui){
 
 modSlider.prototype.adjustSliderDims = function(args){
 	
-	console.log("OLD SLIDER DIMS: ")
-	console.log($(this.slider).slider("option", "min"));
-	console.log($(this.slider).slider("option", "max"));
+	//console.log("OLD SLIDER DIMS: ")
+	//console.log($(this.slider).slider("option", "min"));
+	//console.log($(this.slider).slider("option", "max"));
+	
 	if (args["min"]) $(this.slider).slider("option", "min",   args["min"]);
 	if (args["max"]) $(this.slider).slider("option", "max",   args["max"]);
 	if (args["step"]) $(this.slider).slider("option", "step",  args["step"]);
@@ -197,9 +200,9 @@ modSlider.prototype.adjustSliderDims = function(args){
 		this.currValue = args["value"]
 	}
 
-	console.log("NEW SLIDER DIMS: ")
-	console.log($(this.slider).slider("option", "min"));
-	console.log($(this.slider).slider("option", "max"));
+	//console.log("NEW SLIDER DIMS: ")
+	//console.log($(this.slider).slider("option", "min"));
+	//console.log($(this.slider).slider("option", "max"));
 }
 	
 var addSlideFunction = function(that, func, mapValueToSlider){
