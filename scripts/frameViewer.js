@@ -32,8 +32,8 @@ function frameViewer(args){
 	this._css = this.args._css;
 	this.currFrame = this.args.onloadFrame;
 	
-	this.widget = elementMaker("div", this.args.parent, this.args.id, this._css);
-	this.canvas = elementMaker("canvas", this.widget, this.args.id + "_canvas", {
+	this.widget = makeElement("div", this.args.parent, this.args.id, this._css);
+	this.canvas = makeElement("canvas", this.widget, this.args.id + "_canvas", {
 		height: this._css.height,
 		width: this._css.width,
 		top: 0,

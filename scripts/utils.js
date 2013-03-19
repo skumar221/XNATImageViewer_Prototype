@@ -77,18 +77,23 @@ function swap(darr){
 
 function _remap1D(n, dold, dnew){
 
-	if (dold[0] == dold[1]){
+	if ((dold[0] == dold[1]) || (dnew[0] == dnew[1])){
 		throw ("Remap: initial domain is equal!");
 	}
-	else if (dold[0] > dold[1]){
+	
+	if (dold[0] > dold[1]){
+		dold = swap(dold);
+	}
+
+	if (dnew[0] > dnew[1]){
 		dold = swap(dold);
 	}
 	
-	if (dnew[0] == dnew[1]){
-		throw ("Remap: map domain is equal!");
+	if (n < dold[0]){
+		n = dold[0];
 	}
-	else if (dnew[0] > dnew[1]){
-		dold = swap(dold);
+	else if (n > dold[1]){
+		n = dold[1];
 	}
 
 	return Math.round((n/(dold[1]-dold[0])) * ((dnew[1]-dnew[0])));
@@ -103,17 +108,20 @@ var _genericElementArgs = {
   	backgroundColor: "rgba(200,200,200,1)",
 }
   
-function elementMaker(type, parent, id, css){
-	if (!type || !parent || !id){
-		throw "Need more parameters to make element!";
+function makeElement(type, parent, id, css){
+	if (!type || !parent){
+		throw "Make Element: Need more parameters to make element!";
 	}
 	
   var e = document.createElement(type);
-  e.setAttribute("id", id);
+  if (id) e.setAttribute("id", id);
   parent.appendChild(e);
   
-  var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
-  $(e).css(_cssargs);
+  if (css){
+ 	  var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
+  	  $(e).css(_cssargs); 	
+  }
+
  
   return e;
 }
@@ -121,23 +129,3 @@ function elementMaker(type, parent, id, css){
 function dimCSS(object){
 	console.log("DIMCSS: " + (typeof object).toString())
 }
-
-
-// from: http://phrogz.net/JS/classes/OOPinJS2.html
-Function.prototype.inheritsFrom = function( parentClassOrObject ){ 
-	if ( parentClassOrObject.constructor == Function ) 
-	{ 
-		//Normal Inheritance 
-		this.prototype = new parentClassOrObject;
-		this.prototype.constructor = this;
-		this.prototype.parent = parentClassOrObject.prototype;
-	} 
-	else 
-	{ 
-		//Pure Virtual Inheritance 
-		this.prototype = parentClassOrObject;
-		this.prototype.constructor = this;
-		this.prototype.parent = parentClassOrObject;
-	} 
-	return this;
-} 

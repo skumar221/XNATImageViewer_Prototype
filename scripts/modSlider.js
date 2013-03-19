@@ -43,7 +43,7 @@ var mouseWheelScroll = function(e, that){
 		
 		var timeDiff = currMouseWheelEvent - that.args.lastMouseWheelEvent;
 		if (timeDiff < 70){
-			multiplier *= 2; 
+			multiplier *= 1.5; 
 		}
 		
 		
@@ -65,6 +65,12 @@ var mouseWheelScroll = function(e, that){
 	        value = $(this.slider).slider("option", "min");
 	    }
 	
+		// Need to round the value if the "step" of the slider
+		// is an integer
+		if (! (value % $(this.slider).slider("option", "step") === 0)){
+			value = Math.round(value )
+		}
+		
 	    result = element.slider('option', 'slide').call(element, e, { value: value });
 	    that.currValue = value;
 	    //console.log("value: " + that.currValue)

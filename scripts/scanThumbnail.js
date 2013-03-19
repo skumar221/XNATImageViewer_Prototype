@@ -31,9 +31,9 @@ function scanThumbnail(args){
 	
 	this.mouseDown = false;
 	
-	this.widget = elementMaker("div", this.args.parent, this.args.id, this._css);
+	this.widget = makeElement("div", this.args.parent, this.args.id, this._css);
 	
-	this.image = elementMaker("img", this.widget, this.args.id + "_image", mergeArgs(this._css,{
+	this.image = makeElement("img", this.widget, this.args.id + "_image", mergeArgs(this._css,{
 		top: 0,
 		left: 0
 	}));

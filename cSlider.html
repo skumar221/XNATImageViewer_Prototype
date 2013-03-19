@@ -16,6 +16,7 @@
 </body>
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/imageScans.js"></script>
+<script src="./scripts/scanTabs.js"></script>
 <script src="./scripts/cSlider.js"></script>
 <script src="./scripts/modSlider.js"></script>
 <script src="./scripts/sliderSet.js"></script>
@@ -28,7 +29,6 @@
 
 
 window.onload = function(){
-	
 	
 	frameSlider = new modSlider({
 		id: "frameSlider", 
@@ -114,10 +114,12 @@ window.onload = function(){
 
 	  a.addDropZone(_frameViewer.dropZone);
   }
-  scrollContent.style.height = _px(h + scrollMarginY);
+  
+  var scHeight = h + scrollMarginY*2 + 100;
+  scrollContent.style.height = _px(scHeight);
   
   
-  //scrollContent.style.backgroundColor= "rgba(10, 200, 2, .4)";
+  scrollContent.style.backgroundColor= "rgba(10, 200, 2, .4)";
   
    /*
 	var sliderSetArgs = {
@@ -169,11 +171,21 @@ window.onload = function(){
 //  console.log("bounds height: " + $(scrollBounds).height() + " content height: " + $(scrollContent).height())
 
   contentSlider.addSlideFunction(function(_slider){
+  	   //console.log(_slider.currValue);
+  	   //console.log(scHeight);
+  	   //console.log($(scrollBounds).height());
+  	   //console.log(scrollMarginY);
+  	   var t = -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, scHeight - $(scrollBounds).height() - scrollMarginY]);
+  	   //console.log("top: " + t)
+  	   //console.log("*********")
   		$(scrollContent).css({
-  			top: -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, $(scrollContent).height() - $(scrollBounds).height() - scrollMarginY])
+  			top: -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, scHeight - $(scrollBounds).height() - scrollMarginY])
   		});
   });  
   contentSlider.bindToMouseWheel(scrollBounds);
+  
+  
+  var sTabs = new scanTabs();
   
 }
 

@@ -40,7 +40,7 @@ function dropZone(args){
 	var defaultID = defaultArgs_dropZone.id;
 	this.args.id = (this.args.id.search(defaultID) == -1) ? (this.args.id + defaultID) : this.args.id;
 	
-	this.widget = elementMaker("div", this.args.parent, this.args.id, mergeArgs(this._css,{
+	this.widget = makeElement("div", this.args.parent, this.args.id, mergeArgs(this._css,{
 		top: this.args._css.top,
 		left: this.args._css.left,
 		margin: "0 auto",
@@ -48,7 +48,7 @@ function dropZone(args){
 		border: "none"
 	}));
 
-	this.highlightDiv = elementMaker("div", this.widget, this.args.id + "_highlight", mergeArgs(this.args._highlightcss,{
+	this.highlightDiv = makeElement("div", this.widget, this.args.id + "_highlight", mergeArgs(this.args._highlightcss,{
 		margin: "0 auto"
 	}));
 	
