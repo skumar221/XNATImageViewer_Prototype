@@ -114,18 +114,24 @@ function makeElement(type, parent, id, css){
 	}
 	
   var e = document.createElement(type);
-  if (id) e.setAttribute("id", id);
-  parent.appendChild(e);
+  
+  if (id) 
+  	e.setAttribute("id", id);
+  if (parent)
+  	parent.appendChild(e);
   
   if (css){
- 	  var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
-  	  $(e).css(_cssargs); 	
+ 	  //var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
+  	  //$(e).css(_cssargs); 
+  	  $(e).css(css)	
   }
-
- 
   return e;
 }
 
 function dimCSS(object){
 	console.log("DIMCSS: " + (typeof object).toString())
+}
+
+function _pct(value){
+	return (value * 100).toString() + "%";
 }
