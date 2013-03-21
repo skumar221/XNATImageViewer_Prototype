@@ -22,7 +22,7 @@ defaultArgs_XNATModalImageViewer = {
 		//"min-height": "600px",
 		//"min-width": "300px",
 		position: "absolute",
-		height: "90%",
+		height: "80%",
 		backgroundColor: "rgba(0,0,0,1)",
 		border: "solid rgba(155, 155, 155, 1) 1px",
 		"border-radius": "0px"
@@ -77,7 +77,7 @@ var maxModalWidth_E = function(){
 
 var minModalHeight = function(){
 	
-	var minPx = 700;
+	var minPx = 650;
 	var pctCompressed = .8;
 	var currPx = (pctCompressed * window.innerHeight);
 	
@@ -134,9 +134,9 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------
 		//	SCAN GALLERY
 		//----------------------------------
-		that.scanGallery = //new scanGallery({
-		//	orientation: "vertical"
-		//});	
+		that.scanGallery = new scanGallery({
+			parent: that.modal
+		});	
 		
 		
 		//----------------------------------
