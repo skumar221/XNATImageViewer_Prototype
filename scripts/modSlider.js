@@ -243,7 +243,7 @@ modSlider.prototype.positionWidget = function(){
 	this.widget.style.position = (this.args["position"]);
 	this.widget.style.width = _px(this.args["width"]);
 	this.widget.style.height = _px(this.args["height"]);
-	this.widget.style.left = _px(this.args["left"] + 8);  // I have no idea why I have to do this.
+	this.widget.style.left = _px(this.args["left"]);  // I have no idea why I have to do this.
 	this.widget.style.top = _px(this.args["top"]);
 	
 	$(this.widget).css({

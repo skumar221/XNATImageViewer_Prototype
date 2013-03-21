@@ -109,8 +109,12 @@ var _genericElementArgs = {
 }
   
 function makeElement(type, parent, id, css){
-	if (!type || !parent){
-		throw "Make Element: Need more parameters to make element!";
+	if (!type){
+		throw "Make Element: Need more parameters to make element! -- invalid type";
+	}
+	
+	if (!parent){
+		throw "Make Element: Need more parameters to make element -- invalid parent.";
 	}
 	
   var e = document.createElement(type);
