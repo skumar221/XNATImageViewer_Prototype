@@ -18,22 +18,20 @@ var defaultArgs_frameViewer = {
 		    "border" : "solid",
 			"border-color": "rgba(0,0,0,1)",
 			"color": "rgba(0,0,0,1)",
-		  	//"background-color" : "rgba(255,255,10,1)",
 		  	"border-width" : 1,
 		  	"border-radius": 0,	 
 		  	 overflow: "visible"
   		 },
 }
 
- 
 function frameViewer(args){
 
-	this.args = (args) ? mergeArgs(defaultArgs_frameViewer, args) : defaultArgs_frameViewer;
-	this._css = this.args._css;
+	__Init__(this, defaultArgs_frameViewer, args);
+		
 	this.currFrame = this.args.onloadFrame;
 	
-	this.widget = makeElement("div", this.args.parent, this.args.id, this._css);
-	this.canvas = makeElement("canvas", this.widget, this.args.id + "_canvas", {
+
+	this.canvas = __MakeElement__("canvas", this.widget, this.args.id + "_canvas", {
 		height: this._css.height,
 		width: this._css.width,
 		top: 0,

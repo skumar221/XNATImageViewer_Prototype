@@ -82,5 +82,5 @@ function onloadOld(){
 
 
 window.onload = function(){
-	var XNATModal = new XNATModalImageViewer();
+	var XNATModal = new XNATModalImageViewer();
 }

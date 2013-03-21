@@ -15,10 +15,10 @@ defaultArgs_scanTabs = {
 // using titles.
 var makeTabTitles = function(parent, titles){
 
-	var titlesElt = makeElement("ul", parent);	
+	var titlesElt = __MakeElement__("ul", parent);	
 	for (var i=0;i<titles.length;i++){
-		var li = makeElement("li", titlesElt);	
-		var a = makeElement("a", li);
+		var li = __MakeElement__("li", titlesElt);	
+		var a = __MakeElement__("a", li);
 
 		$(a).attr('href', "#" + parent.id + "-" + (i+1).toString());
 		a.innerHTML = titles[i];	
@@ -36,14 +36,14 @@ var scanTabs = function(args){
 	this._css = this.args._css;
 	var that = this;
 	
-	this.widget = makeElement("div", this.args.parent, this.args.id, this.args._css);
+	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args._css);
 
 	
 	this.tabTitles = makeTabTitles(this.widget, ["Tab1", "Tab 2"]);
 	
 	this.tabDivs = []
 	for (var i=0;i<this.args.numTabs;i++){
-		var e = makeElement("div", this.widget, this.args.id + "-" + (i+1).toString());
+		var e = __MakeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
 		//e.className = "content"
 		e.style.height = "300px"
 		e.innerHTML = "aasdasdfasdf;aoeswfase + " + i.toString();

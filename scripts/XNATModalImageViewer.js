@@ -22,11 +22,10 @@ defaultArgs_XNATModalImageViewer = {
 		//"min-height": "600px",
 		//"min-width": "300px",
 		position: "absolute",
-		height: "80%",
+		height: 800,
 		backgroundColor: "rgba(0,0,0,1)",
 		border: "solid rgba(95, 95, 95, 1) 1px",
 		"border-radius": "0px"
-		
 	}
 }
 
@@ -89,7 +88,7 @@ var minModalHeight = function(){
 var XNATModalImageViewer = function(args){
 	var that = this;
 	
-	__init__(this, defaultArgs_XNATModalImageViewer, args, function(){	
+	__Init__(this, defaultArgs_XNATModalImageViewer, args, function(){	
 		
 		//----------------------------------
 		//	WIDGET
@@ -102,7 +101,7 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------
 		//	MODAL
 		//----------------------------------
-		that.modal = makeElement("div", that.widget, that.args.id + "_modal", that.args._modalcss);	
+		that.modal = __MakeElement__("div", that.widget, that.args.id + "_modal", that.args._modalcss);	
 		$(that.modal).css({
 			"overflow-x": "hidden",
 			"overflow-y": "hidden"
@@ -121,12 +120,11 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------
 		//	CLOSE BUTTON
 		//----------------------------------
-		that.closeButton = makeElement("img", that.widget, that.args.id + "_closeIcon", {
+		that.closeButton = __MakeElement__("img", that.widget, that.args.id + "_closeIcon", {
 			position: "absolute", 
 			cursor: "pointer",
-			width: 30,
-			height: 30,
-			"backgroundColor": "rgba(0,0,0,0)"
+			width: 20,
+			height: 20,
 		});	
 		that.closeButton.src = "./icons/closeButton.png";
 		
@@ -154,6 +152,32 @@ var XNATModalImageViewer = function(args){
 		//	COMPARE BUTTON
 		//----------------------------------	
 		that.createCompareButton();
+		
+		/*
+		var newSlider = new __Slider__({
+			parent: that.modal,
+			orientation: "horizontal",
+			longSide: 800,
+			shortSide: 10,
+			_css:{
+				top: "2.5%",
+				left: 300,
+			}
+		});
+		
+		var newSlider2 = new __Slider__({
+			parent: that.modal,
+			orientation: "vertical",
+			longSide: 400,
+			shortSide: 10,
+			_css:{
+				top: "10.5%",
+				left: 300,
+				backgroundColor: "rgba(20, 200, 60, .5)"
+			}
+		});
+		*/
+		
 	});
 }
 
@@ -211,7 +235,7 @@ XNATModalImageViewer.prototype.restyle = function(){
 	//----------------------------------
 	var modalDims = this.modalDims();
 	//console.log(modalDims)
-	$(this.modal).css(modalDims["pctStr"]);
+	$(this.modal).css(modalDims["px"]);
 	
 	
 	//----------------------------------
@@ -231,8 +255,8 @@ XNATModalImageViewer.prototype.restyle = function(){
 	//----------------------------------
 	$(this.compareButton).css({
 		left:  (modalDims["px"]["width"] - _i(this.compareButton.style.width)),
-		top: 0,
 		height: "100%",
+		top: 0,
 	})	
 	
 	//console.log("-------------------")
@@ -258,13 +282,13 @@ XNATModalImageViewer.prototype.destroy = function(fadeOut){
 XNATModalImageViewer.prototype.createCompareButton = function(){
 	var that = this;
 	
-	that.compareButton = makeElement("button", that.modal, that.args.id + "_compareButton", {
-		position: "relative",
+	that.compareButton = __MakeElement__("button", that.modal, that.args.id + "_compareButton", {
+		position: "absolute",
 		"color": "rgba(255,255,255,1)",
 		"font-size": 10,
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
-		"border-radius": 2,
+		"border-radius": 0,
 		backgroundColor: "rgba(70, 70, 70, 1)",
 		width: "20px",
 	});

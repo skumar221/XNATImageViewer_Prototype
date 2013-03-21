@@ -52,17 +52,7 @@ function _css(className, args){
 	}
 }
 
-//from: http://www.webdeveloper.com/forum/showthread.php?130717-How-to-create-CSS-styles-from-within-javascript
-function newStyle(str){
-	var pa= document.getElementsByTagName('head')[0] ;
-	var el= document.createElement('style');
-	el.type= 'text/css';
-	el.media= 'screen';
-	if(el.styleSheet) el.styleSheet.cssText= str;// IE method
-	else el.appendChild(document.createTextNode(str));// others
-	pa.appendChild(el);
-	return el;
-}
+
 
 function _i(val){
 	return parseInt(val, 10);
@@ -77,6 +67,11 @@ function swap(darr){
 
 function _remap1D(n, dold, dnew){
 
+
+	//console.log("N: " + n)
+	//console.log("dold: " + dold)
+	//console.log("dnew: " + dnew)
+	
 	if ((dold[0] == dold[1]) || (dnew[0] == dnew[1])){
 		throw ("Remap: initial domain is equal!");
 	}
@@ -86,56 +81,85 @@ function _remap1D(n, dold, dnew){
 	}
 
 	if (dnew[0] > dnew[1]){
-		dold = swap(dold);
+		dnew = swap(dnew);
 	}
-	
-	if (n < dold[0]){
+
+	if (n <= dold[0]){
 		n = dold[0];
+		var returner = {
+			newVal: dnew[0],
+			adjOld: n
+		};
+		return returner;
 	}
-	else if (n > dold[1]){
+	else if (n >= dold[1]){
 		n = dold[1];
-	}
-
-	return Math.round((n/(dold[1]-dold[0])) * ((dnew[1]-dnew[0])));
-}
-
-var _genericElementArgs = {
-  	position: "absolute",
-  	top: 0,
-  	left: 0,
-  	height: 200,
-  	width: 200,
-  	backgroundColor: "rgba(200,200,200,1)",
-}
-  
-function makeElement(type, parent, id, css){
-	if (!type){
-		throw "Make Element: Need more parameters to make element! -- invalid type";
+		var returner = {
+			newVal: dnew[1],
+			adjOld: n
+		};
+		return returner;
 	}
 	
-	if (!parent){
-		throw "Make Element: Need more parameters to make element -- invalid parent.";
+    var newVal = Math.round((n/(dold[1]-dold[0])) * ((dnew[1]-dnew[0])));
+
+    if (newVal < dnew[0]){
+		newVal = dnew[0];
 	}
-	
-  var e = document.createElement(type);
-  
-  if (id) 
-  	e.setAttribute("id", id);
-  if (parent)
-  	parent.appendChild(e);
-  
-  if (css){
- 	  //var _cssargs = (css) ? mergeArgs(_genericElementArgs, css): _genericElementArgs;
-  	  //$(e).css(_cssargs); 
-  	  $(e).css(css)	
-  }
-  return e;
+	else if (newVal > dnew[1]){
+		newVal = dnew[1];
+	}
+    
+    //console.log("newVAl: " + newVal);    
+    //console.log("*****************")
+	return {
+		newVal: newVal,
+		adjOld: n
+	};
 }
 
-function dimCSS(object){
-	console.log("DIMCSS: " + (typeof object).toString())
-}
 
 function _pct(value){
 	return (value * 100).toString() + "%";
 }
+
+function applyHoverAnim(elt, beforeCSS, afterCSS, animtime, beforeCallback, afterCallback){
+	if (!elt)
+		throw("HoverAnim in utils.js: need to apply element")
+	
+	if (!beforeCSS)
+		beforeCSS = {
+			"border-color": "rgba(50,50,50,1)",
+		}
+			
+	if (!afterCSS)
+		afterCSS = {
+			"border-color": "rgba(200,200,200,1)",
+		}
+		
+	if (!animtime)
+		animtime = 100;
+	if (!beforeCallback)
+		beforeCallback = function(){};
+	if (!afterCallback)
+		afterCallback = function(){};
+		
+	$(elt).mouseover(function(){
+	  $(elt).stop().animate(afterCSS, animtime, beforeCallback);
+	}).mouseleave(
+		function(){ 
+		$(elt).stop().animate(beforeCSS, animtime, afterCallback);	
+	});
+}
+
+function layerMouseClick(event){
+	
+ 	if (event.offsetX){
+ 		return {x: event.offsetX, y: event.offsetY};
+ 	}
+ 	else if (event.layerX){
+ 		return {x: event.layerX, y: event.layerY};
+ 	}
+	 		
+}
+

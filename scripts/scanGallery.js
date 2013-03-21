@@ -3,54 +3,54 @@ var defaultArgs_scanGallery = {
 	id: "scanGallery",
 	parent: document.body,
 	orientation: "vertical",
-	sliderWidth: 10,
+	sliderWidth: 8,
 	_css: {
 		top: 0,
 		left: 30,
-		width: 140,
-		border: "solid rgba(150,150,150,1) 1px"
+		width: 110,
+		border: "solid rgba(90,90,90,1) 1px"
 	}
 }
 
 var scanGallery = function(args){
   	var that = this;
-	 __init__(this, defaultArgs_scanGallery, args, function(){
+	 __Init__(this, defaultArgs_scanGallery, args, function(){
 	 });
 	 
 	 $(this.widget).css({
 	    position: "relative",
-	    top: 0,
-	 	left: 0,
-	 	height: "95%",
-	 	backgroundColor: "rgba(100,225, 90, .6)",
+	    top: (10),
+	 	left: 10,
+	 	height: $(this.args.parent).outerHeight() - 24,
 	 	overflow: "hidden",
 	 	"overflow-x": "hidden",
 	 	"overflow-y": "hidden"
 	 })
 	
-	  this.scrollBounds = makeElement("div", this.widget, this.args.id + "_scrollBounds", {
+	  this.scrollBounds = __MakeElement__("div", this.widget, this.args.id + "_scrollBounds", {
 	  	position: "absolute",
 	  	top: 0,
 	  	left: this.args.sliderWidth + 2,
 	  	height: "100%",
 	  	width: 130,
 	 	border: "solid rgb(0,0,255,1) 1px",
-	 	backgroundColor: "rgba(200, 50, 10, .5)",
+	 	//backgroundColor: "rgba(200, 50, 10, .5)",
 	  	borderWidth: "1px",
 	  	overflow: "hidden",
 	  });
 	  
-	  this.scrollContent = makeElement("div", this.scrollBounds, this.args.id + "_scrollContent", {
+	  this.scrollContent = __MakeElement__("div", this.scrollBounds, this.args.id + "_scrollContent", {
 	  	position: "relative",
+	  	border: "solid rgb(0,0,255,1) 1px",
 	  	top: 0,
 	  })
 	
-	  var scrollMarginY = 12;
-	  var scrollMarginX = 12;
+	  var scrollMarginY = 8;
+	  var scrollMarginX = 8;
 	  var thumbSpacing = scrollMarginY;
 	  var totalHeight = 0;
 	  	  
-	  for (var i=0; i<10; i++){
+	  for (var i=0; i<20; i++){
 		  var h = i*(100) + thumbSpacing*i + scrollMarginY;  	
 	  	  var a = new scanThumbnail({
 	  	  	id: "scrollContent_" + i.toString(),
@@ -67,8 +67,8 @@ var scanGallery = function(args){
 	  this.scrollContent.style.height = _px(scHeight);
 	  this.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";
 	  
-	console.log("WDIGET HEIGHT: " + this.widget.style.height);
-	console.log("PARENT HEIGHT: " + $(this.widget).outerHeight());
+	//console.log("WDIGET HEIGHT: " + this.widget.style.height);
+	//console.log("PARENT HEIGHT: " + $(this.widget).outerHeight());
 	  
 	this.contentSlider = new modSlider({
 		id: "contentSlider", 
@@ -77,27 +77,39 @@ var scanGallery = function(args){
 		top: 0, 
 		left: 0, 
 		orientation: "vertical",  
-		value:100, step: 1, 
-		height: $(this.args.parent).outerHeight(), 
+		value:100, 
+		step: 1, 
+		height: $(this.widget).height(), 
 		width: this.args.sliderWidth, 
-		width_handle: 8, 
+		width_handle: 6, 
 		borderRadius_slider: 0,
-		borderRadius_handle: 0,
-		border: "solid rgba(200,200,200,1) 1px",
-		"sliderBGColor":"rgba(0, 0, 200, 1)" 
+		borderRadius_handle: 3,
+		border: "solid rgba(200,200,200,1) 0px",
+		"sliderBGColor":"rgba(50, 50, 50, 1)" ,
+		borderWidth_handle: 0,
+		height_handle: 40,
 	});
   
 
   this.contentSlider.addSlideFunction(function(_slider){
-  	   var t = -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, scHeight - $(this.scrollBounds).height() - scrollMarginY]);
-  		$(this.scrollContent).css({
-  			top: -_remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], [0, scHeight - $(this.scrollBounds).height() - scrollMarginY])
+  		var t = -1 * _remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], 
+  			   							    [0, scHeight - $(that.scrollBounds).height() - scrollMarginY]).newVal;
+  		$(that.scrollContent).css({
+  			top: t,
   		});
   });  
   this.contentSlider.bindToMouseWheel(this.scrollBounds);
   
+  this.restyle();
 }
 
 scanGallery.prototype.restyle = function(){
+	 $(this.widget).css({
+	 	height: $(this.args.parent).outerHeight() * .5,// - 24,
+	 })
 	
+	  this.scrollBounds = __MakeElement__("div", this.widget, this.args.id + "_scrollBounds", {
+	  	height: "100%",
+	  	overflow: "hidden",
+	  });
 }

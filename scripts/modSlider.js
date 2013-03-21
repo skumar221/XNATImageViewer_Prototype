@@ -380,7 +380,7 @@ modSlider.prototype.restyle = function(){
 
 			
 	    $(this.sliderHandle).css({
-		  	"left" : (Math.floor(this.args["width"]/2 - totalwidth_handle/2)),
+		  	"left" : ((this.args["width"]/2 - totalwidth_handle/2)),
 		  	// Don't mess with top, as that is how it slides.
 		  	// mess with margin-top instdead
 		  	//"top" : (0), 
