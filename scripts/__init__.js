@@ -9,8 +9,8 @@ var __init__ = function(obj, defaultArgs, args, initRoutine){
 	  obj.restyle();
 	});
 	
-	initRoutine();
-	
+	if (initRoutine)
+		initRoutine();
 	
 	if(obj.restyle) 
 		obj.restyle();
