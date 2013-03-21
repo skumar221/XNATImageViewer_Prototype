@@ -24,7 +24,7 @@ defaultArgs_XNATModalImageViewer = {
 		position: "absolute",
 		height: "90%",
 		backgroundColor: "rgba(0,0,0,1)",
-		border: "solid rgba(155, 155, 155, 1) 1px",
+		border: "solid rgba(95, 95, 95, 1) 1px",
 		"border-radius": "0px"
 		
 	}
@@ -95,7 +95,7 @@ var XNATModalImageViewer = function(args){
 		//	WIDGET
 		//----------------------------------			
 		that.widget.onclick = function(){ 
-		//	that.destroy();
+			that.destroy();
 		}	
 		
 		
@@ -265,12 +265,12 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 2,
-		backgroundColor: "rgba(40, 40, 40, 1)",
+		backgroundColor: "rgba(70, 70, 70, 1)",
 		width: "20px",
 	});
 	
 	
-	$(that.compareButton).fadeTo(0, .5);
+	$(that.compareButton).fadeTo(0, .7);
 	
 	var bindMouseLeave = function(){	
 		$(that.compareButton).mouseover(function(){
@@ -278,7 +278,7 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		}).mouseleave(
 			function(){ 
 				if (that.changeState != "expanding"){
-					$(that.compareButton).stop().fadeTo(200, .5);
+					$(that.compareButton).stop().fadeTo(200, .7);
 				}			
 	    });
 	}
