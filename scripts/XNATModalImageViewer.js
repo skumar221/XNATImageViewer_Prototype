@@ -8,36 +8,39 @@ defaultArgs_XNATModalImageViewer = {
 	compressWidth: .33,
 	expandWidth: .9,
 	expanded: true,
+	gutter: 10,
+	marginWidth: 50,
+	marginTop: 10,
+	compareButtonWidth: 30,
 	_css: {
 		position: "fixed",
 		height: "100%",
 		width: "100%",
-		backgroundColor: "rgba(0,0,0,.8)",
+		backgroundColor: "rgba(0,0,0,.95)",
 		"overflow-x": "hidden",
 		"overflow-y": "hidden",
 		"display": "inline-block",
 		"font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
 	},
 	_modalcss: {
-		//"min-height": "600px",
-		//"min-width": "300px",
 		position: "absolute",
-		height: 800,
 		backgroundColor: "rgba(0,0,0,1)",
 		border: "solid rgba(95, 95, 95, 1) 1px",
 		"border-radius": "0px"
+		
+		// for height mins and maxes, see below
 	}
 }
 
 
 var minModalWidth_C = function(){
 	
-	var minPx = 550;
-	var pctCompressed = .6;
+	var minPx = 400;
+	var pctCompressed = .48;
 	var currPx = (pctCompressed * window.innerWidth);
 	
 	var retVal =  (currPx < minPx) ?  ((minPx/window.innerWidth)) : (pctCompressed);
-	//console.log("retVal_C: " + retVal)
+	
 	return retVal;
 }
 
@@ -76,8 +79,8 @@ var maxModalWidth_E = function(){
 
 var minModalHeight = function(){
 	
-	var minPx = 650;
-	var pctCompressed = .8;
+	var minPx = 450;
+	var pctCompressed = .88;
 	var currPx = (pctCompressed * window.innerHeight);
 	
 	var retVal =  (currPx < minPx) ?  ((minPx/window.innerHeight)) : (pctCompressed);
@@ -115,7 +118,7 @@ var XNATModalImageViewer = function(args){
 			      event.cancelBubble = true; // IE model
 			  }
 		}
-		
+		that.restyle();
 		
 		//----------------------------------
 		//	CLOSE BUTTON
@@ -125,34 +128,49 @@ var XNATModalImageViewer = function(args){
 			cursor: "pointer",
 			width: 20,
 			height: 20,
+			zIndex: 103
 		});	
 		that.closeButton.src = "./icons/closeButton.png";
-		
-		
-		//----------------------------------
-		//	SCAN GALLERY
-		//----------------------------------
-		that.scanGallery = new scanGallery({
-			parent: that.modal
-		});	
-		
-		
-		//----------------------------------
-		//	SCAN VIEWER LEFT
-		//----------------------------------	
-		that.scanViewer_left;// = new scanFrameViewer()
-		
-		
-		//----------------------------------
-		//	SCAN VIEWER RIGHT
-		//----------------------------------	
-		that.scanViewer_right;// = new scanFrameViewer()
 		
 		//----------------------------------
 		//	COMPARE BUTTON
 		//----------------------------------	
 		that.createCompareButton();
 		
+		//----------------------------------
+		//	SCAN GALLERY
+		//----------------------------------
+		that.scanGallery = new scanGallery({
+			parent: that.modal,
+			_css: {
+				left: that.args.gutter,
+				top: that.args.marginTop
+			}
+		});	
+		
+		
+		//----------------------------------
+		//	SCAN VIEWER LEFT
+		//----------------------------------	
+		that.scanViewer_left = new scanViewer({
+			parent: that.modal,
+			_css:{
+				left: $(that.scanGallery.widget).outerWidth() + that.args.marginWidth,
+			}
+		})
+		
+		
+		//----------------------------------
+		//	SCAN VIEWER RIGHT
+		//----------------------------------	
+		that.scanViewer_right = new scanViewer({
+			parent: that.modal,
+			_css:{
+				left: $(that.scanViewer_left.widget).outerWidth()
+					+ $(that.scanViewer_left.widget).position().left
+					+ that.args.marginWidth,
+			}
+		})
 		/*
 		var newSlider = new __Slider__({
 			parent: that.modal,
@@ -191,9 +209,13 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	_l = (_l > this.args.minLeft) ? _l : this.args.minLeft;	
 	_l = _l/window.innerWidth;
 
+	/*
 	var _t = (window.innerHeight * (1-_h))/2;	
 	_t = (_t > this.args.minTop) ? _t : this.args.minTop;	
 	_t = _t/window.innerHeight;
+	*/
+	
+	var _t = .05;
 	
 	var pctObj =  {
 		width: _w,
@@ -233,32 +255,34 @@ XNATModalImageViewer.prototype.restyle = function(){
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	var modalDims = this.modalDims();
+	this.modalDimensions = this.modalDims();
 	//console.log(modalDims)
-	$(this.modal).css(modalDims["px"]);
-	
+	$(this.modal).css(this.modalDimensions["px"]);
 	
 	//----------------------------------
 	//	CLOSE BUTTON
 	//----------------------------------
-	var buttonW = _i(this.closeButton.style.width);
-	var buttonL = ((modalDims["px"]["width"] + modalDims["px"]["left"] - buttonW/2));
-	//console.log(buttonL)
-	$(this.closeButton).css({
-		left: buttonL,
-		top: modalDims["px"]["top"]- $(this.closeButton).height()/2,
-		opacity: .9
-	})
-
+	if (this.closeButton){
+		var buttonW = _i(this.closeButton.style.width);
+		var buttonL = ((this.modalDimensions["px"]["width"] + this.modalDimensions["px"]["left"] - buttonW/2));
+		//console.log(buttonL)
+		$(this.closeButton).css({
+			left: buttonL,
+			top: this.modalDimensions["px"]["top"]- $(this.closeButton).height()/2,
+			opacity: .9
+		})		
+	}
+	
 	//----------------------------------
 	//	COMPARE BUTTON
 	//----------------------------------
-	$(this.compareButton).css({
-		left:  (modalDims["px"]["width"] - _i(this.compareButton.style.width)),
-		height: "100%",
-		top: 0,
-	})	
-	
+	if (this.compareButton){
+		$(this.compareButton).css({
+			left:  (this.modalDimensions["px"]["width"] - _i(this.compareButton.style.width)),
+			height: "100%",
+			top: 0,
+		})			
+	}	
 	//console.log("-------------------")
 }
 
@@ -290,7 +314,8 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
 		backgroundColor: "rgba(70, 70, 70, 1)",
-		width: "20px",
+		width: that.args.compareButtonWidth,
+		zIndex: 100
 	});
 	
 	

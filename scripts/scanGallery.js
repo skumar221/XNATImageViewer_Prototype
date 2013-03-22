@@ -19,9 +19,6 @@ var scanGallery = function(args){
 	 
 	 $(this.widget).css({
 	    position: "relative",
-	    top: (10),
-	 	left: 10,
-	 	height: $(this.args.parent).outerHeight() - 24,
 	 	overflow: "hidden",
 	 	"overflow-x": "hidden",
 	 	"overflow-y": "hidden"
@@ -29,10 +26,6 @@ var scanGallery = function(args){
 	
 	  this.scrollBounds = __MakeElement__("div", this.widget, this.args.id + "_scrollBounds", {
 	  	position: "absolute",
-	  	top: 0,
-	  	left: this.args.sliderWidth + 2,
-	  	height: "100%",
-	  	width: 130,
 	 	border: "solid rgb(0,0,255,1) 1px",
 	 	//backgroundColor: "rgba(200, 50, 10, .5)",
 	  	borderWidth: "1px",
@@ -79,8 +72,6 @@ var scanGallery = function(args){
 		orientation: "vertical",  
 		value:100, 
 		step: 1, 
-		height: $(this.widget).height(), 
-		width: this.args.sliderWidth, 
 		width_handle: 6, 
 		borderRadius_slider: 0,
 		borderRadius_handle: 3,
@@ -104,12 +95,26 @@ var scanGallery = function(args){
 }
 
 scanGallery.prototype.restyle = function(){
+	//alert((this.args.parent).style.height);
 	 $(this.widget).css({
-	 	height: $(this.args.parent).outerHeight() * .5,// - 24,
+	 	height: $(this.args.parent).innerHeight() - 20,// - 24,
+	 	top: this._css.top,
+	 	left: this._css.left,
 	 })
 	
-	  this.scrollBounds = __MakeElement__("div", this.widget, this.args.id + "_scrollBounds", {
-	  	height: "100%",
-	  	overflow: "hidden",
-	  });
+	if (this.contentSlider){
+		  $(this.scrollBounds).css({
+		  	overflow: "hidden",
+			top: 0,
+			left: this.args.sliderWidth + 2,
+			height: "100%",
+		  	width: 130,
+		  });
+	 }
+	 if (this.contentSlider){
+		this.contentSlider.args.height = $(this.widget).height();
+		this.contentSlider.args.width = 10;	
+		this.contentSlider.restyle();  	
+	 }
+
 }
