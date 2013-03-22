@@ -154,10 +154,11 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------	
 		that.scanViewer_left = new scanViewer({
 			parent: that.modal,
+			id: "SCANVIEW_LEFT",
 			_css:{
 				left: $(that.scanGallery.widget).outerWidth() + that.args.marginWidth,
 			}
-		})
+		});
 		
 		
 		//----------------------------------
@@ -165,12 +166,22 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------	
 		that.scanViewer_right = new scanViewer({
 			parent: that.modal,
+			id: "SCANVIEW_RIGHT",			
 			_css:{
 				left: $(that.scanViewer_left.widget).outerWidth()
 					+ $(that.scanViewer_left.widget).position().left
 					+ that.args.marginWidth,
 			}
-		})
+		});
+		
+		
+		//----------------------------------
+		//	ADDING DROPZONES
+		//----------------------------------			
+		for (var i=0; i < that.scanGallery.thumbs.length; i++){
+			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_right.frameViewer);	
+			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_left.frameViewer);	
+		}
 		/*
 		var newSlider = new __Slider__({
 			parent: that.modal,

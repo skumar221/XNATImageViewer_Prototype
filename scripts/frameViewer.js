@@ -11,13 +11,13 @@ var defaultArgs_frameViewer = {
 			left: 20,
 			height: 300,
 			width: 300,	
-			"fontSize": 24,		
+			"fontSize": 16,		
 			"overflow-y": "hidden",
 			"overflow-x": "hidden",
 		    "font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 		    "border" : "solid",
-			"border-color": "rgba(0,0,0,1)",
-			"color": "rgba(0,0,0,1)",
+			"borderColor": "rgba(50,50,50,1)",
+			"color": "rgba(255,255,255,1)",
 		  	"border-width" : 1,
 		  	"border-radius": 0,	 
 		  	 overflow: "visible"
@@ -41,13 +41,6 @@ function frameViewer(args){
 	this.canvas.width = this._css.width;
 //	console.log("this._css.height: " + this._css.height)
 
-	this.dropZone = new dropZone(mergeArgs(this.args, {
-		parent: this.widget,
-		_css: {
-			top: 0,
-			left: 0
-		}
-	}));
 
 	this.context = this.canvas.getContext('2d');
 	this.onloadCallbacks = [];
@@ -55,6 +48,7 @@ function frameViewer(args){
 	this.adjustMethods = {};
 	
 	this.context.font = _px(this.args._css["fontSize"]) + " " + this.args._css["font-family"];
+	this.context.fillStyle = "white"
 	this.context.fillText(this.args.blankMsg, this.args._css.width/2 - 110, this.args._css.height/2);
 	//this.context.fillText("y", 58, 165);
 	
@@ -66,7 +60,6 @@ function frameViewer(args){
 		}
 	}
 
-	this.dropZone.addDropMethod(loadDropable);
 }
 
 

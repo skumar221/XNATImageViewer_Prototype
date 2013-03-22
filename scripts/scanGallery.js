@@ -17,6 +17,8 @@ var scanGallery = function(args){
 	 __Init__(this, defaultArgs_scanGallery, args, function(){
 	 });
 	 
+	 this.thumbs = [];
+	 
 	 $(this.widget).css({
 	    position: "relative",
 	 	overflow: "hidden",
@@ -53,7 +55,7 @@ var scanGallery = function(args){
 	  	  		left: scrollMarginX,
 	  	  	}
 	  	  });
-		  //a.addDropZone(_frameViewer.dropZone);
+		  this.thumbs.push(a)
 	  }
 	  
 	  var scHeight = h + scrollMarginY*2 + 100;
@@ -92,6 +94,14 @@ var scanGallery = function(args){
   this.contentSlider.bindToMouseWheel(this.scrollBounds);
   
   this.restyle();
+}
+
+scanGallery.prototype.addDropZones = function(zoneArr){
+	for (var i=0; i<this.thumbs.length; i++){
+		for (var j=0; j<zoneArr.length; j++){
+			this.thumbs[i].addDropZone(zoneArr[j]);	
+		}
+	 }
 }
 
 scanGallery.prototype.restyle = function(){
