@@ -123,7 +123,7 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	this.values[i].style.top = _px(hPos);
 	
 	s.args.left = sliderLeft;
-	s.restyle();
+	s.updateCSS();
 	
 	var that = this;
 	s.addSlideFunction(function(_slider){

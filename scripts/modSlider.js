@@ -170,7 +170,7 @@ function modSlider(args){
 
   	this.args["parent"].appendChild(this.valueDisplay);
 
-	this.restyle();
+	this.updateCSS();
   	
 	
 	this.bindToMouseWheel(this.widget);
@@ -192,7 +192,7 @@ modSlider.prototype.slide = function(e,ui){
 	otherSliderFunctions(this);
 }
 
-modSlider.prototype.adjustSliderDims = function(args){
+modSlider.prototype.changeSliderProperties = function(args){
 	
 	//console.log("OLD SLIDER DIMS: ")
 	//console.log($(this.slider).slider("option", "min"));
@@ -256,8 +256,8 @@ modSlider.prototype.positionWidget = function(){
 	});
 }
 
-modSlider.prototype.restyle = function(){	
-	//console.log("RESTYLE");
+modSlider.prototype.updateCSS = function(){	
+	//console.log("updateCSS");
 	this.positionWidget();
 	//this.widget.style.backgroundColor = "rgba(255,0,0,.5)";
 

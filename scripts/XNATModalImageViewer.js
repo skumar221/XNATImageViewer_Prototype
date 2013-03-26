@@ -11,7 +11,7 @@ defaultArgs_XNATModalImageViewer = {
 	gutter: 10,
 	marginWidth: 50,
 	marginTop: 10,
-	compareButtonWidth: 30,
+	expandButtonWidth: 30,
 	_css: {
 		position: "fixed",
 		height: "100%",
@@ -118,7 +118,7 @@ var XNATModalImageViewer = function(args){
 			      event.cancelBubble = true; // IE model
 			  }
 		}
-		that.restyle();
+		that.updateCSS();
 		
 		//----------------------------------
 		//	CLOSE BUTTON
@@ -135,7 +135,8 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------
 		//	COMPARE BUTTON
 		//----------------------------------	
-		that.createCompareButton();
+		that.createExpandButton();
+		
 		
 		//----------------------------------
 		//	SCAN GALLERY
@@ -173,8 +174,8 @@ var XNATModalImageViewer = function(args){
 					+ that.args.marginWidth,
 			}
 		});
-		
-		
+  
+  		
 		//----------------------------------
 		//	ADDING DROPZONES
 		//----------------------------------			
@@ -182,30 +183,6 @@ var XNATModalImageViewer = function(args){
 			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_right.frameViewer);	
 			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_left.frameViewer);	
 		}
-		/*
-		var newSlider = new __Slider__({
-			parent: that.modal,
-			orientation: "horizontal",
-			longSide: 800,
-			shortSide: 10,
-			_css:{
-				top: "2.5%",
-				left: 300,
-			}
-		});
-		
-		var newSlider2 = new __Slider__({
-			parent: that.modal,
-			orientation: "vertical",
-			longSide: 400,
-			shortSide: 10,
-			_css:{
-				top: "10.5%",
-				left: 300,
-				backgroundColor: "rgba(20, 200, 60, .5)"
-			}
-		});
-		*/
 		
 	});
 }
@@ -261,7 +238,7 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	}
 }
 
-XNATModalImageViewer.prototype.restyle = function(){
+XNATModalImageViewer.prototype.updateCSS = function(){
 
 	//----------------------------------
 	//	MODAL
@@ -269,6 +246,7 @@ XNATModalImageViewer.prototype.restyle = function(){
 	this.modalDimensions = this.modalDims();
 	//console.log(modalDims)
 	$(this.modal).css(this.modalDimensions["px"]);
+	
 	
 	//----------------------------------
 	//	CLOSE BUTTON
@@ -284,12 +262,13 @@ XNATModalImageViewer.prototype.restyle = function(){
 		})		
 	}
 	
+	
 	//----------------------------------
 	//	COMPARE BUTTON
 	//----------------------------------
-	if (this.compareButton){
-		$(this.compareButton).css({
-			left:  (this.modalDimensions["px"]["width"] - _i(this.compareButton.style.width)),
+	if (this.expandButton){
+		$(this.expandButton).css({
+			left:  (this.modalDimensions["px"]["width"] - _i(this.expandButton.style.width)),
 			height: "100%",
 			top: 0,
 		})			
@@ -314,10 +293,10 @@ XNATModalImageViewer.prototype.destroy = function(fadeOut){
 
 }
 
-XNATModalImageViewer.prototype.createCompareButton = function(){
+XNATModalImageViewer.prototype.createExpandButton = function(){
 	var that = this;
 	
-	that.compareButton = __MakeElement__("button", that.modal, that.args.id + "_compareButton", {
+	that.expandButton = __MakeElement__("button", that.modal, that.args.id + "_expandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
 		"font-size": 10,
@@ -325,34 +304,34 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
 		backgroundColor: "rgba(70, 70, 70, 1)",
-		width: that.args.compareButtonWidth,
+		width: that.args.expandButtonWidth,
 		zIndex: 100
 	});
 	
 	
-	$(that.compareButton).fadeTo(0, .7);
+	$(that.expandButton).fadeTo(0, .7);
 	
 	var bindMouseLeave = function(){	
-		$(that.compareButton).mouseover(function(){
-		  $(that.compareButton).stop().fadeTo(200, 1);
+		$(that.expandButton).mouseover(function(){
+		  $(that.expandButton).stop().fadeTo(200, 1);
 		}).mouseleave(
 			function(){ 
 				if (that.changeState != "expanding"){
-					$(that.compareButton).stop().fadeTo(200, .7);
+					$(that.expandButton).stop().fadeTo(200, .7);
 				}			
 	    });
 	}
 	
-	that.compareButton.innerHTML = (this.args.expanded) ? "<<" : ">>";
+	that.expandButton.innerHTML = (this.args.expanded) ? "<<" : ">>";
 	bindMouseLeave();
 	
-	that.compareButton.onclick = function(){
+	that.expandButton.onclick = function(){
 		 
 		 $(that.modal).stop();
 		 $(that.closeButton).stop();
-		 $(that.compareButton).stop().unbind('mouseleave');
-		 $(that.compareButton).stop().unbind('mouseover');
-		 //$(that.compareButton).stop()
+		 $(that.expandButton).stop().unbind('mouseleave');
+		 $(that.expandButton).stop().unbind('mouseover');
+		 //$(that.expandButton).stop()
 		 
 		 that.changeState = "expanding";
 		 
@@ -365,7 +344,7 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		 	changePct= minModalWidth_E();
 		 }
 		 
-		 that.compareButton.innerHTML = inner; 
+		 that.expandButton.innerHTML = inner; 
 		 var animLen = 500;
 
 		 var modalW = window.innerWidth * changePct;		
@@ -384,9 +363,9 @@ XNATModalImageViewer.prototype.createCompareButton = function(){
 		 });
 		 
 
-		 $(that.compareButton).stop().animate({
+		 $(that.expandButton).stop().animate({
 		 	opacity: .5,
-		    left: (changePct*window.innerWidth - _i(that.compareButton.style.width)),
+		    left: (changePct*window.innerWidth - _i(that.expandButton.style.width)),
 		  }, animLen, function() {
 		    // Animation complete.
 		 });

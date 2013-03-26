@@ -1,3 +1,5 @@
+
+
 //Returns true if it is a DOM element 
 // from: http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
 function __IsElement__(o){

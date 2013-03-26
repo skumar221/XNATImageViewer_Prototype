@@ -6,12 +6,12 @@ var __Init__ = function(obj, defaultArgs, args, initRoutine){
 	obj._css = obj.args._css;
 	obj.widget = __MakeElement__("div", obj.args.parent, obj.args.id, obj._css);
 	$(window).resize(function() {
-	  obj.restyle();
+	  obj.updateCSS();
 	});
 	
 	if (initRoutine)
 		initRoutine();
 	
-	if(obj.restyle) 
-		obj.restyle();
+	if(obj.updateCSS) 
+		obj.updateCSS();
 }

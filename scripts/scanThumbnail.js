@@ -55,7 +55,7 @@ function scanThumbnail(args){
 	this.frames = this.getFrameList();
 
 	__Droppable__(this);
-	this.restyle();
+	this.updateCSS();
 }
 
 
@@ -97,7 +97,7 @@ scanThumbnail.prototype.getFrameList = function(){
 //*********************************************
 // WINDOW RESIZING
 //*********************************************
-scanThumbnail.prototype.restyle = function(){
+scanThumbnail.prototype.updateCSS = function(){
 	$(this.widget).css(this._css);
 }
 

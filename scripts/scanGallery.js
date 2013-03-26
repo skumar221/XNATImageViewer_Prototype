@@ -93,7 +93,7 @@ var scanGallery = function(args){
   });  
   this.contentSlider.bindToMouseWheel(this.scrollBounds);
   
-  this.restyle();
+  this.updateCSS();
 }
 
 scanGallery.prototype.addDropZones = function(zoneArr){
@@ -104,7 +104,7 @@ scanGallery.prototype.addDropZones = function(zoneArr){
 	 }
 }
 
-scanGallery.prototype.restyle = function(){
+scanGallery.prototype.updateCSS = function(){
 	//alert((this.args.parent).style.height);
 	 $(this.widget).css({
 	 	height: $(this.args.parent).innerHeight() - 20,// - 24,
@@ -124,7 +124,7 @@ scanGallery.prototype.restyle = function(){
 	 if (this.contentSlider){
 		this.contentSlider.args.height = $(this.widget).height();
 		this.contentSlider.args.width = 10;	
-		this.contentSlider.restyle();  	
+		this.contentSlider.updateCSS();  	
 	 }
 
 }

@@ -40,7 +40,7 @@ function checkIfOverDropZone(elt, dropZones){
 			
 			
 			//------------------------------------
-			// If a collision is detected, return the zopne number
+			// If a collision is detected, return the zone number
 			//------------------------------------	
 			if (dzElt && elementCollision(element, dzElt, true)){
 				return i;

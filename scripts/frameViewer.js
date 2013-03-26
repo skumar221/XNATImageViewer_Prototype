@@ -44,7 +44,7 @@ function frameViewer(args){
 
 	this.context = this.canvas.getContext('2d');
 	this.onloadCallbacks = [];
-	this.restyle();
+	this.updateCSS();
 	this.adjustMethods = {};
 	
 	this.context.font = _px(this.args._css["fontSize"]) + " " + this.args._css["font-family"];
@@ -64,12 +64,33 @@ function frameViewer(args){
 
 
 
-frameViewer.prototype.restyle = function(){
+frameViewer.prototype.updateCSS = function(){
 	$(this.widget).css(this._css);
 }
 
 frameViewer.prototype.addOnloadCallback = function(callback){
 	this.onloadCallbacks.push(callback)
+}
+
+frameViewer.prototype.loadByDroppable = function(droppable){
+	if (droppable.frames){
+		this.loadFrames(droppable.frames);
+		if (this.frameSlider){
+			this.frameSlider.changeSliderProperties({
+				"min" : 0,
+				"max" : droppable.frames.length-1,
+				"value" : Math.round(droppable.frames.length/2),
+			});
+			this.drawFrame(this.frameSlider.currValue, true);
+		}		
+		else{
+			console.log("NO DRAW FRAME");
+		}
+	}
+	else{
+		throw "FrameViewer.js: Invalid Droppable for frameViewer."
+	}
+
 }
 
 frameViewer.prototype.loadFrames = function(frames){
