@@ -62,8 +62,8 @@ var scanViewer = function(args){
 		borderRadius_handle : 2,
 		borderWidth_slider: 1,			
   		borderWidth_handle: 0,			
-		handleBorderColor: "rgba(55,55,55,1)",			
-	  	sliderBorderColor: "rgba(55,55,55,1)",			
+		handleBorderColor: __Globals__.semiactiveLineColor,				
+	  	sliderBorderColor: __Globals__.semiactiveLineColor,				
 	  	sliderBGColor: "rgba(50, 50, 50, 1)",			
 	  	handleBGColor: "rgba(255,255,255,1)",	
 	});
@@ -95,12 +95,82 @@ var scanViewer = function(args){
 	 	  	height: scanTabHeight,
 		}
 	});
+
 	
-	
+	/*
 	//----------------------------------
-	// SCAN CONTENTS
+	// BRIGHNESS SLIDER (ON SCAN TAB 1)
 	//----------------------------------	
-  
+	this.scanTabs.tabs[1].innerHTML += "<br>Brightness:<br>";
+	this.brightnessSlider = new modSlider({
+		parent: this.scanTabs.tabs[1],
+		id: this.args.id + "_brightnessSlider",
+		top: 200,
+		left: 200,
+		value: 50,
+		min: 0,
+		max: 100,
+		handleBorderColor: __Globals__.semiactiveLineColor,				
+	  	sliderBorderColor: __Globals__.semiactiveLineColor,			
+	  	sliderBGColor: "rgba(30, 30, 30, 1)",	
+	});
+	this.brightnessSlider.addSlideFunction(function(_slider){
+	    that.frameViewer.imageAdjust("brightness", that.brightnessSlider.currValue);
+	});  
+
+
+	//----------------------------------
+	// CONTRAST SLIDER (ON SCAN TAB 1)
+	//----------------------------------	
+	this.scanTabs.tabs[1].innerHTML += "<br>Contrast:<br>";
+	this.contrastSlider = new modSlider({
+		parent: this.scanTabs.tabs[1],
+		id: this.args.id + "_contrastSlider",
+		top: 85,
+		left: 100,
+		handleBorderColor: __Globals__.semiactiveLineColor,				
+	  	sliderBorderColor: __Globals__.semiactiveLineColor,			
+	  	sliderBGColor: "rgba(30, 30, 30, 1)",					
+	});
+	this.contrastSlider.addSlideFunction(function(_slider){      
+	    that.frameViewer.imageAdjust("contrast", that.contrastSlider.currValue);
+	});
+	*/
+	
+	  var sliderSetArgs = {
+	    id: this.args.sliderSet + "_styleSliderSet",
+	    parent: this.scanTabs.tabs[1],
+	    _css:{
+	        "top": 40,
+	        "left": 0, 
+	        "borderColor": "rgba(255,255,255,1)",
+	        "borderWidth": 0,
+	        "color": __Globals__.activeFontColor,
+	        "backgroundColor": "rgba(0,0,0,0)"   
+	        }
+	  }
+	
+	  var ss = new sliderSet(sliderSetArgs, [    
+	    {id: this.args.id + "_brightnessSlider",
+	    displayLabel: "Brightness:"},
+	    {id: this.args.id + "_contrastSlider",
+	    displayLabel: "Contrast:"},
+	  ]); 
+	
+	 for (var j=0;j<ss.sliders.length;j++){
+	    var sl = ss.sliders[j];
+	    if (j==0){
+			sl.addSlideFunction(function(_slider){
+					that.frameViewer.imageAdjust("brightness", _slider.currValue);
+		    });
+	    }
+	    else if (j==1){
+			sl.addSlideFunction(function(_slider){
+					that.frameViewer.imageAdjust("contrast", _slider.currValue);
+		    });
+	    }    
+	 }
+	
 	this.updateCSS();
 }
 

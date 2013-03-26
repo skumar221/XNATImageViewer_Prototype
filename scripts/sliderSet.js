@@ -4,7 +4,7 @@ var defaultArgs_sliderSet = {
 	fitToContent: "true",
 	layout: "rowDiv_1",
 	inputEditable: true,
-	showGenButton: true,
+	showGenButton: false,
 	rowHeight : 40,
 	_css: {
 			"position": 'absolute',
@@ -100,7 +100,7 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	s = new modSlider(mergeArgs(this.sliderArgs[i], {
 		parent: this.sliderRows[i],
 		id: this.args["id"] + "_" + this.sliderArgs[i]["id"],
-		displayLabel: this.sliderArgs[i]["id"],
+		displayLabel: this.sliderArgs[i].displayLabel,
 		corollary: this.sliderArgs[i]["id"],
 		top: hPos,
 		left: 0

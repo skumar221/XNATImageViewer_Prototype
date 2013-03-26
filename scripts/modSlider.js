@@ -16,9 +16,9 @@ var defaultArgs_modSlider = {
   	borderWidth_handle: 1,			//def 1
   	min: 0,			//def 1
   	max: 100,			//def 1
-  	handleBorderColor: "rgba(55,55,55,1)",			//def 1
-  	sliderBorderColor: "rgba(55,55,55,1)",			//def 1
-  	sliderBGColor: "rgba(200,200,200,1)",			//def 1
+  	handleBorderColor: __Globals__.inactiveLineColor,			//def 1
+  	sliderBorderColor: __Globals__.inactiveLineColor,			//def 1
+  	sliderBGColor: "rgba(20,20,20,1)",			//def 1
   	handleBGColor: "rgba(155,155,155,1)",			//def 1
   	orientation: "horizontal",			//def 1
   	borderRadius_slider: 0,			//def 1

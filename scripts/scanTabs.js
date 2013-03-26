@@ -64,14 +64,12 @@ var scanTabs = function(args){
 	
 	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);
 	
-	this.tabDivs = []
+	this.tabs = []
 	for (var i=0;i<this.args.tabTitles.length;i++){
 		var e = __MakeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
-		e.innerHTML = "Tab " + i.toString() + ": content.";
-		this.tabDivs.push(e)
+		this.tabs.push(e)
 	}
 
-	
 	$(this.widget).tabs();
 	
 	//------------------------------
@@ -127,8 +125,8 @@ scanTabs.prototype.updateCSS = function(){
 	// TAB CONTENTS
 	//------------------------------
 	var contentsHeight;
-	for (var i=0;i<this.tabDivs.length;i++){
-		$(this.tabDivs[i]).css({
+	for (var i=0;i<this.tabs.length;i++){
+		$(this.tabs[i]).css({
 			"font-size": this.args.contentFontSize,
 			"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 			width: $(this.widget).width() - 20,
