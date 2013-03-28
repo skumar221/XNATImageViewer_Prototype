@@ -120,7 +120,7 @@ var __Droppable__mousedown = function(that){
 			that.restoreDrag(that);
 			if (that.dropZones && that.dropZones.length >0){
 				//that.dropZones[dz].loadFrames(that.frames);		
-				that.dropZones[dz].loadByDroppable(that);		
+				that.dropZones[dz].loadDroppable(that);		
 			}
 		}
 		

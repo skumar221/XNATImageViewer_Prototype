@@ -58,16 +58,18 @@ var mouseWheelScroll = function(e, that){
 		var d = (delta< 0)? -1: 1 
 	    value -= multiplier * d * that.args["step"];
 
-	    if (value > $(this.slider).slider("option", "max")) {
-	        value = $(this.slider).slider("option", "max");
+
+	    if (value > $(that.slider).slider("option", "max")) {
+	        value = $(that.slider).slider("option", "max");
 	    }
-	    if (value < $(this.slider).slider("option", "min")) {
-	        value = $(this.slider).slider("option", "min");
+	    if (value < $(that.slider).slider("option", "min")) {
+
+	        value = $(that.slider).slider("option", "min");
 	    }
 	
 		// Need to round the value if the "step" of the slider
 		// is an integer
-		if (! (value % $(this.slider).slider("option", "step") === 0)){
+		if (! (value % $(that.slider).slider("option", "step") === 0)){
 			value = Math.round(value )
 		}
 		

@@ -72,20 +72,10 @@ frameViewer.prototype.addOnloadCallback = function(callback){
 	this.onloadCallbacks.push(callback)
 }
 
-frameViewer.prototype.loadByDroppable = function(droppable){
+frameViewer.prototype.loadDroppable = function(droppable){
 	if (droppable.frames){
+		this.currDroppable = droppable;
 		this.loadFrames(droppable.frames);
-		if (this.frameSlider){
-			this.frameSlider.changeSliderProperties({
-				"min" : 0,
-				"max" : droppable.frames.length-1,
-				"value" : Math.round(droppable.frames.length/2),
-			});
-			this.drawFrame(this.frameSlider.currValue, true);
-		}		
-		else{
-			console.log("NO DRAW FRAME");
-		}
 	}
 	else{
 		throw "FrameViewer.js: Invalid Droppable for frameViewer."
@@ -132,9 +122,9 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 	if (this.frames){
 		if (frameNumber < 0) frameNumber = 0;
 		else if (frameNumber > this.frames.length) frameNumber = this.frames.length -1;
-	
-		this.currFrame = frameNumber;
+		
 		if (this.frames.length > 0){
+			this.currFrame = frameNumber;
 			this.context.drawImage(this.frames[frameNumber], 0, 0, this.canvas.width, this.canvas.height);	
 		}
 		
