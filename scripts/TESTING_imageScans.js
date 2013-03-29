@@ -161,27 +161,29 @@ var TESTING_testData1 = {
 	"./imageScans/ICBM_UCLA_1297_MR_SAG_MPRAGE_8_CHANNEL_br_raw_20060720121528782_159.jpg",
 	"./imageScans/ICBM_UCLA_1297_MR_SAG_MPRAGE_8_CHANNEL_br_raw_20060720121533250_160.jpg",
 	],
-	viewTypeData: [
-		{label:"Data", option:["RAW"]}, 
-		{label:"Type", option:["MPRAGE"]}, 
-		{label:"Image", option:["DICOM"]},  
-		{label:"View", option:["Transverse" , "Sagittal" , "Coronal"]},  
-		{label:"Display", option:["Stack" , "Montage"]}, 
-	],
-	sessionInfo:
-		[
-		{label:"SessionID", value: ["RAW"]}, 
-		{label:"LabID", value: ["MPRAGE"]}, 
-		{label:"Map#",value:  ["DICOM"]},  
-		{label:"Age", value: ["Transverse"]},  
-		{label:"Gender", value: ["Stack"]}, 
-		{label:"Handedness", value: ["Stack"]}, 
-		{label:"Acq.Date", value: ["Stack"]}, 
-		{label:"Scanner", value: ["Stack"]}, 
-		{label:"Stabilization", value: ["Stack"]}, 
-		{label:"Investigator",value:  ["Stack"]}, 
-		{label:"Operator", value: ["Stack"]}, 
-		{label:"Additional Notes: ", value: [
+	viewTypeData: {
+		"data": {label:"Data", option:["RAW"]}, 
+		"type": {label:"Type", option:["MPRAGE"]}, 
+		"image": {label:"Image", option:["DICOM"]},  
+		"view" : {label:"View", option:["Transverse" , "Sagittal" , "Coronal"]},  
+		"display" : {label:"Display", option:["Stack" , "Montage"]}, 
+	},
+	sessionInfo:{
+		"SessionID": {label:"Session ID", value: ["UCLA_1297"]}, 
+		"LabID": {label:"Lab ID", value: ["25"]}, 
+		"Map#": {label:"Map #",value:  ["DICOM"]},  
+		"Age": {label:"Age", value: ["Transverse"]},  
+		"Gender": {label:"Gender", value: ["Stack"]}, 
+		"Handedness": {label:"Handedness", value: ["Stack"]}, 
+		"AcqDate" : {label:"Acq.Date", value: ["Stack"]}, 
+		"Scanner" : {label:"Scanner", value: ["Stack"]}, 
+		"stabilization": {label:"Stabilization", value: ["Stack"]}, 
+		"investigator":{label:"Investigator",value:  ["Stack"]}, 
+		"operator":{label:"Operator", value: ["Stack"]}, 
+		"scannumber":{label:"Scan number", value: ["7"]}, 
+		"type":{label:"type", value: ["MPRAGE"]}, 
+		"quality":{label:"quality", value: ["usable"]}, 
+		"additionalnotes":{label:"Additional Notes: ", value: [
 				"SCAN NUMBER: 7 \n" +
 				"TYPE:        MPRAGE\n" +
 				"Quality:     usable\n" +
@@ -198,6 +200,7 @@ var TESTING_testData1 = {
 				"Origin:      \n" +
 				"Time:        \n" +
 				"Note:       "
-		]},]
+		]},
+	},
 	
 }

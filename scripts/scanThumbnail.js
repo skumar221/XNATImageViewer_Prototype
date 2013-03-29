@@ -8,10 +8,10 @@ defaultArgs_scanThumbnail = {
 		width: 80,
 		height: 80,
 		top: 0,
-		left: 0,
-		"font-size": 12,		
+		left: 0,	
 		"overflow-y": "hidden",
 		"overflow-x": "hidden",
+		"font-size": 12,			
 	    "font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
 	    "border" : "solid",
 		"border-color": "rgba(50,50,50,1)",
@@ -29,25 +29,28 @@ function scanThumbnail(args){
 	__Init__(this, defaultArgs_scanThumbnail, args, function(){});
 
 
-	//--------------------------------
-	// MOUSE INTERACTIONS
-	//--------------------------------
 	this.mouseDown = false;
-	this.setHoverMethods();
+
+
+
 	
 	
 	//--------------------------------
 	// THUMBNAIL IMAGE
 	//--------------------------------
 	// AJAX QUERY WOULD BE HERE
-	// this.scanData = getXNATScanDataFromURL();TESTING_testData1;	
+	// this.scanData = getXNATScanDataFromURL();TESTING_testData1;		
 	this.scanData = TESTING_testData1;	
+	
+	
 	
 	//--------------------------------
 	// THUMBNAIL IMAGE
 	//--------------------------------	
 	this.thumbImage = new Image();
 	this.thumbImage.src = this.scanData.scanPaths[Math.round(this.scanData.scanPaths.length/2)]; 
+	
+	
 	
 	//--------------------------------
 	// THUMBNAIL CANVAS
@@ -56,54 +59,111 @@ function scanThumbnail(args){
 	this.cloneable = this.thumb; // for __Droppable__.js
 	
 	
+	
 	//--------------------------------
 	// FRAMES
 	//--------------------------------
 	this.frames = this.getFrameList();
 
+
+
+	//--------------------------------
+	// INTERACTION METHODS
+	//--------------------------------
+	
+	//--------------------------------
+	// HOVER STUFF
+	//--------------------------------
+	this.hoverData = __MakeElement__("div", this.widget, this.args.id + "_hoverData", {
+		position: "absolute",
+		height: this.args._css.height,
+		width: this.args._css.width,
+		top: 0,
+		left: 0,
+		color: "rgba(255,255,255,1)",
+		backgroundColor: "rgba(80,80,80,.5)",
+	});
+	$(this.hoverData).fadeTo(0,0)
+	this.hoverData.align = "right";
+	this.hoverData.text = __MakeElement__("div", this.hoverData, this.hoverData.id + "_text",{
+		position: "absolute",
+		padding: 12,
+		fontSize: 10
+		//marginRight: 10
+	})
+	this.hoverData.text.innerHTML += "<div style='margin-right:10px'>";
+	this.hoverData.text.innerHTML += this.scanData.sessionInfo["SessionID"].value + "<br>";
+	this.hoverData.text.innerHTML += this.scanData.sessionInfo["scannumber"].value + "<br>";
+	this.hoverData.text.innerHTML += this.scanData.sessionInfo["type"].value + "<br>";
+	this.hoverData.text.innerHTML += this.scanData.sessionInfo["quality"].value + "<br>";
+	this.hoverData.text.innerHTML += "</div>";
+	this.setHoverMethods();
 	__Droppable__(this);
-	this.updateCSS();
+	this.updateCSS();	
 }
 
 
-//*********************************************
+
+
+//-----------------------------
 // THUMB CANVASES
-//*********************************************
+//-----------------------------
 scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 
 	elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, mergeArgs(this._css,{
 		top: 0,
 		left: 0,
-		"border-width": 0
+		"border-width": 0,
+		"font-size": 12,			
+	    "font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
+		color: "rgb(255,255,255)"
 	}));
 
 	elt.width = this._css.width;
 	elt.height = this._css.height;
-
 	elt.getContext("2d").drawImage(this.thumbImage, 0, 0, this._css.width, this._css.height);
 
 	return elt;	
 }
 
-//*********************************************
+
+
+
+//-----------------------------
 // HIGHLIGHT HOVER
-//*********************************************
+//-----------------------------
 scanThumbnail.prototype.setHoverMethods = function(){
 	var that = this;
+	var animtime = 100;
+		
 	applyHoverAnim(this.widget);
+	$(this.widget).mouseover(function(){
+
+	  $(that.hoverData).stop().fadeTo(animtime,1);
+		
+	}).mouseleave(
+		function(){ 
+		$(that.hoverData).stop().fadeTo(100,0);
+	});
+	
 }
 
-//*********************************************
+
+
+
+//-----------------------------
 // FRAMES
-//*********************************************
+//-----------------------------
 scanThumbnail.prototype.getFrameList = function(){
 	return this.scanData.scanPaths;
 }
 
 
-//*********************************************
+
+
+//-----------------------------
 // WINDOW RESIZING
-//*********************************************
+//-----------------------------
 scanThumbnail.prototype.updateCSS = function(){
 	$(this.widget).css(this._css);
 }

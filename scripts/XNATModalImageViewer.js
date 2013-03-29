@@ -146,7 +146,8 @@ var XNATModalImageViewer = function(args){
 			orientation: "vertical",
 			_css: {
 				left: that.args.gutter,
-				top: that.args.marginTop
+				top: that.args.marginTop,
+				height: 700,
 			}
 		});	
 		

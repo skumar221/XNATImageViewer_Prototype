@@ -218,16 +218,18 @@ scanViewer.prototype.populateData = function(data){
 	//----------------------------------
 	// DATA: VIEW TYPE DATA
 	//----------------------------------
-	function makeDisplayableData(labelArr){
-		for (var i=0;i<labelArr.length;i++){
-			var noSpace = labelArr[i]["label"].replace(/\s+/g, ' ');
-			var currTop = (that.textCSS_small.fontSize * (2.5*i+1) + 30);
+	function makeDisplayableData(labelObj){
+		var counter = 0;
+		for (i in labelObj){
+			console.log(labelObj[i])
+			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
+			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
 			that.displayableData[noSpace] = __MakeElement__("div", that.scanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
 			$(that.displayableData[noSpace]).css(mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
-			that.displayableData[noSpace].innerHTML = labelArr[i].label;		
+			that.displayableData[noSpace].innerHTML = labelObj[i].label;		
 
 			that.displayableData[noSpace + "_dropdown"] = __MakeElement__("select", that.scanTabs.tabs[0], that.args.id + "_data_" + noSpace);
 			$(that.displayableData[noSpace + "_dropdown"]).css(mergeArgs(that.textCSS_small,{
@@ -239,9 +241,11 @@ scanViewer.prototype.populateData = function(data){
 				borderColor: __Globals__.semiactiveLineColor
 			}));	
 			
-			for (var j=0;j<labelArr[i]["option"].length;j++){
-				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelArr[i]["option"][j] + "</option>"
+			for (var j=0;j<labelObj[i]["option"].length;j++){
+				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelObj[i]["option"][j] + "</option>"
 			}
+			
+			counter++;
 		}
 	}
 	
@@ -251,7 +255,7 @@ scanViewer.prototype.populateData = function(data){
 	//----------------------------------
 	// DATA: SESSION INFO DATA
 	//----------------------------------
-	function makeSessionInfoData(labelArr){
+	function makeSessionInfoData(labelObj){
 		//----------------------------------
 		//	SCROLL GALLERY
 		//----------------------------------
@@ -269,23 +273,24 @@ scanViewer.prototype.populateData = function(data){
 		});	
 
 		var contents = __MakeElement__("div", that.sessionInfoScrollGallery.scrollContent, that.args.id + "_contents");
-		
-		for (var i=0;i<labelArr.length;i++){
-			var noSpace = labelArr[i]["label"].replace(/\s+/g, ' ');			
-			var currTop = (that.textCSS_small.fontSize * (2*i));
+		var counter = 0;
+		for (i in labelObj){
+			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
+			var currTop = (that.textCSS_small.fontSize * (2*counter));
 			that.displayableData[noSpace] = __MakeElement__("div", contents, that.args.id + "_data_" + noSpace);
 			$(that.displayableData[noSpace]).css(mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
-			that.displayableData[noSpace].innerHTML = labelArr[i].label + ":";		
+			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
 			that.displayableData[noSpace + "_value"] = __MakeElement__("div", contents, that.args.id + "_value_" + noSpace);
 			$(that.displayableData[noSpace + "_value"]).css(mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 160,
 			}));	
-			that.displayableData[noSpace + "_value"].innerHTML = labelArr[i]["value"][0]
+			that.displayableData[noSpace + "_value"].innerHTML = labelObj[i]["value"][0]
+			counter++;
 		}
 		
 		contents.style.height = _px(currTop + 300);

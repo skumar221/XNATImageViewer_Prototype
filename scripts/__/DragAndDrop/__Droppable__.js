@@ -3,13 +3,17 @@
 //*********************************************
 var dropZoneMouseover = function(dz, obj){
 	if (dz){
-		if (!obj.hovering || obj.hovering == ""){
-			$(dz).stop().animate({
-				opacity: 1,
-				backgroundColor: "rgba(120, 120, 120, 0.2)",
-				borderColor: "rgba(255,255,255,1)",
-			}, 200, function(){});	
-			obj.hovering = dz.id;
+		
+		$(dz).stop().animate({
+			opacity: 1,
+			backgroundColor: "rgba(120, 120, 120, 0.2)",
+			borderColor: "rgba(255,255,255,1)",
+		}, 100, function(){});	
+	
+		for (var i=0; i<obj.dropZones.length; i++){
+			if (obj.dropZones[i].widget != dz){
+				dropZoneMouseout(obj.dropZones[i].widget, obj);
+			}	
 		}
 	}
 }
@@ -19,14 +23,16 @@ var dropZoneMouseover = function(dz, obj){
 //*********************************************
 var dropZoneMouseout = function(dz, obj){
 	if (dz){
-		if (obj.hovering == dz.id){
+		//try{
 			$(dz).stop().animate({
 				opacity: 1,
 				backgroundColor: "rgba(120,120,220,0)",
 				borderColor: "rgba(55,55,55,1)",
-			}, 200, function(){});
-			obj.hovering = "";
-		}
+			}, 100, function(){});	
+		//}
+		//catch(e){
+		//	console.log("ERROR")
+		//}
 	}
 }
 
@@ -207,6 +213,8 @@ function __Droppable__(obj){
 		$(__ExtractElement__(obj)).css({borderColor: obj._css["border-color"]});
 
 	}
+	
+	
 	//--------------------------------
 	// APPEND DRAGGABLE FUNCTIONS
 	//--------------------------------	
@@ -214,6 +222,7 @@ function __Droppable__(obj){
 	obj.dropZoneMouseout = function(dz){dropZoneMouseout(dz, obj)};
 	obj.dropZoneMouseover = function(dz){dropZoneMouseover(dz, obj)};
 	obj.draggable.onmousedown = function(){__Droppable__mousedown(obj);}
+	obj.onmousedown = obj.draggable.onmousedown;
 
 }
 

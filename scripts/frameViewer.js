@@ -2,7 +2,7 @@ var defaultArgs_frameViewer = {
 	id: "frameViewer",
 	parent: document.body,
 	onloadFrame: 0,
-	blankMsg : "Drop thumbnail here",
+	blankMsg : "drop thumbnail here",
 	contrastThreshold: .1,
 	_css: {
 			position: 'absolute',
@@ -46,9 +46,9 @@ function frameViewer(args){
 	this.updateCSS();
 	this.adjustMethods = {};
 	
-	this.context.font = _px(this.args._css["fontSize"]) + " " + this.args._css["font-family"];
+	this.context.font = _px(10) + " " + this.args._css["font-family"];
 	this.context.fillStyle = "white"
-	this.context.fillText(this.args.blankMsg, this.args._css.width/2 - 110, this.args._css.height/2);
+	this.context.fillText(this.args.blankMsg, this.args._css.width/2 - 52, this.args._css.height/2);
 	//this.context.fillText("y", 58, 165);
 	
 	this.frames = [];
