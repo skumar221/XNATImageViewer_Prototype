@@ -139,15 +139,38 @@ var XNATModalImageViewer = function(args){
 		
 		
 		//----------------------------------
-		//	SCAN GALLERY
+		//	SCROLL GALLERY
 		//----------------------------------
-		that.scanGallery = new scanGallery({
+		that.scrollGallery = new scrollGallery({
 			parent: that.modal,
+			orientation: "vertical",
 			_css: {
 				left: that.args.gutter,
 				top: that.args.marginTop
 			}
 		});	
+		
+		that.scrollGallery.setContents(function(){
+		  that.scrollGallery.thumbs = [];
+		  var thumbSpacing = that.scrollGallery.args.scrollMarginY;
+		  var totalHeight = 0;
+		  	  
+		  for (var i=0; i<20; i++){
+			  var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
+		  	  var a = new scanThumbnail({
+		  	  	id: "scrollContent_" + i.toString(),
+		  	  	parent: that.scrollGallery.scrollContent,
+		  	  	_css: {
+		  	  		top: h, 
+		  	  		left: that.scrollGallery.args.scrollMarginX,
+		  	  	}
+		  	  });
+			  that.scrollGallery.thumbs.push(a)
+		  }
+		  
+		  that.scrollGallery.scrollContent.style.height = _px(h + that.scrollGallery.args.scrollMarginY*1 + 100);
+		  that.scrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
+		})
 		
 		
 		//----------------------------------
@@ -157,7 +180,7 @@ var XNATModalImageViewer = function(args){
 			parent: that.modal,
 			id: "SCANVIEW_LEFT",
 			_css:{
-				left: $(that.scanGallery.widget).outerWidth() + that.args.marginWidth,
+				left: $(that.scrollGallery.widget).outerWidth() + that.args.marginWidth,
 			}
 		});
 		
@@ -179,9 +202,9 @@ var XNATModalImageViewer = function(args){
 		//----------------------------------
 		//	ADDING DROPZONES
 		//----------------------------------			
-		for (var i=0; i < that.scanGallery.thumbs.length; i++){
-			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_right.frameViewer);	
-			that.scanGallery.thumbs[i].addDropZone(that.scanViewer_left.frameViewer);	
+		for (var i=0; i < that.scrollGallery.thumbs.length; i++){
+			that.scrollGallery.thumbs[i].addDropZone(that.scanViewer_right.frameViewer);	
+			that.scrollGallery.thumbs[i].addDropZone(that.scanViewer_left.frameViewer);	
 		}
 		
 	});

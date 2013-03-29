@@ -51,6 +51,8 @@ var tabDiv = function(parent, contentElt){
 	
 }
 
+
+
 var scanTabs = function(args){
 	this.args = (args) ? mergeArgs(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
 	this._css = this.args._css;
@@ -67,6 +69,7 @@ var scanTabs = function(args){
 	this.tabs = []
 	for (var i=0;i<this.args.tabTitles.length;i++){
 		var e = __MakeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
+		e.label = this.tabTitleObj.titlesA[i].innerHTML;
 		this.tabs.push(e)
 	}
 
@@ -88,6 +91,17 @@ var scanTabs = function(args){
 	// CSS
 	//------------------------------	
 	this.updateCSS();
+}
+
+scanTabs.prototype.getTab = function(value){
+	if (typeof value == "string"){
+		for (var i=0;i<this.tabs.length;i++){
+			var v = (this.tabs[i].label).toLowerCase();
+			if (v.search(value.toLowerCase()) > -1){
+				return this.tabs[i];
+			}
+		}		
+	}
 }
 
 scanTabs.prototype.setActiveTab = function(e){

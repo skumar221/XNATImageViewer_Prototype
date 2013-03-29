@@ -35,12 +35,19 @@ function scanThumbnail(args){
 	this.mouseDown = false;
 	this.setHoverMethods();
 	
-
+	
+	//--------------------------------
+	// THUMBNAIL IMAGE
+	//--------------------------------
+	// AJAX QUERY WOULD BE HERE
+	// this.scanData = getXNATScanDataFromURL();TESTING_testData1;	
+	this.scanData = TESTING_testData1;	
+	
 	//--------------------------------
 	// THUMBNAIL IMAGE
 	//--------------------------------	
 	this.thumbImage = new Image();
-	this.thumbImage.src = "./imageScans/ICBM_UCLA_1297_MR_SAG_MPRAGE_8_CHANNEL_br_raw_20060720120938860_80.jpg"; 
+	this.thumbImage.src = this.scanData.scanPaths[Math.round(this.scanData.scanPaths.length/2)]; 
 	
 	//--------------------------------
 	// THUMBNAIL CANVAS
@@ -90,7 +97,7 @@ scanThumbnail.prototype.setHoverMethods = function(){
 // FRAMES
 //*********************************************
 scanThumbnail.prototype.getFrameList = function(){
-	return imageScans;
+	return this.scanData.scanPaths;
 }
 
 

@@ -97,7 +97,7 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	
 	var hPos = i*this.args.rowHeight + 10;
 
-	s = new modSlider(mergeArgs(this.sliderArgs[i], {
+	s = new __Slider__(mergeArgs(this.sliderArgs[i], {
 		parent: this.sliderRows[i],
 		id: this.args["id"] + "_" + this.sliderArgs[i]["id"],
 		displayLabel: this.sliderArgs[i].displayLabel,

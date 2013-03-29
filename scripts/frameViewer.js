@@ -1,8 +1,7 @@
 var defaultArgs_frameViewer = {
 	id: "frameViewer",
 	parent: document.body,
-	framePaths: imageScans,
-	onloadFrame: 0,//Math.round(imageScans.length/2),
+	onloadFrame: 0,
 	blankMsg : "Drop thumbnail here",
 	contrastThreshold: .1,
 	_css: {
@@ -114,8 +113,6 @@ frameViewer.prototype.loadFrames = function(frames){
 	  	img.src = framePaths[i];
 	  	this.frames.push(img);
 	 }
-
-	
 }
 
 frameViewer.prototype.drawFrame = function(frameNumber, adjustments){		
