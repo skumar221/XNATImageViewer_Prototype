@@ -42,3 +42,7 @@ function __CloneCanvas__(oldCanvas) {
     //return the new canvas
     return newCanvas;
 }
+
+function __ToInt__(val){
+	return parseInt(val, 10);
+}

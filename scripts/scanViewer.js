@@ -42,8 +42,6 @@ var defaultArgs_scanViewer = {
 var scanViewer = function(args){
   	var that = this;
 	 __Init__(this, defaultArgs_scanViewer, args, function(){});
-	 
-	 $(this.widget).css({});
 
 	 //----------------------------------
 	 // FRAME VIEWER
