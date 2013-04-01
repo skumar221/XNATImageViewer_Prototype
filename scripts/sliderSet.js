@@ -12,7 +12,7 @@ var defaultArgs_sliderSet = {
 			"left": 0,
 			"height": 500,
 			"width": 500,	
-			"fontSize": 12,		
+			"fontSize": 10,		
 			"overflow-y": "hidden",
 			"overflow-x": "hidden",
 		    "font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',

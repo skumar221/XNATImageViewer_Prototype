@@ -31,8 +31,6 @@ function frameViewer(args){
 	
 
 	this.canvas = __MakeElement__("canvas", this.widget, this.args.id + "_canvas", {
-		height: this._css.height,
-		width: this._css.width,
 		top: 0,
 		left: 0
 	});
@@ -43,13 +41,12 @@ function frameViewer(args){
 
 	this.context = this.canvas.getContext('2d');
 	this.onloadCallbacks = [];
-	this.updateCSS();
+
 	this.adjustMethods = {};
 	
 	this.context.font = _px(10) + " " + this.args._css["font-family"];
 	this.context.fillStyle = "white"
-	this.context.fillText(this.args.blankMsg, this.args._css.width/2 - 52, this.args._css.height/2);
-	//this.context.fillText("y", 58, 165);
+
 	
 	this.frames = [];
 	var that = this;
@@ -59,12 +56,29 @@ function frameViewer(args){
 		}
 	}
 
+
+	this.updateCSS();
 }
 
 
 
 frameViewer.prototype.updateCSS = function(){
-	$(this.widget).css(this._css);
+	//$(this.widget).css(this._css);
+	//console.log($(this.widget).height())
+	this.canvas.height = $(this.widget).height();
+	this.canvas.width = $(this.widget).width();
+	$(this.canvas).css({
+		height: $(this.widget).height(),
+		width: $(this.widget).width(),
+	})
+
+	
+	if (this.frames.length == 0){
+	    this.context.fillStyle = "black";
+	    this.context.fillRect(0,0, this.canvas.height, this.canvas.width);
+	    this.context.fillStyle = "white";	    
+		this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
+	}
 }
 
 frameViewer.prototype.addOnloadCallback = function(callback){

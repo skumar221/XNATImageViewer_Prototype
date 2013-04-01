@@ -11,7 +11,5 @@ var __Init__ = function(obj, defaultArgs, args, initRoutine){
 	
 	if (initRoutine)
 		initRoutine();
-	
-	if(obj.updateCSS) 
-		obj.updateCSS();
+
 }

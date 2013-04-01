@@ -7,11 +7,15 @@ defaultArgs_XNATModalImageViewer = {
 	minTop: 20,
 	compressWidth: .33,
 	expandWidth: .9,
-	expanded: true,
+	expanded: false,
 	gutter: 10,
 	marginWidth: 50,
 	marginTop: 10,
+	marginLeft: 10,
 	expandButtonWidth: 30,
+	galleryWidth: 100,
+	MINIMUMHEIGHT: 400,
+	heightPct: .90,
 	_css: {
 		position: "fixed",
 		height: "100%",
@@ -35,13 +39,13 @@ defaultArgs_XNATModalImageViewer = {
 
 var minModalWidth_C = function(){
 	
-	var minPx = 400;
+	var minPx = 440;
+	/*
 	var pctCompressed = .48;
 	var currPx = (pctCompressed * window.innerWidth);
-	
 	var retVal =  (currPx < minPx) ?  ((minPx/window.innerWidth)) : (pctCompressed);
-	
-	return retVal;
+	*/
+	return minPx;
 }
 
 var minModalWidth_E = function(){
@@ -77,10 +81,10 @@ var maxModalWidth_E = function(){
 	return retVal;
 }
 
-var minModalHeight = function(){
+var minModalHeight = function(that){
 	
-	var minPx = 450;
-	var pctCompressed = .88;
+	var minPx = 520;
+	var pctCompressed = that.args.heightPct;
 	var currPx = (pctCompressed * window.innerHeight);
 	
 	var retVal =  (currPx < minPx) ?  ((minPx/window.innerHeight)) : (pctCompressed);
@@ -91,143 +95,132 @@ var minModalHeight = function(){
 var XNATModalImageViewer = function(args){
 	var that = this;
 	
-	__Init__(this, defaultArgs_XNATModalImageViewer, args, function(){	
+	__Init__(this, defaultArgs_XNATModalImageViewer, args, function(){});
+		
+		
 		
 		//----------------------------------
 		//	WIDGET
 		//----------------------------------			
-		that.widget.onclick = function(){ 
+		this.widget.onclick = function(){ 
 			that.destroy();
 		}	
+		
+		
 		
 		
 		//----------------------------------
 		//	MODAL
 		//----------------------------------
-		that.modal = __MakeElement__("div", that.widget, that.args.id + "_modal", that.args._modalcss);	
-		$(that.modal).css({
+		this.modal = __MakeElement__("div", this.widget, this.args.id + "_modal", this.args._modalcss);	
+		$(this.modal).css({
 			"overflow-x": "hidden",
 			"overflow-y": "hidden"
 		})
 		
 		// Don't destroy when clicking on window (i.e. don't propagate)				
-		that.modal.onclick = function(event, element) {
+		this.modal.onclick = function(event, element) {
 			  if (event.stopPropagation) {
 			      event.stopPropagation();   // W3C model
 			  } else {
 			      event.cancelBubble = true; // IE model
 			  }
 		}
-		that.updateCSS();
+
+		
+		
 		
 		//----------------------------------
 		//	CLOSE BUTTON
 		//----------------------------------
-		that.closeButton = __MakeElement__("img", that.widget, that.args.id + "_closeIcon", {
+		this.closeButton = __MakeElement__("img", this.widget, this.args.id + "_closeIcon", {
 			position: "absolute", 
 			cursor: "pointer",
 			width: 20,
 			height: 20,
 			zIndex: 103
 		});	
-		that.closeButton.src = "./icons/closeButton.png";
+		this.closeButton.src = "./icons/closeButton.png";
+		
+		
 		
 		//----------------------------------
 		//	COMPARE BUTTON
 		//----------------------------------	
-		that.createExpandButton();
+		this.createExpandButton();
+		
 		
 		
 		//----------------------------------
 		//	SCROLL GALLERY
 		//----------------------------------
-		that.scrollGallery = new scrollGallery({
-			parent: that.modal,
+		this.scrollGallery = new scrollGallery({
+			parent: this.modal,
 			orientation: "vertical",
 			_css: {
-				left: that.args.gutter,
-				top: that.args.marginTop,
+				left: this.args.gutter,
+				top: this.args.marginTop,
 				height: 700,
 			}
 		});	
-		
-		that.scrollGallery.setContents(function(){
-		  that.scrollGallery.thumbs = [];
-		  var thumbSpacing = that.scrollGallery.args.scrollMarginY;
-		  var totalHeight = 0;
-		  	  
-		  for (var i=0; i<20; i++){
-			  var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
-		  	  var a = new scanThumbnail({
-		  	  	id: "scrollContent_" + i.toString(),
-		  	  	parent: that.scrollGallery.scrollContent,
-		  	  	_css: {
-		  	  		top: h, 
-		  	  		left: that.scrollGallery.args.scrollMarginX,
-		  	  	}
-		  	  });
-			  that.scrollGallery.thumbs.push(a)
-		  }
-		  
-		  that.scrollGallery.scrollContent.style.height = _px(h + that.scrollGallery.args.scrollMarginY*1 + 100);
-		  that.scrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
+		// set the contents
+		this.scrollGallery.setContents(function(){
+			that.scrollGallery.thumbs = [];
+			var thumbSpacing = that.scrollGallery.args.scrollMarginY;
+			var totalHeight = 0;
+			  	  
+			for (var i=0; i<20; i++){
+			 var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
+			 var a = new scanThumbnail({
+				  	id: "scrollContent_" + i.toString(),
+				  	parent: that.scrollGallery.scrollContent,
+				  	_css: {
+				  		top: h, 
+				  		left: that.scrollGallery.args.scrollMarginX,
+				  	}
+				  });
+			   that.scrollGallery.thumbs.push(a)
+			}
+			  
+			  that.scrollGallery.scrollContent.style.height = _px(h + that.scrollGallery.args.scrollMarginY*1 + 100);
+			  that.scrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
 		})
 		
 		
+		
 		//----------------------------------
-		//	SCAN VIEWER LEFT
+		//	SCAN VIEWERS
 		//----------------------------------	
-		that.scanViewer_left = new scanViewer({
-			parent: that.modal,
-			id: "SCANVIEW_LEFT",
-			_css:{
-				left: $(that.scrollGallery.widget).outerWidth() + that.args.marginWidth,
-			}
-		});
+		this.scanViewers = [];	
+		this.addScanViewer(this.args.numScanViewers);	
+
+			
 		
-		
-		//----------------------------------
-		//	SCAN VIEWER RIGHT
-		//----------------------------------	
-		that.scanViewer_right = new scanViewer({
-			parent: that.modal,
-			id: "SCANVIEW_RIGHT",			
-			_css:{
-				left: $(that.scanViewer_left.widget).outerWidth()
-					+ $(that.scanViewer_left.widget).position().left
-					+ that.args.marginWidth,
-			}
-		});
-  
-  		
-		//----------------------------------
-		//	ADDING DROPZONES
-		//----------------------------------			
-		for (var i=0; i < that.scrollGallery.thumbs.length; i++){
-			that.scrollGallery.thumbs[i].addDropZone(that.scanViewer_right.frameViewer);	
-			that.scrollGallery.thumbs[i].addDropZone(that.scanViewer_left.frameViewer);	
-		}
-		
-	});
+		this.updateCSS();
+}
+
+XNATModalImageViewer.prototype.setDropZones = function(dz){
+	
+	//----------------------------------
+	//	SET DROPZONES
+	//----------------------------------			
+	for (var i=0; i < this.scrollGallery.thumbs.length; i++){
+		this.scrollGallery.thumbs[i].addDropZone(dz);	
+	}
 }
 
 XNATModalImageViewer.prototype.modalDims = function(conversion){
 		
-	var _w = (this.args.expanded) ? minModalWidth_E() : minModalWidth_C();
-	var _h = minModalHeight();
+	var _w = minModalWidth_C();
+	var _h = minModalHeight(this);
 	
 
 	var _l = (window.innerWidth * (1-_w))/2;	
 	_l = (_l > this.args.minLeft) ? _l : this.args.minLeft;	
 	_l = _l/window.innerWidth;
 
-	/*
-	var _t = (window.innerHeight * (1-_h))/2;	
-	_t = (_t > this.args.minTop) ? _t : this.args.minTop;	
-	_t = _t/window.innerHeight;
-	*/
 	
-	var _t = .05;
+	var _t = (1-this.args.heightPct)/2;
 	
 	var pctObj =  {
 		width: _w,
@@ -262,42 +255,87 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	}
 }
 
-XNATModalImageViewer.prototype.updateCSS = function(){
+XNATModalImageViewer.prototype.updateCSS = function(args){
+
+
 
 	//----------------------------------
-	//	MODAL
+	//	MODAL - PASS 1
 	//----------------------------------
+
 	this.modalDimensions = this.modalDims();
-	//console.log(modalDims)
-	$(this.modal).css(this.modalDimensions["px"]);
-	
+	$(this.modal).css(this.modalDimensions["px"]);	
+	if(args){
+		$(this.modal).css(args);
+	}	
+
 	
 	//----------------------------------
-	//	CLOSE BUTTON
+	//	SCROLL GALLERY
 	//----------------------------------
-	if (this.closeButton){
-		var buttonW = _i(this.closeButton.style.width);
-		var buttonL = ((this.modalDimensions["px"]["width"] + this.modalDimensions["px"]["left"] - buttonW/2));
-		//console.log(buttonL)
-		$(this.closeButton).css({
-			left: buttonL,
-			top: this.modalDimensions["px"]["top"]- $(this.closeButton).height()/2,
-			opacity: .9
-		})		
+	$(this.scrollGallery.widget).css({
+		left: this.args.marginLeft,
+		top: this.args.marginTop,
+		height: $(this.modal).height() - this.args.marginTop*2,	
+	})
+	this.scrollGallery.updateCSS();
+
+
+
+
+	//----------------------------------
+	//	SCAN VIEWERS
+	//----------------------------------		
+	for (var i=0;i<this.scanViewers.length;i++){
+		var l = (i==0) ? $(this.scrollGallery.widget).position().left + $(this.scrollGallery.widget).width() + this.args.marginLeft*2 : 
+						 $(this.scanViewers[i-1].widget).position().left + $(this.scanViewers[i-1].widget).width() + this.args.marginLeft*2;
+		$(this.scanViewers[i].widget).css({
+			height: $(this.modal).height() - this.args.marginTop*2,
+			left: l,
+			top: this.args.marginTop,
+		})
+		this.scanViewers[i].updateCSS();
 	}
 	
 	
+	
 	//----------------------------------
-	//	COMPARE BUTTON
+	//	MODAL - PASS 2
+	//----------------------------------	
+	var modalWidth = $(this.scanViewers[this.scanViewers.length-1].widget).position().left + 
+					 $(this.scanViewers[this.scanViewers.length-1].widget).width() + 
+					 this.args.marginLeft*2 + _i(this.expandButton.style.width);		
+	$(this.modal).css({
+		width: modalWidth,
+		left: window.innerWidth/2 - modalWidth/2
+	});
+
+	
+		
+	//----------------------------------
+	//	CLOSE BUTTON
+	//----------------------------------
+	$(this.closeButton).css({
+		left: $(this.modal).position().left + modalWidth - $(this.closeButton).width()/2,
+		top: this.modalDimensions["px"]["top"]- $(this.closeButton).height()/2,
+		opacity: .9
+	})		
+
+	
+	
+	
+	//----------------------------------
+	//	EXPAND BUTTON
 	//----------------------------------
 	if (this.expandButton){
 		$(this.expandButton).css({
-			left:  (this.modalDimensions["px"]["width"] - _i(this.expandButton.style.width)),
+			left:  (modalWidth - _i(this.expandButton.style.width)),
 			height: "100%",
 			top: 0,
 		})			
 	}	
-	//console.log("-------------------")
+	
+	
 }
 
 XNATModalImageViewer.prototype.destroy = function(fadeOut){
@@ -317,71 +355,90 @@ XNATModalImageViewer.prototype.destroy = function(fadeOut){
 
 }
 
+
+
+XNATModalImageViewer.prototype.addScanViewer = function(addNum){
+	
+	if(!addNum) addNum = 1;
+	
+	for (var i=0;i<addNum;i++){
+		var v = new scanViewer({
+			parent: this.modal,
+			id: this.args.id + "_scanViewer_" + (this.scanViewers.length + i).toString(),
+		});			
+		this.scanViewers.push(v);	
+		this.setDropZones(v.frameViewer);	
+	}
+}
+
+
+
 XNATModalImageViewer.prototype.createExpandButton = function(){
+	
+	
 	var that = this;
 	
-	that.expandButton = __MakeElement__("button", that.modal, that.args.id + "_expandButton", {
+		
+	//-------------------------
+	// button element
+	//-------------------------
+	this.expandButton = __MakeElement__("button", this.modal, this.args.id + "_expandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
-		"font-size": 10,
+		"font-size": 18,
+		"font-weight": "bold",
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
 		backgroundColor: "rgba(70, 70, 70, 1)",
-		width: that.args.expandButtonWidth,
+		width: this.args.expandButtonWidth,
 		zIndex: 100
 	});
 	
 	
-	$(that.expandButton).fadeTo(0, .7);
+	$(this.expandButton).fadeTo(0, .7);
 	
 	var bindMouseLeave = function(){	
-		$(that.expandButton).mouseover(function(){
-		  $(that.expandButton).stop().fadeTo(200, 1);
+		$(this.expandButton).mouseover(function(){
+		  $(this.expandButton).stop().fadeTo(200, 1);
 		}).mouseleave(
 			function(){ 
-				if (that.changeState != "expanding"){
-					$(that.expandButton).stop().fadeTo(200, .7);
+				if (this.changeState != "expanding"){
+					$(this.expandButton).stop().fadeTo(200, .7);
 				}			
 	    });
 	}
 	
-	that.expandButton.innerHTML = (this.args.expanded) ? "<<" : ">>";
+	this.expandButton.innerHTML = "+";
 	bindMouseLeave();
 	
-	that.expandButton.onclick = function(){
+	this.expandButton.onclick = function(){
 		 
 		 $(that.modal).stop();
 		 $(that.closeButton).stop();
 		 $(that.expandButton).stop().unbind('mouseleave');
 		 $(that.expandButton).stop().unbind('mouseover');
-		 //$(that.expandButton).stop()
-		 
-		 that.changeState = "expanding";
-		 
-		 var inner = ">>";
-		 var changePct= minModalWidth_C();
-		// var closeButtonLeft = 
-		
-		 if (!that.args.expanded){
-		 	inner = "<<";
-		 	changePct= minModalWidth_E();
-		 }
-		 
-		 that.expandButton.innerHTML = inner; 
-		 var animLen = 500;
 
-		 var modalW = window.innerWidth * changePct;		
+		  //that.addScanViewer();
+		  //that.updateCSS();
+		 
+		 
+		 var animLen = 500;
+		 var scanViewerWidth = $(that.scanViewers[that.scanViewers.length-1].widget).width();
+		
+		 var newWidth = $(that.modal).width() + scanViewerWidth + _i(that.closeButton.style.width);
+
 		 $(that.modal).stop().animate({
-		    width: _pct(changePct),
-		    left: _pct((1-changePct)/2),
+		    width: newWidth,
+		    left: window.innerWidth/2 - newWidth/2,
 		  }, animLen, function() {
-		    that.changeState = "normal";
-		    bindMouseLeave();
+		    that.addScanViewer();
+		    that.updateCSS({width: newWidth});
 		 });
 
+	
 		 $(that.closeButton).stop().animate({
-		    left: _pct(changePct+ (1-changePct)/2 - (_i(that.closeButton.style.width)/2)/window.innerWidth),
+		    left: window.innerWidth/2 + newWidth/2 - (_i(that.closeButton.style.width)/2),
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
@@ -389,14 +446,12 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 
 		 $(that.expandButton).stop().animate({
 		 	opacity: .5,
-		    left: (changePct*window.innerWidth - _i(that.expandButton.style.width)),
+		    left: (newWidth - _i(that.expandButton.style.width)),
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
-
-		 that.args.expanded = !that.args.expanded;
 		 
-		 //console.log("EXPANDED: " + that.args.expanded)
+
  	}
 }
 

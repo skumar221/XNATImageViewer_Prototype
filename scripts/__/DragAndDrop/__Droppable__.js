@@ -150,9 +150,6 @@ var __Droppable__mousedown = function(that){
 }
 
 
-
-
-
 function __Droppable__(obj){
 	
 	obj.dropZones = [];

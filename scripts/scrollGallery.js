@@ -69,6 +69,9 @@ var scrollGallery = function(args){
 	 	"overflow-y": "hidden"
 	 })
 
+
+
+
 	//-------------------------------
 	// THE CONTENTS DIV 
 	//-------------------------------
@@ -77,6 +80,8 @@ var scrollGallery = function(args){
 	  	border: "solid rgb(0,0,255,1) 1px",
 	  	top: 0,
 	  })
+
+
 
 
 	//-------------------------------
@@ -88,6 +93,9 @@ var scrollGallery = function(args){
 		id: this.args.id + "_contentSlider",
 	}));
   
+  
+  
+  
 	//-------------------------------
 	// THE CONTENTS - BLANK FOR NOW
 	//-------------------------------
@@ -97,7 +105,8 @@ var scrollGallery = function(args){
 	blankContents.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."	    
 	this.setContents(blankContents)
   
-  this.updateCSS();
+	
+	this.updateCSS();
 }
 
 scrollGallery.prototype.mapSliderToContents = function(){
@@ -158,9 +167,8 @@ scrollGallery.prototype.setContents = function(obj){
 scrollGallery.prototype.updateCSS = function(){
 	//alert((this.args.parent).style.height);
 	 $(this.widget).css({
-	 	height: this._css.height,// - 24,
-	 	top: this._css.top,
-	 	left: this._css.left,
+	 	//top: this._css.top,
+	 	//left: this._css.left,
 	 })
 	
 	if (this.contentSlider){		
@@ -174,6 +182,7 @@ scrollGallery.prototype.updateCSS = function(){
 				});		
 			}
 			this.contentSlider.args.height = $(this.widget).height();
+			this.contentSlider.updateCSS();
 		}
 		else{
 

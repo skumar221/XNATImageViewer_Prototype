@@ -3,7 +3,7 @@ defaultArgs_scanTabs = {
 	id: "_scanTabs",
 	scanContents: 0,
 	tabTitles: ["<b>Info.</b>", "<b>Adjust</b>"],
-	contentFontSize: 12,
+	contentFontSize: 10,
 	activeLineColor: __Globals__.activeLineColor,
 	activeFontColor: __Globals__.activeFontColor,
 	inactiveLineColor: __Globals__.inactiveLineColor,
@@ -118,12 +118,12 @@ scanTabs.prototype.setActiveTab = function(e){
 scanTabs.prototype.updateCSS = function(){
 
 
+
 	//------------------------------
 	// WIDGET
 	//------------------------------
 	$(this.widget).css({
 		"font-size": this.args.contentFontSize,
-		"height" : 180,
 		"padding": 0,
 		"borderRadius": 0,
 		"borderWidth": this._css.borderWidth,
@@ -133,8 +133,7 @@ scanTabs.prototype.updateCSS = function(){
 		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 
 	})
-	
-	
+
 	//------------------------------
 	// TAB CONTENTS
 	//------------------------------
@@ -152,12 +151,13 @@ scanTabs.prototype.updateCSS = function(){
 			"color": "rgba(255,255,255,1)",
 			background: "none",
 			"backgroundColor": "rgba(0,0,0,1)",
-			height: $(this.widget).height() - this.args.tabHeight - 20,
+			height: ($(this.widget).height() - this.args.tabHeight)- 22,// compensating for the padding,
 			marginLeft:-1
 
 		})
 	}
-	
+
+
 	
 	//------------------------------
 	// PARENT TITLE ELEMENT
@@ -172,6 +172,7 @@ scanTabs.prototype.updateCSS = function(){
 		padding: 0,
 		
 	})
+
 
 	
 	//------------------------------

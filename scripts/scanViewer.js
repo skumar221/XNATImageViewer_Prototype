@@ -2,8 +2,6 @@
 var defaultArgs_scanViewer = {
 	id: "scanViewer",
 	parent: document.body,
-	innerPct: .95,
-	marginPct: .025,
 	_css: {
 		top: 0,
 		left: 80,
@@ -43,18 +41,14 @@ var scanViewer = function(args){
   	var that = this;
 	 __Init__(this, defaultArgs_scanViewer, args, function(){});
 
+
+
 	 //----------------------------------
 	 // FRAME VIEWER
 	 //----------------------------------
 	 this.frameViewer = new frameViewer({
 	 	id: this.args.id + "_frameViewer",
 	 	parent: this.widget,
-	 	_css: {
-	 		left: $(this.widget).width() * this.args.marginPct,
-	 	  	top: $(this.widget).width() * this.args.marginPct,
-	 	  	width: $(this.widget).width() * this.args.innerPct,
-	 	  	height: $(this.widget).width() * this.args.innerPct,
-	 	  }
 	 });
 
 
@@ -66,15 +60,13 @@ var scanViewer = function(args){
 	})
 
 
+
 	 //----------------------------------
 	 // FRAME SLIDER
 	 //----------------------------------		
 	this.frameSlider = new __Slider__(mergeArgs(this.args._frameslidercss, {
 		id: this.args.id + "_frameSlider", 
 		parent: this.widget,
-		top : $(this.frameViewer.widget).height() + 20,
-		left : $(this.frameViewer.widget).position().left,
-		width : $(this.frameViewer.widget).width(),
 	}));
 
 
@@ -85,7 +77,7 @@ var scanViewer = function(args){
 
 		// Update any displayable data
 		if (that.displayableData && that.displayableData.frameNumber){
-			that.displayableData.frameNumber.innerHTML = "Slice: "+(that.frameSlider.currValue + 1) + " / " + that.frameViewer.frames.length	
+			that.displayableData.frameNumber.innerHTML = "Frame: "+(that.frameSlider.currValue + 1) + " / " + that.frameViewer.frames.length	
 		}
 
 
@@ -114,6 +106,7 @@ var scanViewer = function(args){
 	});
 	
 	
+	
 	//----------------------------------
 	// SCAN TABS
 	//----------------------------------		
@@ -123,12 +116,6 @@ var scanViewer = function(args){
 		id: this.args.id + "_tabs",
 		parent: this.widget,
 		tabTitles: ["<b>View Type</b>", "<b>Session Info</b>", "<b>Adjust</b>"],
-		_css:{
-	 		left: $(this.widget).width() * this.args.marginPct,
-	 	  	top: scanTabTop,
-	 	  	width: $(this.widget).width() * this.args.innerPct,
-	 	  	height: scanTabHeight,
-		}
 	});
 
 	
@@ -190,8 +177,11 @@ var scanViewer = function(args){
 
 
 	// DATA: Frame Number
-	this.displayableData.frameNumber = __MakeElement__("div", this.frameViewer.widget, this.args.id + "frameDisplay");
+	this.displayableData.frameNumber = __MakeElement__("div", this.frameViewer.widget, this.args.id + "_frameDisplay");
 	$(this.displayableData.frameNumber).css(this.textCSS_small);		
+		
+		
+		
 		
 	//----------------------------------
 	// Synchronize current frame number with display
@@ -200,14 +190,79 @@ var scanViewer = function(args){
 		that.displayableData.frameNumber.innerHTML = "Slice: "+ (that.frameViewer.currFrame) + " / " + that.frameViewer.frames.length	
 	});
 	
-	that.updateCSS();
+	this.updateCSS();
 }
 
 scanViewer.prototype.updateCSS = function(){
-	 $(this.widget).css({
-	 	top: 10,
-	 	height: $(this.args.parent).innerHeight() - 20,
-	 })
+
+	var tabsHeight = 180;
+	var marginLeft = 10;
+	var marginTop = 10;
+	var marginLeft = 10; 
+
+
+	var scanTabTop = $(this.widget).height() - tabsHeight - marginTop;
+	var sliderTop = scanTabTop - this.frameSlider.args.height - marginTop*1.5;
+	var viewerWidth = sliderTop - marginTop*2;
+	var viewerHeight = viewerWidth;
+	
+	
+
+	$(this.widget).css({
+		width: viewerWidth + marginLeft * 2
+	})
+	
+	
+	
+	//----------------------------------
+	// SCAN TABS
+	//----------------------------------	
+	$(this.scanTabs.widget).css({
+ 		left: marginLeft,
+ 	  	top: scanTabTop,
+ 	  	width: viewerWidth,
+ 	  	height: tabsHeight,
+	});	 
+   this.scanTabs.updateCSS();
+
+
+
+	//----------------------------------
+	// FRAME SLIDER
+	//----------------------------------		
+	$(this.frameSlider.widget).css({
+		top : sliderTop,
+		left : marginLeft,
+		width : viewerWidth,
+	});
+   //this.frameSlider.updateCSS();
+	
+		 
+	 //----------------------------------
+	 // FRAME VIEWER
+	 //----------------------------------
+	 $(this.frameViewer.widget).css({
+ 	    left: marginLeft,
+ 		top: marginTop,
+ 	  	width: viewerWidth,
+ 	  	height: viewerHeight,
+	 });
+	 this.frameViewer.updateCSS();
+	 
+
+
+	 //----------------------------------
+	 // FRAME NUMBER DISPLAY
+	 //----------------------------------	 
+	 $(this.displayableData.frameNumber).css({
+	 		top: $(this.frameViewer.widget).height() - __Globals__.fontSizeSmall -5,
+	 });
+	 
+	 
+	 
+	 
+	 this.frameViewer.drawFrame(this.frameSlider.currValue, true);
+   	
 }
 
 scanViewer.prototype.populateData = function(data){	
@@ -219,7 +274,7 @@ scanViewer.prototype.populateData = function(data){
 	function makeDisplayableData(labelObj){
 		var counter = 0;
 		for (i in labelObj){
-			console.log(labelObj[i])
+//			console.log(labelObj[i])
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
 			that.displayableData[noSpace] = __MakeElement__("div", that.scanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
