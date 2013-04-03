@@ -166,7 +166,7 @@ var XNATModalImageViewer = function(args){
 		   that.scrollGallery.thumbs.push(a)
 		}
 		  
-		  that.scrollGallery.scrollContent.style.height = __PX__(h + that.scrollGallery.args.scrollMarginY*1 + 100);
+		  that.scrollGallery.scrollContent.style.height = __toPx__(h + that.scrollGallery.args.scrollMarginY*1 + 100);
 		  that.scrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
 	})
 	
@@ -247,7 +247,7 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	
 	var pxStrObj = {};
 	for (key in pxObj){
-		pxStrObj[key] = __PX__(pxObj[key]);
+		pxStrObj[key] = __toPx__(pxObj[key]);
 	}
 
 	return{

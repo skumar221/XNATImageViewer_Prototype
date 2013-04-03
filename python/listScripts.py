@@ -25,7 +25,6 @@ def main():
            print a
            s.append(a)
  
-    
     print s
 
 
