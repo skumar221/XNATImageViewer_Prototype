@@ -30,14 +30,18 @@ defaultArgs_XNATModalImageViewer = {
 		position: "absolute",
 		backgroundColor: "rgba(0,0,0,1)",
 		border: "solid rgba(95, 95, 95, 1) 1px",
-		"border-radius": "0px"
-		
+		"border-radius": "0px"	
 		// for height mins and maxes, see below
 	}
 }
 
 
-var minModalWidth_C = function(){
+
+//******************************************************
+//  Calculations, if necessary, for the modal's dimensions
+//
+//******************************************************
+var getModalWidth = function(){
 	
 	var minPx = 440;
 	/*
@@ -48,40 +52,13 @@ var minModalWidth_C = function(){
 	return minPx;
 }
 
-var minModalWidth_E = function(){
-	
-	var minPx = 1000;
-	var pctCompressed = .9;
-	var currPx = (pctCompressed * window.innerWidth);
-	
-	var retVal =  (currPx < minPx) ?  ((minPx/window.innerWidth)) : (pctCompressed);
-	//console.log("retVal_E: " + retVal)
-	return retVal;
-}
 
-var maxModalWidth_C = function(){
-	
-	var minPx = 550;
-	var pctCompressed = .6;
-	var currPx = (pctCompressed * window.innerWidth);
-	
-	var retVal =  (currPx < minPx) ?  ((minPx/window.innerWidth)) : (pctCompressed);
-	//console.log("retVal_C: " + retVal)
-	return retVal;
-}
 
-var maxModalWidth_E = function(){
-	
-	var minPx = 1000;
-	var pctCompressed = .9;
-	var currPx = (pctCompressed * window.innerWidth);
-	
-	var retVal =  (currPx < minPx) ?  ((minPx/window.innerWidth)) : (pctCompressed);
-	//console.log("retVal_E: " + retVal)
-	return retVal;
-}
-
-var minModalHeight = function(that){
+//******************************************************
+//  Calculations, if necessary, for the modal's dimensions
+//
+//******************************************************
+var getModalHeight = function(that){
 	
 	var minPx = 520;
 	var pctCompressed = that.args.heightPct;
@@ -92,6 +69,13 @@ var minModalHeight = function(that){
 	return retVal;
 }
 
+
+
+
+//******************************************************
+//  Init
+//
+//******************************************************
 var XNATModalImageViewer = function(args){
 	var that = this;
 	
@@ -215,10 +199,23 @@ XNATModalImageViewer.prototype.setDropZones = function(dz){
 	}
 }
 
+
+
+
+//******************************************************
+//  Calculates the modal dimensions based on pixed values.
+//  translates them to other representaions accordingly.
+//
+//  This was implemented for two reasons: 1) To avoid CSS
+//  stylesheets and have dynamic acces to an element's properties
+//  2) Sometimes there was a delay in jQuery registering
+//  an element's dimensions if percentages were entered.
+//
+//******************************************************
 XNATModalImageViewer.prototype.modalDims = function(conversion){
 		
-	var _w = minModalWidth_C();
-	var _h = minModalHeight(this);
+	var _w = getModalWidth();
+	var _h = getModalHeight(this);
 	
 
 	var _l = (window.innerWidth * (1-_w))/2;	
@@ -261,6 +258,13 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	}
 }
 
+
+
+
+//******************************************************
+//  Update CSS.
+//
+//******************************************************
 XNATModalImageViewer.prototype.updateCSS = function(args){
 
 
@@ -353,12 +357,16 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	}
 }
 
+
+
+
+//******************************************************
+//  Clears the modal out of the DOM.
+//
+//******************************************************
 XNATModalImageViewer.prototype.destroy = function(fadeOut){
-	
-	var fadeOut = (fadeOut) ? fadeOut: 200;
-	
+	var fadeOut = (fadeOut) ? fadeOut: 200;	
 	//console.log("Destroying! " + this.args.id);
-	
 	var that = this;
 	$(this.widget).fadeOut(fadeOut, function(){
 		try{
@@ -371,11 +379,16 @@ XNATModalImageViewer.prototype.destroy = function(fadeOut){
 
 
 
-XNATModalImageViewer.prototype.addScanViewer = function(addNum){
+
+//******************************************************
+//  Adds a scanViewer based on the arguments.
+//  If no arguments, defaulted to 1
+//
+//******************************************************
+XNATModalImageViewer.prototype.addScanViewer = function(numViewers){
+	if(!numViewers) numViewers = 1;
 	
-	if(!addNum) addNum = 1;
-	
-	for (var i=0;i<addNum;i++){
+	for (var i=0;i<numViewers;i++){
 		var v = new scanViewer({
 			parent: this.modal,
 			id: this.args.id + "_scanViewer_" + (this.scanViewers.length + i).toString(),
@@ -393,8 +406,12 @@ XNATModalImageViewer.prototype.addScanViewer = function(addNum){
 //  
 //  when a mouse is hovering over a given viewer, we tell
 //  the other viewers to "subordinate" themselves to the slider
-//  of the viewer being hovered on.  Once the mouse leaves that 
-//  viewer, those "subordination" calls are cleared.
+//  of the viewer being hovered on.  We propagate the slide 
+//  signal both to the left and right of the hovered viewer,
+//  making sure to stop when a chain link is "broken".
+//
+//  Once we stop hovering over a given viewer, its propagation
+//  commands are cleared.
 //
 //******************************************************
 XNATModalImageViewer.prototype.linkViewers = function(leftInd, rightInd){
@@ -402,78 +419,91 @@ XNATModalImageViewer.prototype.linkViewers = function(leftInd, rightInd){
 	
 	var that = this;
 	
+	
+	//-----------------------------------------
+	//  VERIFY ARGUMENTS
+	//-----------------------------------------
 	if ((leftInd >= rightInd) || (leftInd != (rightInd -1))){
 		throw "Link Viewers: Unacceptable Link Indices.  They have to be one apart, unequal, and left less than right."
 	}
 	
-	//console.log("linking viewer " + leftInd + " with " + rightInd)
 	
 	
-	// Mouseover
-	var mouseoverLink = function(that, indA){
+	//-----------------------------------------
+	//  SET THE MOUSEOVER via JQUERY
+	//-----------------------------------------
+	var defineMouseover = function(that, indA){
+
 		$(that.scanViewers[indA].widget).mouseover(function(){
 			
-
-			//that.scanViewers[indA].frameSlider.linkSlider(that.scanViewers[indB].frameSlider);
 			
-			//propagate down to the right
-			var rInd = indA;	
-					
+			
+			//-----------------------------------------
+			//  PROPAGATE RIGHT
+			//-----------------------------------------
+			var rInd = indA;						
 			if (that.scanViewers[rInd+1]){
 				while(that.scrollLinks[rInd]){
 					
 					if ($(that.scrollLinks[rInd]).data('activated')){
-						console.log("Prop Right " + indA + " with " + (rInd + 1));
+						//console.log("Prop Right " + indA + " with " + (rInd + 1));
 						that.scanViewers[indA].frameSlider.linkSlider(that.scanViewers[rInd + 1].frameSlider);		
 					}
 					else{
-						console.log("!Prop Right " + indA + " with " + (rInd + 1) + " -- BREAK");
+						//console.log("!Prop Right " + indA + " with " + (rInd + 1) + " -- BREAK");
 						break;
-					}
-					
+					}				
 					rInd++;					
 				}	
 			}
 			
+			
+			
+			//-----------------------------------------
+			//  PROPAGATE LEFT
+			//-----------------------------------------
 			var rInd = indA;
-			// propagate down to the left
 			if (that.scanViewers[rInd-1]){
 				while(that.scrollLinks[rInd-1]){
 					
 					if ($(that.scrollLinks[rInd-1]).data('activated')){
-						console.log("Prop Left  " + indA + " with " + (rInd - 1));
+						//console.log("Prop Left  " + indA + " with " + (rInd - 1));
 						that.scanViewers[indA].frameSlider.linkSlider(that.scanViewers[rInd - 1].frameSlider);		
 					}
 					else{
-						console.log("!Prop Left  " + indA + " with " + (rInd - 1) + " -- BREAK");
+						//console.log("!Prop Left  " + indA + " with " + (rInd - 1) + " -- BREAK");
 						break;
-					}
-					
+					}				
 					rInd--;					
 				}	
-			}
+			}			
+		    //console.log("**********************")		
 			
-		    console.log("**********************")		
 			
-			// Mouseout
+			
+			
+		//-----------------------------------------
+		//  SET THE MOUSEOUT via JQUERY
+		//-----------------------------------------
 		}).mouseout(function(){		
 			that.scanViewers[indA].frameSlider.clearLinked();			
 		});			
 	}
 	
-	mouseoverLink(that, leftInd);
-	mouseoverLink(that, rightInd);
+	defineMouseover(that, leftInd);
+	defineMouseover(that, rightInd);
 }
+
 
 
 
 //******************************************************
 //  ADD SCROLL LINK ICON
+//
 //******************************************************
 XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	
 	var that = this;
-
 
 	
 	
@@ -489,15 +519,22 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	c.src = "./icons/Chain1-Broken.png";
 	
 	
+
 	
-	$(c).data('activated', false);
-	
-	
+	//-----------------------------------------
+	//  STORE ICON IN ARRAY
+	//-----------------------------------------	
 	this.scrollLinks.push(c);
 	
 	
-	// Want to give it some tracking parameters
+	
+	
+	//-----------------------------------------
+	//  CUSTOM ELEMENT DATA
+	//-----------------------------------------	
 	$(c).data('number', this.scrollLinks.length - 1);
+	$(c).data('activated', false);
+	
 	
 	
 	
@@ -507,19 +544,14 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	that.widgetOver = -1;
 	var c = this.scrollLinks[this.scrollLinks.length -1];
 	c.onclick = function(){
-		
 		// Set it to the opposite
 		$(c).data('activated', !$(c).data('activated'));
 		
 		if ($(c).data('activated')){
-	
-			
 			// Change the icon's image
 			c.src = "./icons/Chain1-Closed.png";
-
-
+			// Link viewers
 			that.linkViewers($(c).data('number'), $(c).data('number') + 1);
-			
 		}
 		else{
 			c.src = "./icons/Chain1-Broken.png";				
@@ -531,6 +563,11 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 
 
 
+
+//******************************************************
+//  Expand button
+//
+//******************************************************
 XNATModalImageViewer.prototype.createExpandButton = function(){
 	
 	
@@ -583,10 +620,13 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 
 
 	//-------------------------
-	// Button onlcick
+	// Button onlclick
 	//-------------------------		
 	this.expandButton.onclick = function(){
 		 
+		 
+		 // clear any Jquery actions happening on other
+		 // parts of the modal.
 		 $(that.modal).stop();
 		 $(that.closeButton).stop();
 		 $(that.expandButton).stop().unbind('mouseleave');
@@ -596,11 +636,19 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 		  //that.updateCSS();
 		 
 		 
+		 
+		//-------------------------
+		// Define animation parameters
+		//-------------------------	
 		 var animLen = 500;
-		 var scanViewerWidth = $(that.scanViewers[that.scanViewers.length-1].widget).width();
-		
+		 var scanViewerWidth = $(that.scanViewers[that.scanViewers.length-1].widget).width();	
 		 var newWidth = $(that.modal).width() + scanViewerWidth + __toInt__(that.closeButton.style.width);
 
+
+
+		//-------------------------
+		// Animate the window
+		//-------------------------	
 		 $(that.modal).stop().animate({
 		    width: newWidth,
 		    left: window.innerWidth/2 - newWidth/2,
@@ -610,14 +658,22 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 		    that.updateCSS({width: newWidth});
 		 });
 
-	
+
+
+		//-------------------------
+		// Animate the close button
+		//-------------------------		
 		 $(that.closeButton).stop().animate({
 		    left: window.innerWidth/2 + newWidth/2 - (__toInt__(that.closeButton.style.width)/2),
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
 		 
-
+		 		
+		 		
+		//-------------------------
+		// Animate the expand button
+		//-------------------------	
 		 $(that.expandButton).stop().animate({
 		 	opacity: .5,
 		    left: (newWidth - __toInt__(that.expandButton.style.width)),
