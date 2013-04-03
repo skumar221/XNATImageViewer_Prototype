@@ -3,7 +3,7 @@ defaultArgs_scanThumbnail = {
 	parent: document.body,
 	draggableParent: document.body,
 	returnAnimMax: 300,
-	_css: {
+	CSS: {
 		position: "absolute",
 		width: 80,
 		height: 80,
@@ -76,8 +76,8 @@ function scanThumbnail(args){
 	//--------------------------------
 	this.hoverData = __MakeElement__("div", this.widget, this.args.id + "_hoverData", {
 		position: "absolute",
-		height: this.args._css.height,
-		width: this.args._css.width,
+		height: this.args.CSS.height,
+		width: this.args.CSS.width,
 		top: 0,
 		left: 0,
 		color: "rgba(255,255,255,1)",
@@ -110,7 +110,7 @@ function scanThumbnail(args){
 //-----------------------------
 scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 
-	elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, mergeArgs(this._css,{
+	elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, __MergeArgs__(this.CSS,{
 		top: 0,
 		left: 0,
 		"border-width": 0,
@@ -119,9 +119,9 @@ scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 		color: "rgb(255,255,255)"
 	}));
 
-	elt.width = this._css.width;
-	elt.height = this._css.height;
-	elt.getContext("2d").drawImage(this.thumbImage, 0, 0, this._css.width, this._css.height);
+	elt.width = this.CSS.width;
+	elt.height = this.CSS.height;
+	elt.getContext("2d").drawImage(this.thumbImage, 0, 0, this.CSS.width, this.CSS.height);
 
 	return elt;	
 }
@@ -165,7 +165,7 @@ scanThumbnail.prototype.getFrameList = function(){
 // WINDOW RESIZING
 //-----------------------------
 scanThumbnail.prototype.updateCSS = function(){
-	$(this.widget).css(this._css);
+	$(this.widget).css(this.CSS);
 }
 
 

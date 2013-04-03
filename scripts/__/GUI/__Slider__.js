@@ -96,6 +96,9 @@ __Slider__.prototype.bindToMouseWheel = function(elt){
 		this.mouseWheelBindElements.push(elt);
 		$(elt).bind('mousewheel DOMMouseScroll', function(e){mouseWheelScroll(e, that)});
 		$(this.slider).slider('option', 'value', this.currValue);
+		$(elt).hover(function(){
+			that.mouseOver = true;
+		});
 	}
 }
 
@@ -103,28 +106,45 @@ __Slider__.prototype.bindToMouseWheel = function(elt){
 
 function __Slider__(args){
 	that = this;
-	this.args = (args) ? mergeArgs(defaultArgs___Slider__, args) : defaultArgs___Slider__;
+	this.args = (args) ? __MergeArgs__(defaultArgs___Slider__, args) : defaultArgs___Slider__;
   	
-	//console.log(args);
+  	
+  	
+ 	//----------------------------------
+	// PRIVATE VARS
+	//----------------------------------      
+    this.mouseOver = false;
+    this.slideCallbacks = [];
+    this.mouseWheelBindElements = [];
+    
+    
+    
+     	
+	//----------------------------------
+	// WIDGET
+	//----------------------------------	
   	this.widget = document.createElement("div");
   	this.widget.setAttribute("id", this.args["id"]);
-  	//this.widget.style.cursor = "pointer";
   	this.args["parent"].appendChild(this.widget);
 
+
+
+
+	//----------------------------------
+	// JQUERY SLIDER
+	//----------------------------------
   	this.slider = document.createElement("div");
   	this.slider.setAttribute("id", this.args["id"] + "_slider");
   	this.widget.appendChild(this.slider);
-    
-    var that = this;
-    //this.currValue = (this.args["orientation"] == "horizontal") ? this.args["min"] : this.args["max"];
-    this.currValue = this.args["value"];
-    				 
-    
-    this.mouseOver = false;
-    
-    this.sliderFunctions = [];
-    this.mouseWheelBindElements = [];
 
+
+
+
+	//----------------------------------
+	// SLIDER'S VALUES
+	//----------------------------------    
+    var that = this;
+    this.currValue = this.args["value"];
 	$(this.slider).slider({
 		  orientation: this.args["orientation"],
 		  min: this.args["min"],
@@ -138,31 +158,34 @@ function __Slider__(args){
           	  that.slide(e, ui);
           },
 	});
-	
-	this.widget.onmouseover=function(){
-		//console.log("MOUSEOVER! " + that.args["id"]); 
-		this.mouseOver = true;
-	}
-	
-	this.widget.onmouseout=function(){
-		//console.log("MOUSEOUT! " + that.args["id"]); 
-		this.mouseOver = false;
-	}	
-	
+
+
+
+
+	//----------------------------------
+	// DETATCHING THE CSS PROVIDED BY JQUERY UI
+	// FOR VARIOUS SLIDER COMPONENTS
+	//----------------------------------  
 	this.sliderHandle = this.slider.getElementsByTagName('a')[0];
 	this.sliderHandle.setAttribute("id", this.args["id"] + "_handle");
 	$(this.sliderHandle).removeClass("ui-slider-horizontal");
+
+	// the scroller
 	
 	this.scroller = document.createElement("div");
   	this.scroller.setAttribute("id", this.args["id"] + "_scroller");
   	this.widget.appendChild(this.scroller);
-
+  	
+	// the constrainer, which is actually the jquery slider's bounds
+	
 	this.sliderConstrainer= document.createElement("div");
   	this.sliderConstrainer.setAttribute("id", this.args["id"] + "_sliderConstrainer");
   	this.widget.removeChild(this.slider);  	
   	this.sliderConstrainer.appendChild(this.slider);
   	this.widget.appendChild(this.sliderConstrainer);
-  	
+
+	// the value display, usually hidden
+	 	
   	this.valueDisplay = document.createElement("div");
   	this.valueDisplay.setAttribute("id", this.args["id"] + "_valueDisplay");
   	this.valueDisplay.innerHTML = (this.currValue);
@@ -171,37 +194,53 @@ function __Slider__(args){
 
   	this.args["parent"].appendChild(this.valueDisplay);
 
-	this.updateCSS();
-  	
-	
+
+
+
+	//----------------------------------
+	// BIND WIDGET TO MOUSE WHEEL
+	//---------------------------------- 	
 	this.bindToMouseWheel(this.widget);
 	
 	 if (that.args["disableDocumentOverflow"]){
   		document.documentElement.style.overflowY = 'hidden';
   	}
   	
-  	this.addSlideFunction = function(func, mapValueToSlider){
-  		addSlideFunction(that, func, mapValueToSlider);
+  	this.addSlideCallback = function(func, mapValueToSlider, clearAll, call){
+  		addSlideCallback(that, func, mapValueToSlider, clearAll, call);
   	}
-  	this.setSlideFunction = function(func, mapValueToSlider){
-  		addSlideFunction(that, func, mapValueToSlider, true);
+  	
+  	
+  	this.addLinkedCallback = function(func){
+  		if (!that.linkedCallbacks)
+			that.linkedCallbacks = [];
+  		addLinkedCallback(that, func);
   	}
+  	
+  	this.updateCSS();
 } 
 
+
+
+
+//******************************************************
+// The official slide routine
+//******************************************************
 __Slider__.prototype.slide = function(e,ui){
 	//console.log("this.id: " + this.args["id"] + " " + ui.value);
 	this.currValue = (this.args["orientation"] == "horizontal") ? 
 					  ui.value : this.args["max"] - ui.value;
 	this.valueDisplay.innerHTML = (this.currValue);
-	otherSliderFunctions(this);
+	performCallbacks(this);
 }
 
-__Slider__.prototype.changeSliderProperties = function(args){
-	
-	//console.log("OLD SLIDER DIMS: ")
-	//console.log($(this.slider).slider("option", "min"));
-	//console.log($(this.slider).slider("option", "max"));
-	
+
+
+
+//******************************************************
+// Changes the slider properties and calls the slide routine!
+//******************************************************
+__Slider__.prototype.changeSliderProperties = function(args, callSlide){
 	if (args["min"]) $(this.slider).slider("option", "min",   args["min"]);
 	if (args["max"]) $(this.slider).slider("option", "max",   args["max"]);
 	if (args["step"]) $(this.slider).slider("option", "step",  args["step"]);
@@ -209,78 +248,168 @@ __Slider__.prototype.changeSliderProperties = function(args){
 		$(this.slider).slider("option", "value", args["value"]);
 		this.currValue = args["value"]
 	}
-
-	//console.log("NEW SLIDER DIMS: ")
-	//console.log($(this.slider).slider("option", "min"));
-	//console.log($(this.slider).slider("option", "max"));
+	
+	if (callSlide===true){
+		$(this.slider).slider('option', 'slide').call(this.slider, this.slider, {
+			value: $(this.slider).slider("option", "value")
+		});	
+	}
 }
 
+
+
+
+//******************************************************
+//  Clips value to the min/max of the slider.  Sometimes these
+//  are violated b/c of the mousehweel.
+//******************************************************
 __Slider__.prototype.clipValue = function(val){
 	this.currValue = (val) ? val : this.currValue;
 
+	
 	if (this.currValue > this.args.max){
 		$(this.slider).slider("option", "max", this.currValue);
 	}
+	
+	
 	else if (this.currValue < this.args.min){
 		$(this.slider).slider("option", "min", this.currValue);
 	}
+	
+	
 	$(this.slider).slider("option", "value", this.currValue);
 }
-	
-var addSlideFunction = function(that, func, mapValueToSlider, clearAll){
+
+
+
+
+//******************************************************
+//  Append to callback list
+//******************************************************
+var addSlideCallback = function(that, func, mapValueToSlider, clearAll, call){
 
 	that.clipValue(mapValueToSlider);
-	if (clearAll === true) that.sliderFunctions = [];
-	that.sliderFunctions.push(func);
+	if (clearAll === true) that.slideCallbacks = [];
+	that.slideCallbacks.push(func);
 
-	$(that.slider).slider('option', 'slide').call(that.slider, that.slider, {value: that.currValue});
-	that.currValue = $(that.slider).slider("option", "value");
-}
-
-var setSlideFunction = function(that, func, mapValueToSlider, clearAll){
-
-	that.clipValue(mapValueToSlider);
-	if (clearAll === true) that.sliderFunctions = [];
-	that.sliderFunctions.push(func);
-
-	$(that.slider).slider('option', 'slide').call(that.slider, that.slider, {value: that.currValue});
-	that.currValue = $(that.slider).slider("option", "value");
-}
-
-var otherSliderFunctions = function(that){
-	//this.slide = func;
-	//console.log("performing other slider functions: " + that.args.id + " " + that.sliderFunctions.length);
-	for (var i=0; i<that.sliderFunctions.length; i++){
-		that.sliderFunctions[i](that);
+	if (!call===false){
+		$(that.slider).slider('option', 'slide').call(that.slider, that.slider, {value: that.currValue});
+		that.currValue = $(that.slider).slider("option", "value");
 	}
 }
 
-__Slider__.prototype.positionWidget = function(){
-	this.widget.style.position = (this.args["position"]);
-	this.widget.style.width = _px(this.args["width"]);
-	this.widget.style.height = _px(this.args["height"]);
-	this.widget.style.left = _px(this.args["left"]);  // I have no idea why I have to do this.
-	this.widget.style.top = _px(this.args["top"]);
+
+
+
+//******************************************************
+//  Append to linked callback list
+//******************************************************
+var addLinkedCallback = function(that, func){
+	that.linkedCallbacks.push(func);
+}
+
+
+
+
+//******************************************************
+//  Clears linked callbacks and sliders
+//******************************************************
+__Slider__.prototype.clearLinked= function(){
+	this.linkedCallbacks = [];
+	this.linkedSliders = [];
+}
+
+
+
+
+//******************************************************
+//  Runs the callbacks
+//******************************************************
+var performCallbacks = function(that){
+	for (var i=0; i<that.slideCallbacks.length; i++){
+		that.slideCallbacks[i](that);
+	}
 	
+	if (that.linkedSliders && that.linkedSliders.length > 0 
+		&& that.linkedCallbacks && that.linkedCallbacks.length > 0){
+		for (var i=0;i<that.linkedCallbacks.length; i++){
+//			console.log("CALLING LINKED CALLBACK " + i)
+			that.linkedCallbacks[i](that);
+		}
+	}
+}
+
+
+
+
+//******************************************************
+//  Links the inputted slider (b) to this (a)
+//******************************************************
+__Slider__.prototype.linkSlider = function(b){
+	
+	var that = this;
+	if (this.linkedSliders){
+		for (var i=0;i<this.linkedSliders.length; i++){
+			if(b == this.linkedSliders[i]){
+				return;
+			}				
+		}
+		this.linkedSliders.push(b);		
+	}
+	else{
+		this.linkedSliders = [];
+	}
+
+	this.addLinkedCallback(function(a){  
+		if (a.mouseOver){	
+			
+			var aDiff = $(a.slider).slider("option", "max") - $(a.slider).slider("option", "min");
+			
+			var bDiff = $(b.slider).slider("option", "max") - $(b.slider).slider("option", "min");
+			// percentage-based linking
+			var bVal = Math.round(bDiff * (a.currValue / aDiff));
+
+			b.changeSliderProperties({value: bVal}, false);
+			performCallbacks(b);
+			//b.slide(null, {value: bVal});
+		}
+  	});
+}
+
+
+
+
+__Slider__.prototype.updateCSS = function(){	
+
+
+
+
+	//----------------------------------------------
+	//  CSS: THE WIDGET
+	//----------------------------------------------
 	$(this.widget).css({
 		"position": "absolute",
+		width: __PX__(this.args["width"]),
+		height: __PX__(this.args["height"]),
+		left: __PX__(this.args["left"]),
+		top: __PX__(this.args["top"]),
 		"border" : "solid",
 		"border-color": this.args["sliderBorderColor"],
 	  	"background-color" : this.args["sliderBGColor"],
 	  	"border-width" : (this.args["borderWidth_slider"]),
 	  	"border-radius": (this.args["borderRadius_slider"]),	  		
 	});
-}
-
-__Slider__.prototype.updateCSS = function(){	
-	//console.log("updateCSS");
-	this.positionWidget();
-	//this.widget.style.backgroundColor = "rgba(255,0,0,.5)";
-
+	
+	
+	
+	
+	//----------------------------------------------
+	//  CSS: VALUE DISPLAY
+	//----------------------------------------------
 	if (this.args["showValue"]){
 		this.valueDisplay.style.position = (this.args["position"]);
-		this.valueDisplay.style.top =  _px(this.args["top"] + this.args["height"] + 20);
-		this.valueDisplay.style.left =  _px(this.args["left"]);
+		this.valueDisplay.style.top =  __PX__(this.args["top"] + this.args["height"] + 20);
+		this.valueDisplay.style.left =  __PX__(this.args["left"]);
 	}
 
 	//correctly compute the height of the slider + handle
@@ -349,10 +478,10 @@ __Slider__.prototype.updateCSS = function(){
 	  	constrainWidth = this.args["width"]-(this.args["constrainMargin"]*2) - 	(this.args["width_handle"]);						  
 	  	$(this.sliderConstrainer).css({
 	  		"position": "relative",
-		  	"width" : _px(constrainWidth),
-		  	"height" : _px(this.args["height"]),
-		  	"left": _px(0),
-		  	"top": _px(0), // basically puts the slider at the top of the widget
+		  	"width" : __PX__(constrainWidth),
+		  	"height" : __PX__(this.args["height"]),
+		  	"left": __PX__(0),
+		  	"top": __PX__(0), // basically puts the slider at the top of the widget
 		  				   // no big deal, because handle's top is adjusted
 			//"backgroundColor" : "rgba(0,255,0,.5)",	 
 			"margin" : "0px auto",	//aligns the slider and handle to the middle
@@ -360,8 +489,8 @@ __Slider__.prototype.updateCSS = function(){
 	  	
 	  	// for debugging
 	  	$(this.slider).css({  	
-	  		"height" : _px($(this.sliderConstrainer).css("height")),	
-		  	"width" : _px($(this.sliderConstrainer).css("width")),		
+	  		"height" : __PX__($(this.sliderConstrainer).css("height")),	
+		  	"width" : __PX__($(this.sliderConstrainer).css("width")),		
 		  	//"backgroundColor" : "rgba(0,255,0,.5)",	 
 	  	});	 
 	  	 	

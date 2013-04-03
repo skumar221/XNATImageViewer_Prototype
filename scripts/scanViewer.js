@@ -2,7 +2,7 @@
 var defaultArgs_scanViewer = {
 	id: "scanViewer",
 	parent: document.body,
-	_css: {
+	CSS: {
 		top: 0,
 		left: 80,
 		width: 500,
@@ -64,14 +64,14 @@ var scanViewer = function(args){
 	 //----------------------------------
 	 // FRAME SLIDER
 	 //----------------------------------		
-	this.frameSlider = new __Slider__(mergeArgs(this.args._frameslidercss, {
+	this.frameSlider = new __Slider__(__MergeArgs__(this.args._frameslidercss, {
 		id: this.args.id + "_frameSlider", 
 		parent: this.widget,
 	}));
 
 
 	// Tell frameslider how to behave...	
-	this.frameSlider.addSlideFunction(function(_slider){  		
+	this.frameSlider.addSlideCallback(function(_slider){  		
 		var subtractor = (that.frameSlider.args["sliderMin"] > 0) ? that.frameSlider.args["sliderMin"] : 0;
 
 
@@ -126,7 +126,7 @@ var scanViewer = function(args){
 	  var sliderSetArgs = {
 	    id: this.args.sliderSet + "_styleSliderSet",
 	    parent: that.scanTabs.getTab("Adjust"),
-	    _css:{
+	    CSS:{
 	        "top": 40,
 	        "left": 0, 
 	        "borderColor": "rgba(255,255,255,1)",
@@ -146,16 +146,16 @@ var scanViewer = function(args){
 	  ]); 
 
 
-	// Append sliders set to frame viewer
+	// Append slider set to frame viewer
 	 for (var j=0;j<ss.sliders.length;j++){
 	    var sl = ss.sliders[j];
 	    if (j==0){
-			sl.addSlideFunction(function(_slider){
+			sl.addSlideCallback(function(_slider){
 					that.frameViewer.imageAdjust("brightness", _slider.currValue);
 		    });
 	    }
 	    else if (j==1){
-			sl.addSlideFunction(function(_slider){
+			sl.addSlideCallback(function(_slider){
 					that.frameViewer.imageAdjust("contrast", _slider.currValue);
 		    });
 	    }    
@@ -192,6 +192,8 @@ var scanViewer = function(args){
 	
 	this.updateCSS();
 }
+
+
 
 scanViewer.prototype.updateCSS = function(){
 
@@ -278,14 +280,14 @@ scanViewer.prototype.populateData = function(data){
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
 			that.displayableData[noSpace] = __MakeElement__("div", that.scanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace]).css(mergeArgs(that.textCSS_small,{
+			$(that.displayableData[noSpace]).css(__MergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label;		
 
 			that.displayableData[noSpace + "_dropdown"] = __MakeElement__("select", that.scanTabs.tabs[0], that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace + "_dropdown"]).css(mergeArgs(that.textCSS_small,{
+			$(that.displayableData[noSpace + "_dropdown"]).css(__MergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 110,
 				width: "10em",
@@ -317,10 +319,10 @@ scanViewer.prototype.populateData = function(data){
 			parent: that.scanTabs.getTab("Session Info"),
 			id: that.args.id + ("_sessionInfoTab_data"),
 			orientation: "vertical",
-			_css: {
+			CSS: {
 				left: 0,
 				top: 0,
-				height: that.scanTabs._css.height * .80,
+				height: that.scanTabs.CSS.height * .80,
 				width: 440
 			}
 		});	
@@ -331,14 +333,14 @@ scanViewer.prototype.populateData = function(data){
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
 			that.displayableData[noSpace] = __MakeElement__("div", contents, that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace]).css(mergeArgs(that.textCSS_small,{
+			$(that.displayableData[noSpace]).css(__MergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
 			that.displayableData[noSpace + "_value"] = __MakeElement__("div", contents, that.args.id + "_value_" + noSpace);
-			$(that.displayableData[noSpace + "_value"]).css(mergeArgs(that.textCSS_small,{
+			$(that.displayableData[noSpace + "_value"]).css(__MergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 160,
 			}));	
@@ -346,7 +348,7 @@ scanViewer.prototype.populateData = function(data){
 			counter++;
 		}
 		
-		contents.style.height = _px(currTop + 300);
+		contents.style.height = __PX__(currTop + 300);
 		that.sessionInfoScrollGallery.setContents(contents);
 	}
 	// NOTE:  Ajax query would be here

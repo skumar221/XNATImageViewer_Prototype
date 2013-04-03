@@ -9,7 +9,7 @@ defaultArgs_scanTabs = {
 	inactiveLineColor: __Globals__.inactiveLineColor,
 	inactiveFontColor: __Globals__.inactiveFontColor,
 	tabHeight: 25,
-	_css: {
+	CSS: {
 		top: 400,
 		left: 20,
 		height: 300,
@@ -54,14 +54,14 @@ var tabDiv = function(parent, contentElt){
 
 
 var scanTabs = function(args){
-	this.args = (args) ? mergeArgs(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
-	this._css = this.args._css;
+	this.args = (args) ? __MergeArgs__(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
+	this.CSS = this.args.CSS;
 	var that = this;
 	this.activeTab = 0;
 	
 	var that = this;
 	
-	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args._css);
+	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args.CSS);
 
 	
 	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);
@@ -126,7 +126,7 @@ scanTabs.prototype.updateCSS = function(){
 		"font-size": this.args.contentFontSize,
 		"padding": 0,
 		"borderRadius": 0,
-		"borderWidth": this._css.borderWidth,
+		"borderWidth": this.CSS.borderWidth,
 		 background: "none",
 		"borderColor": __Globals__.inactiveLineColor,
 		"backgroundColor": "rgba(25,25,25,1)",
@@ -203,8 +203,8 @@ scanTabs.prototype.updateCSS = function(){
 			borderColor: bColor,
 			borderRadius: 0,
 			height: this.args.tabHeight,
-			marginTop: -1* this._css.borderWidth,
-			marginLeft:-1* this._css.borderWidth,
+			marginTop: -1* this.CSS.borderWidth,
+			marginLeft:-1* this.CSS.borderWidth,
 		})
 	}	
 

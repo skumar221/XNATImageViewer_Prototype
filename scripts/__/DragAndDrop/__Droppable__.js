@@ -173,7 +173,7 @@ function __Droppable__(obj){
 		left: 0,
 		backgroundColor : "rgba(0,50,230,.5)",
 		opacity: 0,
-		borderColor: this._css["border_color"],
+		borderColor: this.CSS["border_color"],
 	});	
 	
 
@@ -190,7 +190,7 @@ function __Droppable__(obj){
 		position: "absolute",
 		top: $(obj.draggable).height() + 20,
 		left: 0,
-		fontFamily: obj._css["font-family"],
+		fontFamily: obj.CSS["font-family"],
 		fontSize: 12,
 		color: "white",
 		"white-space": "nowrap"  // no text wrapping
@@ -207,7 +207,7 @@ function __Droppable__(obj){
 			left: 0
 		});
 		
-		$(__ExtractElement__(obj)).css({borderColor: obj._css["border-color"]});
+		$(__ExtractElement__(obj)).css({borderColor: obj.CSS["border-color"]});
 
 	}
 	

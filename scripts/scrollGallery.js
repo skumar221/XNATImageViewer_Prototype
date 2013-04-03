@@ -7,7 +7,7 @@ var defaultArgs_scrollGallery = {
 	sliderWidth: 8,
 	scrollMarginY: 8,
 	scrollMarginX: 8,
-	_css: {
+	CSS: {
 		top: 0,
 		left: 30,
 		width: 110,
@@ -60,8 +60,14 @@ var scrollGallery = function(args){
 	 __Init__(this, defaultArgs_scrollGallery, args, function(){
 	 });
 	 
-	 this.contentsHeight = this._css.height;
-	 
+	 this.contentsHeight = this.CSS.height;
+
+
+
+
+	//-------------------------------
+	// THE WIDGET
+	//-------------------------------	 
 	 $(this.widget).css({
 	    position: "relative",
 	 	overflow: "hidden",
@@ -88,7 +94,7 @@ var scrollGallery = function(args){
 	// THE SLIDER
 	//-------------------------------	
 	var mArgs = (this.args.orientation == "vertical") ? this.args._slidercss_vertical : this.args._slidercss_horizontal;
-	this.contentSlider = new __Slider__(mergeArgs(mArgs,{
+	this.contentSlider = new __Slider__(__MergeArgs__(mArgs,{
 		parent: this.widget,
 		id: this.args.id + "_contentSlider",
 	}));
@@ -121,7 +127,7 @@ scrollGallery.prototype.mapSliderToContents = function(){
 		}
 		else{
 	  		var t =   _remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], 
-	   							    [0,_i(that.scrollContent.style.width) - $(that.widget).width() - that.args.scrollMarginX]).newVal;	
+	   							    [0,__toInt__(that.scrollContent.style.width) - $(that.widget).width() - that.args.scrollMarginX]).newVal;	
 	   		if (t<0) t= 0;	
 	   		console.log(t);
 	   		$(that.scrollContent).css({
@@ -154,12 +160,12 @@ scrollGallery.prototype.setContents = function(obj){
 		// if obj is a DOM Element
 		if(obj.tagName){
 			that.scrollContent.appendChild(obj);
-			that.scrollContent.style.height = _px($(obj).height());
-			that.scrollContent.style.width = _px($(obj).width());
+			that.scrollContent.style.height = __PX__($(obj).height());
+			that.scrollContent.style.width = __PX__($(obj).width());
 		}
 	}
 
-	that.contentSlider.setSlideFunction(that.mapSliderToContents());  
+	that.contentSlider.addSlideCallback(that.mapSliderToContents());  
 	that.contentSlider.bindToMouseWheel(that.widget);		
 	this.updateCSS();
 }
@@ -167,8 +173,8 @@ scrollGallery.prototype.setContents = function(obj){
 scrollGallery.prototype.updateCSS = function(){
 	//alert((this.args.parent).style.height);
 	 $(this.widget).css({
-	 	//top: this._css.top,
-	 	//left: this._css.left,
+	 	//top: this.CSS.top,
+	 	//left: this.CSS.left,
 	 })
 	
 	if (this.contentSlider){		

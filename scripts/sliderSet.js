@@ -6,7 +6,7 @@ var defaultArgs_sliderSet = {
 	inputEditable: true,
 	showGenButton: false,
 	rowHeight : 40,
-	_css: {
+	CSS: {
 			"position": 'absolute',
 			"top": 0,
 			"left": 0,
@@ -27,14 +27,14 @@ var defaultArgs_sliderSet = {
 
 function sliderSet(args, sliderArgs){
 
-	this.args = mergeArgs(defaultArgs_sliderSet, args);
-	this._css = this.args._css;
+	this.args = __MergeArgs__(defaultArgs_sliderSet, args);
+	this.CSS = this.args.CSS;
 
 //	console.log("SLDIER SET ID: " + this.args["id"])
 	this.widget = document.createElement("div");
   	this.widget.setAttribute("id", this.args["id"]);
   	this.args.parent.appendChild(this.widget)
-	$(this.widget).css(this._css);
+	$(this.widget).css(this.CSS);
 	
 	this.labels = [sliderArgs.length];
 	this.values = [sliderArgs.length];
@@ -54,9 +54,9 @@ function sliderSet(args, sliderArgs){
 		this.genButton.setAttribute('name','Generate slider Parameters');
 		this.genButton.setAttribute('value','Generate slider Parameters');
 	  	$(this.genButton).css({ 
-	  		"position": this._css["position"],
-	  		"left": this._css["left"],
-	  		"top": this._css["top"] + this._css["height"] + 10,
+	  		"position": this.CSS["position"],
+	  		"left": this.CSS["left"],
+	  		"top": this.CSS["top"] + this.CSS["height"] + 10,
 		});
 		var that = this;
 		this.genButton.onclick = function(){
@@ -92,12 +92,12 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	
 	this.sliderRows[i] = document.createElement("div");
   	this.sliderRows[i].setAttribute("id",  this.args["id"] + "_sliderRow");
-  	//this.sliderRows[i].style.left = _px(labelMargin);
+  	//this.sliderRows[i].style.left = __PX__(labelMargin);
   	this.widget.appendChild(this.sliderRows[i])
 	
 	var hPos = i*this.args.rowHeight + 10;
 
-	s = new __Slider__(mergeArgs(this.sliderArgs[i], {
+	s = new __Slider__(__MergeArgs__(this.sliderArgs[i], {
 		parent: this.sliderRows[i],
 		id: this.args["id"] + "_" + this.sliderArgs[i]["id"],
 		displayLabel: this.sliderArgs[i].displayLabel,
@@ -112,24 +112,24 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
   	this.labels[i].innerHTML = s.args["displayLabel"].substring(0,12);
   	this.sliderRows[i].appendChild(this.labels[i])
 	this.labels[i].style.position = 'absolute';
-	this.labels[i].style.top = _px(hPos);
-	this.labels[i].style.left = _px(labelMargin);
+	this.labels[i].style.top = __PX__(hPos);
+	this.labels[i].style.left = __PX__(labelMargin);
 	
 	this.values[i] = document.createElement("div");
   	this.values[i].setAttribute("id",  s.args["id"] + "_value");
   	this.values[i].innerHTML = s.currValue;
   	this.sliderRows[i].appendChild(this.values[i])
 	this.values[i].style.position = 'absolute';
-	this.values[i].style.top = _px(hPos);
+	this.values[i].style.top = __PX__(hPos);
 	
 	s.args.left = sliderLeft;
 	s.updateCSS();
 	
 	var that = this;
-	s.addSlideFunction(function(_slider){
+	s.addSlideCallback(function(_slider){
 	  	that.values[i].innerHTML = _slider.currValue;
 	});
   
-	this.values[i].style.left = _px(valueLeft);
+	this.values[i].style.left = __PX__(valueLeft);
 }
 

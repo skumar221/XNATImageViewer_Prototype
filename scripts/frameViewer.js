@@ -4,7 +4,7 @@ var defaultArgs_frameViewer = {
 	onloadFrame: 0,
 	blankMsg : "drop thumbnail here",
 	contrastThreshold: .1,
-	_css: {
+	CSS: {
 			position: 'absolute',
 			top: 15,
 			left: 20,
@@ -34,9 +34,9 @@ function frameViewer(args){
 		top: 0,
 		left: 0
 	});
-	this.canvas.height = this._css.height;
-	this.canvas.width = this._css.width;
-//	console.log("this._css.height: " + this._css.height)
+	this.canvas.height = this.CSS.height;
+	this.canvas.width = this.CSS.width;
+//	console.log("this.CSS.height: " + this.CSS.height)
 
 
 	this.context = this.canvas.getContext('2d');
@@ -44,7 +44,7 @@ function frameViewer(args){
 
 	this.adjustMethods = {};
 	
-	this.context.font = _px(10) + " " + this.args._css["font-family"];
+	this.context.font = __PX__(10) + " " + this.args.CSS["font-family"];
 	this.context.fillStyle = "white"
 
 	
@@ -63,7 +63,7 @@ function frameViewer(args){
 
 
 frameViewer.prototype.updateCSS = function(){
-	//$(this.widget).css(this._css);
+	//$(this.widget).css(this.CSS);
 	//console.log($(this.widget).height())
 	this.canvas.height = $(this.widget).height();
 	this.canvas.width = $(this.widget).width();
@@ -79,6 +79,8 @@ frameViewer.prototype.updateCSS = function(){
 	    this.context.fillStyle = "white";	    
 		this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
 	}
+	
+	this.drawFrame(this.currFrame); 
 }
 
 frameViewer.prototype.addOnloadCallback = function(callback){
