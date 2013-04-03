@@ -3,8 +3,17 @@ var defaultArgs___Slider__ = {
   	corollary: "sliderScroller",			//def "sliderScroller"
   	displayLabel: "sliderScroller",			//def "sliderScroller"
   	parent: document.body,			//def document.body
-  	width: 200,						//def 500
-  	height: 8,					//def 200
+  	
+  	horizontalDims: {
+		width: 200,						//def 500
+  		height: 8,					//def 200  		
+  	},
+
+  	verticalDims: {
+		width: 8,						//def 500
+  		height: 200,					//def 200  		  		
+  	},
+  	
   	top: 50,						//def 0
   	left: 50,						//def 0
   	position: "absolute",			//def absolute
@@ -36,7 +45,7 @@ var mouseWheelScroll = function(e, that){
 	    
 	    var delta = 0, element = $(that.slider), value, result, oe;
 	    oe = e.originalEvent; // for jQuery >=1.7
-	    value = element.slider('value');
+	    value = element.slider('value'); 
 	
 		var multiplier = (that.args["orientation"] == "horizontal") ? -1: 1;
 		
@@ -217,6 +226,8 @@ function __Slider__(args){
   		addLinkedCallback(that, func);
   	}
   	
+  	
+
   	this.updateCSS();
 } 
 
@@ -379,28 +390,14 @@ __Slider__.prototype.linkSlider = function(b){
 
 
 
+
+//******************************************************
+//  Delegates depending on orientation of slider
+//
+//******************************************************
 __Slider__.prototype.updateCSS = function(){	
-
-
-
-
-	//----------------------------------------------
-	//  CSS: THE WIDGET
-	//----------------------------------------------
-	$(this.widget).css({
-		"position": "absolute",
-		width: __toPx__(this.args["width"]),
-		height: __toPx__(this.args["height"]),
-		left: __toPx__(this.args["left"]),
-		top: __toPx__(this.args["top"]),
-		"border" : "solid",
-		"border-color": this.args["sliderBorderColor"],
-	  	"background-color" : this.args["sliderBGColor"],
-	  	"border-width" : (this.args["borderWidth_slider"]),
-	  	"border-radius": (this.args["borderRadius_slider"]),	  		
-	});
 	
-	
+	this.syncWidgetDims();
 	
 	
 	//----------------------------------------------
@@ -413,30 +410,32 @@ __Slider__.prototype.updateCSS = function(){
 	}
 
 	//correctly compute the height of the slider + handle
-	var totalSliderHeight = this.args["height"] + 2*this.args["borderWidth_slider"];
+	var totalSliderHeight = __toInt__($(this.widget).css("height")) + 2*this.args["borderWidth_slider"];
 	var totalheight_handle = this.args["height_handle"] + 2*this.args["borderWidth_handle"];
 	
 	// determine whether the handle+borders or the slider+borders is taller
 	var heightAdj = 0;//(totalSliderHeight < totalheight_handle) ? totalheight_handle/2 + totalSliderHeight/2 : totalSliderHeight;
 	var handleTopMarginAdj = 0; 
 	
+	
 	if (totalSliderHeight < totalheight_handle){
 		heightAdj = totalheight_handle/2 + totalSliderHeight/2;
-		handleTopMarginAdj = -(totalheight_handle/2 - this.args["height"]/2);
+		handleTopMarginAdj = -(totalheight_handle/2 - __toInt__($(this.widget).css("height"))/2);
 	}
 	else{
 		heightAdj = totalSliderHeight;
-		handleTopMarginAdj = this.args["height"]/2 - totalheight_handle/2; 
+		handleTopMarginAdj = __toInt__($(this.widget).css("height"))/2 - totalheight_handle/2; 
 		
 	}
 	
-	var totalSliderWidth = this.args["width"] + this.args["borderWidth_slider"]*2;
+	var totalSliderWidth = __toInt__($(this.widget).css("width")) + this.args["borderWidth_slider"]*2;
 	var totalwidth_handle = this.args["width_handle"] + this.args["borderWidth_handle"]*2;
 	var deltaWidth = totalwidth_handle - totalSliderWidth;
 	
-	var totalSliderHeight = this.args["height"] + this.args["borderWidth_slider"]*2;
+	var totalSliderHeight = __toInt__($(this.widget).css("height")) + this.args["borderWidth_slider"]*2;
 	var totalheight_handle = this.args["height_handle"] + this.args["borderWidth_handle"]*2;
 	var deltaHeight = totalheight_handle - totalSliderHeight;
+	
 	
 	$(this.sliderHandle).css({
 		"border-radius": this.args["borderRadius_handle"],
@@ -453,17 +452,7 @@ __Slider__.prototype.updateCSS = function(){
 		"margin-bottom": "0px",
 	})
 
-	//*********************************************
-	//	Dimension out and style the widget
-	//*********************************************
-	$(this.widget).css({
-		"position": "absolute",
-		"border" : "solid",
-		"border-color": this.args["sliderBorderColor"],
-	  	"background-color" : this.args["sliderBGColor"],
-	  	"border-width" : (this.args["borderWidth_slider"]),
-	  	"border-radius": (this.args["borderRadius_slider"]),	  		
-	});
+	
 	
 	//*********************************************
 	//	Remove Default Styling
@@ -472,70 +461,160 @@ __Slider__.prototype.updateCSS = function(){
 	  	"background": "none",
 	  	"border": "none",
   	});	
-
-	if (this.args["orientation"] == "horizontal"){	  
-		//console.log("Horiz: " + this.args.id);			    
-	  	constrainWidth = this.args["width"]-(this.args["constrainMargin"]*2) - 	(this.args["width_handle"]);						  
-	  	$(this.sliderConstrainer).css({
-	  		"position": "relative",
-		  	"width" : __toPx__(constrainWidth),
-		  	"height" : __toPx__(this.args["height"]),
-		  	"left": __toPx__(0),
-		  	"top": __toPx__(0), // basically puts the slider at the top of the widget
-		  				   // no big deal, because handle's top is adjusted
-			//"backgroundColor" : "rgba(0,255,0,.5)",	 
-			"margin" : "0px auto",	//aligns the slider and handle to the middle
-	  	});	
-	  	
-	  	// for debugging
-	  	$(this.slider).css({  	
-	  		"height" : __toPx__($(this.sliderConstrainer).css("height")),	
-		  	"width" : __toPx__($(this.sliderConstrainer).css("width")),		
-		  	//"backgroundColor" : "rgba(0,255,0,.5)",	 
-	  	});	 
-	  	 	
-		$(this.sliderHandle).css({
-		  	"margin-left" : (-totalwidth_handle/2), // minor tweak
-		  	"margin-top" : (0), 
-		  	"top" : (this.args["height"]/2 - totalheight_handle/2),
-		});
-		
-  }
-  else if (this.args["orientation"] == "vertical"){	
-  		//console.log("vert: " + this.args.id)
-  		constrainHeight = this.args["height"]-(this.args["constrainMargin"]*2) - (this.args["height_handle"]);			  
-	  	$(this.sliderConstrainer).css({
-	  		"position" : "relative",
-		  	"height" : (constrainHeight),
-		  	// no vertical align, so have to use this
-		  	"top": ((this.args["height"] - constrainHeight)/2),
-		  	"left": (0),
-		  	//"backgroundColor" : "rgba(0,255,0,.5)",	  		  		 		  		
-	  	});	
-
-	  	$(this.slider).css({
-	  		// For whatever reason the slider hieght does not 
-	  		// borrow from the slider container
-		  	"height" : $(this.sliderConstrainer).css("height"),	
-		  	"width" : $(this.sliderConstrainer).css("width"),	
-		  	//"height" : (0),	
-		  	//"width" : (0),	
-		  	//"backgroundColor" : "rgba(0,255,0,.5)",		  		
-	  	});	
-
-			
-	    $(this.sliderHandle).css({
-		  	"left" : ((this.args["width"]/2 - totalwidth_handle/2)),
-		  	// Don't mess with top, as that is how it slides.
-		  	// mess with margin-top instdead
-		  	//"top" : (0), 
-		  	"margin-bottom" : (-totalheight_handle/2), 
-		  	"margin-top" : (0), 
-		  	"margin-left" : (0), 
-		});
-  }
-
-	//$(this.slider).slider('option', 'value', this.currValue);
   	
+	if (this.args["orientation"] == "horizontal"){
+		this.updateCSS_Horizontal({
+			"totalwidth_handle" : totalwidth_handle,
+			"totalheight_handle" : totalheight_handle,	
+		});
+	}
+	else{
+		this.updateCSS_Vertical({
+			"totalwidth_handle" : totalwidth_handle,
+			"totalheight_handle" : totalheight_handle,	
+		});		
+	}
+	
+
 }
 
+
+
+
+//******************************************************
+//  Priortizes the given widget dimensions based upon the 
+//  following order of importance (Highest to lowest)
+//
+//  1) CSS dimension
+//  2) this.args dimension
+//  3) this.args.horizontal/vertical dimension
+//
+//******************************************************
+__Slider__.prototype.syncWidgetDims = function(){
+	
+	this.widgetDims = {};	
+	
+     // get three widths, from args and from css
+	var dW = (this.args["orientation"] == "horizontal") ? this.args.horizontalDims["width"] : this.args.verticalDims["width"];
+	var iW = this.args["width"];
+	var cW = __toInt__($(this.widget).css('width'));
+	
+	
+	
+	// get three heights, from args and from css
+	var dH = (this.args["orientation"] == "horizontal") ? this.args.horizontalDims["height"] : this.args.verticalDims["height"];
+	var iH = this.args["height"];
+	var cH = __toInt__($(this.widget).css("height"));
+	
+	
+	// Priority of the width to use
+	var W = (cW) ? cW : (iW) ? iW : dW;
+	// Priority of the height to use
+	var H = (cH) ? cH : (iH) ? iH : dH;
+
+	
+	// Priority of the left to use
+	var L = __toInt__($(this.widget).css("left")) ? __toInt__($(this.widget).css("left")) : (this.args["left"]);
+	// Priority of the top to use
+	var T = __toInt__($(this.widget).css("top")) ? __toInt__($(this.widget).css("top")) : (this.args["top"]);
+
+	
+	// DEBUG
+	/*
+	console.log(this.args.id);
+	console.log(cW, iW, dW);
+	console.log(cH, iH, dH);
+	console.log("selectedW: " + W);
+	console.log("selectedH: " + H);
+	console.log("***********");
+	*/
+		
+	$(this.widget).css({
+		"position": "absolute",
+		width: W,
+		height: H,
+		left: L,
+		top: T,
+		"border" : "solid",
+		"border-color": this.args["sliderBorderColor"],
+	  	"background-color" : this.args["sliderBGColor"],
+	  	"border-width" : (this.args["borderWidth_slider"]),
+	  	"border-radius": (this.args["borderRadius_slider"]),	
+	});
+}
+
+
+
+
+__Slider__.prototype.updateCSS_Vertical = function(args){
+
+
+	//console.log("vert: " + this.args.id)
+	constrainHeight = __toInt__($(this.widget).css("height"))-(this.args["constrainMargin"]*2) - (this.args["height_handle"]);			  
+  	$(this.sliderConstrainer).css({
+  		"position" : "relative",
+	  	"height" : (constrainHeight),
+	  	// no vertical align, so have to use this
+	  	"top": ((__toInt__($(this.widget).css("height")) - constrainHeight)/2),
+	  	"left": (0),
+	  	//"backgroundColor" : "rgba(0,255,0,.5)",	  		  		 		  		
+  	});	
+
+  	$(this.slider).css({
+  		// For whatever reason the slider hieght does not 
+  		// borrow from the slider container
+	  	"height" : $(this.sliderConstrainer).css("height"),	
+	  	"width" : $(this.sliderConstrainer).css("width"),	
+	  	//"height" : (0),	
+	  	//"width" : (0),	
+	  	//"backgroundColor" : "rgba(0,255,0,.5)",		  		
+  	});	
+
+		
+    $(this.sliderHandle).css({
+	  	"left" : (__toInt__($(this.widget).css("width"))/2 - args.totalwidth_handle/2),
+	  	// Don't mess with top, as that is how it slides.
+	  	// mess with margin-top instdead
+	  	//"top" : (0), 
+	  	"margin-bottom" : (-args.totalheight_handle/2), 
+	  	"margin-top" : (0), 
+	  	"margin-left" : (0), 
+	});
+}
+
+
+
+
+__Slider__.prototype.updateCSS_Horizontal = function(args){
+
+  
+	//console.log("Horiz: " + this.args.id);			    
+  	constrainWidth = __toInt__($(this.widget).css("width")) - (this.args["constrainMargin"]*2) - 	(this.args["width_handle"]);		
+//	  	console.log(constrainWidth)				  
+  	$(this.sliderConstrainer).css({
+  		"position": "relative",
+	  	"width" : (constrainWidth),
+	  	"height" : __toInt__($(this.widget).css("height")),
+	  	"left": (0),
+	  	"top": (0), // basically puts the slider at the top of the widget
+	  				   // no big deal, because handle's top is adjusted
+		//"backgroundColor" : "rgba(0,255,0,.5)",	 
+		"margin" : "0px auto",	//aligns the slider and handle to the middle
+  	});	
+  	
+  	// for debugging
+  	$(this.slider).css({  	
+  		"height" : ($(this.sliderConstrainer).css("height")),	
+	  	"width" : ($(this.sliderConstrainer).css("width")),		
+	  	//"backgroundColor" : "rgba(0,255,0,.5)",	 
+  	});	 
+  	 	
+	$(this.sliderHandle).css({
+	  	"margin-left" : (-args.totalwidth_handle/2), // minor tweak
+	  	"margin-top" : (0), 
+	  	"top" : __toInt__($(this.widget).css("height"))/2 - args.totalheight_handle/2,
+	});
+	
+  
+  
+}

@@ -37,6 +37,11 @@ var defaultArgs_scanViewer = {
 
 
 
+
+
+//******************************************************
+//  
+//******************************************************
 var scanViewer = function(args){
   	var that = this;
 	 __Init__(this, defaultArgs_scanViewer, args, function(){});
@@ -68,7 +73,6 @@ var scanViewer = function(args){
 		id: this.args.id + "_frameSlider", 
 		parent: this.widget,
 	}));
-
 
 	// Tell frameslider how to behave...	
 	this.frameSlider.addSlideCallback(function(_slider){  		
@@ -195,6 +199,10 @@ var scanViewer = function(args){
 
 
 
+
+//******************************************************
+//  
+//******************************************************
 scanViewer.prototype.updateCSS = function(){
 
 	var tabsHeight = 180;
@@ -217,7 +225,7 @@ scanViewer.prototype.updateCSS = function(){
 	
 	
 	//----------------------------------
-	// SCAN TABS
+	// CSS: SCAN TABS
 	//----------------------------------	
 	$(this.scanTabs.widget).css({
  		left: marginLeft,
@@ -230,18 +238,20 @@ scanViewer.prototype.updateCSS = function(){
 
 
 	//----------------------------------
-	// FRAME SLIDER
+	// CSS: FRAME SLIDER
 	//----------------------------------		
 	$(this.frameSlider.widget).css({
 		top : sliderTop,
 		left : marginLeft,
 		width : viewerWidth,
+		height: 5
 	});
-   //this.frameSlider.updateCSS();
+    this.frameSlider.updateCSS();
+
 	
 		 
 	 //----------------------------------
-	 // FRAME VIEWER
+	 // CSS: FRAME VIEWER
 	 //----------------------------------
 	 $(this.frameViewer.widget).css({
  	    left: marginLeft,
@@ -254,7 +264,7 @@ scanViewer.prototype.updateCSS = function(){
 
 
 	 //----------------------------------
-	 // FRAME NUMBER DISPLAY
+	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
 	 		top: $(this.frameViewer.widget).height() - __Globals__.fontSizeSmall -5,
@@ -267,6 +277,14 @@ scanViewer.prototype.updateCSS = function(){
    	
 }
 
+
+
+
+
+
+//******************************************************
+//  
+//******************************************************
 scanViewer.prototype.populateData = function(data){	
 	var that = this;
 

@@ -171,12 +171,23 @@ scrollGallery.prototype.setContents = function(obj){
 }
 
 scrollGallery.prototype.updateCSS = function(){
-	//alert((this.args.parent).style.height);
+	
+	
+
+
+	 //----------------------------------
+	 // The WIDGET
+	 //----------------------------------
 	 $(this.widget).css({
 	 	//top: this.CSS.top,
 	 	//left: this.CSS.left,
 	 })
-	
+
+
+
+	 //----------------------------------
+	 // THE SLIDER
+	 //----------------------------------	
 	if (this.contentSlider){		
 		if(this.args.orientation == "vertical"){
 			if(this.args.sliderLocation == "right"){
@@ -187,8 +198,15 @@ scrollGallery.prototype.updateCSS = function(){
 					left: $(this.contentSlider.widget).outerWidth(),
 				});		
 			}
-			this.contentSlider.args.height = $(this.widget).height();
+			
+
+			$(this.contentSlider.widget).css({
+				height : $(this.widget).height(),
+				width : 10
+			});
 			this.contentSlider.updateCSS();
+			
+			
 		}
 		else{
 
