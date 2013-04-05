@@ -16,7 +16,7 @@ defaultArgs_scanThumbnail = {
 	    "border" : "solid",
 		"border-color": "rgba(50,50,50,1)",
 		"color": "rgba(0,0,0,1)",
-	  	"background-color" : "rgba(120,31,60,1)",
+	  	//"background-color" : "rgba(120,31,60,1)",
 	  	"border-width" : 1,
 	  	"border-radius": 0,	 
 	  	"cursor": "pointer"
@@ -71,6 +71,10 @@ function scanThumbnail(args){
 	// INTERACTION METHODS
 	//--------------------------------
 	
+	
+	
+	
+	
 	//--------------------------------
 	// HOVER STUFF
 	//--------------------------------
@@ -100,6 +104,17 @@ function scanThumbnail(args){
 	this.setHoverMethods();
 	__Droppable__(this);
 	this.updateCSS();	
+	
+	
+	// Once the image lods, we want to make sure it is also the draggable image
+	// and that it's draw on the thumbnail canvas.
+	$(this.thumbImage).load(function(){
+		console.log("load 2: " + that.thumb);			
+		if (that.thumb && that.thumb.nodeName == "CANVAS")
+			that.thumb.getContext("2d").drawImage(that.thumbImage, 0, 0, that.CSS.width, that.CSS.height);
+		else
+			console.log("No thumb canvas")
+	});
 }
 
 
@@ -109,8 +124,10 @@ function scanThumbnail(args){
 // THUMB CANVASES
 //-----------------------------
 scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
-
-	elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, __MergeArgs__(this.CSS,{
+	
+	var that = this;
+	
+	var elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, __MergeArgs__(this.CSS,{
 		top: 0,
 		left: 0,
 		"border-width": 0,
@@ -121,9 +138,9 @@ scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 
 	elt.width = this.CSS.width;
 	elt.height = this.CSS.height;
-	elt.getContext("2d").drawImage(this.thumbImage, 0, 0, this.CSS.width, this.CSS.height);
-
-	return elt;	
+	
+	// Might want to put the progress indicator here.
+	return elt;
 }
 
 

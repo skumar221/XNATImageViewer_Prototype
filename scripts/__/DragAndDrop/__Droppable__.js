@@ -26,7 +26,7 @@ var dropZoneMouseout = function(dz, obj){
 		//try{
 			$(dz).stop().animate({
 				opacity: 1,
-				backgroundColor: "rgba(120,120,220,0)",
+				backgroundColor: "rgba(120,120,120,0)",
 				borderColor: "rgba(55,55,55,1)",
 			}, 100, function(){});	
 		//}
@@ -158,6 +158,9 @@ function __Droppable__(obj){
 	// CREATE DRAGGABLE
 	//--------------------------------
 	var cloneObj = (obj.cloneable) ? obj.cloneable : obj;
+	
+	// extract the element from the obj (we don't know wheter it's
+	// a javascript object ir or a DOM element)
 	obj.draggable = __ExtractElement__(cloneObj).cloneNode(true);
 	obj.draggable.id = obj.args.id + "_draggable";
 	
@@ -177,10 +180,23 @@ function __Droppable__(obj){
 	});	
 	
 
-	if (obj.draggable.nodeName == "CANVAS")
-	{
-		obj.draggable.getContext('2d').drawImage(cloneObj, 0,0)
-	}
+
+	// Draw the image of the object has one associated 
+	// with it.
+	if (obj.thumbImage){
+		console.log("load 1: " + obj.draggable.id + " " + obj.draggable.nodeName);
+		if (obj.draggable.nodeName == "CANVAS")
+		{						
+			$(obj.thumbImage).load(function(){
+
+				obj.draggable.getContext('2d').drawImage(obj.thumbImage, 0,0, 
+														 obj.draggable.width, 
+														 obj.draggable.height);		
+			})
+		}
+	}		
+	
+
 		
 	//--------------------------------
 	// DRAW HINT
