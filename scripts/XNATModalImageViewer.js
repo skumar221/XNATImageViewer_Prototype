@@ -154,16 +154,26 @@ var XNATModalImageViewer = function(args){
 		var totalHeight = 0;
 		  	  
 		for (var i=0; i<20; i++){
-		 var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
-		 var a = new scanThumbnail({
-			  	id: "scrollContent_" + i.toString(),
-			  	parent: that.scrollGallery.scrollContent,
-			  	CSS: {
-			  		top: h, 
-			  		left: that.scrollGallery.args.scrollMarginX,
-			  	}
-			  });
-		   that.scrollGallery.thumbs.push(a)
+			var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
+			var scanThumb = new scanThumbnail({
+				  	id: "scrollContent_" + i.toString(),
+				  	parent: that.scrollGallery.scrollContent,
+				  	CSS: {
+				  		top: h, 
+				  		left: that.scrollGallery.args.scrollMarginX,
+				  	}
+				  });
+	
+				
+			// We want to manage the active thumbnails...
+			// we need to "deactivate" them when another has replaced
+			// their slot.  
+			scanThumb.addActivatedCallback(function(thumb, args){
+				that.manageActiveThumbs(thumb, args);
+			})
+			
+			
+			that.scrollGallery.thumbs.push(scanThumb);
 		}
 		  
 		  that.scrollGallery.scrollContent.style.height = __toPx__(h + that.scrollGallery.args.scrollMarginY*1 + 100);
@@ -686,4 +696,32 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 }
 
 
+
+//******************************************************
+//  Manage Active Thumbs
+//******************************************************
+XNATModalImageViewer.prototype.manageActiveThumbs = function(thumb, args){
+	if (!this.activeThumbManager)
+		this.activeThumbManager = {};
+	
+
+	// We basically want to cycle through the manager
+	// so that any thumbnail associated with args.activeDropZoneID
+	// is removed and replaced with thumb
+	if (args.activeDropZoneID){
+		for (var i=0;i<this.scanViewers.length;i++){
+			if (this.scanViewers[i].frameViewer.args.id == args.activeDropZoneID){
+				if (this.activeThumbManager[args.activeDropZoneID]){
+					//console.log("deactivating existing: " + this.activeThumbManager[args.activeDropZoneID].args.id + " in " + args.activeDropZoneID)
+					this.activeThumbManager[args.activeDropZoneID].deactivate();
+				}
+
+				this.activeThumbManager[args.activeDropZoneID] = thumb;
+				//console.log("inserting: " + thumb.args.id + " in " + args.activeDropZoneID);
+				break;
+			}
+		}
+	}
+	
+}
 

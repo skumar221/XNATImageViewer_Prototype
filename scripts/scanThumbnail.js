@@ -3,6 +3,7 @@ defaultArgs_scanThumbnail = {
 	parent: document.body,
 	draggableParent: document.body,
 	returnAnimMax: 300,
+	activated: false,
 	CSS: {
 		position: "absolute",
 		width: 80,
@@ -108,8 +109,7 @@ function scanThumbnail(args){
 	
 	// Once the image lods, we want to make sure it is also the draggable image
 	// and that it's draw on the thumbnail canvas.
-	$(this.thumbImage).load(function(){
-		console.log("load 2: " + that.thumb);			
+	$(this.thumbImage).load(function(){		
 		if (that.thumb && that.thumb.nodeName == "CANVAS")
 			that.thumb.getContext("2d").drawImage(that.thumbImage, 0, 0, that.CSS.width, that.CSS.height);
 		else
@@ -120,9 +120,9 @@ function scanThumbnail(args){
 
 
 
-//-----------------------------
+//****************************************
 // THUMB CANVASES
-//-----------------------------
+//****************************************
 scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 	
 	var that = this;
@@ -145,32 +145,108 @@ scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 
 
 
-
-//-----------------------------
-// HIGHLIGHT HOVER
-//-----------------------------
-scanThumbnail.prototype.setHoverMethods = function(){
-	var that = this;
-	var animtime = 100;
-		
-	applyHoverAnim(this.widget);
-	$(this.widget).mouseover(function(){
-
-	  $(that.hoverData).stop().fadeTo(animtime,1);
-		
-	}).mouseleave(
-		function(){ 
-		$(that.hoverData).stop().fadeTo(100,0);
-	});
-	
+//****************************************
+// Hover On
+//****************************************
+scanThumbnail.prototype.hoverOn = function(animtime){
+	$(this.hoverData).stop().fadeTo(animtime,1);
 }
 
 
 
 
-//-----------------------------
+//****************************************
+// Hover Off
+//****************************************
+scanThumbnail.prototype.hoverOff = function(animtime){ 
+	$(this.hoverData).stop().fadeTo(animtime,0);
+}
+
+
+
+//****************************************
+// SET HOVER HIGHLIGHTING
+//****************************************
+scanThumbnail.prototype.setHoverMethods = function(){
+	var that = this;
+	that.args.animtime = 100;
+
+
+	//--------------------------
+	// Setup procedure, defines the mouseovers
+	//--------------------------		
+	//console.log("thumb deactivate");
+	this.deactivate();
+}
+
+
+
+
+//****************************************
+// DEACTIVATE
+//****************************************
+scanThumbnail.prototype.deactivate = function(){ 
+	//console.log("DEACTIVATING: " + this.args.id)
+	
+	var that = this;
+	this.args.activated = false;
+	
+	
+	//--------------------------
+	// GENERIC BORDER HIGHLIGHT
+	//--------------------------	
+	applyHoverAnim(this.widget);
+	
+	
+	//--------------------------
+	// SHOW HOVERING METADATA
+	//--------------------------
+	$(this.widget).mouseover(function(){
+		that.hoverOn(that.args.animtime);
+	}).mouseleave(function(){
+		that.hoverOff(that.args.animtime);
+	});	
+	
+	
+	this.hoverOff(100);
+}
+
+
+//****************************************
+// ACTIVATE
+//****************************************
+scanThumbnail.prototype.activate = function(activeDropZoneID){ 
+	var that = this;
+	this.args.activated = true;
+	
+	// Do the hover On
+	this.hoverOn(0);
+	
+	
+	// Unbind all hover existing methods
+	$(this.widget).unbind('mouseover').unbind('mouseleave');
+	
+
+	// Since we're unbinding everything we have to rebind
+	// the generic hover (border highlighting)	
+	applyHoverAnim(this.widget);
+		
+	// Callbacks	
+	if (this.activatedCallbacks && this.activatedCallbacks.length > 0){
+		for (var i=0;i<this.activatedCallbacks.length;i++){
+			this.activatedCallbacks[i](that, {
+				"activeDropZoneID": activeDropZoneID
+			});
+		}
+	}
+}
+
+
+
+
+//****************************************
 // FRAMES
-//-----------------------------
+//****************************************
 scanThumbnail.prototype.getFrameList = function(){
 	return this.scanData.scanPaths;
 }
@@ -178,14 +254,24 @@ scanThumbnail.prototype.getFrameList = function(){
 
 
 
-//-----------------------------
+//****************************************
 // WINDOW RESIZING
-//-----------------------------
+//****************************************
 scanThumbnail.prototype.updateCSS = function(){
 	$(this.widget).css(this.CSS);
 }
 
 
+
+//****************************************
+// activated callaback
+//****************************************
+scanThumbnail.prototype.addActivatedCallback = function(callback){
+	if(!this.activatedCallbacks)
+		this.activatedCallbacks = [];
+	
+	this.activatedCallbacks.push(callback)
+}
 
 
 

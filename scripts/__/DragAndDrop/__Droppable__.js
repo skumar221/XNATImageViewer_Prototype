@@ -23,6 +23,7 @@ var dropZoneMouseover = function(dz, obj){
 //---------------------------------
 var dropZoneMouseout = function(dz, obj){
 	if (dz){
+
 		//try{
 			$(dz).stop().animate({
 				opacity: 1,
@@ -112,6 +113,7 @@ var __Droppable__mousedown = function(that){
 		//--------------------------------
 		that.mouseDown = false;
 		
+
 		
 		//--------------------------------
 		// IF OVER A DROPZONE...
@@ -128,8 +130,14 @@ var __Droppable__mousedown = function(that){
 				//that.dropZones[dz].loadFrames(that.frames);		
 				that.dropZones[dz].loadDroppable(that);		
 			}
+			
+			// set activated	
+			if (that.args.activated !== null || that.activated !== null){
+				that.activate(that.dropZones[dz].args.id);
+			}
 		}
 		
+
 		
 		//--------------------------------
 		// IF NOT, ANIMATE BACK TO POSITION
@@ -139,8 +147,23 @@ var __Droppable__mousedown = function(that){
 			$(that.draggable).animate({
 				left: "+=" + (wPos.left - dPos.left).toString(),
 				top: "+=" + (wPos.top - dPos.top).toString(),
-			}, animTime, function(){that.restoreDrag(that)})		
+			}, animTime, function(){				
+				
+				that.restoreDrag(that);
+
+				if (that.args.activated !== null || that.activated !== null){
+					//console.log("droppable deactivate");
+					if (!that.args.activated)
+						that.deactivate();
+				}
+				
+			})			
 		}
+		
+		
+		//--------------------------------
+		// Unbind mouseenter and leave events, either way
+		//--------------------------------
 		for (var i=0;i< that.dropZones.length; i++){
 			that.dropZoneMouseout(that.dropZones[i].widget);	
 			$(that.dropZones[i]).unbind('mouseenter').unbind('mouseleave');
@@ -184,7 +207,6 @@ function __Droppable__(obj){
 	// Draw the image of the object has one associated 
 	// with it.
 	if (obj.thumbImage){
-		console.log("load 1: " + obj.draggable.id + " " + obj.draggable.nodeName);
 		if (obj.draggable.nodeName == "CANVAS")
 		{						
 			$(obj.thumbImage).load(function(){
