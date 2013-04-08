@@ -133,6 +133,18 @@ var XNATModalImageViewer = function(args){
 	//----------------------------------	
 	this.createExpandButton();
 	
+
+	
+	//----------------------------------
+	//SCAN DATA PATHS - AJAX QUERY HERE
+	//
+	// FOR PROTOTYPING PURPOSES
+	//----------------------------------	
+	this.scanDataPaths = []
+	for (var i=0;i<20;i++){
+		this.scanDataPaths.push(TESTSCANDATA_1);
+	}
+
 	
 	
 	//----------------------------------
@@ -153,9 +165,9 @@ var XNATModalImageViewer = function(args){
 		var thumbSpacing = that.scrollGallery.args.scrollMarginY;
 		var totalHeight = 0;
 		  	  
-		for (var i=0; i<20; i++){
+		for (var i=0; i<that.scanDataPaths.length; i++){
 			var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
-			var scanThumb = new scanThumbnail({
+			var scanThumb = new scanThumbnail(that.scanDataPaths[i], {
 				  	id: "scrollContent_" + i.toString(),
 				  	parent: that.scrollGallery.scrollContent,
 				  	CSS: {
@@ -252,7 +264,7 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	
 	var pctStrObj = {};
 	for (key in pctObj){
-		pctStrObj[key] = _pct(pctObj[key]);
+		pctStrObj[key] = __Pct__(pctObj[key]);
 	}
 	
 	var pxStrObj = {};

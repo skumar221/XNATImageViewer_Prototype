@@ -55,6 +55,8 @@ var defaultArgs_scrollGallery = {
 	}
 }
 
+
+
 var scrollGallery = function(args){
   	var that = this;
 	 __Init__(this, defaultArgs_scrollGallery, args, function(){
@@ -119,14 +121,14 @@ scrollGallery.prototype.mapSliderToContents = function(){
 	var that = this;
 	return function(_slider){		
 		if (that.args.orientation == "vertical"){
-	  		var t = -1 * _remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], 
+	  		var t = -1 * __RemapID__(_slider.currValue, [_slider.args.min, _slider.args.max], 
 	   							    [0, $(that.scrollContent).outerHeight() - $(that.widget).height() - that.args.scrollMarginY]).newVal;	
 	   		$(that.scrollContent).css({
 	  			top: t,
 	  		});
 		}
 		else{
-	  		var t =   _remap1D(_slider.currValue, [_slider.args.min, _slider.args.max], 
+	  		var t =   __RemapID__(_slider.currValue, [_slider.args.min, _slider.args.max], 
 	   							    [0,__toInt__(that.scrollContent.style.width) - $(that.widget).width() - that.args.scrollMarginX]).newVal;	
 	   		if (t<0) t= 0;	
 	   		console.log(t);

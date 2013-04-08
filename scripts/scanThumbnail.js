@@ -25,7 +25,7 @@ defaultArgs_scanThumbnail = {
 }
 
 
-function scanThumbnail(args){
+function scanThumbnail(scanData, args){
 	var that = this;
 	__Init__(this, defaultArgs_scanThumbnail, args, function(){});
 
@@ -40,8 +40,7 @@ function scanThumbnail(args){
 	// THUMBNAIL IMAGE
 	//--------------------------------
 	// AJAX QUERY WOULD BE HERE
-	// this.scanData = getXNATScanDataFromURL();TESTING_testData1;		
-	this.scanData = TESTING_testData1;	
+	this.scanData = scanData;	
 	
 	
 	
@@ -195,7 +194,7 @@ scanThumbnail.prototype.deactivate = function(){
 	//--------------------------
 	// GENERIC BORDER HIGHLIGHT
 	//--------------------------	
-	applyHoverAnim(this.widget);
+	__ApplyHoverAnim__(this.widget);
 	
 	
 	//--------------------------
@@ -210,6 +209,8 @@ scanThumbnail.prototype.deactivate = function(){
 	
 	this.hoverOff(100);
 }
+
+
 
 
 //****************************************
@@ -229,7 +230,7 @@ scanThumbnail.prototype.activate = function(activeDropZoneID){
 
 	// Since we're unbinding everything we have to rebind
 	// the generic hover (border highlighting)	
-	applyHoverAnim(this.widget);
+	__ApplyHoverAnim__(this.widget);
 		
 	// Callbacks	
 	if (this.activatedCallbacks && this.activatedCallbacks.length > 0){

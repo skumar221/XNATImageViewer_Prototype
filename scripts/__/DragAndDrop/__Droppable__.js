@@ -18,6 +18,8 @@ var dropZoneMouseover = function(dz, obj){
 	}
 }
 
+
+
 //---------------------------------
 // DROPZONE MOUSEOUT ANIMATION
 //---------------------------------
@@ -38,6 +40,7 @@ var dropZoneMouseout = function(dz, obj){
 }
 
 
+
 //---------------------------------
 // ADD DROP ZONE -- checks for dups
 //---------------------------------
@@ -53,15 +56,19 @@ var addDropZone = function(dz, obj){
 	return true;
 }
 
+
+
 //---------------------------------
 //	THE DRAGGING PROCESS
 //---------------------------------
 var __Droppable__mousedown = function(that){
 
+
 	//--------------------------------
 	// SET GLOBAL
 	//--------------------------------
 	that.mouseDown = true;
+
 
 	//--------------------------------
 	// SWITCH DRAGGABLE's PARENT
@@ -199,7 +206,7 @@ function __Droppable__(obj){
 		left: 0,
 		backgroundColor : "rgba(0,50,230,.5)",
 		opacity: 0,
-		borderColor: this.CSS["border_color"],
+		borderColor: obj.CSS["border_color"],
 	});	
 	
 
