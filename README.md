@@ -18,9 +18,9 @@ A general overview of the XNATModalImageViewer flow is as follows:
 		data set called TESTSCANDATA_1 found in the ./TESTSCANS directory
 
 
-	2) scrollGallery.js (Holds "scanThumbnails")
-		Mousewheel responsive filmstrip gallery that hosts "scanThumbnails", which are
-		__Draggable__ widgets that can be dropped into __DropZones__  
+2) scrollGallery.js (Holds "scanThumbnails")
+	Mousewheel responsive filmstrip gallery that hosts "scanThumbnails", which are
+	__Draggable__ widgets that can be dropped into __DropZones__  
 
 
  3) scanThumbnail.js  (is a __Draggable__)
@@ -29,9 +29,9 @@ A general overview of the XNATModalImageViewer flow is as follows:
 		are themselves not loaded onto the thumbnail, but their paths are.
 
 
-	4) scanViewer.js (Holds: frameViewer, scanTabs and a slider)
- 		This is the "view" widget thats comprised of the metadata tabs, the frame slider and 
-		the frameViewer
+4) scanViewer.js (Holds: frameViewer, scanTabs and a slider)
+	This is the "view" widget thats comprised of the metadata tabs, the frame slider and 
+	the frameViewer
 
 
  5) frameViewer.js (is a _DropZone__)
@@ -39,14 +39,14 @@ A general overview of the XNATModalImageViewer flow is as follows:
 		effectively making them frames.
 
 
-	6) imageManip.js
-		Contains utility methods for brightness and contrast.
+6) imageManip.js
+	Contains utility methods for brightness and contrast.
 
 
-	7) scanTabs.js
- 		Modified jQueryUI tabs for hosting metadata/
+7) scanTabs.js
+	Modified jQueryUI tabs for hosting metadata/
 
-	8) The "__" toolkit
-		 jQuery + javaScript toolkit, developed by Sunil Kumar.  Contains a lot of useful stuff.
+8) The "__" toolkit
+	 jQuery + javaScript toolkit, developed by Sunil Kumar.  Contains a lot of useful stuff.
 
 
