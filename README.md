@@ -20,10 +20,10 @@ A general overview of the XNATModalImageViewer flow is as follows:
 
 2) scrollGallery.js (Holds "scanThumbnails")
 	Mousewheel responsive filmstrip gallery that hosts "scanThumbnails", which are
-	__Draggable__ widgets that can be dropped into __DropZones__  
+	"__Draggable__" widgets that can be dropped into "__DropZones__". 
 
 
- 3) scanThumbnail.js  (is a __Draggable__)
+ 3) scanThumbnail.js  (is a "__Draggable__")
 		A quasi-intelligent javaScript object (comprised of several elements, mostly divs)
 		that contains the basic information of the scan itself, and its metadata.  The images
 		are themselves not loaded onto the thumbnail, but their paths are.
@@ -34,7 +34,7 @@ A general overview of the XNATModalImageViewer flow is as follows:
 	the frameViewer
 
 
- 5) frameViewer.js (is a _DropZone__)
+ 5) frameViewer.js (is a "__DropZone__")
 		Holds a number of HTML5 canvas elements that allow the user to cycle through them, 
 		effectively making them frames.
 
