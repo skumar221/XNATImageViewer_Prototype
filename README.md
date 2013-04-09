@@ -1,7 +1,7 @@
 
 
 OVERVIEW: Most of the "objects" (or widgets) are organized around standard
-object-oriented principles.  Since javaScript makes everything
+object-oriented principles.  Since JavaScript makes everything
 first-class, I do some modification to impart more "object-like" qualities into the widgets. 
 For instance, they all have init functions (i.e. "__Init__") and "updateCSS"
 functions.  You'll also notice that they all have a "default" set of arguments, found
@@ -25,7 +25,7 @@ A general overview of the XNATModalImageViewer flow is as follows:
 
 
  3) scanThumbnail.js  (is a "__Draggable__"):
-		A quasi-intelligent javaScript object (comprised of several elements, mostly divs)
+		A quasi-intelligent JavaScript object (comprised of several elements, mostly divs)
 		that contains the basic information of the scan itself, and its metadata.  The images
 		are themselves not loaded onto the thumbnail, but their paths are.
 
@@ -48,6 +48,6 @@ A general overview of the XNATModalImageViewer flow is as follows:
 	Modified jQueryUI tabs for hosting metadata/
 
 8) The "__" toolkit:
-	 jQuery + javaScript toolkit, developed by Sunil Kumar.  Contains a lot of useful stuff.
+	 jQuery + JavaScript toolkit, developed by Sunil Kumar.  Contains a lot of useful stuff.
 
 
