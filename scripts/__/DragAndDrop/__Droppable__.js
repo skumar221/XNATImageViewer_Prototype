@@ -1,6 +1,6 @@
-//---------------------------------
+//***************************************
 // DROPZONE MOUSEOVER ANIMATION
-//---------------------------------
+//***************************************
 var dropZoneMouseover = function(dz, obj){
 	if (dz){
 		
@@ -20,9 +20,9 @@ var dropZoneMouseover = function(dz, obj){
 
 
 
-//---------------------------------
+//***************************************
 // DROPZONE MOUSEOUT ANIMATION
-//---------------------------------
+//***************************************
 var dropZoneMouseout = function(dz, obj){
 	if (dz){
 
@@ -41,9 +41,9 @@ var dropZoneMouseout = function(dz, obj){
 
 
 
-//---------------------------------
+//***************************************
 // ADD DROP ZONE -- checks for dups
-//---------------------------------
+//***************************************
 var addDropZone = function(dz, obj){
 	if(!obj) obj = this;
 	for (var i=0; i<obj.dropZones.length; i++){
@@ -58,9 +58,9 @@ var addDropZone = function(dz, obj){
 
 
 
-//---------------------------------
+//***************************************
 //	THE DRAGGING PROCESS
-//---------------------------------
+//***************************************
 var __Droppable__mousedown = function(that){
 
 
@@ -180,6 +180,13 @@ var __Droppable__mousedown = function(that){
 }
 
 
+
+
+
+//***************************************
+//	Init
+//
+//***************************************
 function __Droppable__(obj){
 	
 	obj.dropZones = [];

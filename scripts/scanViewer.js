@@ -40,7 +40,8 @@ var defaultArgs_scanViewer = {
 
 
 //******************************************************
-//  
+//  Init
+//	
 //******************************************************
 var scanViewer = function(args){
   	var that = this;
@@ -168,7 +169,7 @@ var scanViewer = function(args){
 
 	
 	//----------------------------------
-	// DISPLAYABLE DATA
+	// METADATA, A.K.A. DISPLAYABLE DATA
 	//----------------------------------	
 	this.displayableData = {};
 	this.textCSS_small = {
@@ -201,7 +202,8 @@ var scanViewer = function(args){
 
 
 //******************************************************
-//  
+//  UpdateCSS
+//
 //******************************************************
 scanViewer.prototype.updateCSS = function(){
 
@@ -283,10 +285,12 @@ scanViewer.prototype.updateCSS = function(){
 
 
 //******************************************************
-//  
+//  Fill in metadata -- this will likely change as it gets 
+//  deployed to the web...
 //******************************************************
 scanViewer.prototype.populateData = function(data){	
 	var that = this;
+
 
 	//----------------------------------
 	// DATA: VIEW TYPE DATA

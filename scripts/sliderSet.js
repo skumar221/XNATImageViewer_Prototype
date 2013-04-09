@@ -25,29 +25,54 @@ var defaultArgs_sliderSet = {
   		 },
 }
 
+
+
+
+//******************************************************
+//  Init
+//
+//******************************************************
 function sliderSet(args, sliderArgs){
 
 	this.args = __MergeArgs__(defaultArgs_sliderSet, args);
 	this.CSS = this.args.CSS;
 
-//	console.log("SLDIER SET ID: " + this.args["id"])
+
+
+	//----------------------------------
+	//	WIDGET
+	//----------------------------------
 	this.widget = document.createElement("div");
   	this.widget.setAttribute("id", this.args["id"]);
   	this.args.parent.appendChild(this.widget)
 	$(this.widget).css(this.CSS);
-	
+
+
+
+	//----------------------------------
+	//	Other globals
+	//----------------------------------	
 	this.labels = [sliderArgs.length];
 	this.values = [sliderArgs.length];
 	this.sliders = [sliderArgs.length];
 	this.sliderRows = [sliderArgs.length];
-	//this.sliderCols = [sliderArgs.length];
 	
+	
+	
+	//----------------------------------
+	//	ARGS + Layout
+	//----------------------------------
 	this.sliderArgs = sliderArgs;
 	for (var i=0; i<this.sliderArgs.length; i++){
 		if (this.args.layout  == "rowDiv_1") this.slider_rowDiv1(i);
 	}
 	
-	// gen button
+	
+	
+	//----------------------------------
+	//	Gen button - generates a list of outputs based
+	//  on the slider outputs.
+	//----------------------------------
 	if (this.args.showGenButton){
 		this.genButton = document.createElement('input');
 		this.genButton.setAttribute('type','button');
@@ -73,6 +98,11 @@ function sliderSet(args, sliderArgs){
 
 
 
+
+//******************************************************
+//  addTable
+//
+//******************************************************
 function addTable() {
     var c, r, t;
     t = document.createElement('table');
@@ -84,19 +114,34 @@ function addTable() {
     document.getElementById("addtable").appendChild(t);
 }
 
+
+
+
+//******************************************************
+//  A slider set layout -- in this case, rows based on divs
+//
+//******************************************************
 sliderSet.prototype.slider_rowDiv1 = function(i){
 	
 	var labelMargin = 10;
 	var sliderLeft = labelMargin + 100;
 	var valueLeft = labelMargin + 400;
 	
+
+	
+	//----------------------------------
+	//	Create a Row (DIV based)
+	//----------------------------------
 	this.sliderRows[i] = document.createElement("div");
   	this.sliderRows[i].setAttribute("id",  this.args["id"] + "_sliderRow");
-  	//this.sliderRows[i].style.left = __toPx__(labelMargin);
   	this.widget.appendChild(this.sliderRows[i])
 	
-	var hPos = i*this.args.rowHeight + 10;
-
+	
+	
+	//----------------------------------
+	//	Create a slider
+	//----------------------------------
+	var hPos = i * this.args.rowHeight + 10;
 	s = new __Slider__(__MergeArgs__(this.sliderArgs[i], {
 		parent: this.sliderRows[i],
 		id: this.args["id"] + "_" + this.sliderArgs[i]["id"],
@@ -106,7 +151,12 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 		left: 0
 	}));
 	this.sliders[i] = s;
-			
+
+
+
+	//----------------------------------
+	//	Row label
+	//----------------------------------			
 	this.labels[i] = document.createElement("div");
   	this.labels[i].setAttribute("id",  s.args["id"] + "_label");
   	this.labels[i].innerHTML = s.args["displayLabel"].substring(0,12);
@@ -114,7 +164,12 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	this.labels[i].style.position = 'absolute';
 	this.labels[i].style.top = __toPx__(hPos);
 	this.labels[i].style.left = __toPx__(labelMargin);
-	
+
+
+
+	//----------------------------------
+	//	Value display
+	//----------------------------------	
 	this.values[i] = document.createElement("div");
   	this.values[i].setAttribute("id",  s.args["id"] + "_value");
   	this.values[i].innerHTML = s.currValue;
@@ -124,7 +179,12 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	
 	s.args.left = sliderLeft;
 	s.updateCSS();
-	
+
+
+
+	//----------------------------------
+	//	Update value display
+	//----------------------------------	
 	var that = this;
 	s.addSlideCallback(function(_slider){
 	  	that.values[i].innerHTML = _slider.currValue;

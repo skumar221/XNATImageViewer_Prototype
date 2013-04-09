@@ -1,4 +1,6 @@
-
+//******************************************************
+//  Returns an element based on the given parameters.
+//******************************************************
 function __MakeElement__(type, parent, id, css){
 	if (!type){
 		throw "Make Element: Need more parameters to make element! -- invalid type";

@@ -18,8 +18,14 @@ defaultArgs_scanTabs = {
 	}
 }
 
-// These conform to the jQuery format of
-// using titles.
+
+
+
+//******************************************************
+//  The tab "titles" themselves are elements.  
+//  Treated this as a separate method b/c jQuery UI
+//  has some quirks as to how it treats tab titles.
+//******************************************************
 var makeTabTitles = function(parent, titles){
 
 	var titleElt = __MakeElement__("ul", parent);	
@@ -47,26 +53,30 @@ var makeTabTitles = function(parent, titles){
 	}
 }
 
-var tabDiv = function(parent, contentElt){
-	
-}
 
 
 
+//******************************************************
+//  Init
+//
+//******************************************************
 var scanTabs = function(args){
 	this.args = (args) ? __MergeArgs__(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
 	this.CSS = this.args.CSS;
 	var that = this;
 	this.activeTab = 0;
 	
-	var that = this;
-	
-	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args.CSS);
 
 	
+	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args.CSS);
 	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);
-	
 	this.tabs = []
+	
+	
+
+	//------------------------------
+	// Tab Titles
+	//------------------------------	
 	for (var i=0;i<this.args.tabTitles.length;i++){
 		var e = __MakeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
 		e.label = this.tabTitleObj.titlesA[i].innerHTML;
@@ -74,6 +84,8 @@ var scanTabs = function(args){
 	}
 
 	$(this.widget).tabs();
+	
+	
 	
 	//------------------------------
 	// ACTIVE TAB TRACKING
@@ -86,6 +98,7 @@ var scanTabs = function(args){
 	// Set Active Tab to 0
 	$(this.tabTitleObj.titlesA[this.activeTab]).click();  
 	
+
 	
 	//------------------------------
 	// CSS
@@ -93,6 +106,13 @@ var scanTabs = function(args){
 	this.updateCSS();
 }
 
+
+
+
+//******************************************************
+//  getTab
+//
+//******************************************************
 scanTabs.prototype.getTab = function(value){
 	if (typeof value == "string"){
 		for (var i=0;i<this.tabs.length;i++){
@@ -104,6 +124,13 @@ scanTabs.prototype.getTab = function(value){
 	}
 }
 
+
+
+
+//******************************************************
+//  setActiveTab
+//
+//******************************************************
 scanTabs.prototype.setActiveTab = function(e){
 	var elt = document.getElementById(e.currentTarget.id);
 	var elt = e.currentTarget;

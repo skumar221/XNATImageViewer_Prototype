@@ -1,3 +1,14 @@
+/*********************************************************************************************
+ * 
+ *   Contains methods for image manipulation (i.e. brightness and contrast)
+ * 
+ ********************************************************************************************/
+
+
+
+/************************
+ * LINEAR BRIGHTNESS
+ ***********************/
 function linearBrightness(data, value){
 	for(var i = 0, n = data.length; i < n; i += 4) {		
 		var red = data[i];
@@ -13,6 +24,10 @@ function linearBrightness(data, value){
 }
 
 
+
+/************************
+ * LINEAR CONTRAST
+ ***********************/
 function linearContrast(data, value, threshold){
 	//var threshold = .05;
 	for(var i = 0, n = data.length; i < n; i += 4) {
@@ -50,6 +65,12 @@ function linearContrast(data, value, threshold){
 	return data
 }
 
+
+
+/************************
+ * See of an array of objects has a value match
+ * for a given key
+ ***********************/
 function objArrContains(objArr, key, value){
 	var match = -1;
 	for (var i = 0; i < objArr.length; i++) {
@@ -59,6 +80,11 @@ function objArrContains(objArr, key, value){
 	return match;
 }
 
+
+
+/************************
+ * Histogram for contrast algorithm
+ ***********************/
 function histogram(data){
 	var histArr = [];
 	for(var i = 0; i < data.length; i += 4) {	
@@ -93,6 +119,10 @@ function histogram(data){
 }
 
 
+
+/************************
+ * Math manipulation
+ ***********************/
 function sigmaMult(arr1, arr2){
 	if ((arr1.length != arr2.length) || (arr1.length == 0) || (arr2.length ==0)) {
 		throw "sigmaMult: Array lengths unequal or zero length!"

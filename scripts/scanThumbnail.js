@@ -25,6 +25,12 @@ defaultArgs_scanThumbnail = {
 }
 
 
+
+
+//******************************************************
+//  Init
+//
+//******************************************************
 function scanThumbnail(scanData, args){
 	var that = this;
 	__Init__(this, defaultArgs_scanThumbnail, args, function(){});
@@ -32,9 +38,6 @@ function scanThumbnail(scanData, args){
 
 	this.mouseDown = false;
 
-
-
-	
 	
 	//--------------------------------
 	// THUMBNAIL IMAGE
@@ -70,8 +73,6 @@ function scanThumbnail(scanData, args){
 	//--------------------------------
 	// INTERACTION METHODS
 	//--------------------------------
-	
-	
 	
 	
 	

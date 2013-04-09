@@ -38,6 +38,11 @@ var defaultArgs___Slider__ = {
 }
 
 
+
+//******************************************************
+//  Manages the mousewheel scrollong in the slider
+//
+//******************************************************
 var mouseWheelScroll = function(e, that){
 	  	//get the current mouseWheelEvent
 	  	_date = new Date();
@@ -91,8 +96,20 @@ var mouseWheelScroll = function(e, that){
 	    that.args.lastMouseWheelEvent = currMouseWheelEvent;
 }
 
+
+
+
+//******************************************************
+//  Binds the slider to the mousewheel
+//
+//******************************************************
 __Slider__.prototype.bindToMouseWheel = function(elt){
-//	console.log(this.args.id)
+
+
+
+	//----------------------------------
+	//	WIDGET
+	//----------------------------------	
  	var that = this;
     var eltFound = false;
     for (var i=0;i<this.mouseWheelBindElements.length;i++){
@@ -102,6 +119,11 @@ __Slider__.prototype.bindToMouseWheel = function(elt){
     	}
     } 		
 	if (!eltFound){
+	
+		
+		//----------------------------------
+		//	WIDGET
+		//----------------------------------	
 		this.mouseWheelBindElements.push(elt);
 		$(elt).bind('mousewheel DOMMouseScroll', function(e){mouseWheelScroll(e, that)});
 		$(this.slider).slider('option', 'value', this.currValue);
@@ -113,6 +135,12 @@ __Slider__.prototype.bindToMouseWheel = function(elt){
 
 
 
+
+
+//******************************************************
+//  Init
+//
+//******************************************************
 function __Slider__(args){
 	that = this;
 	this.args = (args) ? __MergeArgs__(defaultArgs___Slider__, args) : defaultArgs___Slider__;
@@ -180,21 +208,18 @@ function __Slider__(args){
 	$(this.sliderHandle).removeClass("ui-slider-horizontal");
 
 	// the scroller
-	
 	this.scroller = document.createElement("div");
   	this.scroller.setAttribute("id", this.args["id"] + "_scroller");
   	this.widget.appendChild(this.scroller);
   	
 	// the constrainer, which is actually the jquery slider's bounds
-	
 	this.sliderConstrainer= document.createElement("div");
   	this.sliderConstrainer.setAttribute("id", this.args["id"] + "_sliderConstrainer");
   	this.widget.removeChild(this.slider);  	
   	this.sliderConstrainer.appendChild(this.slider);
   	this.widget.appendChild(this.sliderConstrainer);
 
-	// the value display, usually hidden
-	 	
+	// the value display, usually hidden 	
   	this.valueDisplay = document.createElement("div");
   	this.valueDisplay.setAttribute("id", this.args["id"] + "_valueDisplay");
   	this.valueDisplay.innerHTML = (this.currValue);
@@ -207,7 +232,7 @@ function __Slider__(args){
 
 
 	//----------------------------------
-	// BIND WIDGET TO MOUSE WHEEL
+	// BIND WIDGET TO MOUSEWHEEL
 	//---------------------------------- 	
 	this.bindToMouseWheel(this.widget);
 	
@@ -249,7 +274,7 @@ __Slider__.prototype.slide = function(e,ui){
 
 
 //******************************************************
-// Changes the slider properties and calls the slide routine!
+// Changes the slider properties and calls the slide routine
 //******************************************************
 __Slider__.prototype.changeSliderProperties = function(args, callSlide){
 	if (args["min"]) $(this.slider).slider("option", "min",   args["min"]);
@@ -272,7 +297,7 @@ __Slider__.prototype.changeSliderProperties = function(args, callSlide){
 
 //******************************************************
 //  Clips value to the min/max of the slider.  Sometimes these
-//  are violated b/c of the mousehweel.
+//  are exceeded b/c of the mousehweel velocity.
 //******************************************************
 __Slider__.prototype.clipValue = function(val){
 	this.currValue = (val) ? val : this.currValue;
@@ -354,7 +379,7 @@ var performCallbacks = function(that){
 
 
 //******************************************************
-//  Links the inputted slider (b) to this (a)
+//  Links the inputted slider (b)
 //******************************************************
 __Slider__.prototype.linkSlider = function(b){
 	
@@ -413,21 +438,24 @@ __Slider__.prototype.updateCSS = function(){
 	var totalSliderHeight = __toInt__($(this.widget).css("height")) + 2*this.args["borderWidth_slider"];
 	var totalheight_handle = this.args["height_handle"] + 2*this.args["borderWidth_handle"];
 	
-	// determine whether the handle+borders or the slider+borders is taller
+
+	//----------------------------------------------
+	//  Determine whether the handle+borders or the slider+borders is taller
+	//----------------------------------------------	
 	var heightAdj = 0;//(totalSliderHeight < totalheight_handle) ? totalheight_handle/2 + totalSliderHeight/2 : totalSliderHeight;
 	var handleTopMarginAdj = 0; 
-	
-	
 	if (totalSliderHeight < totalheight_handle){
 		heightAdj = totalheight_handle/2 + totalSliderHeight/2;
 		handleTopMarginAdj = -(totalheight_handle/2 - __toInt__($(this.widget).css("height"))/2);
 	}
 	else{
 		heightAdj = totalSliderHeight;
-		handleTopMarginAdj = __toInt__($(this.widget).css("height"))/2 - totalheight_handle/2; 
-		
 	}
-	
+
+
+	//----------------------------------------------
+	//  Useful variables
+	//----------------------------------------------	
 	var totalSliderWidth = __toInt__($(this.widget).css("width")) + this.args["borderWidth_slider"]*2;
 	var totalwidth_handle = this.args["width_handle"] + this.args["borderWidth_handle"]*2;
 	var deltaWidth = totalwidth_handle - totalSliderWidth;
@@ -436,7 +464,11 @@ __Slider__.prototype.updateCSS = function(){
 	var totalheight_handle = this.args["height_handle"] + this.args["borderWidth_handle"]*2;
 	var deltaHeight = totalheight_handle - totalSliderHeight;
 	
-	
+
+
+	//----------------------------------------------
+	//  THE SLIDER HANDLE
+	//----------------------------------------------		
 	$(this.sliderHandle).css({
 		"border-radius": this.args["borderRadius_handle"],
 		"width": (this.args["width_handle"]),

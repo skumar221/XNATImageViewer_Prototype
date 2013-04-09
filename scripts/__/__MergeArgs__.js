@@ -1,3 +1,6 @@
+//******************************************************
+//  Merges two javaScript objects, giving obj2 the priority
+//******************************************************
 function __MergeArgs__(obj1,obj2, recursionDepth){
 	var recDepth = (recursionDepth) ? recursionDepth : 2; 
 	// obj2 gets the priority

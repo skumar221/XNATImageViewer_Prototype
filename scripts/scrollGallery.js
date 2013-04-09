@@ -57,6 +57,10 @@ var defaultArgs_scrollGallery = {
 
 
 
+//******************************************************
+//  Init
+//
+//******************************************************
 var scrollGallery = function(args){
   	var that = this;
 	 __Init__(this, defaultArgs_scrollGallery, args, function(){
@@ -117,6 +121,15 @@ var scrollGallery = function(args){
 	this.updateCSS();
 }
 
+
+
+
+//******************************************************
+//  Need to map the min/max and step values of the slider
+//  to the length of the contents so we can scroll
+//  in a proportional manner. This varies depending on 
+//  the orientation of the gallery: vertical or horizontal.
+//******************************************************
 scrollGallery.prototype.mapSliderToContents = function(){
 	var that = this;
 	return function(_slider){		
@@ -138,7 +151,13 @@ scrollGallery.prototype.mapSliderToContents = function(){
 		}
    }
 }
-	
+
+
+
+
+//******************************************************
+//  Sets contents.
+//******************************************************
 scrollGallery.prototype.setContents = function(obj){
   
 	var that = this;
@@ -172,6 +191,12 @@ scrollGallery.prototype.setContents = function(obj){
 	this.updateCSS();
 }
 
+
+
+
+//******************************************************
+//  UpdateCSS
+//******************************************************
 scrollGallery.prototype.updateCSS = function(){
 	
 	
