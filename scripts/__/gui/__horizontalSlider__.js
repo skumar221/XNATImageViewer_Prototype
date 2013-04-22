@@ -154,7 +154,6 @@ function __horizontalSlider__(args){
 		if (that.linkedSliders && that.linkedSliders.length > 0 
 			&& that.linkedCallbacks && that.linkedCallbacks.length > 0){
 			for (var i=0;i<that.linkedCallbacks.length; i++){
-				console.log("LINKED CALLBACKS")
 				that.linkedCallbacks[i](that);
 			}
 		}
@@ -414,7 +413,7 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 //******************************************************
 //  Links the inputted slider (b)
 //******************************************************
-__horizontalSlider__.prototype.linkSlider = function(slider){
+__horizontalSlider__.prototype.linkSlider = function(b){
 	
 	var that = this;
 	
@@ -424,25 +423,27 @@ __horizontalSlider__.prototype.linkSlider = function(slider){
 				return;
 			}				
 		}
-		this.linkedSliders.push(slider);		
+		this.linkedSliders.push(b);		
 	}
 	else{
 		this.linkedSliders = [];
+		this.linkedSliders.push(b);	
 	}
 
 	this.addLinkedCallback(function(a){  
-		if (a.mouseOver){	
+		//if (a.mouseOver){	
 			
-			var aDiff = $(a.slider).slider("option", "max") - $(a.slider).slider("option", "min");
+			var aDiff = a.currArgs().max - a.currArgs().min;
 			
-			var bDiff = $(b.slider).slider("option", "max") - $(b.slider).slider("option", "min");
+			var bDiff = b.currArgs().max - b.currArgs().min;
 			// percentage-based linking
-			var bVal = Math.round(bDiff * (a.currValue / aDiff));
-
-			b.changeSliderProperties({value: bVal}, false);
-			performCallbacks(b);
+			var bVal = Math.round(bDiff * (a.value / aDiff));
+			
+			b.updateProperties({value: bVal});
+			b.runSlideCallbacks();
+			//performCallbacks(b);
 			//b.slide(null, {value: bVal});
-		}
+		//}
   	});
 }
 
