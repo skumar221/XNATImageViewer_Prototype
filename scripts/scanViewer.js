@@ -14,24 +14,29 @@ var defaultArgs_scanViewer = {
 	 	"overflow-x": "visible",
 	 	"overflow-y": "visible"
 	},
-	_frameslidercss:{
-		value: 50,
-		max: 100,
-		min: 0,
-		constrainMargin : 0,
-		borderWidth_slider : 1,
-		borderWidth_handle : 1,
-		height : 5,
-		height_handle : 10,
-		width_handle : 10,
-		borderRadius_slider : 0,
-		borderRadius_handle : 2,
-		borderWidth_slider: 1,			
-  		borderWidth_handle: 0,			
-		handleBorderColor: __Globals__.semiactiveLineColor,				
-	  	sliderBorderColor: __Globals__.semiactiveLineColor,				
-	  	sliderBGColor: "rgba(50, 50, 50, 1)",			
-	  	handleBGColor: "rgba(255,255,255,1)",			
+	_sliderCSS:
+	
+	{
+		id: "_frameSlider", 
+		parent: document.body,
+		round: true,
+		handleOffsetLeft: 0,
+	  	handleOffsetTop: 0,
+		widgetCSS:{
+		},
+		handleCSS:{
+			height: 10,
+			width: 10,
+			borderRadius: 2,
+			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			backgroundColor: "rgba(255,255,255,1)"
+		},
+		trackCSS:{
+			height: 5,
+			borderWidth: 1,
+			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			backgroundColor: "rgba(50, 50, 50, 1)"
+		}
 	}
 }
 
@@ -45,7 +50,7 @@ var defaultArgs_scanViewer = {
 //******************************************************
 var scanViewer = function(args){
   	var that = this;
-	 __Init__(this, defaultArgs_scanViewer, args, function(){});
+	 INIT(this, defaultArgs_scanViewer, args);
 
 
 
@@ -61,49 +66,51 @@ var scanViewer = function(args){
 	// Modify the frameViewer such that it lets "this"
 	// know of the currentScan when it's dropped in.
 	this.frameViewer.addOnloadCallback(function(){
-		if(that.frameViewer.currDroppable.scanData)
-			that.populateData(that.frameViewer.currDroppable.scanData)
+		if(that.frameViewer.currDroppable.scanData) {that.populateData(that.frameViewer.currDroppable.scanData)}
 	})
 
 
 
 	 //----------------------------------
 	 // FRAME SLIDER
-	 //----------------------------------		
-	this.frameSlider = new __Slider__(__MergeArgs__(this.args._frameslidercss, {
+	 //----------------------------------	
+	this.frameSlider = new __horizontalSlider__(__mergeArgs__(this.args._sliderCSS, {
 		id: this.args.id + "_frameSlider", 
 		parent: this.widget,
+		round: true,
 	}));
 
+
 	// Tell frameslider how to behave...	
-	this.frameSlider.addSlideCallback(function(_slider){  		
-		var subtractor = (that.frameSlider.args["sliderMin"] > 0) ? that.frameSlider.args["sliderMin"] : 0;
-
-
+	this.frameSlider.addSlideCallback(function(_slider){ 
+		var subtractor = (_slider.currArgs().max > 0) ? _slider.currArgs().min  : 0;
+		
+		var val = Math.round(_slider.value);
 		// Update any displayable data
 		if (that.displayableData && that.displayableData.frameNumber){
-			that.displayableData.frameNumber.innerHTML = "Frame: "+(that.frameSlider.currValue + 1) + " / " + that.frameViewer.frames.length	
+			that.displayableData.frameNumber.innerHTML = "Frame: "+(val + 1) + " / " + that.frameViewer.frames.length	
 		}
-
-
+		
 		// Draw the frame		
-		that.frameViewer.drawFrame(that.frameSlider.currValue-subtractor, true); 
+		that.frameViewer.drawFrame(val - subtractor, true); 
 	  });
 
 
 	// Bind mousewheel scrolling to slider	
-	this.frameSlider.bindToMouseWheel(that.frameViewer.widget);
+	this.frameSlider.bindToMouseWheel(this.frameViewer.widget);
 
 
 	// Add frameViewer callback function to synchronize with slider
 	this.frameViewer.addOnloadCallback(function(){
 		if (that.frameSlider){
-			that.frameSlider.changeSliderProperties({
-				"min" : 0,
-				"max" : that.frameViewer.currDroppable.frames.length-1,
-				"value" : Math.round(that.frameViewer.currDroppable.frames.length/2),
+			frameVal = 
+			that.frameSlider.updateProperties({
+				min : 0,
+				max : that.frameViewer.currDroppable.frames.length-1,
+				value : Math.round(that.frameViewer.currDroppable.frames.length/2),
 			});
-			that.frameViewer.drawFrame(that.frameSlider.currValue, true);
+
+			that.frameViewer.drawFrame(that.frameSlider.value, true);
 		}		
 		else{
 			console.log("NO DRAW FRAME");
@@ -115,7 +122,7 @@ var scanViewer = function(args){
 	//----------------------------------
 	// SCAN TABS
 	//----------------------------------		
-	var scanTabTop = $(this.frameSlider.widget).height() +  $(this.frameSlider.widget).position().top + 10;
+	var scanTabTop = this.args._sliderCSS.handleCSS.height +  this.args._sliderCSS.widgetCSS.top + 10;
 	var scanTabHeight = $(this.widget).height() - scanTabTop - $(this.widget).width() * this.args.marginPct; 
 	this.scanTabs = new scanTabs({
 		id: this.args.id + "_tabs",
@@ -136,7 +143,7 @@ var scanViewer = function(args){
 	        "left": 0, 
 	        "borderColor": "rgba(255,255,255,1)",
 	        "borderWidth": 0,
-	        "color": __Globals__.activeFontColor,
+	        "color": XNATImageViewerGlobals.activeFontColor,
 	        "backgroundColor": "rgba(0,0,0,0)"   
 	        }
 	  }
@@ -155,13 +162,13 @@ var scanViewer = function(args){
 	 for (var j=0;j<ss.sliders.length;j++){
 	    var sl = ss.sliders[j];
 	    if (j==0){
-			sl.addSlideCallback(function(_slider){
-					that.frameViewer.imageAdjust("brightness", _slider.currValue);
+			sl.addSlideCallback(function(_slider){				
+				that.frameViewer.imageAdjust("brightness", _slider.value);
 		    });
 	    }
 	    else if (j==1){
 			sl.addSlideCallback(function(_slider){
-					that.frameViewer.imageAdjust("contrast", _slider.currValue);
+				that.frameViewer.imageAdjust("contrast", _slider.value);
 		    });
 	    }    
 	 }
@@ -175,14 +182,14 @@ var scanViewer = function(args){
 	this.textCSS_small = {
 		color: "rgba(255,255,255,1)",
 		position: "absolute",
-		top: $(this.frameViewer.widget).height() - __Globals__.fontSizeSmall -5,
+		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall -5,
 		left: 5,
-		fontSize: __Globals__.fontSizeSmall
+		fontSize: XNATImageViewerGlobals.fontSizeSmall
 	};
 
 
 	// DATA: Frame Number
-	this.displayableData.frameNumber = __MakeElement__("div", this.frameViewer.widget, this.args.id + "_frameDisplay");
+	this.displayableData.frameNumber = __makeElement__("div", this.frameViewer.widget, this.args.id + "_frameDisplay");
 	$(this.displayableData.frameNumber).css(this.textCSS_small);		
 		
 		
@@ -214,8 +221,9 @@ scanViewer.prototype.updateCSS = function(){
 
 
 	var scanTabTop = $(this.widget).height() - tabsHeight - marginTop;
-	var sliderTop = scanTabTop - this.frameSlider.args.height - marginTop*1.5;
-	var viewerWidth = sliderTop - marginTop*2;
+	var sliderTop = scanTabTop - this.frameSlider.currArgs().handleCSS.height  - marginTop*1.5;
+	//console.log("slider top", scanTabTop, sliderTop, this.frameSlider.currArgs().handleCSS.height, marginTop)
+	var viewerWidth = sliderTop - marginTop*2 ;
 	var viewerHeight = viewerWidth;
 	
 	
@@ -241,14 +249,16 @@ scanViewer.prototype.updateCSS = function(){
 
 	//----------------------------------
 	// CSS: FRAME SLIDER
-	//----------------------------------		
-	$(this.frameSlider.widget).css({
-		top : sliderTop,
-		left : marginLeft,
-		width : viewerWidth,
-		height: 5
-	});
-    this.frameSlider.updateCSS();
+	//----------------------------------
+    this.frameSlider.updateCSS({
+    	widgetCSS:{
+ 			top : sliderTop,
+			left : marginLeft,   		
+    	},
+    	trackCSS:{
+    		width: viewerWidth
+    	}
+    })
 
 	
 		 
@@ -269,13 +279,12 @@ scanViewer.prototype.updateCSS = function(){
 	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
-	 		top: $(this.frameViewer.widget).height() - __Globals__.fontSizeSmall -5,
+	 		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall -5,
 	 });
 	 
 	 
-	 
-	 
-	 this.frameViewer.drawFrame(this.frameSlider.currValue, true);
+
+	 this.frameViewer.drawFrame(this.frameSlider.value, true);
    	
 }
 
@@ -301,21 +310,21 @@ scanViewer.prototype.populateData = function(data){
 //			console.log(labelObj[i])
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
-			that.displayableData[noSpace] = __MakeElement__("div", that.scanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace]).css(__MergeArgs__(that.textCSS_small,{
+			that.displayableData[noSpace] = __makeElement__("div", that.scanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
+			$(that.displayableData[noSpace]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label;		
 
-			that.displayableData[noSpace + "_dropdown"] = __MakeElement__("select", that.scanTabs.tabs[0], that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace + "_dropdown"]).css(__MergeArgs__(that.textCSS_small,{
+			that.displayableData[noSpace + "_dropdown"] = __makeElement__("select", that.scanTabs.tabs[0], that.args.id + "_data_" + noSpace);
+			$(that.displayableData[noSpace + "_dropdown"]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 110,
 				width: "10em",
 				backgroundColor: "rgba(0,0,0,0)",
 				borderWidth: 1,
-				borderColor: __Globals__.semiactiveLineColor
+				borderColor: XNATImageViewerGlobals.semiactiveLineColor
 			}));	
 			
 			for (var j=0;j<labelObj[i]["option"].length;j++){
@@ -349,20 +358,20 @@ scanViewer.prototype.populateData = function(data){
 			}
 		});	
 
-		var contents = __MakeElement__("div", that.sessionInfoScrollGallery.scrollContent, that.args.id + "_contents");
+		var contents = __makeElement__("div", that.sessionInfoScrollGallery.scrollContent, that.args.id + "_contents");
 		var counter = 0;
 		for (i in labelObj){
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
-			that.displayableData[noSpace] = __MakeElement__("div", contents, that.args.id + "_data_" + noSpace);
-			$(that.displayableData[noSpace]).css(__MergeArgs__(that.textCSS_small,{
+			that.displayableData[noSpace] = __makeElement__("div", contents, that.args.id + "_data_" + noSpace);
+			$(that.displayableData[noSpace]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
-			that.displayableData[noSpace + "_value"] = __MakeElement__("div", contents, that.args.id + "_value_" + noSpace);
-			$(that.displayableData[noSpace + "_value"]).css(__MergeArgs__(that.textCSS_small,{
+			that.displayableData[noSpace + "_value"] = __makeElement__("div", contents, that.args.id + "_value_" + noSpace);
+			$(that.displayableData[noSpace + "_value"]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 160,
 			}));	

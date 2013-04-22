@@ -63,7 +63,7 @@ var defaultArgs_scrollGallery = {
 //******************************************************
 var scrollGallery = function(args){
   	var that = this;
-	 __Init__(this, defaultArgs_scrollGallery, args, function(){
+	 INIT(this, defaultArgs_scrollGallery, args, function(){
 	 });
 	 
 	 this.contentsHeight = this.CSS.height;
@@ -87,7 +87,7 @@ var scrollGallery = function(args){
 	//-------------------------------
 	// THE CONTENTS DIV 
 	//-------------------------------
-	  this.scrollContent = __MakeElement__("div", this.widget, this.args.id + "_scrollContent", {
+	  this.scrollContent = __makeElement__("div", this.widget, this.args.id + "_scrollContent", {
 	  	position: "relative",
 	  	border: "solid rgb(0,0,255,1) 1px",
 	  	top: 0,
@@ -100,7 +100,7 @@ var scrollGallery = function(args){
 	// THE SLIDER
 	//-------------------------------	
 	var mArgs = (this.args.orientation == "vertical") ? this.args._slidercss_vertical : this.args._slidercss_horizontal;
-	this.contentSlider = new __Slider__(__MergeArgs__(mArgs,{
+	this.contentSlider = new __Slider__(__mergeArgs__(mArgs,{
 		parent: this.widget,
 		id: this.args.id + "_contentSlider",
 	}));
@@ -112,8 +112,8 @@ var scrollGallery = function(args){
 	// THE CONTENTS - BLANK FOR NOW
 	//-------------------------------
 	var blankContents = (that.args.orientation == "vertical") ?
-					    __MakeElement__("div", document.body, "blankElement", {height: 800, width: 100, backgroundColor: "rgba(200,100,51,1)"}):
-					    __MakeElement__("div", document.body, "blankElement", {height: 100, width: 800, backgroundColor: "rgba(100,200,51,1)"});
+					    __makeElement__("div", document.body, "blankElement", {height: 800, width: 100, backgroundColor: "rgba(200,100,51,1)"}):
+					    __makeElement__("div", document.body, "blankElement", {height: 100, width: 800, backgroundColor: "rgba(100,200,51,1)"});
 	blankContents.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."	    
 	this.setContents(blankContents)
   

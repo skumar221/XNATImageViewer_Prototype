@@ -1,7 +1,7 @@
 //******************************************************
 //  Returns an element based on the given parameters.
 //******************************************************
-function __MakeElement__(type, parent, id, css){
+function __makeElement__(type, parent, id, css){
 	if (!type){
 		throw "Make Element: Need more parameters to make element! -- invalid type";
 	}
@@ -18,7 +18,7 @@ function __MakeElement__(type, parent, id, css){
   	parent.appendChild(e);
   
   if (css){
-  	  $(e).css(css)	
+  	  __setCSS__(e, css);	
   }
   return e;
 }

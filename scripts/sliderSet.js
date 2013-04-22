@@ -34,7 +34,7 @@ var defaultArgs_sliderSet = {
 //******************************************************
 function sliderSet(args, sliderArgs){
 
-	this.args = __MergeArgs__(defaultArgs_sliderSet, args);
+	this.args = __mergeArgs__(defaultArgs_sliderSet, args);
 	this.CSS = this.args.CSS;
 
 
@@ -142,7 +142,7 @@ sliderSet.prototype.slider_rowDiv1 = function(i){
 	//	Create a slider
 	//----------------------------------
 	var hPos = i * this.args.rowHeight + 10;
-	s = new __Slider__(__MergeArgs__(this.sliderArgs[i], {
+	s = new __Slider__(__mergeArgs__(this.sliderArgs[i], {
 		parent: this.sliderRows[i],
 		id: this.args["id"] + "_" + this.sliderArgs[i]["id"],
 		displayLabel: this.sliderArgs[i].displayLabel,

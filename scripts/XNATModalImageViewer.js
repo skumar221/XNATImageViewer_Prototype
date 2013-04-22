@@ -79,7 +79,7 @@ var getModalHeight = function(that){
 var XNATModalImageViewer = function(args){
 	var that = this;
 	
-	__Init__(this, defaultArgs_XNATModalImageViewer, args, function(){});
+	INIT(this, defaultArgs_XNATModalImageViewer, args, function(){});
 	
 	
 	
@@ -96,7 +96,7 @@ var XNATModalImageViewer = function(args){
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	this.modal = __MakeElement__("div", this.widget, this.args.id + "_modal", this.args._modalcss);	
+	this.modal = __makeElement__("div", this.widget, this.args.id + "_modal", this.args._modalcss);	
 	$(this.modal).css({
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
@@ -117,7 +117,7 @@ var XNATModalImageViewer = function(args){
 	//----------------------------------
 	//	CLOSE BUTTON
 	//----------------------------------
-	this.closeButton = __MakeElement__("img", this.widget, this.args.id + "_closeIcon", {
+	this.closeButton = __makeElement__("img", this.widget, this.args.id + "_closeIcon", {
 		position: "absolute", 
 		cursor: "pointer",
 		width: 20,
@@ -264,7 +264,7 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	
 	var pctStrObj = {};
 	for (key in pctObj){
-		pctStrObj[key] = __Pct__(pctObj[key]);
+		pctStrObj[key] = __toPct__(pctObj[key]);
 	}
 	
 	var pxStrObj = {};
@@ -366,6 +366,7 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 			top: 0,
 		})			
 	}	
+	
 	
 	
 	//----------------------------------
@@ -532,7 +533,7 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	//-----------------------------------------
 	//  MAKE ICON
 	//-----------------------------------------
-	var c = __MakeElement__("img", this.modal, this.args.id + "_scrollLink", {
+	var c = __makeElement__("img", this.modal, this.args.id + "_scrollLink", {
 		position: "absolute",
 		width: 30,
 		height: 15,
@@ -599,7 +600,7 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 	//-------------------------
 	// The button CSS
 	//-------------------------
-	this.expandButton = __MakeElement__("button", this.modal, this.args.id + "_expandButton", {
+	this.expandButton = __makeElement__("button", this.modal, this.args.id + "_expandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
 		"font-size": 18,

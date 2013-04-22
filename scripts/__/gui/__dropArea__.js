@@ -31,12 +31,12 @@ function elementCollision(a,b, flip){
 function checkIfOverDropZone(elt, dropZones){
 	if (dropZones && dropZones.length > 0){
 		
-		var element = __ExtractElement__(elt);
+		var element = __extractElementFromObject__(elt);
 		for (var i=0; i<dropZones.length; i++){
 			//------------------------------------
 			// Check and see if dropZone[i] is an element
 			//------------------------------------		
-			var dzElt = __ExtractElement__(dropZones[i]);
+			var dzElt = __extractElementFromObject__(dropZones[i]);
 			
 			
 			//------------------------------------

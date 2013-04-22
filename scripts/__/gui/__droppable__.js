@@ -198,14 +198,14 @@ function __Droppable__(obj){
 	
 	// extract the element from the obj (we don't know wheter it's
 	// a javascript object ir or a DOM element)
-	obj.draggable = __ExtractElement__(cloneObj).cloneNode(true);
+	obj.draggable = __extractElementFromObject__(cloneObj).cloneNode(true);
 	obj.draggable.id = obj.args.id + "_draggable";
 	
 	//apply jquery draggable to it
 	$(obj.draggable).draggable(); 
 	
 	// add it to the parent
-	__ExtractElement__(obj).appendChild(obj.draggable);	
+	__extractElementFromObject__(obj).appendChild(obj.draggable);	
 
 	// css customization
 	$(obj.draggable).css({
@@ -238,7 +238,7 @@ function __Droppable__(obj){
 	// DRAW HINT
 	//--------------------------------
 	obj.draggable.style.overflow = "visible"
-	var context = __MakeElement__("div", __ExtractElement__(obj), obj.id + "_hint",{
+	var context = __makeElement__("div", __extractElementFromObject__(obj), obj.id + "_hint",{
 		position: "absolute",
 		top: $(obj.draggable).height() + 20,
 		left: 0,
@@ -251,7 +251,7 @@ function __Droppable__(obj){
 
 	
 	obj.restoreDrag = function(){
-		__ExtractElement__(obj).appendChild(obj.draggable);
+		__extractElementFromObject__(obj).appendChild(obj.draggable);
 	
 		$(obj.draggable).css({
 			opacity: 0,
@@ -259,7 +259,7 @@ function __Droppable__(obj){
 			left: 0
 		});
 		
-		$(__ExtractElement__(obj)).css({borderColor: obj.CSS["border-color"]});
+		$(__extractElementFromObject__(obj)).css({borderColor: obj.CSS["border-color"]});
 
 	}
 	

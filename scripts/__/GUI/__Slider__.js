@@ -24,8 +24,8 @@ var defaultArgs___Slider__ = {
   	borderWidth_handle: 1,			//def 1
   	min: 0,			//def 1
   	max: 100,			//def 1
-  	handleBorderColor: __Globals__.inactiveLineColor,			//def 1
-  	sliderBorderColor: __Globals__.inactiveLineColor,			//def 1
+  	handleBorderColor: XNATImageViewerGlobals.inactiveLineColor,			//def 1
+  	sliderBorderColor: XNATImageViewerGlobals.inactiveLineColor,			//def 1
   	sliderBGColor: "rgba(20,20,20,1)",			//def 1
   	handleBGColor: "rgba(155,155,155,1)",			//def 1
   	orientation: "horizontal",			//def 1
@@ -143,7 +143,7 @@ __Slider__.prototype.bindToMouseWheel = function(elt){
 //******************************************************
 function __Slider__(args){
 	that = this;
-	this.args = (args) ? __MergeArgs__(defaultArgs___Slider__, args) : defaultArgs___Slider__;
+	this.args = (args) ? __mergeArgs__(defaultArgs___Slider__, args) : defaultArgs___Slider__;
   	
   	
   	
@@ -248,7 +248,8 @@ function __Slider__(args){
   	this.addLinkedCallback = function(func){
   		if (!that.linkedCallbacks)
 			that.linkedCallbacks = [];
-  		addLinkedCallback(that, func);
+  		//addLinkedCallback(that, func);
+  		that.linkedCallbacks.push(func);
   	}
   	
   	

@@ -4,10 +4,10 @@ defaultArgs_scanTabs = {
 	scanContents: 0,
 	tabTitles: ["<b>Info.</b>", "<b>Adjust</b>"],
 	contentFontSize: 10,
-	activeLineColor: __Globals__.activeLineColor,
-	activeFontColor: __Globals__.activeFontColor,
-	inactiveLineColor: __Globals__.inactiveLineColor,
-	inactiveFontColor: __Globals__.inactiveFontColor,
+	activeLineColor: XNATImageViewerGlobals.activeLineColor,
+	activeFontColor: XNATImageViewerGlobals.activeFontColor,
+	inactiveLineColor: XNATImageViewerGlobals.inactiveLineColor,
+	inactiveFontColor: XNATImageViewerGlobals.inactiveFontColor,
 	tabHeight: 25,
 	CSS: {
 		top: 400,
@@ -28,13 +28,13 @@ defaultArgs_scanTabs = {
 //******************************************************
 var makeTabTitles = function(parent, titles){
 
-	var titleElt = __MakeElement__("ul", parent);	
+	var titleElt = __makeElement__("ul", parent);	
 	var titlesA = [];
 	var titlesLi = [];
 	
 	for (var i=0;i<titles.length;i++){
-		var li = __MakeElement__("li", titleElt);	
-		var a = __MakeElement__("a", li);
+		var li = __makeElement__("li", titleElt);	
+		var a = __makeElement__("a", li);
 
 		$(a).attr('href', "#" + parent.id + "-" + (i+1).toString());
 		a.setAttribute("id", "tabA_" + i.toString());
@@ -61,14 +61,14 @@ var makeTabTitles = function(parent, titles){
 //
 //******************************************************
 var scanTabs = function(args){
-	this.args = (args) ? __MergeArgs__(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
+	this.args = (args) ? __mergeArgs__(defaultArgs_scanTabs, args) : defaultArgs_scanTabs;
 	this.CSS = this.args.CSS;
 	var that = this;
 	this.activeTab = 0;
 	
 
 	
-	this.widget = __MakeElement__("div", this.args.parent, this.args.id, this.args.CSS);
+	this.widget = __makeElement__("div", this.args.parent, this.args.id, this.args.CSS);
 	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);
 	this.tabs = []
 	
@@ -78,7 +78,7 @@ var scanTabs = function(args){
 	// Tab Titles
 	//------------------------------	
 	for (var i=0;i<this.args.tabTitles.length;i++){
-		var e = __MakeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
+		var e = __makeElement__("div", this.widget, this.args.id + "-" + (i+1).toString());
 		e.label = this.tabTitleObj.titlesA[i].innerHTML;
 		this.tabs.push(e)
 	}
@@ -155,7 +155,7 @@ scanTabs.prototype.updateCSS = function(){
 		"borderRadius": 0,
 		"borderWidth": this.CSS.borderWidth,
 		 background: "none",
-		"borderColor": __Globals__.inactiveLineColor,
+		"borderColor": XNATImageViewerGlobals.inactiveLineColor,
 		"backgroundColor": "rgba(25,25,25,1)",
 		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 
@@ -172,7 +172,7 @@ scanTabs.prototype.updateCSS = function(){
 			width: $(this.widget).width() - 20,
 			"padding": 10,
 			borderWidth: 1,
-			borderColor: __Globals__.activeLineColor,
+			borderColor: XNATImageViewerGlobals.activeLineColor,
 			"border-bottom-right-radius": "0px",
 			"border-bottom-left-radius": "0px",
 			"color": "rgba(255,255,255,1)",
@@ -195,7 +195,7 @@ scanTabs.prototype.updateCSS = function(){
 		borderRadius: 0,
 		background: "none",
 		borderWidth: 0,
-		"color": __Globals__.activeFontColor,
+		"color": XNATImageViewerGlobals.activeFontColor,
 		padding: 0,
 		
 	})
@@ -207,8 +207,8 @@ scanTabs.prototype.updateCSS = function(){
 	//------------------------------
 	for (var i=0;i<this.tabTitleObj.titlesA.length;i++){
 		
-		var bColor = (i == this.activeTab) ? __Globals__.activeLineColor : __Globals__.semiactiveLineColor;
-		var fColor = (i == this.activeTab) ? __Globals__.activeFontColor : __Globals__.semiactiveFontColor;
+		var bColor = (i == this.activeTab) ? XNATImageViewerGlobals.activeLineColor : XNATImageViewerGlobals.semiactiveLineColor;
+		var fColor = (i == this.activeTab) ? XNATImageViewerGlobals.activeFontColor : XNATImageViewerGlobals.semiactiveFontColor;
 		 
 		//------------------------------
 		// The Text

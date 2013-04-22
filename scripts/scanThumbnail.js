@@ -33,7 +33,7 @@ defaultArgs_scanThumbnail = {
 //******************************************************
 function scanThumbnail(scanData, args){
 	var that = this;
-	__Init__(this, defaultArgs_scanThumbnail, args, function(){});
+	INIT(this, defaultArgs_scanThumbnail, args, function(){});
 
 
 	this.mouseDown = false;
@@ -79,7 +79,7 @@ function scanThumbnail(scanData, args){
 	//--------------------------------
 	// HOVER STUFF
 	//--------------------------------
-	this.hoverData = __MakeElement__("div", this.widget, this.args.id + "_hoverData", {
+	this.hoverData = __makeElement__("div", this.widget, this.args.id + "_hoverData", {
 		position: "absolute",
 		height: this.args.CSS.height,
 		width: this.args.CSS.width,
@@ -90,7 +90,7 @@ function scanThumbnail(scanData, args){
 	});
 	$(this.hoverData).fadeTo(0,0)
 	this.hoverData.align = "right";
-	this.hoverData.text = __MakeElement__("div", this.hoverData, this.hoverData.id + "_text",{
+	this.hoverData.text = __makeElement__("div", this.hoverData, this.hoverData.id + "_text",{
 		position: "absolute",
 		padding: 12,
 		fontSize: 10
@@ -127,7 +127,7 @@ scanThumbnail.prototype.makeThumbnailCanvas = function(idAppend){
 	
 	var that = this;
 	
-	var elt = __MakeElement__("canvas", this.widget, this.args.id + idAppend, __MergeArgs__(this.CSS,{
+	var elt = __makeElement__("canvas", this.widget, this.args.id + idAppend, __mergeArgs__(this.CSS,{
 		top: 0,
 		left: 0,
 		"border-width": 0,
@@ -195,7 +195,7 @@ scanThumbnail.prototype.deactivate = function(){
 	//--------------------------
 	// GENERIC BORDER HIGHLIGHT
 	//--------------------------	
-	__ApplyHoverAnim__(this.widget);
+	borderHighlightOnHover(this.widget);
 	
 	
 	//--------------------------
@@ -231,7 +231,7 @@ scanThumbnail.prototype.activate = function(activeDropZoneID){
 
 	// Since we're unbinding everything we have to rebind
 	// the generic hover (border highlighting)	
-	__ApplyHoverAnim__(this.widget);
+	borderHighlightOnHover(this.widget);
 		
 	// Callbacks	
 	if (this.activatedCallbacks && this.activatedCallbacks.length > 0){

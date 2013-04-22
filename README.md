@@ -4,12 +4,21 @@
 Most of the "objects" (or widgets) are organized around standard
 object-oriented principles.  Since JavaScript makes everything
 first-class, I do some modification to impart more "object-like" qualities into the widgets. 
-For instance, they all have init functions (i.e. "__Init__") and "updateCSS"
-functions.  You'll also notice that they all have a "default" set of arguments, found
-at the top of each file.  
+
+UPDATE 4/22/12
+I'll be refactoring the code to get tighter control of jQuery use and public 
+variables.  As it stands, jQuery use is a little indescriminate, and I am to 
+reorganize the code (GUI especially) to have very selective use of jQuery.
+With public variables, there currently exist too many opportunities to 
+access elements/objects that are better left out of the public scope.  In general, 
+I'm trying to limit the direct-element access the user has and keep it
+oriented on javaScript.
 
 
-The image viewer is initiated in the onload.js script.
+__ toolkit:
+The first phase entails rewriting the __Slider__.js widget to be jQueryGUI free.
+Now there will be two widgets called __horizontalSlider__.js and __verticalSlider__.js
+
 
 ### Workflow
 

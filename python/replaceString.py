@@ -7,8 +7,8 @@ def main():
     
     rootDir = "../scripts"
     backupDir = "scriptBackup"
-    findStr = "__PX__"
-    replaceStr = "__toPx__"
+    findStr = "__Init__"
+    replaceStr = "INIT"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     #  make a backup folder
@@ -38,10 +38,10 @@ def main():
                l = l.replace(findStr, replaceStr)
                newLines.append(l)
         
-           #fl = open(src, 'w')
-           #for item in newLines:
-           #    fl.write("%s" % item)
-           #fl.close()
+           fl = open(src, 'w')
+           for item in newLines:
+               fl.write("%s" % item)
+           fl.close()
           
            print "Replaced '%s' with '%s' in %s."%(findStr, replaceStr, src)
     

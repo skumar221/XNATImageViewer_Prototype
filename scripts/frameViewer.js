@@ -31,7 +31,7 @@ var defaultArgs_frameViewer = {
 //******************************************************
 function frameViewer(args){
 
-	__Init__(this, defaultArgs_frameViewer, args);
+	INIT(this, defaultArgs_frameViewer, args);
 		
 	this.currFrame = this.args.onloadFrame;
 	
@@ -40,7 +40,7 @@ function frameViewer(args){
 	//----------------------------------
 	//	THE GENERAL CANVAS AND CONTEXT
 	//----------------------------------
-	this.canvas = __MakeElement__("canvas", this.widget, this.args.id + "_canvas", {
+	this.canvas = __makeElement__("canvas", this.widget, this.args.id + "_canvas", {
 		top: 0,
 		left: 0
 	});
@@ -107,7 +107,8 @@ frameViewer.prototype.updateCSS = function(){
 	    this.context.fillStyle = "white";	    
 		this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
 	}
-	
+
+
 	this.drawFrame(this.currFrame); 
 }
 
@@ -189,6 +190,8 @@ frameViewer.prototype.loadFrames = function(frames){
 
 
 
+
+
 //******************************************************
 //  Draws a "frame" (i.e. an Image object) onto the canvas.
 //******************************************************
@@ -232,25 +235,28 @@ frameViewer.prototype.imageAdjust = function(methodType, value){
 	//using their saved parameters
 	
 	//Draw original frame
+
 	this.drawFrame(this.currFrame); 
 	
 	//Get canvas's imageData
-	var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);	
+	if (this.canvas.height > 0 && this.canvas.width > 0){
+		var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);	
 	
-	//Apply image adjustment methods
-	for (var i in this.adjustMethods){
-		switch (i){
-			case "brightness":
-				imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
-				break;
-			case "contrast":
-				imageData.data = linearContrast(imageData.data, 
-											    this.adjustMethods[i], 
-											    this.args.contrastThreshold);
-				break;
+		//Apply image adjustment methods
+		for (var i in this.adjustMethods){
+			switch (i){
+				case "brightness":
+					imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
+					break;
+				case "contrast":
+					imageData.data = linearContrast(imageData.data, 
+												    this.adjustMethods[i], 
+												    this.args.contrastThreshold);
+					break;
+			}
 		}
+		//Put data back into canvas
+		this.context.putImageData(imageData, 0, 0);	
 	}
-	//Put data back into canvas
-	this.context.putImageData(imageData, 0, 0);
 }
 
