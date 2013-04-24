@@ -51,7 +51,7 @@ function scanThumbnail(scanData, args){
 	// THUMBNAIL IMAGE
 	//--------------------------------	
 	this.thumbImage = new Image();
-	this.thumbImage.src = this.scanData.scanPaths[Math.round(this.scanData.scanPaths.length/2)]; 
+	this.thumbImage.src = this.scanData.saggitalPaths[Math.round(this.scanData.saggitalPaths.length/2)]; 
 	
 	
 	
@@ -66,7 +66,9 @@ function scanThumbnail(scanData, args){
 	//--------------------------------
 	// FRAMES
 	//--------------------------------
-	this.frames = this.getFrameList();
+	this.saggitalFrames = this.getFrameList("saggital");
+	this.coronalFrames = this.getFrameList("coronal");
+	this.axialFrames = this.getFrameList("axial");
 
 
 
@@ -249,8 +251,9 @@ scanThumbnail.prototype.activate = function(activeDropZoneID){
 //****************************************
 // FRAMES
 //****************************************
-scanThumbnail.prototype.getFrameList = function(){
-	return this.scanData.scanPaths;
+scanThumbnail.prototype.getFrameList = function(type){
+	
+	return (type == "saggital") ? this.scanData.saggitalPaths : (type == "axial") ? this.scanData.axialPaths : this.scanData.coronalPaths;
 }
 
 

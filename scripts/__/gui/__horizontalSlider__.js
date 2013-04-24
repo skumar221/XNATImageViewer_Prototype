@@ -324,7 +324,6 @@ __horizontalSlider__.prototype.clearLinked= function(){
 //******************************************************
 //  
 //******************************************************
-//__horizontalSlider__.prototype.moveHandle = function(event, handle, wheelDelta){
 __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 
 		var that = this;
@@ -431,19 +430,16 @@ __horizontalSlider__.prototype.linkSlider = function(b){
 	}
 
 	this.addLinkedCallback(function(a){  
-		//if (a.mouseOver){	
 			
-			var aDiff = a.currArgs().max - a.currArgs().min;
-			
-			var bDiff = b.currArgs().max - b.currArgs().min;
-			// percentage-based linking
-			var bVal = Math.round(bDiff * (a.value / aDiff));
-			
-			b.updateProperties({value: bVal});
-			b.runSlideCallbacks();
-			//performCallbacks(b);
-			//b.slide(null, {value: bVal});
-		//}
+		var aDiff = a.currArgs().max - a.currArgs().min;
+		
+		var bDiff = b.currArgs().max - b.currArgs().min;
+		// percentage-based linking
+		var bVal = Math.round(bDiff * (a.value / aDiff));
+		
+		b.updateProperties({value: bVal});
+		b.runSlideCallbacks();
+		
   	});
 }
 

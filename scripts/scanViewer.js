@@ -42,6 +42,36 @@ var defaultArgs_scanViewer = {
 
 
 
+//******************************************************
+//  Method for handling objects that are "Droppable".
+//  In this case, they are the scanThumbnails.
+//******************************************************
+
+frameViewer.prototype.loadFramesByAxis = function(frameType){
+	
+	if (frameType == "saggital")
+		this.loadFrames(this.currDroppable.saggitalFrames);
+	if (frameType == "transverse" || frameType == "axial")
+		this.loadFrames(this.currDroppable.axialFrames);
+	if (frameType == "coronal")
+		this.loadFrames(this.currDroppable.coronalFrames);
+}
+
+
+frameViewer.prototype.loadDroppable = function(droppable){
+	if (droppable.saggitalFrames){
+		this.currDroppable = droppable;
+		//console.log("SAG FRAMES: ", droppable.saggitalFrames)
+		this.loadFramesByAxis("saggital");
+	}
+	else{
+		throw "FrameViewer.js: Invalid Droppable for frameViewer."
+	}
+
+}
+
+
+
 
 
 //******************************************************
@@ -106,8 +136,8 @@ var scanViewer = function(args){
 			frameVal = 
 			that.frameSlider.updateProperties({
 				min : 0,
-				max : that.frameViewer.currDroppable.frames.length-1,
-				value : Math.round(that.frameViewer.currDroppable.frames.length/2),
+				max : that.frameViewer.frames.length-1,
+				value : Math.round(that.frameViewer.frames.length/2),
 			});
 
 			that.frameViewer.drawFrame(that.frameSlider.value, true);
@@ -327,9 +357,27 @@ scanViewer.prototype.populateData = function(data){
 				borderColor: XNATImageViewerGlobals.semiactiveLineColor
 			}));	
 			
+			
 			for (var j=0;j<labelObj[i]["option"].length;j++){
-				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelObj[i]["option"][j] + "</option>"
+				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelObj[i]["option"][j] + "</option>";
 			}
+			
+
+			//----------------------------------
+			// When dropdown is Change the axis of the frames
+			//----------------------------------			
+			if (labelObj[i].label.indexOf("View") != -1){
+				var dd = that.displayableData[noSpace + "_dropdown"];
+				dd.innerHTML = "<option>" + "saggital" + "</option>";
+				dd.innerHTML += "<option>" + "axial" + "</option>";
+				dd.innerHTML += "<option>" + "coronal" + "</option>";
+				
+				dd.onchange = function(){
+					that.frameViewer.loadFramesByAxis(dd.value)
+					//console.log(dd.value);
+				}				
+			}
+
 			
 			counter++;
 		}

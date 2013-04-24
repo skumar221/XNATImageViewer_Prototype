@@ -67,8 +67,8 @@ function frameViewer(args){
 	
 	this.frames = [];
 	var that = this;
-	var loadDropable = function(dropable){
-		if (dropable.frames){
+	var loadDropable = function(droppable){
+		if (droppable.frames){
 			that.loadFrames(dropable.frames);
 		}
 	}
@@ -131,13 +131,7 @@ frameViewer.prototype.addOnloadCallback = function(callback){
 //  In this case, they are the scanThumbnails.
 //******************************************************
 frameViewer.prototype.loadDroppable = function(droppable){
-	if (droppable.frames){
-		this.currDroppable = droppable;
-		this.loadFrames(droppable.frames);
-	}
-	else{
-		throw "FrameViewer.js: Invalid Droppable for frameViewer."
-	}
+
 
 }
 

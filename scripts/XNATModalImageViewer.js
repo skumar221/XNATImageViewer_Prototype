@@ -141,7 +141,7 @@ var XNATModalImageViewer = function(args){
 	// FOR PROTOTYPING PURPOSES
 	//----------------------------------	
 	this.scanDataPaths = []
-	for (var i=0;i<20;i++){
+	for (var i=0;i<4;i++){
 		this.scanDataPaths.push(TESTSCANDATA_1);
 	}
 
