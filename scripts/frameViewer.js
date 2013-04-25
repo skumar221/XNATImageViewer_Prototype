@@ -216,23 +216,27 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 //******************************************************
 frameViewer.prototype.drawImage_MaintainProportions = function(img, canvas, context){
 
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	
+	
+	var startX = 0;
+	var startY = 0;
+	var endX = canvas.width;
+	var endY = canvas.height;
+	
+	
 	if (canvas.width == canvas.height){
-		if (img.width == img.height) {
-			context.drawImage(img, 0, 0, canvas.width, canvas.height)
-		}
-		else if (img.width < img.height) {
-			console.log("HERE")
-			startX = canvas.width * (img.width/canvas.width);
-			endX = img.width + startX;
-			context.drawImage(img, startX, 0, endX, canvas.height);
+		if (img.width < img.height) {
+			startX = (canvas.width * (img.width/canvas.width))/2;
+			endX = img.width + startX*2;
 		}
 		else if (img.width > img.height) {
-			startY = canvas.height * (img.height/canvas.height);
-			endY = img.height + startY;
-			context.drawImage(img, 0, startY, canvas.width, endY);
-		}	
+			startY = (canvas.height * (img.height/canvas.height))/2;
+			endY = img.height + startY*2;
+		}			
 	}
 		
+	context.drawImage(img, startX, startY, endX, endY)
 }
 
 
