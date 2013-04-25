@@ -164,8 +164,8 @@ frameViewer.prototype.loadFrames = function(frames){
 		// if so, draw it to the frame.
 	    img.onload = function() {
 	    	if (this == that.endImage){
-	   			that.context.drawImage(that.frames[that.currFrame], 0, 0, that.canvas.width, that.canvas.height);
-	   			
+	   			//that.context.drawImage(that.frames[that.currFrame], 0, 0, that.canvas.width, that.canvas.height);
+	   			that.drawImage_MaintainProportions(that.frames[that.currFrame], that.canvas, that.context);
 	   			// Need to get the appropriate contrast 
 	   			// threshold for the data set.
 	   			var imageData = that.context.getImageData(0, 0, that.canvas.width, that.canvas.height);	
@@ -196,7 +196,8 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 		
 		if (this.frames.length > 0){
 			this.currFrame = frameNumber;
-			this.context.drawImage(this.frames[frameNumber], 0, 0, this.canvas.width, this.canvas.height);	
+			//this.context.drawImage(this.frames[frameNumber], 0, 0, this.canvas.width, this.canvas.height);	
+			this.drawImage_MaintainProportions(this.frames[frameNumber], this.canvas, this.context);
 		}
 		
 		
@@ -205,6 +206,35 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 		}		
 	}	
 }
+
+
+
+
+
+//******************************************************
+//  Draws a "frame" (i.e. an Image object) onto the canvas.
+//******************************************************
+frameViewer.prototype.drawImage_MaintainProportions = function(img, canvas, context){
+
+	if (canvas.width == canvas.height){
+		if (img.width == img.height) {
+			context.drawImage(img, 0, 0, canvas.width, canvas.height)
+		}
+		else if (img.width < img.height) {
+			console.log("HERE")
+			startX = canvas.width * (img.width/canvas.width);
+			endX = img.width + startX;
+			context.drawImage(img, startX, 0, endX, canvas.height);
+		}
+		else if (img.width > img.height) {
+			startY = canvas.height * (img.height/canvas.height);
+			endY = img.height + startY;
+			context.drawImage(img, 0, startY, canvas.width, endY);
+		}	
+	}
+		
+}
+
 
 
 
