@@ -2,7 +2,7 @@ import sys
 import os
 from PIL import Image
 import shutil
-import dicom
+#import dicom
 
 def main():
     
@@ -101,7 +101,7 @@ def generateCoronal(blankDir, genSize, refFileNames):
                 for j in range(0, refSize[1]): # j is 256
                     pix[k, j] = refPx[ i , j]
             
-            img = img.resize((genSize[0], genSize[1]), Image.BICUBIC)
+            #img = img.resize((genSize[0], genSize[1]), Image.BICUBIC)
             img.save(fn, "JPEG");
             
                 
@@ -124,7 +124,7 @@ def generateAxial(blankDir, genSize, refFileNames):
                 for j in range(0, refSize[1]): # j is 256
                     pix[k, j] = refPx[ j , (refSize[1]- i -1)]
             
-            img = img.resize((genSize[0], genSize[1]), Image.BICUBIC)
+            #img = img.resize((genSize[0], genSize[1]), Image.BICUBIC)
             img.save(fn, "JPEG");
 
 
