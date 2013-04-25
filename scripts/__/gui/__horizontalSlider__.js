@@ -283,6 +283,7 @@ __horizontalSlider__.prototype.setArgs = function(newArgs){
 //  clicked on the widget.
 //******************************************************
 __horizontalSlider__.prototype.startBodyListen = function(bodyElt, handle, track){
+	var that = this;
 	bodyElt.style.width= "100%";
 	bodyElt.style.height = "100%";
 	bodyElt.onmousemove = function(event){ 
