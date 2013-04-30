@@ -164,7 +164,7 @@ frameViewer.prototype.loadFrames = function(frames){
 		// if so, draw it to the frame.
 	    img.onload = function() {
 	    	if (this == that.endImage){
-	   			//that.context.drawImage(that.frames[that.currFrame], 0, 0, that.canvas.width, that.canvas.height);
+
 	   			that.drawImage_MaintainProportions(that.frames[that.currFrame], that.canvas, that.context);
 	   			// Need to get the appropriate contrast 
 	   			// threshold for the data set.
@@ -195,8 +195,10 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 		else if (frameNumber > this.frames.length) frameNumber = this.frames.length -1;
 		
 		if (this.frames.length > 0){
+			frameNumber = Math.round(frameNumber)
 			this.currFrame = frameNumber;
-			//this.context.drawImage(this.frames[frameNumber], 0, 0, this.canvas.width, this.canvas.height);	
+
+			console.log("HERE 2", frameNumber);	
 			this.drawImage_MaintainProportions(this.frames[frameNumber], this.canvas, this.context);
 		}
 		
@@ -224,7 +226,8 @@ frameViewer.prototype.drawImage_MaintainProportions = function(img, canvas, cont
 	var endX = canvas.width;
 	var endY = canvas.height;
 		
-
+	console.log("img", img);
+	
 	if (img.width < img.height) {
 		startX = (canvas.width * (img.width/canvas.width))/2;
 		endX = img.width + startX*2;

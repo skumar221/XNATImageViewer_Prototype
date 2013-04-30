@@ -51,8 +51,8 @@ function scanThumbnail(scanData, args){
 	// THUMBNAIL IMAGE
 	//--------------------------------	
 	this.thumbImage = new Image();
-	this.thumbImage.src = this.scanData.saggitalPaths[Math.round(this.scanData.saggitalPaths.length/2)]; 
-	
+	this.thumbImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
+
 	
 	
 	//--------------------------------
@@ -66,7 +66,7 @@ function scanThumbnail(scanData, args){
 	//--------------------------------
 	// FRAMES
 	//--------------------------------
-	this.saggitalFrames = this.getFrameList("saggital");
+	this.sagittalFrames = this.getFrameList("sagittal"); 
 	this.coronalFrames = this.getFrameList("coronal");
 	this.axialFrames = this.getFrameList("axial");
 
@@ -91,18 +91,17 @@ function scanThumbnail(scanData, args){
 		backgroundColor: "rgba(80,80,80,.5)",
 	});
 	$(this.hoverData).fadeTo(0,0)
-	this.hoverData.align = "right";
+	this.hoverData.align = "left";
 	this.hoverData.text = __makeElement__("div", this.hoverData, this.hoverData.id + "_text",{
 		position: "absolute",
-		padding: 12,
+		padding: 6,
 		fontSize: 10
 		//marginRight: 10
 	})
 	this.hoverData.text.innerHTML += "<div style='margin-right:10px'>";
 	this.hoverData.text.innerHTML += this.scanData.sessionInfo["SessionID"].value + "<br>";
-	this.hoverData.text.innerHTML += this.scanData.sessionInfo["scannumber"].value + "<br>";
 	this.hoverData.text.innerHTML += this.scanData.sessionInfo["type"].value + "<br>";
-	this.hoverData.text.innerHTML += this.scanData.sessionInfo["quality"].value + "<br>";
+	this.hoverData.text.innerHTML += "SCAN: " + __toInt__(this.scanData.sessionInfo["Scan"].value) + "<br>";
 	this.hoverData.text.innerHTML += "</div>";
 	this.setHoverMethods();
 	__Droppable__(this);
@@ -253,7 +252,7 @@ scanThumbnail.prototype.activate = function(activeDropZoneID){
 //****************************************
 scanThumbnail.prototype.getFrameList = function(type){
 	
-	return (type == "saggital") ? this.scanData.saggitalPaths : (type == "axial") ? this.scanData.axialPaths : this.scanData.coronalPaths;
+	return (type == "sagittal") ? this.scanData.sagittalPaths : (type == "axial") ? this.scanData.axialPaths : this.scanData.coronalPaths;
 }
 
 

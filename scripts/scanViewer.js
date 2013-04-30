@@ -49,8 +49,8 @@ var defaultArgs_scanViewer = {
 
 frameViewer.prototype.loadFramesByAxis = function(frameType){
 	
-	if (frameType == "saggital")
-		this.loadFrames(this.currDroppable.saggitalFrames);
+	if (frameType == "sagittal")
+		this.loadFrames(this.currDroppable.sagittalFrames);
 	if (frameType == "transverse" || frameType == "axial")
 		this.loadFrames(this.currDroppable.axialFrames);
 	if (frameType == "coronal")
@@ -59,10 +59,10 @@ frameViewer.prototype.loadFramesByAxis = function(frameType){
 
 
 frameViewer.prototype.loadDroppable = function(droppable){
-	if (droppable.saggitalFrames){
+	if (droppable.sagittalFrames){
 		this.currDroppable = droppable;
-		//console.log("SAG FRAMES: ", droppable.saggitalFrames)
-		this.loadFramesByAxis("saggital");
+		//console.log("SAG FRAMES: ", droppable.sagittalFrames)
+		this.loadFramesByAxis("sagittal");
 	}
 	else{
 		throw "FrameViewer.js: Invalid Droppable for frameViewer."
@@ -368,7 +368,7 @@ scanViewer.prototype.populateData = function(data){
 			//----------------------------------			
 			if (labelObj[i].label.indexOf("View") != -1){
 				var dd = that.displayableData[noSpace + "_dropdown"];
-				dd.innerHTML = "<option>" + "saggital" + "</option>";
+				dd.innerHTML = "<option>" + "sagittal" + "</option>";
 				dd.innerHTML += "<option>" + "axial" + "</option>";
 				dd.innerHTML += "<option>" + "coronal" + "</option>";
 				
