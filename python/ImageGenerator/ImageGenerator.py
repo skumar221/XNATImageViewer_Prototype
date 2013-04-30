@@ -164,12 +164,12 @@ def main():
     # Take in a root directory and build the rest of the 
     # images based on what exists there
     #
-    basePath = "C:/Users/skumar01/Desktop/ErinReidDataset_Prototype"
-    folders = os.listdir(basePath)
-    for folder in folders:
+    basePath = "../../TESTSCANS"
+    #folders = os.listdir(basePath)
+    folderList = ["02_Defaced", "07_Defaced", "08_Defaced", "17_Defaced", "18_Defaced", "24_Defaced"]
+    for folder in folderList:
         f = basePath + "/" + folder
-        if "19" in folder:
-            generateImages(f, "sagittal")
+        generateImages(f, "sagittal")
 #        return
         
         

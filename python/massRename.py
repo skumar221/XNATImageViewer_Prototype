@@ -3,14 +3,14 @@ import os
 
 def main():
     
-    filePaths = ["../TESTSCANS/09_Defaced", "../TESTSCANS/10_Defaced", "../TESTSCANS/19_Defaced", "../TESTSCANS/20_Defaced", "../TESTSCANS/21_Defaced"]
+    filePaths = ["C:/Users/skumar01/Desktop/ErinReidDataset_Prototype - Copy/Complete/22_Defaced/axial"]
 
     for p in filePaths:
         for root, dirs, files in os.walk(p):
            for f in files:
                
                a = root + os.sep + f
-               b = a.replace("-Defaced", "_Defaced")
+               b = a.replace("sagittal", "axial")
                if b != a:
                    print "Renaming %s with %s"%(a, b)
                    os.rename(a, b)
