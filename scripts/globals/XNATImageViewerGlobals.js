@@ -9,4 +9,4 @@ XNATImageViewerGlobals.activeLineColor = "rgba(205,205,205,1)";
 XNATImageViewerGlobals.semiactiveFontColor = "rgba(85,85,85,1)"; 
 XNATImageViewerGlobals.semiactiveLineColor = "rgba(85,85,85,1)"; 
 
-XNATImageViewerGlobals.fontSizeSmall = 11;
+XNATImageViewerGlobals.fontSizeSmall = 8;

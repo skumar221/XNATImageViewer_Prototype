@@ -26,16 +26,17 @@ var defaultArgs_scrollGallery = {
 		widgetCSS:{
 		},
 		handleCSS:{
-			height: 50,
-			width: 5,
+			height: 70,
+			width: 9,
 			borderWidth: 0,
 			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
-			backgroundColor: "rgba(255,255,255,1)"
+			backgroundColor: "rgba(105,105,105,1)"
 		},
 		trackCSS:{
 			borderWidth: 0,
+			width: 10,
 			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
-			backgroundColor: "rgba(50, 50, 50, 1)"
+			backgroundColor: "rgba(0, 0, 0, 1)"
 		}
 	}
 }
@@ -70,12 +71,13 @@ var scrollGallery = function(args){
 
 
 	//-------------------------------
-	// THE CONTENTS DIV 
+	// THE CONTENTS HOLDER
 	//-------------------------------
 	  this.scrollContent = __makeElement__("div", this.widget, this.args.id + "_scrollContent", {
 	  	position: "relative",
 	  	border: "solid rgb(0,0,255,1) 1px",
 	  	top: 0,
+	  	left: this.args._sliderCSS.trackCSS.width * 1.5
 	  })
 
 
@@ -97,9 +99,12 @@ var scrollGallery = function(args){
 	//-------------------------------
 	// THE CONTENTS - BLANK FOR NOW
 	//-------------------------------
-	var blankContents = (that.args.orientation == "vertical") ?
-					    __makeElement__("div", document.body, "blankElement", {height: 800, width: 100, backgroundColor: "rgba(200,100,51,1)"}):
-					    __makeElement__("div", document.body, "blankElement", {height: 100, width: 800, backgroundColor: "rgba(100,200,51,1)"});
+	var blankContents = __makeElement__("div", document.body, "blankElement", {
+		height: 800, 
+		width: 100, 
+		backgroundColor: "rgba(200,100,51,1)"
+	});
+
 	blankContents.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."	    
 	this.setContents(blankContents)
   
@@ -119,7 +124,15 @@ var scrollGallery = function(args){
 scrollGallery.prototype.mapSliderToContents = function(){
 	var that = this;
 	return function(_slider){		
-//		console.log(_slider.value);
+		console.log(_slider.value);
+		
+		if (that.args.orientation == "vertical"){
+	  		var t = -1 * __remap1D__(_slider.value, [_slider.currArgs().min, _slider.currArgs().max], 
+	   							    [0, $(that.scrollContent).outerHeight() - $(that.widget).height() - that.args.scrollMarginY]).newVal;	
+	   		$(that.scrollContent).css({
+	  			top: t,
+	  		});
+		}
    }
 }
 

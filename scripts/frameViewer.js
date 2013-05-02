@@ -2,7 +2,7 @@ var defaultArgs_frameViewer = {
 	id: "frameViewer",
 	parent: document.body,
 	onloadFrame: 0,
-	blankMsg : "drop thumbnail here",
+	blankMsg : "drag and drop thumbnail here",
 	contrastThreshold: .1,
 	CSS: {
 			position: 'absolute',
@@ -17,7 +17,7 @@ var defaultArgs_frameViewer = {
 		    "border" : "solid",
 			"borderColor": "rgba(50,50,50,1)",
 			"color": "rgba(255,255,255,1)",
-		  	"border-width" : 1,
+		  	"border-width" : 0,
 		  	"border-radius": 0,	 
 		  	 overflow: "visible"
   		 },
@@ -104,7 +104,8 @@ frameViewer.prototype.updateCSS = function(){
 	if (this.frames.length == 0){
 	    this.context.fillStyle = "black";
 	    this.context.fillRect(0,0, this.canvas.height, this.canvas.width);
-	    this.context.fillStyle = "white";	    
+	    this.context.fillStyle = "white";	  
+	    this.context.font = 'normal 8pt helvetica';  
 		this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
 	}
 
@@ -198,7 +199,7 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 			frameNumber = Math.round(frameNumber)
 			this.currFrame = frameNumber;
 
-			console.log("HERE 2", frameNumber);	
+
 			this.drawImage_MaintainProportions(this.frames[frameNumber], this.canvas, this.context);
 		}
 		
@@ -225,8 +226,7 @@ frameViewer.prototype.drawImage_MaintainProportions = function(img, canvas, cont
 	var startY = 0;
 	var endX = canvas.width;
 	var endY = canvas.height;
-		
-	console.log("img", img);
+
 	
 	if (img.width < img.height) {
 		startX = (canvas.width * (img.width/canvas.width))/2;

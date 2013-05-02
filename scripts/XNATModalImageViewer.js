@@ -154,6 +154,7 @@ var XNATModalImageViewer = function(args){
 			left: this.args.gutter,
 			top: this.args.marginTop,
 			height: 700,
+			border: "solid rgba(90,90,90,1) 0px"
 		}
 	});	
 	// set the contents
@@ -291,7 +292,6 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	CSS: MODAL - PASS 1
 	//----------------------------------
-
 	this.modalDimensions = this.modalDims();
 	$(this.modal).css(this.modalDimensions["px"]);	
 	if(args){
@@ -303,9 +303,9 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//	CSS: SCROLL GALLERY
 	//----------------------------------
 	$(this.scrollGallery.widget).css({
-		left: this.args.marginLeft,
-		top: this.args.marginTop,
-		height: $(this.modal).height() - this.args.marginTop*2,	
+		left: 0,//this.args.marginLeft,
+		top: 0,//this.args.marginTop,
+		height: $(this.modal).height(),// - this.args.marginTop*2,	
 	})
 	this.scrollGallery.updateCSS();
 
@@ -319,9 +319,9 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 		var l = (i==0) ? $(this.scrollGallery.widget).position().left + $(this.scrollGallery.widget).width() + this.args.marginLeft*2 : 
 						 $(this.scanViewers[i-1].widget).position().left + $(this.scanViewers[i-1].widget).width() + this.args.marginLeft*2;
 		$(this.scanViewers[i].widget).css({
-			height: $(this.modal).height() - this.args.marginTop*2,
+			height: $(this.modal).height(),// - this.args.marginTop*2,
 			left: l,
-			top: this.args.marginTop,
+			top: -1//this.args.marginTop,
 		})
 		this.scanViewers[i].updateCSS();
 	}
@@ -332,8 +332,8 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//	CSS: MODAL - PASS 2
 	//----------------------------------	
 	var modalWidth = $(this.scanViewers[this.scanViewers.length-1].widget).position().left + 
-					 $(this.scanViewers[this.scanViewers.length-1].widget).width() + 
-					 this.args.marginLeft*2 + __toInt__(this.expandButton.style.width);		
+					 $(this.scanViewers[this.scanViewers.length-1].widget).width() + __toInt__(this.expandButton.style.width);// +
+					 //this.args.marginLeft*2;		
 	$(this.modal).css({
 		width: modalWidth,
 		left: window.innerWidth/2 - modalWidth/2
@@ -412,7 +412,8 @@ XNATModalImageViewer.prototype.addScanViewer = function(numViewers){
 		var v = new scanViewer({
 			parent: this.modal,
 			id: this.args.id + "_scanViewer_" + (this.scanViewers.length + i).toString(),
-		});			
+		});		
+		$(v.widget).fadeTo(0, 0).fadeTo(400, 1);	
 		this.scanViewers.push(v);	
 		this.setDropZones(v.frameViewer);	
 	}
@@ -615,18 +616,16 @@ XNATModalImageViewer.prototype.createExpandButton = function(){
 	//-------------------------
 	// Its natural state -- slightly faded
 	//-------------------------
-	$(this.expandButton).fadeTo(0, .7);
-	
-	
+	$(this.expandButton).fadeTo(0, .5);
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
 	$(this.expandButton).mouseover(function(){
-	  $(this.expandButton).stop().fadeTo(200, 1);
+	  $(that.expandButton).stop().fadeTo(200, .8);
 	}).mouseleave(
 		function(){ 
-			if (this.changeState != "expanding"){
-				$(this.expandButton).stop().fadeTo(200, .7);
+			if (that.changeState != "expanding"){
+				$(that.expandButton).stop().fadeTo(200, .5);
 			}			
     });
 

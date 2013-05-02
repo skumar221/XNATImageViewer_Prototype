@@ -89,6 +89,7 @@ var scanViewer = function(args){
 	 this.frameViewer = new frameViewer({
 	 	id: this.args.id + "_frameViewer",
 	 	parent: this.widget,
+	 	"border-width": 0,
 	 });
 
 
@@ -146,7 +147,18 @@ var scanViewer = function(args){
 		}	
 	});
 	
+
+
+
+	//----------------------------------
+	// CONTENT DIVIDER
+	//----------------------------------	
+	this.contentDivider = new contentDivider({
+		id: this.args.id + "_contentDivider",
+		parent: this.widget,		
+	});
 	
+		
 	
 	//----------------------------------
 	// SCAN TABS
@@ -243,22 +255,23 @@ var scanViewer = function(args){
 //******************************************************
 scanViewer.prototype.updateCSS = function(){
 
-	var tabsHeight = 180;
+	var tabsHeight = 100;
 	var marginLeft = 10;
 	var marginTop = 10;
 	var marginLeft = 10; 
 
 
-	var scanTabTop = $(this.widget).height() - tabsHeight - marginTop;
-	var sliderTop = scanTabTop - this.frameSlider.currArgs().handleCSS.height  - marginTop*1.5;
+	var scanTabTop = $(this.widget).height() - tabsHeight -1;// - marginTop;
+	var contentDivTop = scanTabTop	- this.contentDivider.defaultArgs().widgetCSS.height;
+	var sliderTop = contentDivTop - this.frameSlider.currArgs().handleCSS.height - 10;
 	//console.log("slider top", scanTabTop, sliderTop, this.frameSlider.currArgs().handleCSS.height, marginTop)
-	var viewerWidth = sliderTop - marginTop*2 ;
+	var viewerWidth = sliderTop;// - marginTop*2 ;
 	var viewerHeight = viewerWidth;
 	
 	
 
 	$(this.widget).css({
-		width: viewerWidth + marginLeft * 2
+		width: viewerWidth
 	})
 	
 	
@@ -267,12 +280,33 @@ scanViewer.prototype.updateCSS = function(){
 	// CSS: SCAN TABS
 	//----------------------------------	
 	$(this.scanTabs.widget).css({
- 		left: marginLeft,
+ 		left: 0,//marginLeft,
  	  	top: scanTabTop,
- 	  	width: viewerWidth,
+ 	  	width: viewerWidth,// + marginLeft * 2,
  	  	height: tabsHeight,
 	});	 
    this.scanTabs.updateCSS();
+
+
+
+
+	//----------------------------------
+	// CONTENT DIVIDER
+	//----------------------------------
+	this.contentDivider.updateCSS({
+		widgetCSS:{
+			left: 0,
+			width: viewerWidth,
+			top: contentDivTop
+		},
+		boundaryCSS:{
+			width: viewerWidth,	
+			top: 0,
+			left: 0,
+			height: scanTabTop,
+		}
+	});
+
 
 
 
@@ -282,10 +316,10 @@ scanViewer.prototype.updateCSS = function(){
     this.frameSlider.updateCSS({
     	widgetCSS:{
  			top : sliderTop,
-			left : marginLeft,   		
+			left : 4,//marginLeft,   		
     	},
     	trackCSS:{
-    		width: viewerWidth
+    		width: Math.round(viewerWidth) - 10,// + marginLeft * 2
     	}
     })
 
@@ -295,20 +329,21 @@ scanViewer.prototype.updateCSS = function(){
 	 // CSS: FRAME VIEWER
 	 //----------------------------------
 	 $(this.frameViewer.widget).css({
- 	    left: marginLeft,
- 		top: marginTop,
- 	  	width: viewerWidth,
- 	  	height: viewerHeight,
+ 	    left: 0,//marginLeft,
+ 		top: 0,//marginTop,
+ 	  	width: viewerWidth - 10,
+ 	  	height: viewerHeight - 10,
 	 });
 	 this.frameViewer.updateCSS();
 	 
+
 
 
 	 //----------------------------------
 	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
-	 		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall -5,
+	 		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall,// -2,
 	 });
 	 
 	 

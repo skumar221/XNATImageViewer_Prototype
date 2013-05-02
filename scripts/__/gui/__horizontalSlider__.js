@@ -18,6 +18,8 @@ function __horizontalSlider__(args){
 	// HANDLE	
 	var handle =  __makeElement__("div", widget, this.currArgs().id + "_handle", this.currArgs().handleCSS);
 	
+	
+	
 	// Defining the update css version
 	this.updateCSS = function(args){
 		// If there are inputted args, we need to set + validate them
@@ -393,7 +395,7 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 		
 		// MOUSE
 		else if (moveType == "byMouse"){
-			var newPt = getMouseXY(args.event);	
+			var newPt = __getMouseXY__(args.event);	
 				   
 			var tempLeft = newPt.x - // mouseclick x
 						   args.track.getBoundingClientRect().left - // current abs position of the handle
@@ -477,24 +479,6 @@ __horizontalSlider__.prototype.linkSlider = function(b){
 
 
 
-//******************************************************
-//  
-//******************************************************
-function getMouseXY(e) {
-    if (navigator.appName == 'Microsoft Internet Explorer'){
-      tempX = event.clientX + document.body.scrollLeft;
-      tempY = event.clientY + document.body.scrollTop;
-    }
-    else {  // grab the x-y pos.s if browser is NS
-      tempX = e.pageX;
-      tempY = e.pageY;
-    }  
-
-    if (tempX < 0){tempX = 0;}
-    if (tempY < 0){tempY = 0;}  
-
-    return {x:tempX, y:tempY};
-}
 
 
 
