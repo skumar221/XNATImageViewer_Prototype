@@ -14,44 +14,29 @@ var defaultArgs_scrollGallery = {
 		height: 400,
 		border: "solid rgba(90,90,90,1) 1px"
 	},
+
 	
-	_slidercss_vertical:{
-		id: "contentSlider", 
+	_sliderCSS:	
+	{
+		id: "_frameSlider", 
 		parent: document.body,
-		constrainMargin: 2, 
-		orientation: "vertical",
-		top: 0, 
-		left: 0, 
-		width: 10,
-		value:100, 
-		step: 1, 
-		width_handle: 6, 
-		borderRadius_slider: 0,
-		borderRadius_handle: 0,
-		border: "solid rgba(200,200,200,1) 0px",
-		"sliderBGColor":"rgba(50, 50, 50, 1)" ,
-		borderWidth_handle: 0,
-		height_handle: 40,
-	},
-	
-	_slidercss_horizontal:{
-		id: "contentSlider", 
-		parent: document.body,
-		constrainMargin: 0, 
-		orientation: "horizontal",
-		top: 0, 
-		left: 0, 
-		height: 10,
-		width: 300,
-		value:0, 
-		step: 1, 
-  	    height_handle: 6,	
-		width_handle: 30,
-		borderRadius_slider: 0,
-		borderRadius_handle: 0,
-		border: "solid rgba(200,200,200,1) 0px",
-		"sliderBGColor":"rgba(50, 50, 50, 1)" ,
-		borderWidth_handle: 0,
+		round: true,
+		handleOffsetLeft: 0,
+	  	handleOffsetTop: 0,
+		widgetCSS:{
+		},
+		handleCSS:{
+			height: 50,
+			width: 5,
+			borderWidth: 0,
+			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			backgroundColor: "rgba(255,255,255,1)"
+		},
+		trackCSS:{
+			borderWidth: 0,
+			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			backgroundColor: "rgba(50, 50, 50, 1)"
+		}
 	}
 }
 
@@ -99,10 +84,11 @@ var scrollGallery = function(args){
 	//-------------------------------
 	// THE SLIDER
 	//-------------------------------	
-	var mArgs = (this.args.orientation == "vertical") ? this.args._slidercss_vertical : this.args._slidercss_horizontal;
-	this.contentSlider = new __Slider__(__mergeArgs__(mArgs,{
+	var mArgs = this.args._sliderCSS;
+	this.contentSlider = new __verticalSlider__(__mergeArgs__(mArgs,{
 		parent: this.widget,
 		id: this.args.id + "_contentSlider",
+		round: true,
 	}));
   
   
@@ -133,22 +119,7 @@ var scrollGallery = function(args){
 scrollGallery.prototype.mapSliderToContents = function(){
 	var that = this;
 	return function(_slider){		
-		if (that.args.orientation == "vertical"){
-	  		var t = -1 * __RemapID__(_slider.currValue, [_slider.args.min, _slider.args.max], 
-	   							    [0, $(that.scrollContent).outerHeight() - $(that.widget).height() - that.args.scrollMarginY]).newVal;	
-	   		$(that.scrollContent).css({
-	  			top: t,
-	  		});
-		}
-		else{
-	  		var t =   __RemapID__(_slider.currValue, [_slider.args.min, _slider.args.max], 
-	   							    [0,__toInt__(that.scrollContent.style.width) - $(that.widget).width() - that.args.scrollMarginX]).newVal;	
-	   		if (t<0) t= 0;	
-	   		console.log(t);
-	   		$(that.scrollContent).css({
-	  			left: -t,
-	  		});	   							  
-		}
+//		console.log(_slider.value);
    }
 }
 
@@ -198,62 +169,19 @@ scrollGallery.prototype.setContents = function(obj){
 //  UpdateCSS
 //******************************************************
 scrollGallery.prototype.updateCSS = function(){
-	
-	
-
-
-	 //----------------------------------
-	 // The WIDGET
-	 //----------------------------------
-	 $(this.widget).css({
-	 	//top: this.CSS.top,
-	 	//left: this.CSS.left,
-	 })
 
 
 
-	 //----------------------------------
-	 // THE SLIDER
-	 //----------------------------------	
-	if (this.contentSlider){		
-		if(this.args.orientation == "vertical"){
-			if(this.args.sliderLocation == "right"){
-				this.contentSlider.args.left = 	$(this.widget).width() - $(this.contentSlider.widget).outerWidth();
-			}
-			else{			
-				$(this.scrollContent).css({
-					left: $(this.contentSlider.widget).outerWidth(),
-				});		
-			}
-			
-
-			$(this.contentSlider.widget).css({
-				height : $(this.widget).height(),
-				width : 10
-			});
-			this.contentSlider.updateCSS();
-			
-			
-		}
-		else{
-
-			if(this.args.sliderLocation == "top"){
-				this.contentSlider.args.top = 	0;
-				$(this.scrollContent).css({
-					top: $(this.contentSlider.widget).outerHeight(),
-					left: 0,
-				});		
-			}
-			else{
-				this.contentSlider.args.top = 	$(this.widget).height() - $(this.contentSlider.widget).outerHeight();
-				$(this.scrollContent).css({
-					top: 0,
-					left: 0,
-				});	
-			}
-			this.contentSlider.args.width = $(this.widget).width();
-		}	
-
-		this.contentSlider.updateCSS();  
-	 }
+	//----------------------------------
+	// CSS: FRAME SLIDER
+	//----------------------------------
+    this.contentSlider.updateCSS({
+    	widgetCSS:{
+ 			top : 0,
+			left : 0,   		
+    	},
+    	trackCSS:{
+    		height: __toInt__($(this.widget).css('height')),
+    	}
+    })
 }

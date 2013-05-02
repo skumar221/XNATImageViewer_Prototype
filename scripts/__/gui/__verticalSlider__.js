@@ -5,7 +5,7 @@
 //  Init
 //
 //******************************************************
-function __horizontalSlider__(args){
+function __verticalSlider__(args){
 
 	this.setArgs(args); 
 	var that = this;
@@ -42,7 +42,15 @@ function __horizontalSlider__(args){
 	this.updateProperties = function(args){
 		this.updateCSS(args);
 	}
-	
+
+	
+
+	//----------------------------------
+	// Set Mouse Methods
+	//----------------------------------
+	this.initMouseListener(widget, handle, track);	
+	
+	
 	// GLOBALS - Positioning
 	this.handleStart = function(){ 
 		return { 
@@ -52,21 +60,10 @@ function __horizontalSlider__(args){
 	}
 
 
-	
-
-	
-	//----------------------------------
-	// Set Mouse Methods
-	//----------------------------------		
-	this.initMouseListener(widget, handle, track);
-	
-
-	
-
 	//----------------------------------
 	// Mousewheel Methods - Listener
 	//----------------------------------
-	var lastMouseWheelEvent = 0;
+	var lastMouseWheelEvent = 0;
 	this.setMouseWheelEventTime = function(){
 		var d = new Date();
 		lastMouseWheelEvent = d.getTime();	
@@ -128,6 +125,7 @@ function __horizontalSlider__(args){
 	}
 	
 
+
 	//----------------------------------
 	// linkedCallbacks - Handler
 	//----------------------------------	
@@ -147,7 +145,7 @@ function __horizontalSlider__(args){
 //  div on top of the slider that, when clicked
 //  expands to 100% of the page size.
 //******************************************************
-__horizontalSlider__.prototype.initMouseListener = function(parentElement, handle, track) {
+__verticalSlider__.prototype.initMouseListener = function(parentElement, handle, track) {
 
 	var that = this;
 	
@@ -158,7 +156,6 @@ __horizontalSlider__.prototype.initMouseListener = function(parentElement, handl
 		width: "100%",
 		height: "100%",
 		zIndex: 1999999999,
-		borderWidth: 0,
 		backgroundColor: "rgba(0,0,0,0)"
 	}));
 	
@@ -194,7 +191,8 @@ __horizontalSlider__.prototype.initMouseListener = function(parentElement, handl
 		
 }
 
-__horizontalSlider__.prototype.defaultArgs = function() {
+
+__verticalSlider__.prototype.defaultArgs = function() {
 	
 	return {
 		
@@ -212,13 +210,11 @@ __horizontalSlider__.prototype.defaultArgs = function() {
 	  		position: "absolute",
 	  		top: 50,
 	  		left: 50,
-	  		width: 300,
-	  		//backgroundColor: "rgba(255,0,0,1)",
 	  	},
 	  	
 	  	trackCSS: {
-	  		height: 10,
-	  		width: 300,
+	  		height: 300,
+	  		width: 10,
 	  		position: "absolute",
 	  		border: "solid",
 	  		borderWidth: 1,
@@ -228,8 +224,8 @@ __horizontalSlider__.prototype.defaultArgs = function() {
 	  	},
 	  	
 	  	handleCSS: {
-	  		height: 30,
-	  		width: 10,
+	  		height: 10,
+	  		width: 30,
 	  		position: "absolute",
 	  		border: "solid",
 	  		borderWidth: 1,
@@ -248,17 +244,17 @@ __horizontalSlider__.prototype.defaultArgs = function() {
 //******************************************************
 //  
 //******************************************************
-__horizontalSlider__.prototype.setArgs = function(newArgs){
+__verticalSlider__.prototype.setArgs = function(newArgs){
 
 
 	// Argument check
-	//if (!newArgs.widgetCSS) { throw ("__horizontalSlider__: Invalid arguments - no 'widgetCSS' subObject in arguments.");}
-	if (newArgs.widgetCSS && newArgs.widgetCSS["height"]) { throw ("__horizontalSlider__: Please set the slider height by adjusting either handleCSS['height'] or trackCSS['height']");}
-	if (newArgs.widgetCSS && newArgs.widgetCSS["width"]) { throw ("__horizontalSlider__: Please set the slider width by adjusting either trackCSS['width']"); }
+	//if (!newArgs.widgetCSS) { throw ("__verticalSlider__: Invalid arguments - no 'widgetCSS' subObject in arguments.");}
+	if (newArgs.widgetCSS && newArgs.widgetCSS["height"]) { throw ("__verticalSlider__: Please set the slider height by adjusting either handleCSS['height'] or trackCSS['height']");}
+	if (newArgs.widgetCSS && newArgs.widgetCSS["width"]) { throw ("__verticalSlider__: Please set the slider width by adjusting either trackCSS['width']"); }
 
 
 	// See if newArgs are valid for entry based on the default keys
-	__validateArgs__("__horizontalSlider__", this.defaultArgs(), newArgs, function(){});
+	__validateArgs__("__verticalSlider__", this.defaultArgs(), newArgs, function(){});
 
 	
 	// Define currArgs either as default or previously entered args;
@@ -276,6 +272,7 @@ __horizontalSlider__.prototype.setArgs = function(newArgs){
 	wTrack = mergedArgs.trackCSS.width +  mergedArgs.trackCSS.borderWidth * 2; 
 
 	mergedArgs.widgetCSS.height  = (hHandle > hTrack) ? hHandle : hTrack; 
+	//console.log(mergedArgs.widgetCSS.height )
 	mergedArgs.widgetCSS.width  = (wHandle > wTrack) ? wHandle : wTrack; 
 		
 	// set the top of the track to the "middle of the widget"
@@ -283,10 +280,9 @@ __horizontalSlider__.prototype.setArgs = function(newArgs){
 						      mergedArgs.trackCSS.height/2 - 
 						      mergedArgs.trackCSS.borderWidth;
 	
-	mergedArgs.handleCSS.left = mergedArgs.handleOffsetLeft;
+	mergedArgs.handleCSS.left = mergedArgs.handleOffsetLeft + wTrack/2 - Math.round(wHandle/2);
 	mergedArgs.handleCSS.top = mergedArgs.handleOffsetTop;
 	
-
 
 	// GLOBALS - Positional Domain
 
@@ -298,46 +294,15 @@ __horizontalSlider__.prototype.setArgs = function(newArgs){
 	
 	this.handleDomain = function(){
 		return 	{
-			start: this.currArgs().handleOffsetLeft,
-			end:   this.currArgs().widgetCSS.width - this.currArgs().handleCSS.width - this.currArgs().handleOffsetLeft,
+			start: this.currArgs().handleOffsetTop,
+			end:   this.currArgs().trackCSS.height  - this.currArgs().handleCSS.height - this.currArgs().handleOffsetTop,
 		}	
 	}
+	
+	
+	
 }
 
-
-
-
-
-//******************************************************
-//  Uses a DIV element to listen for body-level mouse position.
-//  This element is "activated" when the onmousedown is 
-//  clicked on the widget.
-//******************************************************
-__horizontalSlider__.prototype.startBodyListen = function(bodyElt, handle, track){
-	var that = this;
-	bodyElt.style.width= "100%";
-	bodyElt.style.height = "100%";
-	bodyElt.onmousemove = function(event){ 
-		that.moveHandle("byMouse", {
-			"event": event, 
-			handle: handle,
-			track: track
-		});
-	}
-}
-
-
-
-
-
-//******************************************************
-//  Clears the bodyMouseListener DIV element.
-//******************************************************
-__horizontalSlider__.prototype.stopBodyListen = function(bodyElt){
-	bodyElt.style.width= "0%";
-	bodyElt.style.height = "0%";
-	bodyElt.onmousemove = function(){};
-}
 
 
 
@@ -345,7 +310,7 @@ __horizontalSlider__.prototype.stopBodyListen = function(bodyElt){
 //******************************************************
 //  Clears linked callbacks and sliders
 //******************************************************
-__horizontalSlider__.prototype.clearLinked= function(){
+__verticalSlider__.prototype.clearLinked= function(){
 	this.linkedCallbacks = [];
 	this.linkedSliders = [];
 }
@@ -356,12 +321,13 @@ __horizontalSlider__.prototype.clearLinked= function(){
 //******************************************************
 //  
 //******************************************************
-__horizontalSlider__.prototype.moveHandle = function(moveType, args){
+__verticalSlider__.prototype.moveHandle = function(moveType, args){
 
 		var that = this;
 		
 		// vars
 		var domainOfHandle = this.handleDomain();
+
 				
 				
 		// Do not want to propagate to the DOM
@@ -369,7 +335,11 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 		if (args.event) { args.event.stopPropagation(); } 
 
 
-		// MOUSEWHEEL
+
+
+		//------------------------
+		// BY MOUSEWHEEL
+		//------------------------
 		if (moveType == "byMouseWheel" && args.wheelDelta){
 
 			
@@ -385,45 +355,67 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 			}
 			
 			
-			// generate a tempLeft
-			var tempLeft = __toInt__(args.handle.style.left) + (args.wheelDelta * step);
+			// generate a tempLeft.  with verticalScrolling, we need to invert
+			// the direction of the step
+			var tempTop = __toInt__(args.handle.style.top) + (args.wheelDelta * -1 * step);
+			
+			
+			
+			// log the mousewheel event time
+			// for velocity calculations
 			this.setMouseWheelEventTime();		
 		}
 
 		
-		// MOUSE
+
+		
+		
+		//------------------------
+		// BY MOUSE
+		//------------------------
 		else if (moveType == "byMouse"){
+
 			var newPt = getMouseXY(args.event);	
-				   
-			var tempLeft = newPt.x - // mouseclick x
-						   args.track.getBoundingClientRect().left - // current abs position of the handle
-						   __toInt__(args.handle.style.width)/2; // centers the handle on the mouse pointer		
+					   
+			var tempTop = newPt.y - // mouseclick x
+						   args.track.getBoundingClientRect().top - // current abs position of the handle
+						   __toInt__(args.handle.style.height)/2; // centers the handle on the mouse pointer		
 
 		}
 		
+
+
 		
-		// ENTERED
+		//------------------------
+		// BY VALUE
+		//------------------------
 		else if (moveType == "byValue"){
-			tempLeft = domainOfHandle.start + (domainOfHandle.end - domainOfHandle.start) * (args.value / (that.currArgs().max - that.currArgs().min));
+			tempTop = domainOfHandle.start + (domainOfHandle.end - domainOfHandle.start) * (args.value / (that.currArgs().max - that.currArgs().min));
 		}
 
 
-		// Throw an error otherwise
+
+
+		//------------------------
+		// ELSE ERROR
+		//------------------------
 		else{
-			throw "__horizontalSlider__: invalid moveHandle arguments."
+			throw "__verticalSlider__: invalid moveHandle arguments."
 		}
 		
 
 		// Reposition handle if outside of its CSS domain
-		if (tempLeft < domainOfHandle.start){
-			tempLeft = domainOfHandle.start;
+		if (tempTop < domainOfHandle.start){
+			tempTop = domainOfHandle.start;
 		}
-		if (tempLeft > domainOfHandle.end){
-			tempLeft = domainOfHandle.end;
+		if (tempTop > domainOfHandle.end){
+			tempTop = domainOfHandle.end;
 		}
+
+		
 		
 		// get the Slider value
-		var pct = tempLeft / (domainOfHandle.end - domainOfHandle.start);
+		var pct = tempTop / (domainOfHandle.end - domainOfHandle.start);
 		that.value = pct * (that.currArgs().max - that.currArgs().min);
 
 
@@ -431,7 +423,7 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 		if (that.currArgs.round) {that.value = Math.round(that.value);}
 		
 		// move the handle
-		args.handle.style.left = __toPx__(tempLeft);
+		args.handle.style.top = __toPx__(tempTop);
 		
 		// run callbackls
 		that.runSlideCallbacks();	
@@ -444,7 +436,7 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 //******************************************************
 //  Links the inputted slider (b)
 //******************************************************
-__horizontalSlider__.prototype.linkSlider = function(b){
+__verticalSlider__.prototype.linkSlider = function(b){
 	
 	var that = this;
 	

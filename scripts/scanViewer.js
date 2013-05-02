@@ -14,8 +14,7 @@ var defaultArgs_scanViewer = {
 	 	"overflow-x": "visible",
 	 	"overflow-y": "visible"
 	},
-	_sliderCSS:
-	
+	_sliderCSS:	
 	{
 		id: "_frameSlider", 
 		parent: document.body,
