@@ -82,7 +82,10 @@ var scanViewer = function(args){
 	 INIT(this, defaultArgs_scanViewer, args);
 
 
-
+	  //$(function() {
+	    $(this.widget).resizable().draggable();
+	  //});
+    	
 	 //----------------------------------
 	 // FRAME VIEWER
 	 //----------------------------------
@@ -276,6 +279,11 @@ scanViewer.prototype.updateCSS = function(){
 	// Widget
 	//----------------------------------
 	this.widget.style.width = __toPx__(viewerWidth);
+	
+	
+	//$(function() {
+
+  	//});
 	
 
 	
