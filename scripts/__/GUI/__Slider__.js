@@ -24,8 +24,8 @@ var defaultArgs___Slider__ = {
   	borderWidth_handle: 1,			//def 1
   	min: 0,			//def 1
   	max: 100,			//def 1
-  	handleBorderColor: XNATImageViewerGlobals.inactiveLineColor,			//def 1
-  	sliderBorderColor: XNATImageViewerGlobals.inactiveLineColor,			//def 1
+  	handleBorderColor: Globals.inactiveLineColor,			//def 1
+  	sliderBorderColor: Globals.inactiveLineColor,			//def 1
   	sliderBGColor: "rgba(20,20,20,1)",			//def 1
   	handleBGColor: "rgba(155,155,155,1)",			//def 1
   	orientation: "horizontal",			//def 1

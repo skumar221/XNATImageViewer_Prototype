@@ -1,6 +1,7 @@
 function __mouseListener__(parent, callbacks) {
 
 	var that = this;
+	parent.hasMouseListener = true;
 	
 	var mouseListenerElement =  __makeElement__("div", parent, parent.id + "_mouseListenerElement", {
 		position: "absolute",
@@ -17,7 +18,7 @@ function __mouseListener__(parent, callbacks) {
 	mouseListenerElement.onmousedown = function(event){ 
 		this.style.position = "fixed";
 		
-		this.style.backgroundColor = "rgba(255, 0, 0, .5)";
+		this.style.backgroundColor = "rgba(255, 0, 0, 0)";
 		this.mouseDown = true;
 		if (callbacks.mousedown){
 			for (var i=0; i<callbacks.mousedown.length; i++){
@@ -49,6 +50,11 @@ function __mouseListener__(parent, callbacks) {
 				callbacks.mouseup[i](event)
 			}
 		}
+	}
+	
+	parent.clearMouseListener = function(){
+		parent.removeChild(mouseListenerElement);
+		parent.hasMouseListener = false;
 	}
 		
 }

@@ -6,8 +6,8 @@ defaultArgs_scanThumbnail = {
 	activated: false,
 	CSS: {
 		position: "absolute",
-		width: 80,
-		height: 80,
+		width: Globals.thumbnailWidth,
+		height: Globals.thumbnailHeight,
 		top: 0,
 		left: 0,	
 		"overflow-y": "hidden",

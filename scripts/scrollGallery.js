@@ -29,13 +29,13 @@ var defaultArgs_scrollGallery = {
 			height: 70,
 			width: 9,
 			borderWidth: 0,
-			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			borderColor: Globals.semiactiveLineColor,
 			backgroundColor: "rgba(105,105,105,1)"
 		},
 		trackCSS:{
 			borderWidth: 0,
 			width: 10,
-			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			borderColor: Globals.semiactiveLineColor,
 			backgroundColor: "rgba(0, 0, 0, 1)"
 		}
 	}
@@ -124,7 +124,6 @@ var scrollGallery = function(args){
 scrollGallery.prototype.mapSliderToContents = function(){
 	var that = this;
 	return function(_slider){		
-		console.log(_slider.value);
 		
 		if (that.args.orientation == "vertical"){
 	  		var t = -1 * __remap1D__(_slider.value, [_slider.currArgs().min, _slider.currArgs().max], 

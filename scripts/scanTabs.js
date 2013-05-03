@@ -4,10 +4,10 @@ defaultArgs_scanTabs = {
 	scanContents: 0,
 	tabTitles: ["<b>Info.</b>", "<b>Adjust</b>"],
 	contentFontSize: 10,
-	activeLineColor: XNATImageViewerGlobals.activeLineColor,
-	activeFontColor: XNATImageViewerGlobals.activeFontColor,
-	inactiveLineColor: XNATImageViewerGlobals.inactiveLineColor,
-	inactiveFontColor: XNATImageViewerGlobals.inactiveFontColor,
+	activeLineColor: Globals.activeLineColor,
+	activeFontColor: Globals.activeFontColor,
+	inactiveLineColor: Globals.inactiveLineColor,
+	inactiveFontColor: Globals.inactiveFontColor,
 	tabHeight: 25,
 	CSS: {
 		top: 400,
@@ -155,7 +155,7 @@ scanTabs.prototype.updateCSS = function(){
 		"borderRadius": 0,
 		"borderWidth": this.CSS.borderWidth,
 		 background: "none",
-		"borderColor": XNATImageViewerGlobals.inactiveLineColor,
+		"borderColor": Globals.inactiveLineColor,
 		"backgroundColor": "rgba(25,25,25,1)",
 		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 
@@ -172,7 +172,7 @@ scanTabs.prototype.updateCSS = function(){
 			width: $(this.widget).width() - 20,
 			"padding": 10,
 			borderWidth: 1,
-			borderColor: XNATImageViewerGlobals.activeLineColor,
+			borderColor: Globals.activeLineColor,
 			"border-bottom-right-radius": "0px",
 			"border-bottom-left-radius": "0px",
 			"color": "rgba(255,255,255,1)",
@@ -195,7 +195,7 @@ scanTabs.prototype.updateCSS = function(){
 		borderRadius: 0,
 		background: "none",
 		borderWidth: 0,
-		"color": XNATImageViewerGlobals.activeFontColor,
+		"color": Globals.activeFontColor,
 		padding: 0,
 		
 	})
@@ -207,8 +207,8 @@ scanTabs.prototype.updateCSS = function(){
 	//------------------------------
 	for (var i=0;i<this.tabTitleObj.titlesA.length;i++){
 		
-		var bColor = (i == this.activeTab) ? XNATImageViewerGlobals.activeLineColor : XNATImageViewerGlobals.semiactiveLineColor;
-		var fColor = (i == this.activeTab) ? XNATImageViewerGlobals.activeFontColor : XNATImageViewerGlobals.semiactiveFontColor;
+		var bColor = (i == this.activeTab) ? Globals.activeLineColor : Globals.semiactiveLineColor;
+		var fColor = (i == this.activeTab) ? Globals.activeFontColor : Globals.semiactiveFontColor;
 		 
 		//------------------------------
 		// The Text

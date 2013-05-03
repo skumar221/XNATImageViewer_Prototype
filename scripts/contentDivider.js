@@ -14,26 +14,43 @@ var contentDivider = function(args){
 
 	
 	//-------------------------------
-	// THE WIDGET
+	// The Widget
 	//-------------------------------	 
-	var mainElement = __makeElement__("div", this.currArgs().parent, this.currArgs().id, this.currArgs().widgetCSS);
+	var widget = __makeElement__("div", this.currArgs().parent, this.currArgs().id, this.currArgs().widgetCSS);
 
 	 
 	 
-	// Defining the update css version
-	this.updateCSS = function(args){
-		// If there are inputted args, we need to set + validate them
+	//-------------------------------
+	// UpdateCSS
+	//-------------------------------
+	this.updateCSS = function(args){		
 		if (args) { this.setArgs(args) };
-		
-		__setCSS__(mainElement, this.currArgs().widgetCSS);
-		mainElement.updateDragBounds(this.currArgs().boundaryCSS);
-
+		__setCSS__(widget, this.currArgs().widgetCSS);
+		widget.updateDragBounds(this.currArgs().boundaryCSS);
 	}
 	
+
+
+	//-------------------------------
+	// Set the widget as draggable
+	//-------------------------------	
+	__draggable__(widget, this.currArgs().boundaryCSS, this.currArgs().boundaryCSS);
 	
-	__draggable__(mainElement, this.currArgs().boundaryCSS, this.currArgs().boundaryCSS);
-	
+
+
+
+	//-------------------------------
+	// Callbacks
+	//-------------------------------	
+	this.clearCallbacks = function(){
+		widget.clearDragCallbacks();
+	}		
+	this.addMoveCallback = function(callback){
+		widget.addDragCallback(callback);
+	}
 }
+
+
 
 
 
@@ -68,7 +85,6 @@ contentDivider.prototype.defaultArgs = function(){
 //******************************************************
 contentDivider.prototype.setArgs = function(newArgs){
 
-	
 	
 	// See if newArgs are valid for entry based on the default keys
 	__validateArgs__("contentDivider", this.defaultArgs(), newArgs, function(){});

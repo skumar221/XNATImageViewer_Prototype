@@ -7,8 +7,8 @@ def main():
     
     rootDir = "../scripts"
     backupDir = "scriptBackup"
-    findStr = "__Init__"
-    replaceStr = "INIT"
+    findStr = "XNATImageViewerGlobals"
+    replaceStr = "Globals"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     #  make a backup folder

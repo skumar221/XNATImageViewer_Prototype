@@ -27,13 +27,13 @@ var defaultArgs_scanViewer = {
 			height: 10,
 			width: 10,
 			borderRadius: 2,
-			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			borderColor: Globals.semiactiveLineColor,
 			backgroundColor: "rgba(255,255,255,1)"
 		},
 		trackCSS:{
 			height: 5,
 			borderWidth: 1,
-			borderColor: XNATImageViewerGlobals.semiactiveLineColor,
+			borderColor: Globals.semiactiveLineColor,
 			backgroundColor: "rgba(50, 50, 50, 1)"
 		}
 	}
@@ -157,6 +157,7 @@ var scanViewer = function(args){
 		id: this.args.id + "_contentDivider",
 		parent: this.widget,		
 	});
+
 	
 		
 	
@@ -184,7 +185,7 @@ var scanViewer = function(args){
 	        "left": 0, 
 	        "borderColor": "rgba(255,255,255,1)",
 	        "borderWidth": 0,
-	        "color": XNATImageViewerGlobals.activeFontColor,
+	        "color": Globals.activeFontColor,
 	        "backgroundColor": "rgba(0,0,0,0)"   
 	        }
 	  }
@@ -223,9 +224,9 @@ var scanViewer = function(args){
 	this.textCSS_small = {
 		color: "rgba(255,255,255,1)",
 		position: "absolute",
-		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall -5,
+		top: $(this.frameViewer.widget).height() - Globals.fontSizeSmall -5,
 		left: 5,
-		fontSize: XNATImageViewerGlobals.fontSizeSmall
+		fontSize: Globals.fontSizeSmall
 	};
 
 
@@ -255,7 +256,8 @@ var scanViewer = function(args){
 //******************************************************
 scanViewer.prototype.updateCSS = function(){
 
-	var tabsHeight = 100;
+	var that = this;
+	var tabsHeight = Globals.minScanTabHeight;
 	var marginLeft = 10;
 	var marginTop = 10;
 	var marginLeft = 10; 
@@ -264,26 +266,28 @@ scanViewer.prototype.updateCSS = function(){
 	var scanTabTop = $(this.widget).height() - tabsHeight -1;// - marginTop;
 	var contentDivTop = scanTabTop	- this.contentDivider.defaultArgs().widgetCSS.height;
 	var sliderTop = contentDivTop - this.frameSlider.currArgs().handleCSS.height - 10;
-	//console.log("slider top", scanTabTop, sliderTop, this.frameSlider.currArgs().handleCSS.height, marginTop)
 	var viewerWidth = sliderTop;// - marginTop*2 ;
 	var viewerHeight = viewerWidth;
 	
 	
 
-	$(this.widget).css({
-		width: viewerWidth
-	})
+
+	//----------------------------------
+	// Widget
+	//----------------------------------
+	this.widget.style.width = __toPx__(viewerWidth);
 	
+
 	
 	
 	//----------------------------------
-	// CSS: SCAN TABS
+	// Tabs
 	//----------------------------------	
 	$(this.scanTabs.widget).css({
  		left: 0,//marginLeft,
  	  	top: scanTabTop,
- 	  	width: viewerWidth,// + marginLeft * 2,
- 	  	height: tabsHeight,
+ 	  	width: viewerWidth - 2,// + marginLeft * 2,
+ 	  	height: tabsHeight -1,
 	});	 
    this.scanTabs.updateCSS();
 
@@ -291,7 +295,7 @@ scanViewer.prototype.updateCSS = function(){
 
 
 	//----------------------------------
-	// CONTENT DIVIDER
+	// Content Divider
 	//----------------------------------
 	this.contentDivider.updateCSS({
 		widgetCSS:{
@@ -301,7 +305,7 @@ scanViewer.prototype.updateCSS = function(){
 		},
 		boundaryCSS:{
 			width: viewerWidth,	
-			top: 0,
+			top: Globals.minFrameViewerHeight,
 			left: 0,
 			height: scanTabTop,
 		}
@@ -343,12 +347,75 @@ scanViewer.prototype.updateCSS = function(){
 	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
-	 		top: $(this.frameViewer.widget).height() - XNATImageViewerGlobals.fontSizeSmall,// -2,
+	 	top: $(this.frameViewer.widget).height() - Globals.fontSizeSmall,// -2,
 	 });
 	 
 	 
 
 	 this.frameViewer.drawFrame(this.frameSlider.value, true);
+	 
+	 
+	 
+	 //----------------------------------
+	 // Content Divider CAllback
+	 //----------------------------------	 
+	 this.contentDivider.clearCallbacks();
+	 this.contentDivider.addMoveCallback(function(dividerElt){
+	 	
+		var divTop = __toInt__(dividerElt.style.top);
+		var divLeft = __toInt__(dividerElt.style.left);
+		var divHeight = __toInt__(dividerElt.style.height);
+		var divWidth = __toInt__(dividerElt.style.width);
+		
+		
+		//----------------------------------
+		// Tabs
+		//----------------------------------	
+		$(that.scanTabs.widget).css({
+	 	  	top: divTop + divHeight,
+	 	  	height: __toInt__(that.widget.style.height) - (divTop + divHeight) - 1,
+		});	 
+	   that.scanTabs.updateCSS();	
+	   
+	   
+	   
+	   	//----------------------------------
+		// FRAME SLIDER
+		//----------------------------------
+	    that.frameSlider.updateCSS({
+	    	widgetCSS:{
+	 			top : divTop + divHeight - that.frameSlider.currArgs().handleCSS.height - 16,	
+	    	},
+	    })
+	
+		
+			 
+		 //----------------------------------
+		 // FRAME VIEWER
+		 //----------------------------------
+		 var prevHeight = __toInt__(that.frameViewer.widget.style.height);
+		 var newHeight = that.frameSlider.currArgs().widgetCSS.top - 10;
+		 var prevWidth = __toInt__(that.frameViewer.widget.style.width);
+		 var newWidth = prevWidth * (newHeight/prevHeight);
+		 var newLeft = __toInt__(that.widget.style.width)/2 - newWidth/2;
+		 $(that.frameViewer.widget).css({
+	 	  	height: newHeight,
+	 	  	width: newWidth,
+	 	  	left:  newLeft
+		 });
+		 that.frameViewer.updateCSS();
+		 
+	
+	
+	
+		 //----------------------------------
+		 // FRAME NUMBER DISPLAY
+		 //----------------------------------	 
+		 $(that.displayableData.frameNumber).css({
+		 	top: $(that.frameViewer.widget).height() - Globals.fontSizeSmall,// -2,
+		 });	
+		
+	 })
    	
 }
 
@@ -388,7 +455,7 @@ scanViewer.prototype.populateData = function(data){
 				width: "10em",
 				backgroundColor: "rgba(0,0,0,0)",
 				borderWidth: 1,
-				borderColor: XNATImageViewerGlobals.semiactiveLineColor
+				borderColor: Globals.semiactiveLineColor
 			}));	
 			
 			

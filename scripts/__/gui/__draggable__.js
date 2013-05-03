@@ -10,24 +10,26 @@
 //  div on top of the slider that, when clicked
 //  expands to 100% of the page size.
 //******************************************************
-function __draggable__(element, dragBounds, listenBounds){
+function __draggable__(element, dragBounds, callbacks){
 
-	var paramList = ["height", "width", "top", "left"];
-	
-	element.style.position = "fixed";
-	
-	
-	//-webkit-user-select: none; /* Chrome/Safari */        
-    //-moz-user-select: none; /* Firefox */
-    //-ms-user-select: none; /* IE10+ */
 
-    /* Not implemented yet */
-    //-o-user-select: none;
-    //user-select: none;   
-	
-	
+
 
 	
+	//------------------------
+	//  Clear mouse listener
+	//------------------------	
+	if (element.hasMouseListener){
+		element.clearMouseListener();
+	}
+
+	
+
+
+	//------------------------
+	//  Validate boundary args
+	//------------------------	
+	var paramList = ["height", "width", "top", "left"];	
 	for (i in paramList){
 		if (! paramList[i] in dragBounds){
 			throw "__draggable__ init: Missing necessary dragBounds parameter: " + paramList[i]
@@ -37,135 +39,141 @@ function __draggable__(element, dragBounds, listenBounds){
 			throw "__draggable__ init: Missing necessary dragBounds parameter: " + paramList[i]
 		}
 	}
+	
+	
+	
+	
+	//------------------------
+	//  Recalculate the drag bounds in case the element is outside of it.
+	//------------------------	
+	var eltTop = __toInt__(element.style.top);
+	var eltLeft = __toInt__(element.style.left);
+	var eltHeight = __toInt__(element.style.height);
+	var eltWidth = __toInt__(element.style.width);
+	
+	if (eltTop < dragBounds.top){
+		dragBounds.top = eltTop
+	}
+	if ((eltTop + eltHeight) > dragBounds.height){
+		dragBounds.height += (eltTop + eltHeight) - dragBounds.height;
+	}
 
+	if (eltLeft < dragBounds.left){
+		dragBounds.left = eltLeft
+	}
+	if ((eltLeft + eltWidth) > dragBounds.width){
+		dragBounds.width += (eltLeft + eltWidth) - dragBounds.width;
+	}
 
-
-	__mouseListener__(element, {
-		mousemove: [
-			function(event){
-					console.log("MOVING");
-					
-					var newPt = __getMouseXY__(event);	
+	if (!element.hasMouseListener){
 		
+	}
+	
+	
+
+	
+
+	//------------------------
+	//  Define the mouselistener function
+	//------------------------		
+	__mouseListener__(element, {
+		mousemove: [function(event){
 			
-					var elementWidth = __toInt__(element.style.width);
-					var elementHeight = __toInt__(element.style.height);
-					var elementTop = __toInt__(element.style.top);
-					var elementLeft = __toInt__(element.style.left);
-						   
-					var tempLeft = newPt.x - // mouseclick x
-								   element.parentNode.getBoundingClientRect().left - 
-								   elementWidth/2; // centers the handle on the mouse pointer		
-								   
-					var tempTop = newPt.y - // mouseclick x
-								   element.parentNode.getBoundingClientRect().top - 
-								   elementHeight/2; // centers the handle on the mouse pointer	
-								   
-					
-					var moveWidth = (tempLeft + elementWidth);
-					
-					console.log(elementTop, dragBounds.top, dragBounds.height);
-					
-					if (tempLeft < dragBounds.left){
-						tempLeft = dragBounds.left
-					}
-					else if (moveWidth > dragBounds.width){
-						tempLeft = dragBounds.width - elementWidth
-					}
-					
-					
-					element.style.left = __toPx__(tempLeft);
-					element.style.top = __toPx__(tempTop);
-					//element.style.top = __toPx__(647);						
-			}
-		]
-	});
-
-
-    /*
-	element.mouseDown = false;
-	
-	element.onmousedown = function(event){
-		element.mouseDown = true;
-		//element.style.position = "fixed"
-	}
-	
-	element.onmouseout = function(event){
-		console.log("MOUSEOUT")
-		//element.mouseDown = false;
-		//element.style.position = "fixed"
-	}
-	
-	element.onmousemove = function(event){
-		if (element.mouseDown){
-
 			var newPt = __getMouseXY__(event);	
-			
-			document.body.style["-webkit-user-select"] = "none;"
-			document.body.style["-moz-user-select"] = "none;"
-			document.body.style["-ms-user-select"] = "none;"
-			document.body.style["-o-user-select"] = "none;"
-			document.body.style["user-select"] = "none;"
-	
-	
 			var elementWidth = __toInt__(element.style.width);
 			var elementHeight = __toInt__(element.style.height);
 			var elementTop = __toInt__(element.style.top);
 			var elementLeft = __toInt__(element.style.left);
-				   
+
+
+
+
+			//------------------------
+			//  Temporary top/left positions.  Validated later.
+			//------------------------						   
 			var tempLeft = newPt.x - // mouseclick x
-						   //element.parentNode.getBoundingClientRect().left - 
+						   element.parentNode.getBoundingClientRect().left - 
 						   elementWidth/2; // centers the handle on the mouse pointer		
 						   
 			var tempTop = newPt.y - // mouseclick x
-						   //element.parentNode.getBoundingClientRect().top - 
+						   element.parentNode.getBoundingClientRect().top - 
 						   elementHeight/2; // centers the handle on the mouse pointer	
 						   
-			
-			var moveWidth = (tempLeft + elementWidth);
-			
-			console.log(elementTop, dragBounds.top, dragBounds.height);
-			
-			if (tempLeft < dragBounds.left){
-				tempLeft = dragBounds.left
-			}
-			else if (moveWidth > dragBounds.width){
-				tempLeft = dragBounds.width - elementWidth
-			}
-			
-			
-			element.style.left = __toPx__(tempLeft);
-			element.style.top = __toPx__(tempTop);
-			//element.style.top = __toPx__(647);
-		}		
-	}
-	
-	element.onmouseup = function(event){
-		element.mouseDown = false;
-	}
-	*/
-	
-	if (!element.updateDragBounds){
-		element.updateDragBounds = function(dragBounds){
 
-			console.log("dragBounds", dragBounds);
-			dragBounds.backgroundColor = "rgba(255,0,0,.2)";
-			dragBounds.zIndex = 2100000000;
-			dragBounds.position = "fixed"
+
+
+			//------------------------
+			//  The extents of the element
+			//------------------------					
+			var extentsWidth = (tempLeft + elementWidth);
+			var extentsHeight = (tempTop + elementHeight);				
 			
-			//	Debugging
-			if (!element.boundsElt){
-				
+
+
+
+			//------------------------
+			//  Validate X Pos w/ boundary
+			//------------------------										
+			if (tempLeft < dragBounds.left){
+				tempLeft = dragBounds.left;
 			}
-			//	element.boundsElt = __makeElement__("div", element.parentNode, "BOUNDS ELT", dragBounds);
-			//__setCSS__(element.boundsElt, dragBounds);
+			else if (extentsWidth > dragBounds.width){
+				tempLeft = dragBounds.width - elementWidth;
+			}
 			
-			element.onmousedown = function(){};
-			element.onmousemove = function(){};
-			element.onmouseup = function(){};
-			//__draggable__(element, dragBounds)
-		}	
+
+
+			//------------------------
+			//  Validate Y Pos w/ boundary
+			//------------------------
+			if (tempTop < dragBounds.top){
+				//console.log("TOP BOUND REACHED")
+				tempTop = dragBounds.top;
+			}
+			else if (extentsHeight > dragBounds.height){
+				//console.log("BOTTOM BOUND REACHED", tempTop, elementHeight, extentsHeight, dragBounds.height)
+				tempTop = dragBounds.height - elementHeight;
+			}
+			
+			
+						
+			
+			//------------------------
+			//  Apply to style
+			//------------------------	
+			element.style.left = __toPx__(tempLeft);
+			element.style.top = __toPx__(tempTop);	
+			
+
+			
+			
+			//------------------------
+			//  Callbacks
+			//------------------------	
+			if (callbacks && callbacks.length > 0){
+				for (var i=0; i<callbacks.length; i++){
+					callbacks[i](element);
+				}
+			}				
+		}]
+	});
+
+
+	
+
+	element.updateDragBounds = function(dragBounds){
+		__draggable__(element, dragBounds, callbacks);
+	}	
+		
+
+	element.clearDragCallbacks = function(callback){
+		__draggable__(element, dragBounds);
 	}	
 	
 	
+	element.addDragCallback = function(callback){
+		if (!callbacks) { callbacks = [] };
+		callbacks.push(callback); 
+		__draggable__(element, dragBounds, callbacks);
+	}	
 }
