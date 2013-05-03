@@ -264,7 +264,7 @@ scanViewer.prototype.updateCSS = function(){
 
 
 	var scanTabTop = $(this.widget).height() - tabsHeight -1;// - marginTop;
-	var contentDivTop = scanTabTop	- this.contentDivider.defaultArgs().widgetCSS.height;
+	var contentDivTop = scanTabTop;//	- this.contentDivider.defaultArgs().widgetCSS.height;
 	var sliderTop = contentDivTop - this.frameSlider.currArgs().handleCSS.height - 10;
 	var viewerWidth = sliderTop;// - marginTop*2 ;
 	var viewerHeight = viewerWidth;
@@ -301,7 +301,8 @@ scanViewer.prototype.updateCSS = function(){
 		widgetCSS:{
 			left: 0,
 			width: viewerWidth,
-			top: contentDivTop
+			top: contentDivTop,
+			backgroundColor: "rgba(0,0,0,0)"
 		},
 		boundaryCSS:{
 			width: viewerWidth,	
