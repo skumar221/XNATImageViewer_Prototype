@@ -9,7 +9,7 @@ Globals.activeLineColor = "rgba(205,205,205,1)";
 Globals.semiactiveFontColor = "rgba(85,85,85,1)"; 
 Globals.semiactiveLineColor = "rgba(85,85,85,1)"; 
 
-Globals.fontSizeSmall = 8;
+Globals.fontSizeSmall = 10;
 
 
 Globals.minFrameViewerHeight = 150;

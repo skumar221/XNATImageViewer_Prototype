@@ -371,8 +371,8 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//----------------------------------
 	for (var i=0;i<this.scrollLinks.length;i++){
 		$(this.scrollLinks[i]).css({
-			left: $(this.scanViewers[i].widget).position().left + $(this.scanViewers[i].widget).width() - 2,
-			top: $(this.scanViewers[i].widget).position().top + $(this.scanViewers[i].widget).height()*.3 - 2
+			left: 2 + $(this.scanViewers[i].widget).position().left + $(this.scanViewers[i].widget).width() - $(this.scrollLinks[i]).width()/2 + this.args.marginLeft,
+			top: 0,//$(this.scanViewers[i].widget).position().top + $(this.scanViewers[i].frameViewer.widget).height()/2 - 2
 		})	
 	}
 }
@@ -531,13 +531,49 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	//-----------------------------------------
 	//  MAKE ICON
 	//-----------------------------------------
-	var c = __makeElement__("img", this.modal, this.args.id + "_scrollLink", {
+	var c = __makeElement__("div", this.modal, this.args.id + "_scrollLink", {
 		position: "absolute",
-		width: 30,
-		height: 15,
-		cursor: "pointer"
+		width: 40,
+		height: 10,
+		cursor: "pointer",
+		overflow: "visible",
+		//backgroundColor: "rgba(200, 200, 200, .5)"
 	});
-	c.src = "./icons/Chain1-Broken.png";
+	$(c).fadeTo(0, .75);
+	$(c).mouseenter(function(){
+		$(c).stop().fadeTo(300, 1);
+	}).mouseleave(function(){
+		$(c).stop().fadeTo(300, .75);
+	});
+	
+	var icon1 = __makeElement__("img", c, this.args.id + "_scrollLinkIcon1", {
+		position: "absolute",
+		width: 40,
+		height: 10,
+	});
+	icon1.src = "./icons/LinkArrow-Broken.png";
+	
+	var icon2 = __makeElement__("img", c, this.args.id + "_scrollLinkIcon2", {
+		position: "absolute",
+		width: 40,
+		height: 10,
+	});
+	icon2.src = "./icons/LinkArrow.png";
+	
+	
+	var label = __makeElement__("div", c, this.args.id + "_scrollLink", {
+		position: "absolute",
+		top: 15,
+		left: -10,
+		width: 200,
+		color: "rgba(255,255,255,1)",
+		fontSize: Globals.fontSizeSmall
+	});
+	
+
+	$(label).fadeTo(0,0);
+	$(icon2).fadeTo(0,0);
+	
 	
 	
 
@@ -570,12 +606,20 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 		
 		if ($(c).data('activated')){
 			// Change the icon's image
-			c.src = "./icons/Chain1-Closed.png";
+			$(icon1).fadeTo(300,0);
+			$(icon2).fadeTo(300,1);
+			
+			label.innerHTML = "Linking Scrollers";
+			$(label).fadeTo(300,1).delay(1000).fadeTo(300,0);
 			// Link viewers
 			that.linkViewers($(c).data('number'), $(c).data('number') + 1);
 		}
 		else{
-			c.src = "./icons/Chain1-Broken.png";				
+			$(icon1).fadeTo(300,1);
+			$(icon2).fadeTo(300,0);		
+			
+			label.innerHTML = "Unlinking Scrollers";
+			$(label).fadeTo(300,1).delay(1000).fadeTo(300,0);	
 		}
 	}
 	

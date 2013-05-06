@@ -83,7 +83,7 @@ var scanViewer = function(args){
 
 
 	  //$(function() {
-	    $(this.widget).resizable().draggable();
+	    $(this.widget).resizable();//.draggable();
 	  //});
     	
 	 //----------------------------------
@@ -279,6 +279,7 @@ scanViewer.prototype.updateCSS = function(){
 	// Widget
 	//----------------------------------
 	this.widget.style.width = __toPx__(viewerWidth);
+	//this.widget.style.height = __toPx__(__toInt__(this.widget.parentNode.style.height)/2);
 	
 	
 	//$(function() {
