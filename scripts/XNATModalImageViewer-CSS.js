@@ -1,5 +1,6 @@
 function expandModalHorizontally(that){
 		 
+		 var animLen = 500;
 		 
 		 // clear any Jquery actions happening on other
 		 // parts of the modal.
@@ -8,35 +9,70 @@ function expandModalHorizontally(that){
 		 $(that.horizontalExpandButton).stop().unbind('mouseleave');
 		 $(that.horizontalExpandButton).stop().unbind('mouseover');
 
-		  //that.addScanViewer();
-		  //that.updateCSS();
 		 
-		 
-		 
+
 		//-------------------------
-		// Define animation parameters
-		//-------------------------	
-		 var animLen = 500;
-		 var scanViewerWidth = $(that.scanViewers[that.scanViewers.length-1].widget).width();	
-		 var newWidth = $(that.modal).width() + scanViewerWidth + __toInt__(that.closeButton.style.width);
+		// Add a scan viewer, then hide it
+		//-------------------------		
+
+		that.addScanViewer();
+		$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(0,0);
+
 		 
-		 if (newWidth > window.innerWidth){
-		 	console.log("MODAL TOO WIDE, RESIZING");
-		 	newWidth = window.innerWidth * Globals.maxModalWidthPct;	 	
-		 }
+		 
+		
+		//-------------------------
+		//  GET THE MODAL DIMENSIONS, 
+		//-------------------------	
+		 var modalDims = that.modalDims();
 
 
+
+
+		//-------------------------
+		//  CHECK TO SEE IF THE VIEWERS ARE TOO SMALL 
+		//-------------------------	
+		if (__toInt__(that.scanViewers[0].widget.style.width) < Globals.minScanViewerWidth){
+			that.modal.removeChild(that.scanViewers[that.scanViewers.length - 1].widget);
+			that.scanViewers.pop();
+			$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(animLen,1);
+			return;	
+		} 
+		
+		
+		
+		
 		//-------------------------
 		// Animate the window
 		//-------------------------	
 		 $(that.modal).stop().animate({
-		    width: newWidth,
-		    left: window.innerWidth/2 - newWidth/2,
-		  }, animLen, function() {
-		    that.addScanViewer();
+		    width: modalDims.width,
+		    left: modalDims.left,
+		    height: modalDims.height,
+		    top: modalDims.top,
+		  }, animLen, function() {	    
 		    that.addScrollLinkIcon();
 		    that.updateCSS();
+			$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(animLen,1);
 		 });
+
+
+
+
+		//-------------------------
+		// Animate the viewers
+		//-------------------------	
+		for (var i=0;i<that.scanViewers.length;i++){
+			 $(that.scanViewers[i].widget).stop().animate({
+			    left: modalDims.scanViewer.lefts[i],
+			    top: modalDims.scanViewer.tops[i],
+			    width: modalDims.scanViewer.width,
+			    height: modalDims.scanViewer.height,
+			  }, animLen, function() {
+			    // Animation complete.
+			 });			
+		} 
+
 
 
 
@@ -44,7 +80,8 @@ function expandModalHorizontally(that){
 		// Animate the close button
 		//-------------------------		
 		 $(that.closeButton).stop().animate({
-		    left: window.innerWidth/2 + newWidth/2 - (__toInt__(that.closeButton.style.width)/2),
+		    left: modalDims.closeButton.left,
+		    top: modalDims.closeButton.top
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
@@ -52,47 +89,16 @@ function expandModalHorizontally(that){
 		 		
 		 		
 		//-------------------------
-		// Animate the expand button
+		// Animate the horizontal expand button
 		//-------------------------	
 		 $(that.horizontalExpandButton).stop().animate({
 		 	opacity: .5,
-		    left: (newWidth - __toInt__(that.horizontalExpandButton.style.width)),
+		    left: modalDims.horizontalExpandButton.left,
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
 		 
-
 }
-
-
-
-//******************************************************
-//  Calculations, if necessary, for the modal's dimensions
-//
-//******************************************************
-var getModalWidth = function(that){
-
-
-}
-
-
-
-//******************************************************
-//  Calculations, if necessary, for the modal's dimensions
-//
-//******************************************************
-var getModalHeight = function(that){
-	
-	var minPx = Globals.minScanViewerHeight + Globals.expandButtonWidth;
-	var pctCompressed = that.args.heightPct;
-	var currPx = (pctCompressed * window.innerHeight);
-	
-	var retVal =  (currPx < minPx) ?  ((minPx/window.innerHeight)) : (pctCompressed);
-	//console.log("retVal_H: " + retVal)
-	return retVal;
-}
-
-
 
 
 
@@ -110,12 +116,19 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		
 	var that = this;
 	
+	var scrollGalleryLeft = 0;
+	var maxModalWidth = Math.round(window.innerWidth * Globals.maxModalHeightPct);
+	
+	
+	
 	//-------------------------
-	// THE WIDTH
+	// 1. Generate a prelimiary width
 	//-------------------------	
 	
+	
+	
 	//	Get the prescribed height of the modal		
-	var pModalHeight = Globals.maxModalHeightPct * window.innerHeight;
+	var modalHeight = Globals.maxModalHeightPct * window.innerHeight;
 	
 	//	Get the number of scan viewers
 	var numScanViewers = that.scanViewers.length;
@@ -127,45 +140,82 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 						Globals.expandButtonWidth;
 	
 	// determine the the modal width based on prescribed proportions
-	var pScanViewerHeight = pModalHeight - Globals.expandButtonWidth;
-	var pScanViewerWidth = Globals.scanViewerDimRatio * pScanViewerHeight;
+	var scanViewerHeight = modalHeight - Globals.expandButtonWidth;
+	var scanViewerWidth = Globals.scanViewerDimRatio * scanViewerHeight;
 	
 	// determine the minimum modal width
-	var preliminaryModalWidth = Globals.scrollGalleryWidth + 
-						 		pScanViewerWidth  * numScanViewers + 
-						 		Globals.scanViewerVerticalMargin * numScanViewers + 
-						 		Globals.expandButtonWidth;
+	var modalWidth = Globals.scrollGalleryWidth + 
+					 scanViewerWidth  * numScanViewers + 
+					 Globals.scanViewerVerticalMargin * numScanViewers + 
+					 Globals.expandButtonWidth;
 
-	console.log(Globals.scrollGalleryWidth, numScanViewers, pScanViewerWidth, preliminaryModalWidth)
-	var _w = preliminaryModalWidth;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	var _h = pModalHeight;
-	
 
+
+ 
+	//-------------------------
+	// 2. If the modal is too wide, scale it down
+	//-------------------------
+	if (modalWidth> maxModalWidth){	
+							 		
+		scanViewerWidth = (maxModalWidth - (Globals.scrollGalleryWidth + Globals.scanViewerVerticalMargin * numScanViewers + Globals.expandButtonWidth))/numScanViewers;	
+		scanViewerHeight = scanViewerWidth / Globals.scanViewerDimRatio;
+		modalWidth= maxModalWidth;
+		modalHeight = scanViewerHeight + Globals.expandButtonWidth;
+		
+	}
+
+	
+	var _w = modalWidth;
+	var _h = modalHeight;
 	var _l = (window.innerWidth - _w) /2 ;
-
-	
 	var _t = (window.innerHeight - _h)/2;
 	
-	console.log("w: ", _w)
+	
+	
+
+	//-------------------------
+	// SCROLL GALLERY
+	//-------------------------	
+	var scrollGalleryCSS = {
+		width: 110,
+		height: Math.round(_h),
+		left: 0,
+		top: 0,
+	}
+		
+	//-------------------------
+	// SCAN VIEWER LEFTS
+	//-------------------------	
+	var scanViewerLefts = [];
+	var scanViewerTops = [];
+	var viewerStart = scrollGalleryCSS.width + scrollGalleryCSS.left + Globals.scanViewerVerticalMargin;
+	for (var i=0;i<this.scanViewers.length;i++){
+		l = viewerStart + i* (scanViewerWidth + Globals.scanViewerVerticalMargin);
+		scanViewerLefts.push(l);
+		scanViewerTops.push(-1);
+	} 
+	
+	console.log("VIWER WIDTH: ", Math.round(scanViewerWidth));
 	return  {
 		width: Math.round(_w),
 		left: Math.round(_l),
 		height: Math.round(_h),
 		top: Math.round(_t),
-		scanViewerWidth: Math.round(pScanViewerWidth),
-		scanViewerHeight: Math.round(pScanViewerHeight),
+		scanViewer: {
+			width: Math.round(scanViewerWidth),
+			height: Math.round(scanViewerHeight),
+			lefts: scanViewerLefts,
+			tops: scanViewerTops,	
+		},
+		scrollGallery: {widgetCSS: scrollGalleryCSS},
+		closeButton: {
+			left: Math.round(_l) + Math.round(_w) - (__toInt__(that.closeButton.style.width)/2),
+			top: Math.round(_t) - $(this.closeButton).height()/2,// (__toInt__(that.closeButton.style.width)/2),
+		},
+		horizontalExpandButton: {
+			left: (Math.round(_w) - __toInt__(that.horizontalExpandButton.style.width)),
+			top: 0
+		}
 	}
 
 }
@@ -187,44 +237,29 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
     //----------------------------------
 	//	CSS: RESIZE THE MODAL
 	//----------------------------------
-	this.modalDimensions = this.modalDims();
-	console.log(this.modalDimensions);
-	$(this.modal).css(this.modalDimensions);	
+	modalDims = this.modalDims();
+	console.log(modalDims);
+	$(this.modal).css(modalDims);	
 	if(args){$(this.modal).css(args);}	
-
-
-
-	
-
-	
 	
 	
 	//----------------------------------
 	//	CSS: SCROLL GALLERY
 	//----------------------------------
-	$(this.scrollGallery.widget).css({
-		left: 0,//this.args.marginLeft,
-		top: 0,//this.args.marginTop,
-		height: $(this.modal).height(),// - this.args.marginTop*2,	
-	})
-	this.scrollGallery.updateCSS();
-	
-	console.log("WIDTH: ", $(this.scrollGallery.widget).width());
+	this.scrollGallery.updateCSS(modalDims.scrollGallery);
+
 
 
  
  	//----------------------------------
 	//	CSS: SCAN VIEWERS
 	//----------------------------------		
-	for (var i=0;i<this.scanViewers.length;i++){
-		var l = (i==0) ? $(this.scrollGallery.widget).position().left + $(this.scrollGallery.widget).width() + Globals.scanViewerVerticalMargin : 
-						 $(this.scanViewers[i-1].widget).position().left + $(this.scanViewers[i-1].widget).width() + Globals.scanViewerVerticalMargin;
-		console.log("l: ", l);		 	 
+	for (var i=0;i<this.scanViewers.length;i++){	 	 
 		this.scanViewers[i].updateCSS({
-			height: this.modalDimensions.scanViewerHeight,// - this.args.marginTop*2,
-			width: this.modalDimensions.scanViewerWidth,
-			left: l,
-			top: -1//this.args.marginTop,
+			height: modalDims.scanViewer.height,// - this.args.marginTop*2,
+			width: modalDims.scanViewer.width,
+			left: modalDims.scanViewer.lefts[i],
+			top: modalDims.scanViewer.tops[i],
 		});
 	}   
     
@@ -233,11 +268,7 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	CSS: CLOSE BUTTON
 	//----------------------------------
-	$(this.closeButton).css({
-		left: this.modalDimensions["left"] + this.modalDimensions["width"]- $(this.closeButton).width()/2,
-		top: this.modalDimensions["top"]- $(this.closeButton).height()/2,
-		opacity: .9
-	})		
+	__setCSS__(this.closeButton, modalDims.closeButton);		
 
 	
 	
@@ -247,7 +278,7 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//----------------------------------
 	if (this.horizontalExpandButton){
 		$(this.horizontalExpandButton).css({
-			left:  this.modalDimensions["width"] - Globals.expandButtonWidth,
+			left:  modalDims["width"] - Globals.expandButtonWidth,
 			height: "100%",
 			top: 0,
 			width: Globals.expandButtonWidth
@@ -272,7 +303,7 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	}	
 	
 	
-	/*
+	
 	//----------------------------------
 	//	CSS: SCROLL LINKS
 	//----------------------------------
@@ -283,5 +314,5 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 		})	
 	}
 	
-	*/
+	
 }

@@ -1,71 +1,25 @@
-
-var defaultArgs_scrollGallery = {
-	id: "scrollGallery",
-	parent: document.body,
-	orientation: "vertical",
-	sliderLocation: "left",
-	sliderWidth: 8,
-	scrollMarginY: 8,
-	scrollMarginX: 8,
-	CSS: {
-		top: 0,
-		left: 30,
-		width: Globals.scrollGalleryWidth,
-		height: 400,
-		border: "solid rgba(90,90,90,1) 1px",
-		//backgroundColor: "rgba(255,0,0,.5)"
-	},
-
-	
-	_sliderCSS:	
-	{
-		id: "_frameSlider", 
-		parent: document.body,
-		round: true,
-		handleOffsetLeft: 0,
-	  	handleOffsetTop: 0,
-		widgetCSS:{
-		},
-		handleCSS:{
-			height: 70,
-			width: 9,
-			borderWidth: 0,
-			borderColor: Globals.semiactiveLineColor,
-			backgroundColor: "rgba(105,105,105,1)"
-		},
-		trackCSS:{
-			borderWidth: 0,
-			width: 10,
-			borderColor: Globals.semiactiveLineColor,
-			backgroundColor: "rgba(0, 0, 0, 1)"
-		}
-	}
-}
-
-
-
 //******************************************************
 //  Init
 //
 //******************************************************
 var scrollGallery = function(args){
   	var that = this;
-	 INIT(this, defaultArgs_scrollGallery, args, function(){});
-	 
-	 this.contentsHeight = this.CSS.height;
 
-
+	this.args = (args) ? __mergeArgs__(this.defaultArgs(), args) : this.defaultArgs();
+	this.widget = __makeElement__("div", this.args.parent, this.args.id, this.widgetCSS);
+	
+	$(window).resize(function() { obj.updateCSS();});
 
 
 	//-------------------------------
 	// THE WIDGET
 	//-------------------------------	 
-	 $(this.widget).css({
+	 __setCSS__(this.widget, {
 	    position: "relative",
 	 	overflow: "hidden",
 	 	"overflow-x": "hidden",
 	 	"overflow-y": "hidden"
-	 })
+	 });
 
 
 
@@ -110,6 +64,53 @@ var scrollGallery = function(args){
   
 	
 	this.updateCSS();
+}
+
+
+
+
+scrollGallery.prototype.defaultArgs = function(){
+	
+	return {
+		id: "scrollGallery",
+		parent: document.body,
+		orientation: "vertical",
+		sliderLocation: "left",
+		sliderWidth: 8,
+		scrollMarginY: 8,
+		scrollMarginX: 8,
+		widgetCSS: {
+			top: 0,
+			left: 30,
+			width: Globals.scrollGalleryWidth,
+			height: 400,
+			border: "solid rgba(90,90,90,1) 1px",
+		},
+		
+		_sliderCSS:	
+		{
+			id: "_frameSlider", 
+			parent: document.body,
+			round: true,
+			handleOffsetLeft: 0,
+		  	handleOffsetTop: 0,
+			widgetCSS:{
+			},
+			handleCSS:{
+				height: 70,
+				width: 9,
+				borderWidth: 0,
+				borderColor: Globals.semiactiveLineColor,
+				backgroundColor: "rgba(105,105,105,1)"
+			},
+			trackCSS:{
+				borderWidth: 0,
+				width: 10,
+				borderColor: Globals.semiactiveLineColor,
+				backgroundColor: "rgba(0, 0, 0, 1)"
+			}
+		}		
+	}
 }
 
 
@@ -180,10 +181,11 @@ scrollGallery.prototype.setContents = function(obj){
 //******************************************************
 //  UpdateCSS
 //******************************************************
-scrollGallery.prototype.updateCSS = function(){
+scrollGallery.prototype.updateCSS = function(args){
 
 
-
+    if (args) { __setCSS__(this.widget, args.widgetCSS) };
+    
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------

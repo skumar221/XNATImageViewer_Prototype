@@ -36,4 +36,4 @@ Globals.scrollGalleryWidth = 110;
 
 
 Globals.maxModalWidthPct = .90;
-Globals.maxModalHeightPct = .90;
+Globals.maxModalHeightPct = .95;

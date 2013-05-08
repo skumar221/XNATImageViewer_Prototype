@@ -121,7 +121,7 @@ var XNATModalImageViewer = function(args){
 	this.scrollGallery = new scrollGallery({
 		parent: this.modal,
 		orientation: "vertical",
-		CSS: {
+		widgetCSS: {
 			left: this.args.gutter,
 			top: this.args.marginTop,
 			height: 700,
@@ -234,7 +234,7 @@ XNATModalImageViewer.prototype.addScanViewer = function(numViewers){
 			parent: this.modal,
 			id: this.args.id + "_scanViewer_" + (this.scanViewers.length + i).toString(),
 		});		
-		$(v.widget).fadeTo(0, 0).fadeTo(400, 1);	
+		//$(v.widget).fadeTo(0, 0).fadeTo(400, 1);	
 		this.scanViewers.push(v);	
 		this.setDropZones(v.frameViewer);	
 		this.createVerticalExpandButton();
