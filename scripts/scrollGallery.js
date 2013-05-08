@@ -10,9 +10,10 @@ var defaultArgs_scrollGallery = {
 	CSS: {
 		top: 0,
 		left: 30,
-		width: 110,
+		width: Globals.scrollGalleryWidth,
 		height: 400,
-		border: "solid rgba(90,90,90,1) 1px"
+		border: "solid rgba(90,90,90,1) 1px",
+		//backgroundColor: "rgba(255,0,0,.5)"
 	},
 
 	
@@ -49,8 +50,7 @@ var defaultArgs_scrollGallery = {
 //******************************************************
 var scrollGallery = function(args){
   	var that = this;
-	 INIT(this, defaultArgs_scrollGallery, args, function(){
-	 });
+	 INIT(this, defaultArgs_scrollGallery, args, function(){});
 	 
 	 this.contentsHeight = this.CSS.height;
 
@@ -77,7 +77,7 @@ var scrollGallery = function(args){
 	  	position: "relative",
 	  	border: "solid rgb(0,0,255,1) 1px",
 	  	top: 0,
-	  	left: this.args._sliderCSS.trackCSS.width * 1.5
+	  	left: this.args._sliderCSS.trackCSS.width + 4
 	  })
 
 

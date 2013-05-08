@@ -257,16 +257,18 @@ var scanViewer = function(args){
 //  UpdateCSS
 //
 //******************************************************
-scanViewer.prototype.updateCSS = function(){
+scanViewer.prototype.updateCSS = function(args){
 
 	var that = this;
 	var tabsHeight = Globals.minScanTabHeight;
-	var marginLeft = 10;
-	var marginTop = 10;
-	var marginLeft = 10; 
+
+	var widgetHeight = (args && args.height) ? args.height : $(this.widget).height();
+	var widgetWidth = (args && args.width) ? args.width : $(this.widget).width();
+	var widgetTop = (args && args.top) ? args.top : $(this.widget).position().top;
+	var widgetLeft = (args && args.left) ? args.left : $(this.widget).position().left;
 
 
-	var scanTabTop = $(this.widget).height() - tabsHeight -1;// - marginTop;
+	var scanTabTop = widgetHeight  - tabsHeight -1;// - marginTop;
 	var contentDivTop = scanTabTop;//	- this.contentDivider.defaultArgs().widgetCSS.height;
 	var sliderTop = contentDivTop - this.frameSlider.currArgs().handleCSS.height - 10;
 	var viewerWidth = sliderTop;// - marginTop*2 ;
@@ -278,13 +280,10 @@ scanViewer.prototype.updateCSS = function(){
 	//----------------------------------
 	// Widget
 	//----------------------------------
-	this.widget.style.width = __toPx__(viewerWidth);
-	//this.widget.style.height = __toPx__(__toInt__(this.widget.parentNode.style.height)/2);
-	
-	
-	//$(function() {
-
-  	//});
+	this.widget.style.width = __toPx__(widgetWidth);
+	this.widget.style.height = __toPx__(widgetHeight);
+	this.widget.style.top = __toPx__(widgetTop);
+	this.widget.style.left = __toPx__(widgetLeft);
 	
 
 	
@@ -295,7 +294,7 @@ scanViewer.prototype.updateCSS = function(){
 	$(this.scanTabs.widget).css({
  		left: 0,//marginLeft,
  	  	top: scanTabTop,
- 	  	width: viewerWidth - 2,// + marginLeft * 2,
+ 	  	width: widgetWidth - 2,// + marginLeft * 2,
  	  	height: tabsHeight -1,
 	});	 
    this.scanTabs.updateCSS();
@@ -309,12 +308,12 @@ scanViewer.prototype.updateCSS = function(){
 	this.contentDivider.updateCSS({
 		widgetCSS:{
 			left: 0,
-			width: viewerWidth,
+			width: widgetWidth,
 			top: contentDivTop,
 			backgroundColor: "rgba(0,0,0,0)"
 		},
 		boundaryCSS:{
-			width: viewerWidth,	
+			width: widgetWidth,	
 			top: Globals.minFrameViewerHeight,
 			left: 0,
 			height: scanTabTop,
@@ -333,7 +332,7 @@ scanViewer.prototype.updateCSS = function(){
 			left : 4,//marginLeft,   		
     	},
     	trackCSS:{
-    		width: Math.round(viewerWidth) - 10,// + marginLeft * 2
+    		width: Math.round(widgetWidth) - 10,// + marginLeft * 2
     	}
     })
 
@@ -345,8 +344,8 @@ scanViewer.prototype.updateCSS = function(){
 	 $(this.frameViewer.widget).css({
  	    left: 0,//marginLeft,
  		top: 0,//marginTop,
- 	  	width: viewerWidth - 10,
- 	  	height: viewerHeight - 10,
+ 	  	width: widgetWidth - 10,
+ 	  	height: widgetWidth - 10,
 	 });
 	 this.frameViewer.updateCSS();
 	 
@@ -431,6 +430,15 @@ scanViewer.prototype.updateCSS = function(){
 
 
 
+
+
+//******************************************************
+//  Fill in metadata -- this will likely change as it gets 
+//  deployed to the web...
+//******************************************************
+frameViewer.prototype.getPrescribedWidth = function(height){
+	return Globals.scanViewerDimRatio * height;
+}
 
 
 

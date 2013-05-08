@@ -17,5 +17,23 @@ Globals.minFrameViewerWidth = 150;
 
 Globals.minScanTabHeight = 80;
 
+Globals.minScanViewerHeight = 260;
+Globals.minScanViewerWidth = 200;
+
 Globals.thumbnailHeight = 85;
 Globals.thumbnailWidth = 85;
+
+Globals.expandButtonWidth = 20;
+
+
+Globals.scanViewerDimRatio = .85
+Globals.minScanViewerHeight = 320;
+Globals.minScanViewerWidth = Globals.minScanViewerHeight * Globals.scanViewerDimRatio;
+
+Globals.scanViewerVerticalMargin = Globals.expandButtonWidth;
+
+Globals.scrollGalleryWidth = 110;
+
+
+Globals.maxModalWidthPct = .90;
+Globals.maxModalHeightPct = .90;
