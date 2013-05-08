@@ -63,13 +63,37 @@ function expandModalHorizontally(that){
 		// Animate the viewers
 		//-------------------------	
 		for (var i=0;i<that.scanViewers.length;i++){
-			 $(that.scanViewers[i].widget).stop().animate({
+			 
+			//-------------------------
+			// Fade OUT the viewer contents only if there's height change in the modal
+			//-------------------------	
+			 if (modalDims.height != __toInt__(that.modal.style.height)){
+			 	for (var j=0;j<that.scanViewers[i].widget.childNodes.length;j++){
+				 	$(that.scanViewers[i].widget.childNodes[j]).stop().fadeTo(animLen, 0);	
+				 }
+				 var svWidget = that.scanViewers[i].widget;	
+			 }
+			 
+			 
+			 $(svWidget).stop().animate({
 			    left: modalDims.scanViewer.lefts[i],
 			    top: modalDims.scanViewer.tops[i],
 			    width: modalDims.scanViewer.width,
 			    height: modalDims.scanViewer.height,
 			  }, animLen, function() {
-			    // Animation complete.
+			  	
+			  	//-------------------------
+				// Fade IN the viewer contents only if there's height change in the modal
+				//-------------------------	
+			  	for (var i=0;i<that.scanViewers.length;i++){
+			  		var svWidget = that.scanViewers[i].widget;
+			  	    for (var j=0;j<svWidget.childNodes.length;j++){
+				 		$(svWidget.childNodes[j]).stop().fadeTo(animLen, 1);	
+				 	}
+			  	}
+			  	
+			  	
+			  	
 			 });			
 		} 
 
@@ -88,6 +112,7 @@ function expandModalHorizontally(that){
 		 
 		 		
 		 		
+		 		
 		//-------------------------
 		// Animate the horizontal expand button
 		//-------------------------	
@@ -97,6 +122,21 @@ function expandModalHorizontally(that){
 		  }, animLen, function() {
 		    // Animation complete.
 		 });
+		 
+		 
+		 
+		 
+		//----------------------------------
+		//	Animate the scroll links
+		//----------------------------------
+		for (var i=0;i<that.scrollLinks.length;i++){
+			$(that.scrollLinks[i]).stop().animate( {
+				left: modalDims.scrollLink.lefts[i],
+				top: modalDims.scrollLink.tops[i],
+			}, animLen, function(){
+				
+			});	
+		}
 		 
 }
 
@@ -183,8 +223,11 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		top: 0,
 	}
 		
+		
+		
+		
 	//-------------------------
-	// SCAN VIEWER LEFTS
+	// SCAN VIEWER DIMS
 	//-------------------------	
 	var scanViewerLefts = [];
 	var scanViewerTops = [];
@@ -195,6 +238,23 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		scanViewerTops.push(-1);
 	} 
 	
+	
+
+	//-------------------------
+	// SCROLL LINK DIMS
+	//-------------------------	
+	var scrollLinkLefts = [];
+	var scrollLinkTops = [];	
+	for (var i=0;i<that.scrollLinks.length;i++){
+		scrollLinkLefts.push(scanViewerLefts[i] + scanViewerWidth - 
+							 $(that.scrollLinks[i]).width()/2 + 
+							 Globals.scanViewerVerticalMargin/2);
+		scrollLinkTops.push(scanViewerTops[i] + scanViewerHeight/2 - 2);
+	}
+
+				
+				
+				
 	console.log("VIWER WIDTH: ", Math.round(scanViewerWidth));
 	return  {
 		width: Math.round(_w),
@@ -215,6 +275,10 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		horizontalExpandButton: {
 			left: (Math.round(_w) - __toInt__(that.horizontalExpandButton.style.width)),
 			top: 0
+		},
+		scrollLink:{
+			tops:  scrollLinkTops,
+			lefts: scrollLinkLefts,
 		}
 	}
 
@@ -308,9 +372,9 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//	CSS: SCROLL LINKS
 	//----------------------------------
 	for (var i=0;i<this.scrollLinks.length;i++){
-		$(this.scrollLinks[i]).css({
-			left: 2 + $(this.scanViewers[i].widget).position().left + $(this.scanViewers[i].widget).width() - $(this.scrollLinks[i]).width()/2 + this.args.marginLeft,
-			top: $(this.scanViewers[i].widget).position().top + $(this.scanViewers[i].frameViewer.widget).height()/2 - 2
+		__setCSS__(this.scrollLinks[i], {
+			left: modalDims.scrollLink.lefts[i],
+			top: modalDims.scrollLink.tops[i],
 		})	
 	}
 	
