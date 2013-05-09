@@ -8,7 +8,7 @@ var scrollGallery = function(args){
 	this.args = (args) ? __mergeArgs__(this.defaultArgs(), args) : this.defaultArgs();
 	this.widget = __makeElement__("div", this.args.parent, this.args.id, this.widgetCSS);
 	
-	$(window).resize(function() { obj.updateCSS();});
+	$(window).resize(function() { that.updateCSS();});
 
 
 	//-------------------------------

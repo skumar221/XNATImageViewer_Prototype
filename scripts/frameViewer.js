@@ -165,8 +165,13 @@ frameViewer.prototype.loadFrames = function(frames){
 		// if so, draw it to the frame.
 	    img.onload = function() {
 	    	if (this == that.endImage){
-
-	   			that.drawImage_MaintainProportions(that.frames[that.currFrame], that.canvas, that.context);
+//				console.log("1 ", that.currFrame, that.frames.length, that.frames[Math.round(that.currFrame)]);
+				
+				// check to see that there are enough frames to acommodate the currFrame number;
+				if (that.currFrame > that.frames.length) { 
+					that.currFrame = Math.round(that.frames.length/2);
+				}
+	   			that.drawImage_MaintainProportions(that.frames[Math.round(that.currFrame)], that.canvas, that.context);
 	   			// Need to get the appropriate contrast 
 	   			// threshold for the data set.
 	   			var imageData = that.context.getImageData(0, 0, that.canvas.width, that.canvas.height);	
@@ -190,7 +195,8 @@ frameViewer.prototype.loadFrames = function(frames){
 //******************************************************
 //  Draws a "frame" (i.e. an Image object) onto the canvas.
 //******************************************************
-frameViewer.prototype.drawFrame = function(frameNumber, adjustments){		
+frameViewer.prototype.drawFrame = function(frameNumber, adjustments){	
+
 	if (this.frames){
 		if (frameNumber < 0) frameNumber = 0;
 		else if (frameNumber > this.frames.length) frameNumber = this.frames.length -1;
@@ -198,9 +204,10 @@ frameViewer.prototype.drawFrame = function(frameNumber, adjustments){
 		if (this.frames.length > 0){
 			frameNumber = Math.round(frameNumber)
 			this.currFrame = frameNumber;
-
-
-			this.drawImage_MaintainProportions(this.frames[frameNumber], this.canvas, this.context);
+			if (this.frames[frameNumber]){
+				//console.log("it does exist", this.frames[frameNumber], this.frames)
+			}
+				this.drawImage_MaintainProportions(this.frames[frameNumber], this.canvas, this.context);
 		}
 		
 		
@@ -226,19 +233,21 @@ frameViewer.prototype.drawImage_MaintainProportions = function(img, canvas, cont
 	var startY = 0;
 	var endX = canvas.width;
 	var endY = canvas.height;
-
-	
-	if (img.width < img.height) {
-		startX = (canvas.width * (img.width/canvas.width))/2;
-		endX = img.width + startX*2;
-	}
-	else if (img.width > img.height) {
-		startY = (canvas.height * (img.height/canvas.height))/2;
-		endY = img.height + startY*2;
-	}			
+//	console.log(img)
+	//if (img){
+		if (img.width < img.height) {
+			startX = (canvas.width * (img.width/canvas.width))/2;
+			endX = img.width + startX*2;
+		}
+		else if (img.width > img.height) {
+			startY = (canvas.height * (img.height/canvas.height))/2;
+			endY = img.height + startY*2;
+		}	
+		context.drawImage(img, startX, startY, endX, endY)	
+	//}		
 	
 		
-	context.drawImage(img, startX, startY, endX, endY)
+	
 }
 
 

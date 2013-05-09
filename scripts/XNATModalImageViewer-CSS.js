@@ -14,10 +14,19 @@ function removeScanViewer(that, scanViewer){
 
 		//-------------------------
 		// Fade out viewer, then delete it
-		//-------------------------	
-		var viewerInd = that.scanViewers.indexOf(scanViewer);		
+		//-------------------------			
+		
+		// unlink the viewer sliders from one another
+		for (var i=0; i<that.scanViewers.length; i++){
+			that.scanViewers[i].frameSlider.clearLinked();
+			$(that.scanViewers[i].widget).unbind('mouseover');
+			$(that.scanViewers[i].widget).unbind('mouseout');
+		}	
+		
+		// remove viewer from global list
+		var viewerInd = that.scanViewers.indexOf(scanViewer);
 		that.scanViewers.splice(viewerInd , 1);
-		console.log(that.scanViewers.length)
+		
 		if (that.scanViewers.length == 0){
 			that.destroy();
 			return;
@@ -40,17 +49,60 @@ function removeScanViewer(that, scanViewer){
 		//-------------------------
 		// Fade out linkButton, then delete it
 		//-------------------------		
-		if (viewerInd > 0){
-			var v = that.scrollLinks[ viewerInd -1 ];
-			that.scrollLinks.splice(viewerInd -1 , 1);	
-			$(v).stop().fadeTo(animLen, 0, function(){
-				that.modal.removeChild(v);					
-			});
+		
+		// check the position of the link, special case for viewerInd == 0
+		scrollLinkInd = viewerInd -1;
+		if (viewerInd == 0) { scrollLinkInd = 0 };
 
-		}	
+		// remember what is active and what isn't
+		var activeList = [];
+		
+		
+		// deactivate and delete all scroll links
+		for (var j=0; j<that.scrollLinks.length; j++){
+
+			// track the state of the current ones
+			if (j != scrollLinkInd) { 
+				activeList.push($(that.scrollLinks[j]).data('activated'));
+			}
+			
+			// fade out the scrollLinks
+			var sl = that.scrollLinks[j];
+			$(sl).fadeTo(animLen, 0, function(){
+
+				if (this == that.scrollLinks[that.scrollLinks.length - 1]){
+					//console.log("HERE");
+					for (var k=0; k<that.scrollLinks.length; k++){
+						that.modal.removeChild(that.scrollLinks[k]);
+					}
+					that.scrollLinks = [];
+					
+					animateModalChange(that, animLen, {
+						modal: [function(){
+							for (var i=0; i<that.scanViewers.length; i++){
+								if (i > 0) that.addScrollLinkIcon();	
+							}
+							for (var i=0; i<that.scrollLinks.length; i++){
+								
+								if(activeList[i]){
+									that.scrollLinks[i].onclick('activate', 0);	
+								}
+							}
+						}]
+					});
+				}
+
+			});
+			
+
+		}
+		
+
+
+
 
 		 
-		animateModalChange(that, animLen);
+
 
 	
 }
@@ -168,7 +220,7 @@ function animateModalChange(that, animLen, callbacks){
 		 
 		 
 		 
-		 
+		/*
 		//----------------------------------
 		//	Animate the scroll links
 		//----------------------------------
@@ -180,6 +232,8 @@ function animateModalChange(that, animLen, callbacks){
 				
 			});	
 		}
+		*/
+		
 }
 
 function expandModalHorizontally(that){
@@ -201,8 +255,6 @@ function expandModalHorizontally(that){
 		that.addScanViewer();
 		$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(0,0);
 
-		 
-		 
 		
 		//-------------------------
 		//  GET THE MODAL DIMENSIONS, 

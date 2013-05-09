@@ -283,7 +283,13 @@ XNATModalImageViewer.prototype.linkViewers = function(leftInd, rightInd){
 	//  SET THE MOUSEOVER via JQUERY
 	//-----------------------------------------
 	var defineMouseover = function(that, indA){
+		
+		if (! that.scanViewers[indA]){
+			//console.log("ERROR: ", indA, that.scanViewers);
+			return;
+		}
 
+		
 		$(that.scanViewers[indA].widget).mouseover(function(){
 			
 			
@@ -327,7 +333,7 @@ XNATModalImageViewer.prototype.linkViewers = function(leftInd, rightInd){
 					rInd--;					
 				}	
 			}			
-		    //console.log("**********************")		
+		    	
 			
 			
 			
@@ -335,8 +341,8 @@ XNATModalImageViewer.prototype.linkViewers = function(leftInd, rightInd){
 		//-----------------------------------------
 		//  SET THE MOUSEOUT via JQUERY
 		//-----------------------------------------
-		}).mouseout(function(){		
-			that.scanViewers[indA].frameSlider.clearLinked();			
+		}).mouseout(function(){	
+			if (that.scanViewers[indA]) { that.scanViewers[indA].frameSlider.clearLinked() };		
 		});			
 	}
 	
@@ -424,26 +430,43 @@ XNATModalImageViewer.prototype.addScrollLinkIcon = function(){
 	//------------------------------------------
 	that.widgetOver = -1;
 	var c = this.scrollLinks[this.scrollLinks.length -1];
-	c.onclick = function(){
+	c.onclick = function(inputState, animTime){
+		
+		var animLen = (animTime || animTime === 0) ? animTime : 300;
+		//console.log("ANUIMN: ", animLen, inputState, animTime);
+		if (inputState && inputState == 'deactivate') { $(c).data('activated', true);}
+		else if (inputState && inputState == 'activate') { $(c).data('activated', false);}
 		// Set it to the opposite
 		$(c).data('activated', !$(c).data('activated'));
 		
 		if ($(c).data('activated')){
 			// Change the icon's image
-			$(icon1).fadeTo(300,0);
-			$(icon2).fadeTo(300,1);
+			$(icon1).fadeTo(animLen,0);
+			$(icon2).fadeTo(animLen,1);
 			
-			label.innerHTML = "Linking Scrollers";
-			$(label).fadeTo(300,1).delay(1000).fadeTo(300,0);
+			
+			if (animLen != 0) {
+				label.innerHTML = "Linking Scrollers";
+				$(label).fadeTo(animLen,1).delay(1000).fadeTo(animLen,0);
+			}
+			else {
+				$(label).fadeTo(animLen,0)
+			}
 			// Link viewers
+			//console.log("linking: ", $(c).data('number'), "with ", $(c).data('number')+1);
 			that.linkViewers($(c).data('number'), $(c).data('number') + 1);
 		}
-		else{
-			$(icon1).fadeTo(300,1);
-			$(icon2).fadeTo(300,0);		
+		else if (!$(c).data('activated')){
+			$(icon1).fadeTo(animLen,1);
+			$(icon2).fadeTo(animLen,0);		
 			
-			label.innerHTML = "Unlinking Scrollers";
-			$(label).fadeTo(300,1).delay(1000).fadeTo(300,0);	
+			if (animLen != 0) {
+				label.innerHTML = "Unlinking Scrollers";
+				$(label).fadeTo(animLen,1).delay(1000).fadeTo(animLen,0);
+			}
+			else {
+				$(label).fadeTo(animLen,0)
+			}
 		}
 	}
 	

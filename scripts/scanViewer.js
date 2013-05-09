@@ -123,7 +123,8 @@ var scanViewer = function(args){
 			that.displayableData.frameNumber.innerHTML = "Frame: "+(val + 1) + " / " + that.frameViewer.frames.length	
 		}
 		
-		// Draw the frame		
+		// Draw the frame
+	
 		that.frameViewer.drawFrame(val - subtractor, true); 
 	  });
 
@@ -142,7 +143,7 @@ var scanViewer = function(args){
 				value : Math.round(that.frameViewer.frames.length/2),
 			});
 
-			that.frameViewer.drawFrame(that.frameSlider.value, true);
+			that.frameViewer.drawFrame(Math.round(that.frameSlider.value), true);
 		}		
 		else{
 			console.log("NO DRAW FRAME");
