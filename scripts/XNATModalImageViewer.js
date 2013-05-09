@@ -201,13 +201,13 @@ XNATModalImageViewer.prototype.setDropZones = function(dz){
 
 
 
-//******************************************************
+//*******************************a***********************
 //  Clears the modal out of the DOM.
 //
 //******************************************************
 XNATModalImageViewer.prototype.destroy = function(fadeOut){
-	var fadeOut = (fadeOut) ? fadeOut: 200;	
-	//console.log("Destroying! " + this.args.id);
+	var fadeOut = (fadeOut) ? fadeOut: 500;	
+	console.log("Destroying! " + this.args.id);
 	var that = this;
 	$(this.widget).fadeOut(fadeOut, function(){
 		try{
@@ -227,6 +227,7 @@ XNATModalImageViewer.prototype.destroy = function(fadeOut){
 //
 //******************************************************
 XNATModalImageViewer.prototype.addScanViewer = function(numViewers){
+	that = this;
 	if(!numViewers) numViewers = 1;
 	
 	for (var i=0;i<numViewers;i++){
@@ -238,6 +239,12 @@ XNATModalImageViewer.prototype.addScanViewer = function(numViewers){
 		this.scanViewers.push(v);	
 		this.setDropZones(v.frameViewer);	
 		this.createVerticalExpandButton();
+		
+
+		// define the close button clicked event for the scanViewer
+		v.closeButtonClicked = function(event){
+			removeScanViewer(that, v)
+		}
 	}
 }
 
@@ -513,55 +520,7 @@ XNATModalImageViewer.prototype.createVerticalExpandButton = function(){
 
 		  //that.addScanViewer();
 		  //that.updateCSS();
-		 
-		 
-		 
-		//-------------------------
-		// Define animation parameters
-		//-------------------------	
-		/*
-		 var animLen = 500;
-		 var scanViewerWidth = $(that.scanViewers[that.scanViewers.length-1].widget).width();	
-		 var newWidth = $(that.modal).width() + scanViewerWidth + __toInt__(that.closeButton.style.width);
 
-
-
-		//-------------------------
-		// Animate the window
-		//-------------------------	
-		 $(that.modal).stop().animate({
-		    width: newWidth,
-		    left: window.innerWidth/2 - newWidth/2,
-		  }, animLen, function() {
-		    that.addScanViewer();
-		    that.addScrollLinkIcon();
-		    that.updateCSS({width: newWidth});
-		 });
-
-
-
-		//-------------------------
-		// Animate the close button
-		//-------------------------		
-		 $(that.closeButton).stop().animate({
-		    left: window.innerWidth/2 + newWidth/2 - (__toInt__(that.closeButton.style.width)/2),
-		  }, animLen, function() {
-		    // Animation complete.
-		 });
-		 
-		 		
-		 		
-		//-------------------------
-		// Animate the expand button
-		//-------------------------	
-		 $(that.horizontalExpandButton).stop().animate({
-		 	opacity: .5,
-		    left: (newWidth - __toInt__(that.horizontalExpandButton.style.width)),
-		  }, animLen, function() {
-		    // Animation complete.
-		 });
-		 
-		*/
  	}	
 }
 

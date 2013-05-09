@@ -82,9 +82,7 @@ var scanViewer = function(args){
 	 INIT(this, defaultArgs_scanViewer, args);
 
 
-	  //$(function() {
-	    $(this.widget).resizable();//.draggable();
-	  //});
+ 
     	
 	 //----------------------------------
 	 // FRAME VIEWER
@@ -101,6 +99,7 @@ var scanViewer = function(args){
 	this.frameViewer.addOnloadCallback(function(){
 		if(that.frameViewer.currDroppable.scanData) {that.populateData(that.frameViewer.currDroppable.scanData)}
 	})
+
 
 
 
@@ -175,6 +174,35 @@ var scanViewer = function(args){
 		tabTitles: ["<b>View Type</b>", "<b>Session Info</b>", "<b>Adjust</b>"],
 	});
 
+
+
+
+	//----------------------------------
+	// CLOSE BUTTON
+	//----------------------------------		
+	this.closeButton = __makeElement__("img", this.widget, this.args.id + "_closeButton",{
+		position: "absolute",
+		"cursor": "pointer",
+		width: 10,
+		height: 10
+	});
+	this.closeButton.src = "./icons/closeX.png";
+
+	// Its natural state -- slightly faded
+	$(this.closeButton).fadeTo(0, .5);
+
+	// What do do when the mouse leaves	
+	$(this.closeButton).mouseover(function(){
+	  $(that.closeButton).stop().fadeTo(200, 1);
+	}).mouseleave(
+		function(){ 
+		$(that.closeButton).stop().fadeTo(200, .5);
+    });
+	
+	this.closeButton.onclick = function(event){
+		that.closeButtonClicked(event)
+	}
+	
 	
 
 	//----------------------------------
@@ -361,7 +389,20 @@ scanViewer.prototype.updateCSS = function(args){
 	 
 	 
 
+	//----------------------------------
+	// DRAW FRAME ON FRAMEVIEWER
+	//----------------------------------
 	 this.frameViewer.drawFrame(this.frameSlider.value, true);
+	 
+	 
+	 
+	//----------------------------------
+	// CLOSE BUTTON
+	//----------------------------------		
+	__setCSS__(this.closeButton, {
+		top: 3,
+		left: widgetWidth - __toInt__(this.closeButton.style.width) - 3,
+	});
 	 
 	 
 	 
@@ -429,16 +470,9 @@ scanViewer.prototype.updateCSS = function(args){
 }
 
 
-
-
-
 //******************************************************
-//  Fill in metadata -- this will likely change as it gets 
-//  deployed to the web...
 //******************************************************
-frameViewer.prototype.getPrescribedWidth = function(height){
-	return Globals.scanViewerDimRatio * height;
-}
+scanViewer.prototype.closeButtonClicked = function(event){}
 
 
 

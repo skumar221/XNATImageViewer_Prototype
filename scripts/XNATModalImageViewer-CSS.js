@@ -1,4 +1,5 @@
-function expandModalHorizontally(that){
+function removeScanViewer(that, scanViewer){
+		 
 		 
 		 var animLen = 500;
 		 
@@ -6,20 +7,58 @@ function expandModalHorizontally(that){
 		 // parts of the modal.
 		 $(that.modal).stop();
 		 $(that.closeButton).stop();
-		 $(that.horizontalExpandButton).stop().unbind('mouseleave');
-		 $(that.horizontalExpandButton).stop().unbind('mouseover');
+		 $(that.horizontalContractButton).stop().unbind('mouseleave');
+		 $(that.horizontalContractButton).stop().unbind('mouseover');
 
 		 
 
 		//-------------------------
-		// Add a scan viewer, then hide it
+		// Fade out viewer, then delete it
+		//-------------------------	
+		var viewerInd = that.scanViewers.indexOf(scanViewer);		
+		that.scanViewers.splice(viewerInd , 1);
+		console.log(that.scanViewers.length)
+		if (that.scanViewers.length == 0){
+			that.destroy();
+			return;
+		}
+
+		$(scanViewer.widget).stop().fadeTo(animLen, 0, function(){
+			that.modal.removeChild(scanViewer.widget);
+		});
+		
+
+		//-------------------------
+		// Fade out expandButton, then delete it
+		//-------------------------			
+		$(that.verticalExpandButtons[viewerInd]).stop().fadeTo(animLen, 0, function(){
+			that.modal.removeChild(that.verticalExpandButtons[viewerInd]);
+			that.verticalExpandButtons.splice(viewerInd , 1);
+		});
+		
+		
+		//-------------------------
+		// Fade out linkButton, then delete it
 		//-------------------------		
+		if (viewerInd > 0){
+			var v = that.scrollLinks[ viewerInd -1 ];
+			that.scrollLinks.splice(viewerInd -1 , 1);	
+			$(v).stop().fadeTo(animLen, 0, function(){
+				that.modal.removeChild(v);					
+			});
 
-		that.addScanViewer();
-		$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(0,0);
+		}	
 
 		 
-		 
+		animateModalChange(that, animLen);
+
+	
+}
+
+
+function animateModalChange(that, animLen, callbacks){
+		
+		if (!animLen && animLen != 0) { var animLen = 500; }
 		
 		//-------------------------
 		//  GET THE MODAL DIMENSIONS, 
@@ -50,8 +89,12 @@ function expandModalHorizontally(that){
 		    left: modalDims.left,
 		    height: modalDims.height,
 		    top: modalDims.top,
-		  }, animLen, function() {	    
-		    that.addScrollLinkIcon();
+		  }, animLen, function() {
+		  	
+		  	if (callbacks && callbacks.modal && callbacks.modal.length > 0){
+		  		for (i in callbacks.modal) { callbacks.modal[i](that); }
+		  	}	    
+		  	
 		    that.updateCSS();
 			$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(animLen,1);
 		 });
@@ -83,7 +126,7 @@ function expandModalHorizontally(that){
 			  }, animLen, function() {
 			  	
 			  	//-------------------------
-				// Fade IN the viewer contents only if there's height change in the modal
+				// Fade IN the viewer contents if they were faded out
 				//-------------------------	
 			  	for (var i=0;i<that.scanViewers.length;i++){
 			  		var svWidget = that.scanViewers[i].widget;
@@ -137,7 +180,54 @@ function expandModalHorizontally(that){
 				
 			});	
 		}
+}
+
+function expandModalHorizontally(that){
 		 
+		 var animLen = 500;
+		 
+		 // clear any Jquery actions happening on other
+		 // parts of the modal.
+		 $(that.modal).stop();
+		 $(that.closeButton).stop();
+		 $(that.horizontalExpandButton).stop().unbind('mouseleave');
+		 $(that.horizontalExpandButton).stop().unbind('mouseover');
+
+		 
+
+		//-------------------------
+		// Add a scan viewer, then hide it
+		//-------------------------		
+		that.addScanViewer();
+		$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(0,0);
+
+		 
+		 
+		
+		//-------------------------
+		//  GET THE MODAL DIMENSIONS, 
+		//-------------------------	
+		 var modalDims = that.modalDims();
+
+
+
+
+		//-------------------------
+		//  CHECK TO SEE IF THE VIEWERS ARE TOO SMALL 
+		//-------------------------	
+		if (__toInt__(that.scanViewers[0].widget.style.width) < Globals.minScanViewerWidth){
+			that.modal.removeChild(that.scanViewers[that.scanViewers.length - 1].widget);
+			that.scanViewers.pop();
+			$(that.scanViewers[that.scanViewers.length - 1].widget).fadeTo(animLen,1);
+			return;	
+		} 
+		
+
+		animateModalChange(that, animLen, {
+			modal: [function(){that.addScrollLinkIcon()}]
+		});
+		return;
+
 }
 
 
@@ -204,11 +294,9 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		
 	}
 
-	
-	var _w = modalWidth;
-	var _h = modalHeight;
-	var _l = (window.innerWidth - _w) /2 ;
-	var _t = (window.innerHeight - _h)/2;
+
+	var _l = (window.innerWidth - modalWidth) /2 ;
+	var _t = (window.innerHeight - modalHeight)/2;
 	
 	
 	
@@ -218,7 +306,7 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 	//-------------------------	
 	var scrollGalleryCSS = {
 		width: 110,
-		height: Math.round(_h),
+		height: Math.round(modalHeight),
 		left: 0,
 		top: 0,
 	}
@@ -255,11 +343,11 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 				
 				
 				
-	console.log("VIWER WIDTH: ", Math.round(scanViewerWidth));
+//	console.log("VIWER WIDTH: ", Math.round(scanViewerWidth));
 	return  {
-		width: Math.round(_w),
+		width: Math.round(modalWidth),
 		left: Math.round(_l),
-		height: Math.round(_h),
+		height: Math.round(modalHeight),
 		top: Math.round(_t),
 		scanViewer: {
 			width: Math.round(scanViewerWidth),
@@ -269,11 +357,11 @@ XNATModalImageViewer.prototype.modalDims = function(conversion){
 		},
 		scrollGallery: {widgetCSS: scrollGalleryCSS},
 		closeButton: {
-			left: Math.round(_l) + Math.round(_w) - (__toInt__(that.closeButton.style.width)/2),
+			left: Math.round(_l) + Math.round(modalWidth) - (__toInt__(that.closeButton.style.width)/2),
 			top: Math.round(_t) - $(this.closeButton).height()/2,// (__toInt__(that.closeButton.style.width)/2),
 		},
 		horizontalExpandButton: {
-			left: (Math.round(_w) - __toInt__(that.horizontalExpandButton.style.width)),
+			left: (Math.round(modalWidth) - __toInt__(that.horizontalExpandButton.style.width)),
 			top: 0
 		},
 		scrollLink:{
@@ -302,7 +390,7 @@ XNATModalImageViewer.prototype.updateCSS = function(args){
 	//	CSS: RESIZE THE MODAL
 	//----------------------------------
 	modalDims = this.modalDims();
-	console.log(modalDims);
+//	console.log(modalDims);
 	$(this.modal).css(modalDims);	
 	if(args){$(this.modal).css(args);}	
 	
