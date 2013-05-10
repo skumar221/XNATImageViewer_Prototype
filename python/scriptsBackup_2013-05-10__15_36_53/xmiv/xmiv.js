@@ -95,7 +95,15 @@ var xmiv = function(args){
 		zIndex: 103
 	});	
 	this.closeButton.src = "./icons/closeButton.png";
+	
+	
+	
+	//----------------------------------
+	//	EXPAND BUTTON
+	//----------------------------------	
+	this.createHorizontalExpandButton(0);
 
+	
 
 	
 	//----------------------------------
@@ -446,7 +454,7 @@ xmiv.prototype.addScrollLinkIcon = function(){
 //  Expand button
 //
 //******************************************************
-xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
+xmiv.prototype.createVerticalExpandButton = function(rowPos, colPos){
 	var that = this;
 
 	if (!this.verticalExpandButtons) {this.verticalExpandButtons = [[]]};
@@ -472,11 +480,11 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 	if (!this.verticalExpandButtons[rowPos])
 		this.verticalExpandButtons.push([]);
 		
-	this.verticalExpandButtons[rowPos][colPos] = (currButton);
+	this.verticalExpandButtons[rowPos].push(currButton);
 
 	//test it out
 	if (!this.verticalExpandButtons[rowPos][colPos]){
-		throw("addVerticalExpandButton error: the rowPos + colPos arguments were incorrectly applied")
+		throw("createVerticalExpandButton error: the rowPos + colPos arguments were incorrectly applied")
 	}
 	
 	//-------------------------
@@ -516,17 +524,16 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 //  Expand button
 //
 //******************************************************
-xmiv.prototype.addHorizontalExpandButton = function(){
+xmiv.prototype.createHorizontalExpandButton = function(rowNum){
 	
 	
 	var that = this;
 	
-	if (!this.horizontalExpandButtons){ this.horizontalExpandButtons = []};
-	
+		
 	//-------------------------
 	// The button CSS
 	//-------------------------
-	var hB = __makeElement__("button", this.modal, this.args.id + "_expandButton", {
+	this.horizontalExpandButton = __makeElement__("button", this.modal, this.args.id + "_expandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
 		"font-size": 18,
@@ -538,23 +545,22 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 		width: this.args.expandButtonWidth,
 		zIndex: 100
 	});
-	this.horizontalExpandButtons.push(hB);
 	
 	
 	
 	//-------------------------
 	// Its natural state -- slightly faded
 	//-------------------------
-	$(hB).fadeTo(0, .5);
+	$(this.horizontalExpandButton).fadeTo(0, .5);
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(hB).mouseover(function(){
-	  $(hB).stop().fadeTo(200, .8);
+	$(this.horizontalExpandButton).mouseover(function(){
+	  $(that.horizontalExpandButton).stop().fadeTo(200, .8);
 	}).mouseleave(
 		function(){ 
 			if (that.changeState != "expanding"){
-				$(hB).stop().fadeTo(200, .5);
+				$(that.horizontalExpandButton).stop().fadeTo(200, .5);
 			}			
     });
 
@@ -563,18 +569,14 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 	//-------------------------
 	// Its inner text
 	//-------------------------			
-	hB.innerHTML = "+";
+	this.horizontalExpandButton.innerHTML = "+";
+
 
 
 	//-------------------------
 	// Button onlclick
 	//-------------------------		
-
-	hB.onclick = function(){
-		var row = that.horizontalExpandButtons.length-1;
-		var col = that.scanViewers[row].length;
-		that.expand(row, col)
-	}; 
+	this.horizontalExpandButton.onclick = function(){that.expand()}; 
 }
 
 

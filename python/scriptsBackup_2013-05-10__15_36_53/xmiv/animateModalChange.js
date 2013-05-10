@@ -101,9 +101,9 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		//-------------------------
 		// Animate the horizontal expand button
 		//-------------------------	
-		 $(this.horizontalExpandButtons).stop().animate({
+		 $(this.horizontalExpandButton).stop().animate({
 		 	opacity: .5,
-		    left: modalDims.horizontalExpandButtons.left,
+		    left: modalDims.horizontalExpandButton.left,
 		  }, animLen, function() {
 		    // Animation complete.
 		 });

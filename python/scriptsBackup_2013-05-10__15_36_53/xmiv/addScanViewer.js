@@ -49,19 +49,15 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	}	
 	
 	
-	console.log("ROWCOL", rowPos, colPos, that.scanViewers)
-	
 	// Checks the column preceder
 	if (rowPos != 0){
-		if (this.scanViewers[rowPos])
-			if (this.scanViewers[rowPos][colPos-1]) { preceeding_row = true}	
+		if (this.scanViewers[rowPos-1][colPos]) { preceeding_row = true}
 	}
 	
 	
 	// Checks the column preceder
 	if (colPos != 0){
-		if (this.scanViewers[rowPos-1])
-			if (this.scanViewers[rowPos-1][colPos]) { preceeding_column = true}
+		if (this.scanViewers[rowPos][colPos-1]) { preceeding_column = true}
 	}
 
 
@@ -84,7 +80,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	
 	
 	// create column by pushing
-	this.scanViewers[rowPos][colPos] = (v);
+	this.scanViewers[rowPos].push(v);
 	
 	
 	// test the rowPos + colPos to make sure
@@ -100,14 +96,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//	2. Link viewers to other modal widgets
 	//----------------------------------
 	this.setDropZones(v.frameViewer);	
-	this.addVerticalExpandButton(rowPos, colPos);
-	
-	
-	//----------------------------------
-	//	EXPAND BUTTON
-	//----------------------------------
-	if (!this.horizontalExpandButtons || !this.horizontalExpandButtons[rowPos])
-		this.addHorizontalExpandButton(rowPos);
+	this.createVerticalExpandButton(rowPos, colPos);
 	v.closeButtonClicked = function(event){ that.removeScanViewer(v) };
 	
 }

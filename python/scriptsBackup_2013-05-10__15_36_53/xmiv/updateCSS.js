@@ -49,15 +49,13 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	CSS: HORIZONTAL EXPAND BUTTON
 	//----------------------------------
-	if (this.horizontalExpandButtons){
-		for (var i=0; i<this.horizontalExpandButtons.length; i++){
-			$(this.horizontalExpandButtons[i]).css({
-				left: modalDims["horizontalExpandButtons"].left,
-				height: modalDims["horizontalExpandButtons"].height,
-				top: modalDims["horizontalExpandButtons"].tops[i][0],
-				width: Globals.expandButtonWidth
-			})		
-		}		
+	if (this.horizontalExpandButton){
+		$(this.horizontalExpandButton).css({
+			left:  modalDims["width"] - Globals.expandButtonWidth,
+			height: "100%",
+			top: 0,
+			width: Globals.expandButtonWidth
+		})			
 	}	
 	
 	

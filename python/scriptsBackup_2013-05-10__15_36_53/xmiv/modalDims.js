@@ -142,10 +142,9 @@ xmiv.prototype.modalDims = function(conversion){
 			left: Math.round(_l) + Math.round(modalWidth) - (__toInt__(that.closeButton.style.width)/2),
 			top: Math.round(_t) - $(this.closeButton).height()/2,// (__toInt__(that.closeButton.style.width)/2),
 		},
-		horizontalExpandButtons: {
-			left: Math.round(modalWidth) - Globals.expandButtonWidth,
-			tops: scanViewerTops,
-			height: Math.round(scanViewerHeight)
+		horizontalExpandButton: {
+			left: (Math.round(modalWidth) - __toInt__(that.horizontalExpandButton.style.width)),
+			top: 0
 		},
 		scrollLink:{
 			tops:  scrollLinkTops,

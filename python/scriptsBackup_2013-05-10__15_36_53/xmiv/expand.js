@@ -8,8 +8,8 @@ xmiv.prototype.expand = function(rowPos, colPos){
 	 // parts of the modal.
 	 $(this.modal).stop();
 	 $(this.closeButton).stop();
-	 $(this.horizontalExpandButtons).stop().unbind('mouseleave');
-	 $(this.horizontalExpandButtons).stop().unbind('mouseover');
+	 $(this.horizontalExpandButton).stop().unbind('mouseleave');
+	 $(this.horizontalExpandButton).stop().unbind('mouseover');
 
 	 
 
