@@ -31,6 +31,7 @@ Globals.minScanViewerHeight = 320;
 Globals.minScanViewerWidth = Globals.minScanViewerHeight * Globals.scanViewerDimRatio;
 
 Globals.scanViewerVerticalMargin = Globals.expandButtonWidth;
+Globals.scanViewerHorizontalMargin = Globals.expandButtonWidth;
 
 Globals.scrollGalleryWidth = 110;
 

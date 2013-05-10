@@ -6,9 +6,11 @@ from datetime import datetime
 def main():
     
     rootDir = "../scripts"
-    backupDir = "scriptBackup"
-    findStr = "XNATImageViewerGlobals"
-    replaceStr = "Globals"
+    backupDir = "scriptsBackup"
+    
+    
+    findStr = "this.scanViewers.length"
+    replaceStr = "__lengthMD__(this.scanViewers)"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     #  make a backup folder
