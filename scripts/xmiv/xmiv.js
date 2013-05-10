@@ -576,7 +576,7 @@ xmiv.prototype.createHorizontalExpandButton = function(){
 	//-------------------------
 	// Button onlclick
 	//-------------------------		
-	this.horizontalExpandButton.onclick = function(){expand(that)}; 
+	this.horizontalExpandButton.onclick = function(){that.expand()}; 
 }
 
 

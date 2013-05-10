@@ -1,5 +1,6 @@
-function removeScanViewer(that, scanViewer){
+xmiv.prototype.removeScanViewer = function(scanViewer){
 		 
+		 var that = this;
 		 
 		 var animLen = 500;
 		 
@@ -17,15 +18,25 @@ function removeScanViewer(that, scanViewer){
 		//-------------------------			
 		
 		// unlink the viewer sliders from one another
-		for (var i=0; i<__lengthMD__(that.scanViewers); i++){
-			that.scanViewers[i].frameSlider.clearLinked();
-			$(that.scanViewers[i].widget).unbind('mouseover');
-			$(that.scanViewers[i].widget).unbind('mouseout');
-		}	
+		for (var i=0; i<this.scanViewers.length; i++){
+			for (var j=0; j<this.scanViewers[i].length; j++){
+				that.scanViewers[i][j].frameSlider.clearLinked();
+				$(that.scanViewers[i][j].widget).unbind('mouseover');
+				$(that.scanViewers[i][j].widget).unbind('mouseout');
+			}	
+		}
+		
 		
 		// remove viewer from global list
-		var viewerInd = that.scanViewers.indexOf(scanViewer);
-		that.scanViewers.splice(viewerInd , 1);
+		var vI = -1;
+		var vJ = -1;
+		for (var i=0; i<this.scanViewers.length; i++){
+			vI = i;
+			vJ = that.scanViewers[i].indexOf(scanViewer);
+			if ( vJ > -1) { break; };
+		}
+
+		that.scanViewers[vI].splice(vJ , 1);
 		
 		if (__lengthMD__(that.scanViewers) == 0){
 			that.destroy();
@@ -37,6 +48,7 @@ function removeScanViewer(that, scanViewer){
 		});
 		
 
+		/*
 		//-------------------------
 		// Fade out expandButton, then delete it
 		//-------------------------			
@@ -96,5 +108,21 @@ function removeScanViewer(that, scanViewer){
 			
 
 		}
-	
+	*/
+		
+		this.animateModalChange(animLen, {
+			modal: [function(){
+				/*
+				for (var i=0; i<__lengthMD__(that.scanViewers); i++){
+					if (i > 0) that.addScrollLinkIcon();	
+				}
+				for (var i=0; i<that.scrollLinks.length; i++){
+					
+					if(activeList[i]){
+						that.scrollLinks[i].onclick('activate', 0);	
+					}
+				}
+				*/
+			}]
+		});
 }

@@ -97,6 +97,6 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//----------------------------------
 	this.setDropZones(v.frameViewer);	
 	this.createVerticalExpandButton(rowPos, colPos);
-	v.closeButtonClicked = function(event){ removeScanViewer(that, v) };
+	v.closeButtonClicked = function(event){ that.removeScanViewer(v) };
 	
 }

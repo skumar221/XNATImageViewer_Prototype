@@ -25,8 +25,8 @@ xmiv.prototype.updateCSS = function(args){
  	//----------------------------------
 	//	CSS: SCAN VIEWERS
 	//----------------------------------		
-	for (var i=0; i<__numRows__(this.scanViewers); i++){	
-		for (var j=0; j<__numColumns__(this.scanViewers); j++){ 	 
+	for (var i=0; i<this.scanViewers.length; i++){	
+		for (var j=0; j<this.scanViewers[i].length; j++){ 	 
 			this.scanViewers[i][j].updateCSS({
 				height: modalDims.scanViewer.height,// - this.args.marginTop*2,
 				width: modalDims.scanViewer.width,
@@ -64,8 +64,9 @@ xmiv.prototype.updateCSS = function(args){
 	//	CSS: VERTICAL EXPAND BUTTONS
 	//----------------------------------
 	if (this.verticalExpandButtons){
-		for (var i=0; i<__numRows__(this.scanViewers); i++){	
-			for (var j=0; j<__numColumns__(this.scanViewers); j++){ 
+		
+		for (var i=0; i<this.scanViewers.length; i++){	
+			for (var j=0; j<this.scanViewers[i].length; j++){ 
 					$(this.verticalExpandButtons[i][j]).css({
 						left:  $(this.scanViewers[i][j].widget).position().left,
 						height: Globals.expandButtonWidth,
@@ -73,7 +74,8 @@ xmiv.prototype.updateCSS = function(args){
 						top: $(this.modal).height() - Globals.expandButtonWidth,
 					})	
 				}	
-		}	
+		}
+			
 	}	
 	
 	
