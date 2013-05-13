@@ -15,7 +15,8 @@ Globals.fontSizeSmall = 10;
 Globals.minFrameViewerHeight = 150;
 Globals.minFrameViewerWidth = 150;
 
-Globals.minScanTabHeight = 80;
+Globals.minScanTabHeight = 30;
+Globals.defaultScanTabHeight = 80;
 
 Globals.minScanViewerHeight = 260;
 Globals.minScanViewerWidth = 200;

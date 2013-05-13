@@ -34,11 +34,11 @@ var makeTabTitles = function(parent, titles){
 	var titlesLi = [];
 	
 	var iconList = [
-		{
-			src: "./icons/Axes.png",
-			h: 25,
-			w:25
-		},
+		//{
+		//	src: "./icons/Axes.png",
+		//	h: 25,
+		//	w:25
+		//},
 		{	
 			src: "./icons/InfoIcon.png",
 			w: 20,
@@ -47,7 +47,7 @@ var makeTabTitles = function(parent, titles){
 		{
 			src: "./icons/Adjust.png",
 			w: 25,
-			h: 20
+			h: 21
 		}
 	];
 	
@@ -208,7 +208,8 @@ scanTabs.prototype.updateCSS = function(){
 			background: "none",
 			"backgroundColor": "rgba(0,0,0,1)",
 			height: ($(this.widget).height() - this.args.tabHeight)- 22,// compensating for the padding,
-			marginLeft:-1
+			marginLeft:-1,
+			overflow: "hidden",
 
 		})
 	}

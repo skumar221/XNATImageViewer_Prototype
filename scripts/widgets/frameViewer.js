@@ -108,11 +108,15 @@ frameViewer.prototype.updateCSS = function(){
 	    this.context.font = 'normal 8pt helvetica';  
 		//this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
 		
-		//var img = __makeElement__("img", this.widget, this.widget.id + "_dragAndDropImage");
-		//img.src = "./icons/DragAndDrop-2pt.png";
-		//this.context.drawImage(img, 0, 0);	
+		var img = __makeElement__("img", this.canvas, this.widget.id + "_dragAndDropImage");
+		img.src = "./icons/DragAndDrop-3pt.png";
 		
-		//this.drawImage_MaintainProportions(img, this.canvas, this.context);
+		//249 x 156	
+		img.width = 249/2;
+		img.height = 156/2; 
+		//img.style.opacity = .5;
+		this.context.drawImage(img, this.canvas.width/2 - img.width/2, this.canvas.height/2 - img.height/2, img.width, img.height);
+		//this.(img, this.canvas, this.context, img.width, img.height);
 	}
 
 

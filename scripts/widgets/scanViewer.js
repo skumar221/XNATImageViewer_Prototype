@@ -46,14 +46,30 @@ var defaultArgs_scanViewer = {
 //  In this case, they are the scanThumbnails.
 //******************************************************
 
-frameViewer.prototype.loadFramesByAxis = function(frameType){
+frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
 	
-	if (frameType == "sagittal")
+	if (frameType.toLowerCase() == "sagittal")
 		this.loadFrames(this.currDroppable.sagittalFrames);
-	if (frameType == "transverse" || frameType == "axial")
+	if (frameType.toLowerCase() == "transverse" || frameType.toLowerCase() == "axial")
 		this.loadFrames(this.currDroppable.axialFrames);
-	if (frameType == "coronal")
+	if (frameType.toLowerCase() == "coronal")
 		this.loadFrames(this.currDroppable.coronalFrames);
+	
+//	console.log(axisIcons[0].axis);
+	if(axisIcons){
+		for (var i=0; i<axisIcons.length; i++){
+			console.log(axisIcons[0].axis, axisIcons[i].axis.toLowerCase(), frameType.toLowerCase());
+			if (axisIcons[i].axis.toLowerCase() == frameType.toLowerCase()){
+				$(axisIcons[i]).unbind('mouseleave')
+				$(axisIcons[i]).fadeTo(0,1);
+				
+			}
+			else{
+				console.log("not it")
+				$(axisIcons[i]).fadeTo(0, .5);
+			}
+		}	
+	}
 }
 
 
@@ -82,7 +98,7 @@ var scanViewer = function(args){
 	 INIT(this, defaultArgs_scanViewer, args);
 
 
- 
+
     	
 	 //----------------------------------
 	 // FRAME VIEWER
@@ -93,7 +109,10 @@ var scanViewer = function(args){
 	 	"border-width": 0,
 	 });
 
-
+	this.axisIcons = [];
+ 	this.populateViewTypeTab();
+ 	
+ 	
 	// Modify the frameViewer such that it lets "this"
 	// know of the currentScan when it's dropped in.
 	this.frameViewer.addOnloadCallback(function(){
@@ -172,9 +191,10 @@ var scanViewer = function(args){
 	this.scanTabs = new scanTabs({
 		id: this.args.id + "_tabs",
 		parent: this.widget,
-		tabTitles: ["<b>View Type</b>", "<b>Session Info</b>", "<b>Adjust</b>"],
+		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"],
 	});
 
+	
 
 
 
@@ -290,7 +310,7 @@ var scanViewer = function(args){
 scanViewer.prototype.updateCSS = function(args){
 
 	var that = this;
-	var tabsHeight = Globals.minScanTabHeight;
+	var tabsHeight = Globals.defaultScanTabHeight;
 
 	var widgetHeight = (args && args.height) ? args.height : $(this.widget).height();
 	var widgetWidth = (args && args.width) ? args.width : $(this.widget).width();
@@ -314,6 +334,7 @@ scanViewer.prototype.updateCSS = function(args){
 	this.widget.style.height = __toPx__(widgetHeight);
 	this.widget.style.top = __toPx__(widgetTop);
 	this.widget.style.left = __toPx__(widgetLeft);
+	this.widget.style.overflow = "hidden";
 	
 
 	
@@ -346,7 +367,7 @@ scanViewer.prototype.updateCSS = function(args){
 			width: widgetWidth,	
 			top: Globals.minFrameViewerHeight,
 			left: 0,
-			height: scanTabTop,
+			height: __toInt__(this.widget.style.height) - Globals.minScanTabHeight,
 		}
 	});
 
@@ -478,6 +499,69 @@ scanViewer.prototype.closeButtonClicked = function(event){}
 
 
 
+scanViewer.prototype.populateViewTypeTab = function(){
+
+	// SAG : 188x275
+	// TRA: 321x218
+	// CRL 190x275
+	
+	var that = this;
+	
+	var iconStartLeft = 5;
+	//var iconStartTop = 37;
+	var iconStartTop = 5;
+	var imgDiv = 7;
+	var iconDim = 30;
+	var spacer = iconDim*1.5;
+	
+	var iconVals = ['Sagittal', 'Coronal', 'Transverse', '3D'];
+	
+	
+	for (var i=0; i<iconVals.length; i++){
+		//var val = iconVals[i];
+		//var icon = __makeElement__("img", this.scanTabs.getTab("View Type"), this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
+		var icon = __makeElement__("img", this.widget, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
+			position: "absolute",
+			left: iconStartLeft + spacer*i,
+			top: iconStartTop,
+			height: iconDim , 
+			width: iconDim ,
+			cursor: "pointer", 
+			//border: "solid 1px rgb(255,255,255)"
+		});	
+		
+		
+		icon.src = "./icons/" + iconVals[i] + ".png";
+		icon.axis = iconVals[i];
+		
+		var fadeVal = (iconVals[i] == "sagittal") ? 1 : .5;
+		console.log(fadeVal)
+		$(icon).fadeTo(0,fadeVal);
+		
+		$(icon).mouseover(function(){
+			$(this).stop().fadeTo(300,1);
+		}).mouseleave(function(){
+			$(this).stop().fadeTo(0,.5);
+		});	
+		
+		this.axisIcons.push(icon);
+		
+		if (icon.axis != "3D"){
+			icon.onclick = function(){ 
+				if (that.frameViewer.frames.length > 0){
+					console.log("clicking", this.axis)
+					that.frameViewer.loadFramesByAxis(this.axis, that.axisIcons)
+				}; 
+			};		
+		}	
+		
+		
+			
+	}
+
+	
+}
+
 //******************************************************
 //  Fill in metadata -- this will likely change as it gets 
 //  deployed to the web...
@@ -490,6 +574,7 @@ scanViewer.prototype.populateData = function(data){
 	// DATA: VIEW TYPE DATA
 	//----------------------------------
 	function makeDisplayableData(labelObj){
+		/*
 		var counter = 0;
 		for (i in labelObj){
 //			console.log(labelObj[i])
@@ -536,10 +621,11 @@ scanViewer.prototype.populateData = function(data){
 			
 			counter++;
 		}
+		*/
 	}
 	
-	makeDisplayableData(data.viewTypeData);
-
+	//makeDisplayableData(data.viewTypeData);
+	//populateTab_ViewType();
 
 	//----------------------------------
 	// DATA: SESSION INFO DATA
