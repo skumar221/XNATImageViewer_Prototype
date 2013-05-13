@@ -106,7 +106,13 @@ frameViewer.prototype.updateCSS = function(){
 	    this.context.fillRect(0,0, this.canvas.height, this.canvas.width);
 	    this.context.fillStyle = "white";	  
 	    this.context.font = 'normal 8pt helvetica';  
-		this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
+		//this.context.fillText(this.args.blankMsg, this.canvas.width/2 - 52, this.canvas.width/2);	
+		
+		//var img = __makeElement__("img", this.widget, this.widget.id + "_dragAndDropImage");
+		//img.src = "./icons/DragAndDrop-2pt.png";
+		//this.context.drawImage(img, 0, 0);	
+		
+		//this.drawImage_MaintainProportions(img, this.canvas, this.context);
 	}
 
 

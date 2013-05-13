@@ -8,7 +8,8 @@ defaultArgs_scanTabs = {
 	activeFontColor: Globals.activeFontColor,
 	inactiveLineColor: Globals.inactiveLineColor,
 	inactiveFontColor: Globals.inactiveFontColor,
-	tabHeight: 25,
+	tabHeight: 30,
+	tabWidth: 60,
 	CSS: {
 		top: 400,
 		left: 20,
@@ -32,6 +33,24 @@ var makeTabTitles = function(parent, titles){
 	var titlesA = [];
 	var titlesLi = [];
 	
+	var iconList = [
+		{
+			src: "./icons/Axes.png",
+			h: 25,
+			w:25
+		},
+		{	
+			src: "./icons/InfoIcon.png",
+			w: 20,
+			h: 21,
+		},
+		{
+			src: "./icons/Adjust.png",
+			w: 25,
+			h: 20
+		}
+	];
+	
 	for (var i=0;i<titles.length;i++){
 		var li = __makeElement__("li", titleElt);	
 		var a = __makeElement__("a", li);
@@ -40,6 +59,16 @@ var makeTabTitles = function(parent, titles){
 		a.setAttribute("id", "tabA_" + i.toString());
 		li.setAttribute("id", "tabLi_" + i.toString());
 		a.innerHTML = titles[i];	
+		a.style.color = "rgba(0,0,0,0)";
+		
+		var img = __makeElement__("img", a, a.id + " _img", {
+			position: "absolute",
+			left: 18,
+			top: 4,
+		});
+		img.src = iconList[i].src;
+		img.height = iconList[i].h;
+		img.width = iconList[i].w;
 		
 		titlesA.push(a);
 		titlesLi.push(li);
@@ -209,6 +238,7 @@ scanTabs.prototype.updateCSS = function(){
 		
 		var bColor = (i == this.activeTab) ? Globals.activeLineColor : Globals.semiactiveLineColor;
 		var fColor = (i == this.activeTab) ? Globals.activeFontColor : Globals.semiactiveFontColor;
+		var op = (i == this.activeTab) ? .75 : .4;
 		 
 		//------------------------------
 		// The Text
@@ -216,8 +246,9 @@ scanTabs.prototype.updateCSS = function(){
 		$(this.tabTitleObj.titlesA[i]).css({
 			"font-size": this.args.contentFontSize,
 			"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
-			"color": fColor,
+			//"color": fColor,
 			borderRadius: 0,
+			opacity: op
 		})
 		
 		
@@ -230,6 +261,7 @@ scanTabs.prototype.updateCSS = function(){
 			borderColor: bColor,
 			borderRadius: 0,
 			height: this.args.tabHeight,
+			width: this.args.tabWidth,
 			marginTop: -1* this.CSS.borderWidth,
 			marginLeft:-1* this.CSS.borderWidth,
 		})

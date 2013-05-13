@@ -224,13 +224,14 @@ var scanViewer = function(args){
 
 	  
 	// Create new slider set	
+	/*
 	  var ss = new sliderSet(sliderSetArgs, [    
 	    {id: this.args.id + "_brightnessSlider",
 	    displayLabel: "Brightness:"},
 	    {id: this.args.id + "_contrastSlider",
 	    displayLabel: "Contrast:"},
 	  ]); 
-
+	
 
 	// Append slider set to frame viewer
 	 for (var j=0;j<ss.sliders.length;j++){
@@ -247,7 +248,7 @@ var scanViewer = function(args){
 	    }    
 	 }
 	
-
+	*/
 	
 	//----------------------------------
 	// METADATA, A.K.A. DISPLAYABLE DATA
