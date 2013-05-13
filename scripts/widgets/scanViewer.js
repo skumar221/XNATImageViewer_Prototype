@@ -512,7 +512,7 @@ scanViewer.prototype.populateViewTypeTab = function(){
 	var iconStartTop = 5;
 	var imgDiv = 7;
 	var iconDim = 30;
-	var spacer = iconDim*1.5;
+	var spacer = iconDim*1.2;
 	
 	var iconVals = ['Sagittal', 'Coronal', 'Transverse', '3D'];
 	
@@ -523,7 +523,7 @@ scanViewer.prototype.populateViewTypeTab = function(){
 		var icon = __makeElement__("img", this.widget, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
 			position: "absolute",
 			left: iconStartLeft + spacer*i,
-			top: iconStartTop,
+			top: iconStartTop,// + spacer*i,
 			height: iconDim , 
 			width: iconDim ,
 			cursor: "pointer", 
