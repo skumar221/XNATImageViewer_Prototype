@@ -1,47 +1,59 @@
+
+
 xmiv.prototype.removeScanViewer = function(scanViewer){
 		 
 		 var that = this;
-		 
 		 var animLen = 500;
 		 
-		 // clear any Jquery actions happening on other
-		 // parts of the modal.
+		 
+		 
+		//-------------------------
+		// 1.  Stop any ongoing animations
+		//-------------------------		
 		 $(that.modal).stop();
 		 $(that.closeButton).stop();
-		 $(that.horizontalContractButton).stop().unbind('mouseleave');
-		 $(that.horizontalContractButton).stop().unbind('mouseover');
 
 		 
 
 		//-------------------------
-		// Fade out viewer, then delete it
+		// 1. Unlink the scanViewer sliders from one another
 		//-------------------------			
-		
-		// unlink the viewer sliders from one another
 		for (var i=0; i<this.scanViewers.length; i++){
 			for (var j=0; j<this.scanViewers[i].length; j++){
-				that.scanViewers[i][j].frameSlider.clearLinked();
-				$(that.scanViewers[i][j].widget).unbind('mouseover');
-				$(that.scanViewers[i][j].widget).unbind('mouseout');
+				//that.scanViewers[i][j].frameSlider.clearLinked();
+				//$(that.scanViewers[i][j].widget).unbind('mouseover');
+				//$(that.scanViewers[i][j].widget).unbind('mouseout');
 			}	
 		}
 		
 		
-		// remove viewer from global list
-		var vI = -1;
-		var vJ = -1;
-		for (var i=0; i<this.scanViewers.length; i++){
-			vI = i;
-			vJ = that.scanViewers[i].indexOf(scanViewer);
-			if ( vJ > -1) { break; };
-		}
-
-		that.scanViewers[vI].splice(vJ , 1);
 		
+		//-------------------------
+		// 2. Remove scanViewer from global matrix
+		//-------------------------	
+		var prevRowCount = this.scanViewers.length;
+		spliceInRow(this.scanViewers, scanViewer);
+		
+		
+		
+
+		//-------------------------
+		// 3. Remove horizontal expand buttons and regenerate
+		//-------------------------	
+		this.regenerateExpandButtons_Horiz(this.scanViewers.length);
+		this.regenerateExpandButtons_Vert(__numColumns__(this.scanViewers));
+
+
+		
+		//-------------------------
+		// 3.  If no scanviewers left, destroy modal
+		//-------------------------			
 		if (__lengthMD__(that.scanViewers) == 0){
 			that.destroy();
 			return;
 		}
+
+
 
 		$(scanViewer.widget).stop().fadeTo(animLen, 0, function(){
 			that.modal.removeChild(scanViewer.widget);

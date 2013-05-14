@@ -26,13 +26,15 @@ xmiv.prototype.updateCSS = function(args){
 	//	CSS: SCAN VIEWERS
 	//----------------------------------		
 	for (var i=0; i<this.scanViewers.length; i++){	
-		for (var j=0; j<this.scanViewers[i].length; j++){ 	 
-			this.scanViewers[i][j].updateCSS({
-				height: modalDims.scanViewer.height,// - this.args.marginTop*2,
-				width: modalDims.scanViewer.width,
-				left: modalDims.scanViewer.lefts[i][j],
-				top: modalDims.scanViewer.tops[i][j],
-			});
+		for (var j=0; j<this.scanViewers[i].length; j++){ 	
+			if (this.scanViewers[i][j]){
+				this.scanViewers[i][j].updateCSS({
+					height: modalDims.scanViewer.height,// - this.args.marginTop*2,
+					width: modalDims.scanViewer.width,
+					left: modalDims.scanViewer.lefts[i][j],
+					top: modalDims.scanViewer.tops[i][j],
+				});				
+			} 
 		}  
 	} 
     
@@ -66,16 +68,27 @@ xmiv.prototype.updateCSS = function(args){
 	//	CSS: VERTICAL EXPAND BUTTONS
 	//----------------------------------
 	if (this.verticalExpandButtons){
-		
-		for (var i=0; i<this.scanViewers.length; i++){	
-			for (var j=0; j<this.scanViewers[i].length; j++){ 
-					$(this.verticalExpandButtons[i][j]).css({
-						left:  $(this.scanViewers[i][j].widget).position().left,
-						height: Globals.expandButtonWidth,
-						width: $(this.scanViewers[i][j].widget).width(),
-						top: $(this.modal).height() - Globals.expandButtonWidth,
-					})	
-				}	
+		for (var j=0; j<this.verticalExpandButtons.length; j++){
+				
+			var nullCount = 0;
+			var i = 0;
+			for (var k=0; k<this.scanViewers.length; k++){
+				if (!this.scanViewers[k][j]) { nullCount++; }
+				else { i = k; }
+			}
+			
+			if (nullCount == this.scanViewers.length){
+				throw "Encountered an error in updateCSS: check management of scanViewers"
+			}
+			
+			
+			console.log("vertical expand css i: ", i, " j:", j);
+			$(this.verticalExpandButtons[j]).css({
+				left:  $(this.scanViewers[i][j].widget).position().left,
+				height: Globals.expandButtonWidth,
+				width: $(this.scanViewers[i][j].widget).width(),
+				top: $(this.scanViewers[i][j].widget).position().top + $(this.scanViewers[i][j].widget).height(),// - Globals.expandButtonWidth,
+			})	
 		}
 			
 	}	

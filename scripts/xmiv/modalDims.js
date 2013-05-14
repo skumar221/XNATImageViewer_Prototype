@@ -92,7 +92,7 @@ xmiv.prototype.modalDims = function(conversion){
 	var scanViewerTops = [];
 	var viewerStart = scrollGalleryCSS.width + scrollGalleryCSS.left + Globals.scanViewerVerticalMargin;
 	
-	console.log("NumRows: ", __numRows__(this.scanViewers), "  NumCols: " , __numColumns__(this.scanViewers))
+	//console.log("NumRows: ", __numRows__(this.scanViewers), "  NumCols: " , __numColumns__(this.scanViewers))
 	//console.log(this.scanViewers)
 	for (var i=0; i<this.scanViewers.length; i++){
 		for (var j=0; j<this.scanViewers[i].length; j++){

@@ -1,14 +1,13 @@
 //******************************************************
 //  Adds a scanViewer based on the arguments.
-//  If no arguments, defaulted to 1
 //
 //******************************************************
 xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	that = this;
 
 	
-	console.log(" ")
-	console.log("ADDING VIWER AT: ", rowPos, colPos);
+//	console.log(" ")
+//	console.log("ADDING VIWER AT: ", rowPos, colPos);
 	//----------------------------------
 	//	1a. Validate arguments by type
 	//----------------------------------
@@ -49,7 +48,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	}	
 	
 	
-	console.log("ROWCOL", rowPos, colPos, that.scanViewers)
+//	console.log("ROWCOL", rowPos, colPos, that.scanViewers)
 	
 	// Checks the column preceder
 	if (rowPos != 0){
@@ -77,7 +76,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 		id: this.args.id + "_scanViewer_" + __uniqueID__(),
 	});		
 
-
+	
 	// create row if it doesn't exist by pushing
 	// ASSUMPTION: previous rows have been created!
 	if (!this.scanViewers[rowPos]) {this.scanViewers.push([]);}
@@ -100,14 +99,18 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//	2. Link viewers to other modal widgets
 	//----------------------------------
 	this.setDropZones(v.frameViewer);	
-	this.addVerticalExpandButton(rowPos, colPos);
 	
 	
 	//----------------------------------
-	//	EXPAND BUTTON
+	//	Add expand buttons (only on zero counts)
 	//----------------------------------
-	if (!this.horizontalExpandButtons || !this.horizontalExpandButtons[rowPos])
-		this.addHorizontalExpandButton(rowPos);
+	if (!this.horizontalExpandButtons || this.horizontalExpandButtons.length == 0) {
+		this.addHorizontalExpandButton();
+	}
+	if (!this.verticalExpandButtons || this.verticalExpandButtons.length == 0){
+		this.addVerticalExpandButton();
+	}
+		
 	v.closeButtonClicked = function(event){ that.removeScanViewer(v) };
 	
 }

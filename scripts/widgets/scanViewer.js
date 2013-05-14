@@ -535,7 +535,6 @@ scanViewer.prototype.populateViewTypeTab = function(){
 		icon.axis = iconVals[i];
 		
 		var fadeVal = (iconVals[i] == "sagittal") ? 1 : .5;
-		console.log(fadeVal)
 		$(icon).fadeTo(0,fadeVal);
 		
 		$(icon).mouseover(function(){

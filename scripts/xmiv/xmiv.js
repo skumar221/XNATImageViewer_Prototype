@@ -449,7 +449,8 @@ xmiv.prototype.addScrollLinkIcon = function(){
 xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 	var that = this;
 
-	if (!this.verticalExpandButtons) {this.verticalExpandButtons = [[]]};
+//	console.log("*************************add Vertical!")
+	if (!this.verticalExpandButtons) {this.verticalExpandButtons = []};
 	
 	//-------------------------
 	// The button CSS
@@ -465,19 +466,10 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 		backgroundColor: "rgba(70, 70, 70, 1)",
 		zIndex: 100
 	})	
-	
-	
-	// we shouldn've have to validate rowPos + colPos b/c it's already validated
-	// in addScanViewer
-	if (!this.verticalExpandButtons[rowPos])
-		this.verticalExpandButtons.push([]);
-		
-	this.verticalExpandButtons[rowPos][colPos] = (currButton);
 
-	//test it out
-	if (!this.verticalExpandButtons[rowPos][colPos]){
-		throw("addVerticalExpandButton error: the rowPos + colPos arguments were incorrectly applied")
-	}
+		
+	this.verticalExpandButtons.push(currButton);
+
 	
 	//-------------------------
 	// Its natural state -- slightly faded
@@ -492,7 +484,6 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 		function(){ 
 			if (that.changeState != "expanding"){
 				$(currButton).stop().fadeTo(200, .5);
-
 			}			
     });
 
@@ -508,7 +499,9 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 	//-------------------------
 	// Button onlclick
 	//-------------------------		
-	currButton.onclick = function(){ that.expand(rowPos + 1, colPos ); }	
+	currButton.onclick = function(){ 
+		that.expandByRow(that.verticalExpandButtons.indexOf(this)); 
+	}	
 }
 
 
@@ -518,7 +511,7 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 //******************************************************
 xmiv.prototype.addHorizontalExpandButton = function(){
 	
-	
+//	console.log("*************************HORIZONTAL ADD!")
 	var that = this;
 	
 	if (!this.horizontalExpandButtons){ this.horizontalExpandButtons = []};
@@ -536,7 +529,9 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 		"border-radius": 0,
 		backgroundColor: "rgba(70, 70, 70, 1)",
 		width: this.args.expandButtonWidth,
-		zIndex: 100
+		zIndex: 100,
+		//"vertical-align": "middle",
+		//align: "middle"
 	});
 	this.horizontalExpandButtons.push(hB);
 	
@@ -571,9 +566,8 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 	//-------------------------		
 
 	hB.onclick = function(){
-		var row = that.horizontalExpandButtons.length-1;
-		var col = that.scanViewers[row].length;
-		that.expand(row, col)
+//		console.log("ONCLICK")
+		that.expandByColumn(that.horizontalExpandButtons.indexOf(this));
 	}; 
 }
 

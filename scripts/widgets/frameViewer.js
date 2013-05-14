@@ -112,8 +112,8 @@ frameViewer.prototype.updateCSS = function(){
 		img.src = "./icons/DragAndDrop-3pt.png";
 		
 		//249 x 156	
-		img.width = 249/2;
-		img.height = 156/2; 
+		img.width = 249/2.5;
+		img.height = 156/2.5; 
 		//img.style.opacity = .5;
 		this.context.drawImage(img, this.canvas.width/2 - img.width/2, this.canvas.height/2 - img.height/2, img.width, img.height);
 		//this.(img, this.canvas, this.context, img.width, img.height);
