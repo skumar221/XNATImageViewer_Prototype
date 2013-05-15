@@ -103,7 +103,7 @@ var xmiv = function(args){
 	//
 	// FOR PROTOTYPING PURPOSES
 	//----------------------------------	
-	this.scanDataPaths = TESTSCANDATA
+	this.scanDataPaths = TESTSCANDATA;
 
 	
 	

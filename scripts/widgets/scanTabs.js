@@ -8,8 +8,6 @@ defaultArgs_scanTabs = {
 	activeFontColor: Globals.activeFontColor,
 	inactiveLineColor: Globals.inactiveLineColor,
 	inactiveFontColor: Globals.inactiveFontColor,
-	tabHeight: 30,
-	tabWidth: 60,
 	CSS: {
 		top: 400,
 		left: 20,
@@ -41,13 +39,13 @@ var makeTabTitles = function(parent, titles){
 		//},
 		{	
 			src: "./icons/InfoIcon.png",
-			w: 20,
-			h: 21,
+			w: 15,
+			h: 16,
 		},
 		{
 			src: "./icons/Adjust.png",
-			w: 25,
-			h: 21
+			w: 18,
+			h: 16
 		}
 	];
 	
@@ -63,12 +61,12 @@ var makeTabTitles = function(parent, titles){
 		
 		var img = __makeElement__("img", a, a.id + " _img", {
 			position: "absolute",
-			left: 18,
-			top: 4,
 		});
 		img.src = iconList[i].src;
 		img.height = iconList[i].h;
 		img.width = iconList[i].w;
+		img.style.left = __toPx__(Globals.scanTabLabelWidth/2 - iconList[i].w/2);
+		img.style.top = __toPx__(Globals.scanTabLabelHeight/2 - iconList[i].h/2);
 		
 		titlesA.push(a);
 		titlesLi.push(li);
@@ -261,8 +259,8 @@ scanTabs.prototype.updateCSS = function(){
 			backgroundColor:"rgb(0,0,0)",
 			borderColor: bColor,
 			borderRadius: 0,
-			height: this.args.tabHeight,
-			width: this.args.tabWidth,
+			height: Globals.scanTabLabelHeight,
+			width: Globals.scanTabLabelWidth,
 			marginTop: -1* this.CSS.borderWidth,
 			marginLeft:-1* this.CSS.borderWidth,
 		})

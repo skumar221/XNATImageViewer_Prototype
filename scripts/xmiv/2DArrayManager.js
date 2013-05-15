@@ -30,14 +30,17 @@ function spliceInRow(arr, obj){
 	validate2DArray(arr, "spliceInRow")	
 
 	
+	
 	//-------------------------
-	// 2. Pop by row using splice
+	// 2. Nullify, and pop if there are no connected viewers
 	//-------------------------		
 	var found = false;
 	for (var i=0; i<arr.length; i++){
 		for (var j=0; j<arr[i].length; j++){
 			if (arr[i][j] && arr[i][j].widget.id == obj.widget.id){
 				arr[i][j] = null;
+				
+				// No column attched
 				if (!arr[i-1] || !arr[i-1][j]){
 					arr[i].splice(j , 1);
 				}					
@@ -47,9 +50,45 @@ function spliceInRow(arr, obj){
 		}
 	}
 	if (!found) { 
-		throw "spliceInRow Error: obj not found in 2D array!"; 
-	}
+		throw "spliceInRow Error: obj not found in 2D array!";
+		return; 
+	}	
 	
+	
+	
+	//-------------------------
+	// 3.  Splice array depending on if viewers are connected to columns or not
+	//-------------------------		
+	function shiftIfNecessary(arr){
+		for (var i=0; i<arr.length; i++){
+			for (var j=0; j<arr[i].length; j++){
+				var colAttached = true;
+				var rowAttached = true;			
+				if (arr[i][j] && arr[i][j].widget.id){
+
+					// Check column attched
+					if (i>0 && (!arr[i-1] || !arr[i-1][j])){
+						colAttached = false;
+					}	
+					
+					// Check row attched
+					if (j>0 && arr[i] && (!arr[i][j-1])){
+						rowAttached = false;
+					}			
+					
+					// If it's not row attached or column attached
+					// then shift to the left
+					if (!rowAttached && !colAttached){
+						arr[i].splice(j-1, i);
+						shiftIfNecessary(arr);
+						return;
+					}	
+				}			
+			}
+		}	
+	}
+
+	shiftIfNecessary(arr);
 
 	
 	//-------------------------
@@ -65,11 +104,11 @@ function spliceInRow(arr, obj){
 //************************************
 function removeEmptyRows(arr){	
 	for (var i=0; i<arr.length; i++){
-		console.log(arr[i])
+		//console.log(arr[i])
 
 		var undefCount = 0;
 		for (var j=0; j<arr[i].length; j++){
-			console.log("i: ", i, "   j: ", j, arr[i][j])
+			//console.log("i: ", i, "   j: ", j, arr[i][j])
 			if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id){
 				undefCount++;
 			}
@@ -77,7 +116,7 @@ function removeEmptyRows(arr){
 		
 		if (undefCount == arr[i].length){
 			arr.splice(i, 1);	
-			console.log("removing empty b: ", i)
+			//console.log("removing empty b: ", i)
 			removeEmptyRows(arr);
 			return;			
 		}

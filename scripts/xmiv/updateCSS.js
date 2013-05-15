@@ -82,12 +82,12 @@ xmiv.prototype.updateCSS = function(args){
 			}
 			
 			
-			console.log("vertical expand css i: ", i, " j:", j);
+//			console.log("vertical expand css i: ", i, " j:", j);
 			$(this.verticalExpandButtons[j]).css({
 				left:  $(this.scanViewers[i][j].widget).position().left,
 				height: Globals.expandButtonWidth,
 				width: $(this.scanViewers[i][j].widget).width(),
-				top: $(this.scanViewers[i][j].widget).position().top + $(this.scanViewers[i][j].widget).height(),// - Globals.expandButtonWidth,
+				top: $(this.modal).height() - Globals.expandButtonWidth,
 			})	
 		}
 			

@@ -47,39 +47,42 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		//-------------------------
 		// Animate the viewers
 		//-------------------------	
-		for (var i=0;i<__lengthMD__(this.scanViewers);i++){
-			 
-			//-------------------------
-			// Fade OUT the viewer contents only if there's height change in the modal
-			//-------------------------	
-			 if (modalDims.height != __toInt__(this.modal.style.height)){
-			 	for (var j=0;j<this.scanViewers[i].widget.childNodes.length;j++){
-				 	$(this.scanViewers[i].widget.childNodes[j]).stop().fadeTo(animLen, 0);	
-				 }
-				 var svWidget = this.scanViewers[i].widget;	
-			 }
-			 
-			 
-			 $(svWidget).stop().animate({
-			    left: modalDims.scanViewer.lefts[i],
-			    top: modalDims.scanViewer.tops[i],
-			    width: modalDims.scanViewer.width,
-			    height: modalDims.scanViewer.height,
-			  }, animLen, function() {
-			  	
-			  	//-------------------------
-				// Fade IN the viewer contents if they were faded out
+		for (var i=0; i<this.scanViewers.length; i++){
+			for (var j=0; j<this.scanViewers[i].length; j++){ 
+				//-------------------------
+				// Fade OUT the viewer contents only if there's height change in the modal
 				//-------------------------	
-			  	for (var i=0;i<__lengthMD__(this.scanViewers);i++){
-			  		var svWidget = this.scanViewers[i].widget;
-			  	    for (var j=0;j<svWidget.childNodes.length;j++){
-				 		$(svWidget.childNodes[j]).stop().fadeTo(animLen, 1);	
-				 	}
-			  	}
-			  	
-			  	
-			  	
-			 });			
+				 if (modalDims.height != __toInt__(this.modal.style.height)){
+				 	for (var k=0;k<this.scanViewers[i][j].widget.childNodes.length;k++){
+					 	$(this.scanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0);	
+					 }
+					 var svWidget = this.scanViewers[i][j].widget;	
+				 }
+				 
+				 
+				 $(svWidget).stop().animate({
+				    left: modalDims.scanViewer.lefts[i],
+				    top: modalDims.scanViewer.tops[i],
+				    width: modalDims.scanViewer.width,
+				    height: modalDims.scanViewer.height,
+				  }, animLen, function() {
+				  	
+				  	//-------------------------
+					// Fade IN the viewer contents if they were faded out
+					//-------------------------	
+				  	for (var x=0; x<this.scanViewers.length; x++){
+						for (var y=0; y<this.scanViewers[x].length; y++){ 
+					  		var svWidget = this.scanViewers[x][y].widget;
+					  	    for (var z=0; z<svWidget.childNodes.length; z++){
+						 		$(svWidget.childNodes[z]).stop().fadeTo(animLen, 1);	
+						 	}
+					  	}
+				  	}
+				  	
+				  	
+				  	
+				 });			
+			}
 		} 
 
 

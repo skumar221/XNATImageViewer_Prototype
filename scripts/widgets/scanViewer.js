@@ -110,7 +110,7 @@ var scanViewer = function(args){
 	 });
 
 	this.axisIcons = [];
- 	this.populateViewTypeTab();
+ 	this.createAxisSelectionMenu();
  	
  	
 	// Modify the frameViewer such that it lets "this"
@@ -499,7 +499,7 @@ scanViewer.prototype.closeButtonClicked = function(event){}
 
 
 
-scanViewer.prototype.populateViewTypeTab = function(){
+scanViewer.prototype.createAxisSelectionMenu = function(){
 
 	// SAG : 188x275
 	// TRA: 321x218
@@ -514,16 +514,59 @@ scanViewer.prototype.populateViewTypeTab = function(){
 	var iconDim = 30;
 	var spacer = iconDim*1.2;
 	
+
 	var iconVals = ['Sagittal', 'Coronal', 'Transverse', '3D'];
+
+	this.menuIcons = [];
+	
+
+
+	//------------------------------
+	// Axis Menu
+	//------------------------------	
+	this.axisMenu = __makeElement__("div", this.widget, this.args.id + "_ViewTypeTab_AxisMenu",{
+		position: "absolute",
+		left: iconStartLeft,
+		top: iconStartTop,// + spacer*i,
+		height: iconDim , 
+		width: iconDim * (iconVals.length + 2),
+		border: "sold 1px rgba(100,100,100,1)"
+	});
+	var axisMenu_Image = __makeElement__("img", this.axisMenu, this.args.id + "_ViewTypeTab_AxisMenuImage",{
+		position: "absolute",
+		left: 0,
+		top: 0,// + spacer*i,
+		height: iconDim , 
+		width: iconDim ,
+		cursor: "pointer", 
+	});	
+	axisMenu_Image.src = "./icons/Axes.png";
+
+	$(this.axisMenu).fadeTo(0, .5);
+	$(this.axisMenu).mouseover(function(){
+		$(this).stop().fadeTo(300,1);
+		for (var x=0; x<that.menuIcons.length; x++){
+			$(that.menuIcons[x]).stop().fadeTo(300, .5);
+		}
+	}).mouseleave(function(){
+		$(this).stop().fadeTo(300, .5);
+		for (var x=0; x<that.menuIcons.length; x++){
+			$(that.menuIcons[x]).stop().hide(300);
+		}
+	});	
 	
 	
+		
+	
+	//------------------------------
+	// Menu Icons
+	//------------------------------
 	for (var i=0; i<iconVals.length; i++){
-		//var val = iconVals[i];
-		//var icon = __makeElement__("img", this.scanTabs.getTab("View Type"), this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
-		var icon = __makeElement__("img", this.widget, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
+		
+		var icon = __makeElement__("img", this.axisMenu, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
 			position: "absolute",
-			left: iconStartLeft + spacer*i,
-			top: iconStartTop,// + spacer*i,
+			left: iconStartLeft + spacer*(i+1),
+			top: 0,//iconStartTop,// + spacer*i,
 			height: iconDim , 
 			width: iconDim ,
 			cursor: "pointer", 
@@ -533,15 +576,19 @@ scanViewer.prototype.populateViewTypeTab = function(){
 		
 		icon.src = "./icons/" + iconVals[i] + ".png";
 		icon.axis = iconVals[i];
+
 		
-		var fadeVal = (iconVals[i] == "sagittal") ? 1 : .5;
-		$(icon).fadeTo(0,fadeVal);
-		
+		this.menuIcons.push(icon);
+		$(icon).hide();
+		icon.axis = iconVals[i];
+		var fadeVal = (iconVals[i] == "Sagittal") ? 1 : .5;
+
 		$(icon).mouseover(function(){
-			$(this).stop().fadeTo(300,1);
+			$(this).stop().stop().fadeTo(200,1);
 		}).mouseleave(function(){
-			$(this).stop().fadeTo(0,.5);
-		});	
+			$(this).stop().stop().fadeTo(0,.5);
+		});				
+
 		
 		this.axisIcons.push(icon);
 		

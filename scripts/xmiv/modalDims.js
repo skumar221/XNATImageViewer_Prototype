@@ -54,7 +54,7 @@ xmiv.prototype.modalDims = function(conversion){
 	//-------------------------
 	// 2. If the modal is too wide, scale it down
 	//-------------------------
-	/*
+	
 	if (modalWidth > maxModalWidth){	
 							 		
 		scanViewerWidth = (maxModalWidth - (Globals.scrollGalleryWidth + Globals.scanViewerVerticalMargin * scanViewerColumns + Globals.expandButtonWidth))/scanViewerColumns;	
@@ -63,7 +63,7 @@ xmiv.prototype.modalDims = function(conversion){
 		modalHeight = scanViewerHeight + Globals.expandButtonWidth;
 		
 	}
-	*/
+	
 
 
 	var _l = (window.innerWidth - modalWidth) /2 ;
