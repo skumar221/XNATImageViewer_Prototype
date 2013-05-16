@@ -60,8 +60,8 @@ xmiv.prototype.modalDims = function(conversion){
 		scanViewerWidth = (maxModalWidth - (Globals.scrollGalleryWidth + Globals.scanViewerVerticalMargin * scanViewerColumns + Globals.expandButtonWidth))/scanViewerColumns;	
 		scanViewerHeight = scanViewerWidth / Globals.scanViewerDimRatio;
 		modalWidth= maxModalWidth;
-		modalHeight = scanViewerHeight + Globals.expandButtonWidth;
-		
+		modalHeight = (scanViewerHeight * scanViewerRows) + (Globals.scanViewerVerticalMargin  * (scanViewerRows  - 1)) + Globals.expandButtonWidth;
+
 	}
 	
 
@@ -73,7 +73,7 @@ xmiv.prototype.modalDims = function(conversion){
 	
 
 	//-------------------------
-	// SCROLL GALLERY
+	// SCROLL GALLERY DIMS
 	//-------------------------	
 	var scrollGalleryCSS = {
 		width: 110,
@@ -91,19 +91,18 @@ xmiv.prototype.modalDims = function(conversion){
 	var scanViewerLefts = [];
 	var scanViewerTops = [];
 	var viewerStart = scrollGalleryCSS.width + scrollGalleryCSS.left + Globals.scanViewerVerticalMargin;
-	
-	//console.log("NumRows: ", __numRows__(this.scanViewers), "  NumCols: " , __numColumns__(this.scanViewers))
-	//console.log(this.scanViewers)
-	for (var i=0; i<this.scanViewers.length; i++){
-		for (var j=0; j<this.scanViewers[i].length; j++){
+
+	for (var i in this.scanViewers){
+		for (var j in this.scanViewers[i]){ 
 			
 			l = viewerStart + j * (scanViewerWidth + Globals.scanViewerVerticalMargin);
 			
-			if (j==0) scanViewerLefts.push([])
-			scanViewerLefts[i].push(l);
+
+			if (j==0 || !scanViewerLefts[i]) scanViewerLefts.push([])
+			scanViewerLefts[i][j] = l;
 			
-			if (j==0) scanViewerTops.push([]);
-			scanViewerTops[i].push(-1 + i * (scanViewerHeight + Globals.scanViewerHorizontalMargin));
+			if (j==0 || !scanViewerTops[i]) scanViewerTops.push([]);
+			scanViewerTops[i][j] = (-1 + i * (scanViewerHeight + Globals.scanViewerHorizontalMargin));
 		}
 	} 
 	
@@ -125,7 +124,6 @@ xmiv.prototype.modalDims = function(conversion){
 				
 				
 				
-//	console.log("VIWER WIDTH: ", Math.round(scanViewerWidth));
 	return  {
 		width: Math.round(modalWidth),
 		left: Math.round(_l),

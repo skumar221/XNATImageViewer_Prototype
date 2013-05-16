@@ -5,9 +5,11 @@
 xmiv.prototype.updateCSS = function(args){
 
 	
-
+	var that = this;
+	
+	
     //----------------------------------
-	//	CSS: RESIZE THE MODAL
+	//	RESIZE THE MODAL
 	//----------------------------------
 	modalDims = this.modalDims();
 	$(this.modal).css(modalDims);	
@@ -16,18 +18,20 @@ xmiv.prototype.updateCSS = function(args){
 	
 	
 	//----------------------------------
-	//	CSS: SCROLL GALLERY
+	//	SCROLL GALLERY
 	//----------------------------------
 	this.scrollGallery.updateCSS(modalDims.scrollGallery);
 
 
  
  	//----------------------------------
-	//	CSS: SCAN VIEWERS
+	//	SCAN VIEWERS
 	//----------------------------------		
-	for (var i=0; i<this.scanViewers.length; i++){	
-		for (var j=0; j<this.scanViewers[i].length; j++){ 	
+	for (var i in this.scanViewers){
+		for (var j in this.scanViewers[i]){ 
+			
 			if (this.scanViewers[i][j]){
+				
 				this.scanViewers[i][j].updateCSS({
 					height: modalDims.scanViewer.height,// - this.args.marginTop*2,
 					width: modalDims.scanViewer.width,
@@ -41,7 +45,7 @@ xmiv.prototype.updateCSS = function(args){
 	
 		
 	//----------------------------------
-	//	CSS: CLOSE BUTTON
+	//	CLOSE BUTTON
 	//----------------------------------
 	__setCSS__(this.closeButton, modalDims.closeButton);		
 
@@ -49,10 +53,11 @@ xmiv.prototype.updateCSS = function(args){
 	
 	
 	//----------------------------------
-	//	CSS: HORIZONTAL EXPAND BUTTON
+	//	HORIZONTAL EXPAND BUTTON
 	//----------------------------------
 	if (this.horizontalExpandButtons){
-		for (var i=0; i<this.horizontalExpandButtons.length; i++){
+		for (var i in this.horizontalExpandButtons){
+			
 			$(this.horizontalExpandButtons[i]).css({
 				left: modalDims["horizontalExpandButtons"].left,
 				height: modalDims["horizontalExpandButtons"].height,
@@ -65,24 +70,24 @@ xmiv.prototype.updateCSS = function(args){
 	
 	
 	//----------------------------------
-	//	CSS: VERTICAL EXPAND BUTTONS
+	//	VERTICAL EXPAND BUTTONS
 	//----------------------------------
 	if (this.verticalExpandButtons){
-		for (var j=0; j<this.verticalExpandButtons.length; j++){
+		for (var j in this.verticalExpandButtons){
 				
 			var nullCount = 0;
 			var i = 0;
-			for (var k=0; k<this.scanViewers.length; k++){
+			
+			for (var k in this.scanViewers){
 				if (!this.scanViewers[k][j]) { nullCount++; }
 				else { i = k; }
 			}
 			
 			if (nullCount == this.scanViewers.length){
-				throw "Encountered an error in updateCSS: check management of scanViewers"
+				throw "Encountered an error in updatecheck management of scanViewers"
 			}
 			
-			
-//			console.log("vertical expand css i: ", i, " j:", j);
+
 			$(this.verticalExpandButtons[j]).css({
 				left:  $(this.scanViewers[i][j].widget).position().left,
 				height: Globals.expandButtonWidth,
@@ -96,14 +101,15 @@ xmiv.prototype.updateCSS = function(args){
 	
 	
 	//----------------------------------
-	//	CSS: SCROLL LINKS
+	//	SCROLL LINKS
 	//----------------------------------
+	/*
 	for (var i=0;i<this.scrollLinks.length;i++){
 		__setCSS__(this.scrollLinks[i], {
 			left: modalDims.scrollLink.lefts[i],
 			top: modalDims.scrollLink.tops[i],
 		})	
 	}
-	
+	*/
 	
 }

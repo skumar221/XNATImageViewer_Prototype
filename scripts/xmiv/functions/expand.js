@@ -65,7 +65,9 @@ xmiv.prototype.expandByRow = function(colPos){
 	var rowPos = 0;
 	if (this.scanViewers[rowPos][colPos]){
 		while(this.scanViewers[rowPos] && this.scanViewers[rowPos][colPos]){
+			
 			rowPos++;
+			
 		}		
 	}
 

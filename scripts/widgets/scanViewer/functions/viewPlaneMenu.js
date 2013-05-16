@@ -64,10 +64,12 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		icon.src = "./icons/" + iconVals[i] + ".png";
 		icon.axis = iconVals[i];
 		
+		
 		//
 		// ADD Menu Icon to global list	
 		//		
 		this.menuIcons.push(icon);				
+		
 		
 		//
 		// SET hover events
@@ -94,7 +96,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function fadeOutMenuIcons(){
 		
 		axisMenu_Image.hasmouseover = false;
@@ -107,7 +111,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	}
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function fadeInMenuIcons(){
 		
 		axisMenu_Image.hasmouseover = true;
@@ -121,7 +127,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	}
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function setMenuImageHover(){
 
 		$(axisMenu_Image).fadeTo(0, .5);
@@ -140,7 +148,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function setMenuDivMouseleave(){
 		
 		$(that.axisMenu).mouseleave(function(){		
@@ -152,7 +162,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	}
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function setMenuHover(){
 		
 		setMenuImageHover();
@@ -161,7 +173,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	}
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function clearMenuHover(){
 		
 		$(that.axisMenu).unbind('mouseover');
@@ -172,7 +186,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	}
 	
 	
-	
+	//------------------------------
+	// 
+	//------------------------------		
 	function setMenuImageClick(){	
 			
 		axisMenu_Image.clicked = false;	

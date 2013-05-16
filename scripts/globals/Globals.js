@@ -28,7 +28,7 @@ Globals.scanViewerDimRatio = .85
 Globals.minScanViewerHeight = 320;
 Globals.minScanViewerWidth = Globals.minScanViewerHeight * Globals.scanViewerDimRatio;
 Globals.scanViewerVerticalMargin = 20;
-Globals.scanViewerHorizontalMargin = 20
+Globals.scanViewerHorizontalMargin = 20;
 
 //---------------------------
 //  THUMBNAILS

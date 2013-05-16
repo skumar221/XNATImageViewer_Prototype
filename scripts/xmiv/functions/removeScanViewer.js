@@ -18,8 +18,8 @@ xmiv.prototype.removeScanViewer = function(scanViewer){
 		//-------------------------
 		// 1. Unlink the scanViewer sliders from one another
 		//-------------------------			
-		for (var i=0; i<this.scanViewers.length; i++){
-			for (var j=0; j<this.scanViewers[i].length; j++){
+		for (var i in this.scanViewers){
+			for (var j in this.scanViewers[i]){
 				//that.scanViewers[i][j].frameSlider.clearLinked();
 				//$(that.scanViewers[i][j].widget).unbind('mouseover');
 				//$(that.scanViewers[i][j].widget).unbind('mouseout');

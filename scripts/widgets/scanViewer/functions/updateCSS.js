@@ -90,8 +90,9 @@ scanViewer.prototype.updateCSS = function(args){
 	 $(this.frameViewer.widget).css({
  	    left: 0,//marginLeft,
  		top: 0,//marginTop,
- 	  	width: widgetWidth - 10,
- 	  	height: widgetWidth - 10,
+ 	  	width: widgetWidth,
+ 	  	height: widgetWidth,
+ 	  	top: (sliderTop - widgetWidth)/2,
 	 });
 	 this.frameViewer.updateCSS();
 	 

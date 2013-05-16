@@ -30,13 +30,14 @@ function spliceInRow(arr, obj){
 	validate2DArray(arr, "spliceInRow")	
 
 	
-	
+
 	//-------------------------
 	// 2. Nullify, and pop if there are no connected viewers
 	//-------------------------		
 	var found = false;
-	for (var i=0; i<arr.length; i++){
-		for (var j=0; j<arr[i].length; j++){
+	for (var i in arr){
+		for (var j in arr[i]){
+
 			if (arr[i][j] && arr[i][j].widget.id == obj.widget.id){
 				arr[i][j] = null;
 				
@@ -103,20 +104,25 @@ function spliceInRow(arr, obj){
 //  
 //************************************
 function removeEmptyRows(arr){	
-	for (var i=0; i<arr.length; i++){
-		//console.log(arr[i])
+
+	for (var i in arr){
 
 		var undefCount = 0;
+		
 		for (var j=0; j<arr[i].length; j++){
-			//console.log("i: ", i, "   j: ", j, arr[i][j])
-			if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id){
+			
+			if (!arr[i][j])
+				console.log("i: ", i, "   j: ", j, arr[i][j])
+			if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id || arr[i][j] === null){
 				undefCount++;
 			}
 		}			
 		
+		console.log("undefCount: ", undefCount, " arrLen: ", arr[i].length)
+		
 		if (undefCount == arr[i].length){
 			arr.splice(i, 1);	
-			//console.log("removing empty b: ", i)
+			console.log("removing empty b: ", i)
 			removeEmptyRows(arr);
 			return;			
 		}
