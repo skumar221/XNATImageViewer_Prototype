@@ -73,18 +73,29 @@ xmiv.prototype.updateCSS = function(args){
 	//	VERTICAL EXPAND BUTTONS
 	//----------------------------------
 	if (this.verticalExpandButtons){
-		for (var j in this.verticalExpandButtons){
-				
+		for (var j = 0; j<this.verticalExpandButtons.length; j++){
+			
+			//console.log("VER EXPAND: ", j)
 			var nullCount = 0;
 			var i = 0;
 			
-			for (var k in this.scanViewers){
-				if (!this.scanViewers[k][j]) { nullCount++; }
-				else { i = k; }
+			for (var k=0; k<this.scanViewers.length; k++){
+				if (!arrayValueValid(this.scanViewers , k , j)) { 
+					
+					nullCount++;
+					 
+				}
+				else { 
+					
+					i = k; 
+					
+				}
 			}
 			
 			if (nullCount == this.scanViewers.length){
+				
 				throw "Encountered an error in updatecheck management of scanViewers"
+				
 			}
 			
 

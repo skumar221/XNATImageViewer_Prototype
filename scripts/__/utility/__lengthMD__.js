@@ -20,6 +20,17 @@ function __lengthMD__(arr){
 
 }
 
+
+function arrayValueValid(arr, i, j){
+	
+	if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id || arr[i][j] === null){
+		return false;
+	}
+	
+	return true;
+}
+
+
 function __numColumns__(arr){
 
   colCount = 0;

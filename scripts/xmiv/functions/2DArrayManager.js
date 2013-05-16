@@ -68,19 +68,22 @@ function spliceInRow(arr, obj){
 				if (arr[i][j] && arr[i][j].widget.id){
 
 					// Check column attched
-					if (i>0 && (!arr[i-1] || !arr[i-1][j])){
+					if (i>0 && j>0 && (!arrayValueValid(arr, i-1, j))){
+						console.log("NO COLUMN: ", i-1, j, " IN: ", i, j);
 						colAttached = false;
 					}	
 					
 					// Check row attched
-					if (j>0 && arr[i] && (!arr[i][j-1])){
+					if (i>0 && j>0 && (!arrayValueValid(arr, i, j-1))){
+						console.log("NO ROW: ", i, j-1, " IN: ", i, j);
 						rowAttached = false;
 					}			
 					
 					// If it's not row attached or column attached
 					// then shift to the left
 					if (!rowAttached && !colAttached){
-						arr[i].splice(j-1, i);
+						arr[i][j-1] = arr[i][j];
+						arr[i][j] = null;
 						shiftIfNecessary(arr);
 						return;
 					}	
@@ -96,6 +99,19 @@ function spliceInRow(arr, obj){
 	// 3. Shift any empty or unconnected columns up
 	//-------------------------			
 	removeEmptyRows(arr);
+	removeEmptyColumns(arr);
+}
+
+
+
+
+function arrayValueValid(arr, i, j){
+	
+	if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id || arr[i][j] === null){
+		return false;
+	}
+	
+	return true;
 }
 
 
@@ -105,20 +121,17 @@ function spliceInRow(arr, obj){
 //************************************
 function removeEmptyRows(arr){	
 
-	for (var i in arr){
+	for (var i =0; i<arr.length; i++){
 
 		var undefCount = 0;
 		
 		for (var j=0; j<arr[i].length; j++){
 			
-			if (!arr[i][j])
-				console.log("i: ", i, "   j: ", j, arr[i][j])
-			if (!arr[i] || !arr[i][j] || !arr[i][j].widget.id || arr[i][j] === null){
+			if (! arrayValueValid(arr, i, j)){
 				undefCount++;
 			}
 		}			
-		
-		console.log("undefCount: ", undefCount, " arrLen: ", arr[i].length)
+
 		
 		if (undefCount == arr[i].length){
 			arr.splice(i, 1);	
@@ -126,6 +139,51 @@ function removeEmptyRows(arr){
 			removeEmptyRows(arr);
 			return;			
 		}
+		
+	}
+}
+
+
+
+//************************************
+//  
+//************************************
+function removeEmptyColumns(arr){	
+
+	//var emptyCols = [];
+	for (var i =0; i<arr.length; i++){
+
+		var undefCount = 0;
+		
+		for (var j=0; j<arr[i].length; j++){
+			
+			if (!arrayValueValid(arr, i, j)){
+				
+				var emptyColCount = 0;
+				
+				for (var k=0; k<arr.length; k++){
+					if (!arrayValueValid(arr, k, j)){
+						emptyColCount ++;
+					}
+				}
+				
+				console.log("EMPTY COL COUNT: ", emptyColCount, arr.length, j);
+				if (emptyColCount == arr.length){
+					
+					console.log("SPLICING")
+					for (var k=0; k<arr.length; k++){
+						arr[k].splice(j, 1);
+						
+					}	
+					
+					removeEmptyColumns(arr);
+					return;
+									
+				}
+					
+			}
+		}			
+
 		
 	}
 }
