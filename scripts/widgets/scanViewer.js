@@ -559,7 +559,7 @@ scanViewer.prototype.createAxisSelectionMenu = function(){
 		
 	
 	//------------------------------
-	// Menu Icons
+	// Menu Icons - ad
 	//------------------------------
 	for (var i=0; i<iconVals.length; i++){
 		
