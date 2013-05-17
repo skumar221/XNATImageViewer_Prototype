@@ -4,6 +4,8 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		
 		if (!animLen && animLen != 0) { var animLen = 500; }
 		
+		
+		
 		//-------------------------
 		//  GET THE MODAL DIMENSIONS, 
 		//-------------------------	
@@ -47,17 +49,16 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 
 
 		//-------------------------
-		// Animate the viewers
+		// SCAN VIEWERS
 		//-------------------------	
 		for (var i in this.scanViewers){
 			for (var j in this.scanViewers[i]){ 
 				
 
-				//-------------------------
-				// Fade OUT the viewer contents only if there's height change in the modal
-				//-------------------------	
-				 if (modalDims.height != __toInt__(this.modal.style.height)){
-	
+				//
+				// FADE OUT/IN: scanViewer contents
+				//
+				 if (modalDims.scanViewer.height != __toInt__(this.scanViewers[0][0].widget.style.height)){
 				 	
 				 	if (this.scanViewers[i][j]){
 				 		
@@ -67,12 +68,11 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 					 		var childObj = this.scanViewers[i][j].widget.childNodes[k]
 	
 						 	//
-						 	// Have to check if the childObject is DOM element
-						 	// otherwise jQuery throws errors
+						 	// Check if the childObject is DOM element otherwise jQuery throws errors
 						 	//  
 						 	if (__isElement__(childObj)){
 						 		
-						 		$(this.scanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0);		
+						 		$(this.scanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0).fadeTo(animLen, 1);		
 						 		
 						 	}	
 						 }	
@@ -82,39 +82,18 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 				 }
 				 
 
-			 //if (__isElement__(svWidget)){
-				 
-
+				//
+				// ANIMATE: scanViewer widget
+				//
 				 $(svWidget).stop().animate({
 				    left: modalDims.scanViewer.lefts[i][j],
 				    top: modalDims.scanViewer.tops[i][j],
 				    width: modalDims.scanViewer.width,
 				    height: modalDims.scanViewer.height,
-				  }, animLen, function() {
-				  	
-
-						//-------------------------
-						// Fade IN the viewer contents if they were faded out
-						//-------------------------	
-						for (var x in that.scanViewers){			  		
-							for (var y in that.scanViewers[x]){ 
-							  	
-							  	if (that.scanViewers[x][y]){	
-							  		
-							  		var svWidget = that.scanViewers[x][y].widget;
-							  		
-							  	    for (var z=0; z<svWidget.childNodes.length; z++){
-							  	    	
-								 		$(svWidget.childNodes[z]).stop().fadeTo(animLen, 1);	
-								 	}										
-								}
-
-						  	}
-						}
-
-				 });		
-			 //}
-	
+				  }, animLen, function() {});	
+				  
+				  
+				  		
 			}
 		} 
 
@@ -137,11 +116,14 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		//-------------------------
 		// Animate the horizontal expand button
 		//-------------------------	
-		 $(this.horizontalExpandButtons).stop().animate({
-		 	opacity: .5,
-		    left: modalDims.horizontalExpandButtons.left,
-		  }, animLen, function() {
-		    // Animation complete.
-		 });
+		 $(this.horizontalExpandButtons).stop().fadeOut(animLen, 0).fadeIn(animLen);	
+		 
+		 
+		 
+		//-------------------------
+		// Animate the vertical expand buttons
+		//-------------------------		
+		 $(this.verticalExpandButtons).stop().fadeOut(animLen, 0).fadeIn(animLen);		
+		
 		
 }

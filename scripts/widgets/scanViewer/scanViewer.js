@@ -89,17 +89,22 @@ var scanViewer = function(args){
 
 	// Tell frameslider how to behave...	
 	this.frameSlider.addSlideCallback(function(_slider){ 
+		
 		var subtractor = (_slider.currArgs().max > 0) ? _slider.currArgs().min  : 0;
 		
 		var val = Math.round(_slider.value);
+		
 		// Update any displayable data
 		if (that.displayableData && that.displayableData.frameNumber){
-			that.displayableData.frameNumber.innerHTML = "Frame: "+(val + 1) + " / " + that.frameViewer.frames.length	
+			
+			that.displayableData.frameNumber.innerHTML = "Frame: "+(val + 1) + " / " + that.frameViewer.frames.length;	
+			
 		}
 		
 		// Draw the frame
 	
 		that.frameViewer.drawFrame(val - subtractor, true); 
+		
 	  });
 
 
@@ -109,18 +114,24 @@ var scanViewer = function(args){
 
 	// Add frameViewer callback function to synchronize with slider
 	this.frameViewer.addOnloadCallback(function(){
+		
 		if (that.frameSlider){
-			frameVal = 
+			
 			that.frameSlider.updateProperties({
+				
 				min : 0,
 				max : that.frameViewer.frames.length-1,
 				value : Math.round(that.frameViewer.frames.length/2),
+			
 			});
 
 			that.frameViewer.drawFrame(Math.round(that.frameSlider.value), true);
+			
 		}		
 		else{
-			console.log("NO DRAW FRAME");
+			
+			//console.log("NO DRAW FRAME");
+			
 		}	
 	});
 	
@@ -131,8 +142,10 @@ var scanViewer = function(args){
 	// CONTENT DIVIDER
 	//----------------------------------	
 	this.contentDivider = new contentDivider({
+		
 		id: this.args.id + "_contentDivider",
 		parent: this.widget,		
+		
 	});
 
 	
@@ -143,10 +156,13 @@ var scanViewer = function(args){
 	//----------------------------------		
 	var scanTabTop = this.args._sliderCSS.handleCSS.height +  this.args._sliderCSS.widgetCSS.top + 10;
 	var scanTabHeight = $(this.widget).height() - scanTabTop - $(this.widget).width() * this.args.marginPct; 
+	
 	this.scanTabs = new scanTabs({
+		
 		id: this.args.id + "_tabs",
 		parent: this.widget,
 		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"],
+		
 	});
 
 	
@@ -157,33 +173,54 @@ var scanViewer = function(args){
 	// CLOSE BUTTON
 	//----------------------------------		
 	this.closeButton = __makeElement__("img", this.widget, this.args.id + "_closeButton",{
+		
 		position: "absolute",
-		"cursor": "pointer",
+		//"cursor": "pointer",
 		width: 10,
-		height: 10
+		height: 10,
+		
 	});
-	this.closeButton.src = "./icons/closeX.png";
+	//this.closeButton.src = "./icons/closeX.png";
 
+	//
 	// Its natural state -- slightly faded
+	//
 	$(this.closeButton).fadeTo(0, .5);
-
-	// What do do when the mouse leaves	
+	
+	//
+	// mouseover / mouseleave	
+	//
 	$(this.closeButton).mouseover(function(){
+		
 	  $(that.closeButton).stop().fadeTo(200, 1);
-	}).mouseleave(
-		function(){ 
+	
+	}).mouseleave(function(){
+		 
 		$(that.closeButton).stop().fadeTo(200, .5);
+    
     });
-	
+
+	//
+	// onclick
+	//	
 	this.closeButton.onclick = function(event){
+		
 		that.closeButtonClicked(event)
+		
 	}
-	
-	
+
+
+	//----------------------------------
+	// Link Menu
+	//----------------------------------	
+	this.addLinkMenu();
+
 
 	//----------------------------------
 	// BRIGHNESS AND CONTRAST SLIDERS
 	//----------------------------------	
+	
+	/*
 	  var sliderSetArgs = {
 	    id: this.args.sliderSet + "_styleSliderSet",
 	    parent: that.scanTabs.getTab("Adjust"),
@@ -196,7 +233,7 @@ var scanViewer = function(args){
 	        "backgroundColor": "rgba(0,0,0,0)"   
 	        }
 	  }
-
+	*/
 	  
 	// Create new slider set	
 	/*

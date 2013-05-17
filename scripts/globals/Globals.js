@@ -14,6 +14,7 @@ Globals.semiactiveFontColor = "rgba(85,85,85,1)";
 Globals.semiactiveLineColor = "rgba(85,85,85,1)"; 
 
 Globals.fontSizeSmall = 10;
+Globals.fontFamily = 'Helvetica, Helvetica neue, Arial, sans-serif';
 
 //---------------------------
 //  FRAME VIEWER

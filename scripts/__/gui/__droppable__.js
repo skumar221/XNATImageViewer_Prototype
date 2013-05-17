@@ -45,15 +45,47 @@ var dropZoneMouseout = function(dz, obj){
 // ADD DROP ZONE -- checks for dups
 //***************************************
 var addDropZone = function(dz, obj){
+	
 	if(!obj) obj = this;
+	
 	for (var i=0; i<obj.dropZones.length; i++){
+		
 		if (obj.dropZones[i] == dz){
+			
 			console.log("Already tracking drop zone: " + dz.args["id"]);
 			return false;
+			
 		}
 	}
+	
 	obj.dropZones.push(dz);
+	
 	return true;
+}
+
+
+
+
+//***************************************
+// ADD DROP ZONE -- checks for dups
+//***************************************
+var deleteDropZone = function(dz, obj){
+	
+	if(!obj) obj = this;
+	
+	var dzInd = obj.dropZones.indexOf(dz)
+	
+	if (dzInd >= 0){
+		
+		obj.dropZones.splice(dzInd, 1);	
+		return true;
+		
+	}
+	else{
+		throw "deleteDropZones: dropZone " + dz + " not found in list!"
+	}
+
+	return false;;
 }
 
 
@@ -268,6 +300,7 @@ function __Droppable__(obj){
 	// APPEND DRAGGABLE FUNCTIONS
 	//--------------------------------	
 	obj.addDropZone = function(dz){addDropZone(dz, obj)};
+	obj.deleteDropZone = function(dz){deleteDropZone(dz, obj)};
 	obj.dropZoneMouseout = function(dz){dropZoneMouseout(dz, obj)};
 	obj.dropZoneMouseover = function(dz){dropZoneMouseover(dz, obj)};
 	obj.draggable.onmousedown = function(){__Droppable__mousedown(obj);}

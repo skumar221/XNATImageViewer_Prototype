@@ -113,9 +113,10 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	
 	
 	//----------------------------------
-	//	2. Link viewers to other modal widgets
+	//	2. Allows thumbnails to be dropped into viewer
 	//----------------------------------
-	this.setDropZones(v.frameViewer);	
+	this.addDropZone(v.frameViewer);	
+	
 	
 	
 	//----------------------------------
@@ -134,7 +135,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//----------------------------------		
 	v.closeButtonClicked = function(event){ 
 		
-		that.removeScanViewer(v); 
+		that.deleteScanViewer(v); 
 	
 	};
 	

@@ -121,33 +121,56 @@ xmiv.prototype.modalDims = function(conversion){
 		scrollLinkTops.push(scanViewerTops[i] + scanViewerHeight/2 - 2);
 	}
 	*/
-				
+	
+		
 				
 				
 	return  {
+		
 		width: Math.round(modalWidth),
 		left: Math.round(_l),
 		height: Math.round(modalHeight),
 		top: Math.round(_t),
 		scanViewer: {
+			
 			width: Math.round(scanViewerWidth),
 			height: Math.round(scanViewerHeight),
 			lefts: scanViewerLefts,
 			tops: scanViewerTops,	
+			
 		},
-		scrollGallery: {widgetCSS: scrollGalleryCSS},
+		scrollGallery: {
+			
+			widgetCSS: scrollGalleryCSS
+		
+		},
 		closeButton: {
+			
 			left: Math.round(_l) + Math.round(modalWidth) - (__toInt__(that.closeButton.style.width)/2),
 			top: Math.round(_t) - $(this.closeButton).height()/2,// (__toInt__(that.closeButton.style.width)/2),
+			
 		},
 		horizontalExpandButtons: {
+			
 			left: Math.round(modalWidth) - Globals.expandButtonWidth,
 			tops: scanViewerTops,
-			height: Math.round(scanViewerHeight)
+			height: Math.round(scanViewerHeight),
+			width: Globals.expandButtonWidth
+			
+		},
+		verticalExpandButtons:{
+			
+			lefts: scanViewerLefts[0],
+			top: Math.round(modalHeight) - Globals.expandButtonWidth,
+			width: Math.round(scanViewerWidth),
+			height: Globals.expandButtonWidth,
+			
 		},
 		scrollLink:{
+			
 			tops:  scrollLinkTops,
 			lefts: scrollLinkLefts,
+			
 		}
 	}
 
