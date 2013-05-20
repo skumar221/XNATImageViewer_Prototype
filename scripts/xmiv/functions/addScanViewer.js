@@ -139,4 +139,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	
 	};
 	
+	
+	Globals.sliderLinker.setScanViewers(this.scanViewers);
+	
 }

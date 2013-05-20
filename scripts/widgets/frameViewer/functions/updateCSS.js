@@ -43,7 +43,11 @@ frameViewer.prototype.updateCSS = function(){
 		img.width = 249/2.5;
 		img.height = 156/2.5; 
 		this.context.drawImage(img, this.canvas.width/2 - img.width/2, this.canvas.height/2 - img.height/2, img.width, img.height);
+		this.canvas.style.opacity = .6;
 
+	}
+	else{
+		this.canvas.style.opacity = 1;
 	}
 
 

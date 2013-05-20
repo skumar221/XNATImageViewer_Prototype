@@ -46,6 +46,7 @@ function __draggable__(element, dragBounds, callbacks){
 	//------------------------
 	//  Recalculate the drag bounds in case the element is outside of it.
 	//------------------------	
+	
 	var eltTop = __toInt__(element.style.top);
 	var eltLeft = __toInt__(element.style.left);
 	var eltHeight = __toInt__(element.style.height);
@@ -64,10 +65,7 @@ function __draggable__(element, dragBounds, callbacks){
 	if ((eltLeft + eltWidth) > dragBounds.width){
 		dragBounds.width += (eltLeft + eltWidth) - dragBounds.width;
 	}
-
-	if (!element.hasMouseListener){
-		
-	}
+	
 	
 	
 
@@ -78,6 +76,7 @@ function __draggable__(element, dragBounds, callbacks){
 	//------------------------		
 	__mouseListener__(element, {
 		mousemove: [function(event){
+			
 			
 			var newPt = __getMouseXY__(event);	
 			var elementWidth = __toInt__(element.style.width);
@@ -154,7 +153,8 @@ function __draggable__(element, dragBounds, callbacks){
 				for (var i=0; i<callbacks.length; i++){
 					callbacks[i](element);
 				}
-			}				
+			}		
+					
 		}]
 	});
 

@@ -16,6 +16,17 @@ Globals.semiactiveLineColor = "rgba(85,85,85,1)";
 Globals.fontSizeSmall = 10;
 Globals.fontFamily = 'Helvetica, Helvetica neue, Arial, sans-serif';
 
+
+//---------------------------
+//  ANIMATION LENGTHS
+//---------------------------
+
+Globals.animFast = 200;
+Globals.animMed = 500;
+Globals.animSlow = 100;
+
+
+
 //---------------------------
 //  FRAME VIEWER
 //---------------------------
@@ -57,5 +68,12 @@ Globals.defaultScanTabHeight = 25;
 
 Globals.maxModalWidthPct = .90;
 Globals.maxModalHeightPct = .95;
+
+
+//---------------------------
+//  SCROLL LINK GROUPS
+//---------------------------
+Globals.maxScrollLinkGroups = 10;
+Globals.sliderLinker = new sliderLinker();
 
 

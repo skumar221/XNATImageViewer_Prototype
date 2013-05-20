@@ -74,7 +74,7 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		//
 		// SET hover events
 		//
-		$(icon).hide();		
+		$(icon).fadeOut(0);		
 		$(icon).mouseover(function(){
 			$(this).stop().fadeTo(200,1);
 		}).mouseleave(function(){

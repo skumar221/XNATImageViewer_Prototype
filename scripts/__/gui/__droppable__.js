@@ -129,7 +129,9 @@ var __Droppable__mousedown = function(that){
 	// MOUSE MOVE
 	//--------------------------------	
 	that.args.draggableParent.onmousemove = function(){
+		
 		var dz = checkIfOverDropZone(that.draggable, that.dropZones);
+		
 		if (dz > -1){
 			that.dropZoneMouseover(that.dropZones[dz].widget);
 		}

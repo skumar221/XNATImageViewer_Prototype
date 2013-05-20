@@ -162,21 +162,7 @@ var xmiv = function(args){
 	this.addScanViewer(0, 1);	
 	this.addScanViewer(1, 0);	
 	this.addScanViewer(1, 1);	
-	
-	
-		
-	//----------------------------------
-	//	LINK SLIDER CHAINS
-	//----------------------------------
-	this.scrollLinks = [];
-	
-	
-	
-	
-	//----------------------------------
-	//	LINK SLIDER CHAINS
-	//----------------------------------
-	this.scrollLinks = [];
+
 		
 	
 	this.updateCSS();

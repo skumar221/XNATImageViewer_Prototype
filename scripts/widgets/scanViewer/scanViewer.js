@@ -1,6 +1,6 @@
 
 var defaultArgs_scanViewer = {
-	id: "scanViewer",
+	id: "ScanViewer",
 	parent: document.body,
 	CSS: {
 		top: 0,
@@ -59,7 +59,7 @@ var scanViewer = function(args){
 	 // FRAME VIEWER
 	 //----------------------------------
 	 this.frameViewer = new frameViewer({
-	 	id: this.args.id + "_frameViewer",
+	 	id: this.args.id + "_FrameViewer",
 	 	parent: this.widget,
 	 	"border-width": 0,
 	 });
@@ -81,7 +81,7 @@ var scanViewer = function(args){
 	 // FRAME SLIDER
 	 //----------------------------------	
 	this.frameSlider = new __horizontalSlider__(__mergeArgs__(this.args._sliderCSS, {
-		id: this.args.id + "_frameSlider", 
+		id: this.args.id + "_FrameSlider", 
 		parent: this.widget,
 		round: true,
 	}));
