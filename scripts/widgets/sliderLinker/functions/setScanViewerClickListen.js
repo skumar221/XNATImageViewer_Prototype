@@ -19,15 +19,16 @@ sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
 	for (var i=0; i<viewers.length; i++){
 
 		// remove existing selector box from DOM
-		if (viewers[i].selectorBox){
-			viewers[i].widget.parentNode.removeChild(viewers[i].selectorBox);
+		if (viewers[i].selectorBox && viewers[i].selectorBox.selected){
+			continue;
 		}
-		
-		viewers[i].selectorBox =  Globals.sliderLinker.addSelectorBox(			 viewers[i].widget.parentNode, 
-															  				 __toInt__(viewers[i].widget.style.top), 
-															  				 __toInt__(viewers[i].widget.style.left),
-															  				 __toInt__(viewers[i].widget.style.height),
+		else{
+			viewers[i].selectorBox =  Globals.sliderLinker.addSelectorBox(			 viewers[i].widget.parentNode, 
+																  				 __toInt__(viewers[i].widget.style.top), 
+																  				 __toInt__(viewers[i].widget.style.left),
+																  				 __toInt__(viewers[i].widget.style.height),
 															  				 __toInt__(viewers[i].widget.style.width));
+		}
 		viewers[i].selectorBox.scanViewer = viewers[i];
 		
 		viewers[i].selectorBox.style.border = "none";

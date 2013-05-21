@@ -79,13 +79,38 @@ function __horizontalSlider__(args){
 	
 	this.bindToMouseWheel = function(element){
 		
+		/*
+		function disable_scroll() {
+		  if (window.addEventListener) {
+		      window.addEventListener('DOMMouseScroll', wheel, false);
+		  }
+		  window.onmousewheel = document.onmousewheel = wheel;
+		  document.onkeydown = keydown;
+		}
+		
+		function enable_scroll() {
+		    if (window.removeEventListener) {
+		        window.removeEventListener('DOMMouseScroll', wheel, false);
+		    }
+		    window.onmousewheel = document.onmousewheel = document.onkeydown = null;  
+		}
+		*/
+
 		//----------------------------------
 		// Mousewheel Methods - Handler
 		//----------------------------------	
 		function MouseWheelHandler(e) { // cross-browser wheel delta
+			//
+			//  We don't want to scroll the window
+			//
+			window.onmousewheel = null;
+			
+			
 			var e = window.event || e; // old IE support
 			var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+			
 
+			
 			that.moveHandle("byMouseWheel", {
 				"event": e, 
 				handle: handle,
