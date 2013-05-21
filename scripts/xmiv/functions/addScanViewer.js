@@ -84,7 +84,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//	
 	var v = new scanViewer({
 		parent: this.modal,
-		id: this.args.id + "_scanViewer_" + __uniqueID__(),
+		id: this.args.id + "_ScanViewer_" + __uniqueID__(),
 	});		
 
 
@@ -138,8 +138,4 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 		that.deleteScanViewer(v); 
 	
 	};
-	
-	
-	Globals.sliderLinker.setScanViewers(this.scanViewers);
-	
 }

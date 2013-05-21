@@ -48,7 +48,8 @@ scanViewer.prototype.addLinkMenuPopup = function(){
 	
 	doneButton.innerHTML = "Done";
 	doneButton.onclick = function(event){
-		event.stopPropagation();
+		//event.stopPropagation();
+		console.log("done clicked!");
 		
 		$(that.linkMenu_Popup).fadeOut(Globals.animFast);
 		
@@ -123,6 +124,10 @@ scanViewer.prototype.addLinkMenu = function(){
 	var iconDimMed = 35;
 
 
+	//
+	//  Add viewer to sliderLinker list
+	//
+	Globals.sliderLinker.addScanViewer(that);
 
 
 	//------------------------------
@@ -169,68 +174,7 @@ scanViewer.prototype.addLinkMenu = function(){
 	}
 	
 	
-	function setScanViewerClickListen(THAT){
-		
-		for (var i=0; i<that.args.parent.childNodes.length; i++){
-			
-			if (that.args.parent.childNodes[i].id.indexOf('xmiv_scanViewer') == 0){
-				
-				that.args.parent.childNodes[i].onclick = function(){
-					
-					
-					if (typeof this.linked === 'undefined'){
-						this.originalBorder = this.style.border;
-						this.linked = false;											
 
-						
-					}
-					
-					
-					if (typeof this.selectorBox === 'undefined'){
-						this.selectorBox =  Globals.sliderLinker.addSelectorBox(this.parentNode, 
-																					$(this).position().top, 
-																					$(this).position().left,
-																					__toInt__(this.style.height),
-																					__toInt__(this.style.width));
-																					
-						var that = this;
-						this.selectorBox.onclick = function(){
-								that.onclick();						
-						}	
-					}
-					
-					this.linked = !this.linked;
-					var lImg = $(this).find("img[id*='LinkMenuImage']");
-					
-					if (this.linked){
-						
-						lImg.src = "./icons/Chain-Closed.png";
-						$(lImg).fadeTo(Globals.animFast, 1);	
-						Globals.sliderLinker.lastViewerSelected = this;
-						this.selectorBox.style.border = Globals.sliderLinker.lastGroup().border;
-						this.selectorBox.groupID = Globals.sliderLinker.lastGroup().groupID;
-
-						Globals.sliderLinker.addToLastGroup(THAT);
-						
-					}
-					else{
-						$(this.parentNode).find("div[id*='SelectorBox']").remove();
-						this.selectorBox = undefined;
-						Globals.sliderLinker.removeFromGroup(THAT);
-						lImg.src = "./icons/Chain-Broken.png";
-						$(lImg).fadeTo(Globals.animFast, .5);		
-					}
-
-									
-				}
-			
-			}
-		}
-	}
-	
-	function clearScanViewerClickListen(){
-		
-	}
 	
 	this.linkMenu.onclick = function(){
 		that.linkMenu.closed = ! that.linkMenu.closed;
@@ -248,12 +192,7 @@ scanViewer.prototype.addLinkMenu = function(){
 			
 			} 
 			
-			setScanViewerClickListen(that);
-			
-		}
-		else{
-			closePopupDesc();
-			clearScanViewerClickListen();
+			Globals.sliderLinker.setScanViewerClickListen(that);
 		}
 	}
 

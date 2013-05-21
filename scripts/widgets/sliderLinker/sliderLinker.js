@@ -52,7 +52,12 @@ var sliderLinker = function(args){
 		if (groups[groups.length - 1].scanViewers.indexOf(scanViewer) == -1){
 		
 			groups[groups.length - 1].scanViewers.push(scanViewer);
-		
+			
+			
+			//
+			//  Set the border color
+			//
+			scanViewer.selectorBox.style.border = this.lastGroup().border;
 		}
 	
 	}
@@ -64,8 +69,20 @@ var sliderLinker = function(args){
 		for (var i=0; i<groups.length; i++){
 			
 			tempInd = groups[i].scanViewers.indexOf(scanViewer);
+			
 			if (tempInd > -1){
+				
+				var viewer = groups[i].scanViewers[tempInd];
 				groups[i].scanViewers.splice(tempInd, 1);		
+				
+				
+				//
+				//  Remove the border color
+				//
+
+				viewer.selectorBox.style.border = "none";	
+				
+					
 			}
 		}
 	}
@@ -90,6 +107,35 @@ var sliderLinker = function(args){
 	}
 	
 	
+	
+	this.addScanViewer = function(viewer){
+		
+		if (scanViewers.indexOf(viewer) == -1){
+			
+			scanViewers.push(viewer);
+			
+		}
+	}
+	
+	
+	
+	this.addScanViewers = function(viewers){
+		
+		for (var i=0; i<viewers.length; i++){
+			var viewer = viewers[i];
+			
+			if (scanViewers.indexOf(viewer) == -1){
+				
+				scanViewers.push(viewer);
+				
+			}
+		}
+	}
+	
+	this.getScanViewers = function(){
+		return scanViewers;
+	}
+	
 	this.clearAll = function(){
 		groups = [];	
 	}
@@ -110,7 +156,22 @@ var sliderLinker = function(args){
 	
 	this.processGroups = function(){
 
-					
+
+		//
+		//  Clear all mouse-related events from selectorBoxes
+		//
+		
+		for (var i=0;i<scanViewers.length;i++){
+			//scanViewer.selectorBox.style.cursor = "default";
+			$(scanViewers[i].selectorBox).unbind();
+			$(scanViewers[i].selectorBox).css({'pointer-events': 'none'});
+		}
+		
+		
+		
+		//
+		//  PRocess viewers that are in an existing groups
+		//
 		for (var i=0; i<groups.length; i++){			
 			for (var j=0; j<groups[i].scanViewers.length; j++){
 					
@@ -124,13 +185,17 @@ var sliderLinker = function(args){
 					var scanViewer = set.viewer;
 					var viewerGroup = set.viewerset;
 					
+
+					
 					for (var k=0; k<viewerGroup.length; k++){	
 											
 						if (viewerGroup[k] != scanViewer){
 							
 							console.log("LINKING: ", viewerGroup[k].widget.id, "     WITH:     ", scanViewer.widget.id)
 							
-							scanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);						
+							//scanViewer.frameSlider.bindToMouseWheel(scanViewer.selectorBox);
+							scanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);	
+												
 						}
 						
 					}	
@@ -145,10 +210,11 @@ var sliderLinker = function(args){
 					}
 
 					
-				});			
-					
+				});	
+						
+				//$(scanViewer.widget).mouseover();	
 			}
-
+			
 		}
 	}
 

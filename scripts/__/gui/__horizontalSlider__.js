@@ -85,6 +85,7 @@ function __horizontalSlider__(args){
 		function MouseWheelHandler(e) { // cross-browser wheel delta
 			var e = window.event || e; // old IE support
 			var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+
 			that.moveHandle("byMouseWheel", {
 				"event": e, 
 				handle: handle,
@@ -120,9 +121,11 @@ function __horizontalSlider__(args){
 		};
 		
 		
+
 		// linked Callbacks
 		if (that.linkedSliders && that.linkedSliders.length > 0 
 			&& that.linkedCallbacks && that.linkedCallbacks.length > 0){
+
 			for (var i=0;i<that.linkedCallbacks.length; i++){
 				that.linkedCallbacks[i](that);
 			}
@@ -435,7 +438,7 @@ __horizontalSlider__.prototype.moveHandle = function(moveType, args){
 		// move the handle
 		args.handle.style.left = __toPx__(tempLeft);
 		
-		// run callbackls
+		// run callbacks
 		that.runSlideCallbacks();	
 }
 
