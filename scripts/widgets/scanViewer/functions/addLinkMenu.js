@@ -100,8 +100,8 @@ scanViewer.prototype.addLinkMenuPopup = function(){
 	newGroupButton.onclick = function(event){
 		event.stopPropagation();
 		Globals.sliderLinker.addGroup();
-		Globals.sliderLinker.lastViewerSelected.style.border = Globals.sliderLinker.lastGroup().border;
-
+		Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
+		Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
 	}
 	
 	$(this.linkMenu_Popup).fadeOut(0);
@@ -191,7 +191,7 @@ scanViewer.prototype.addLinkMenu = function(){
 				$(that.linkMenu_Popup).fadeIn(Globals.animFast);	
 			
 			} 
-			
+			Globals.sliderLinker.lastViewerSelected = that;
 			Globals.sliderLinker.setScanViewerClickListen(that);
 		}
 	}
