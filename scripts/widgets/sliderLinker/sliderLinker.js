@@ -47,8 +47,7 @@ var sliderLinker = function(args){
 
 	
 	this.addToLastGroup = function(scanViewer){
-		
-		console.log ("ADDING TO LAST GROUP: ", scanViewer.widget.id)
+
 		if (groups[groups.length - 1].scanViewers.indexOf(scanViewer) == -1){
 		
 			groups[groups.length - 1].scanViewers.push(scanViewer);
@@ -58,10 +57,19 @@ var sliderLinker = function(args){
 			//  Set the border color
 			//
 			scanViewer.selectorBox.style.border = this.lastGroup().border;
+			scanViewer.linkMenu_Image.src =  "./icons/Chain-Closed.png";
 		}
 	
 	}
 	
+	this.clearScanViewerSliderLink = function(scanViewer){
+		
+		scanViewer.selectorBox.style.border = "none";	
+		scanViewer.selectorBox.selected = false;	
+		scanViewer.linkMenu_Image.src =  "./icons/Chain-Broken.png";
+		$(scanViewer.widget).unbind();
+		scanViewer.frameSlider.clearLinked();		
+	}
 	
 	this.removeFromGroup = function(scanViewer){
 
@@ -76,13 +84,7 @@ var sliderLinker = function(args){
 				groups[i].scanViewers.splice(tempInd, 1);		
 				
 				
-				//
-				//  Remove the border color
-				//
-
-				viewer.selectorBox.style.border = "none";	
-				
-					
+				this.clearScanViewerSliderLink(viewer);				
 			}
 		}
 	}
@@ -138,12 +140,15 @@ var sliderLinker = function(args){
 	
 	this.clearAll = function(){
 		groups = [];	
+		for (var i=0;i<scanViewers.length;i++){
+			//scanViewer.selectorBox.style.cursor = "default";
+			$(scanViewers[i].selectorBox).remove();
+		}
 	}
 	
 	this.getViewerSetFromID = function(ID){
 		for (var i=0; i<groups.length; i++){			
 			for (var j=0; j<groups[i].scanViewers.length; j++){
-				
 				if (groups[i].scanViewers[j].widget.id == ID){
 					return {
 						viewer: groups[i].scanViewers[j],
@@ -181,7 +186,7 @@ var sliderLinker = function(args){
 				
 				$(scanViewer.widget).mouseover(function(){
 					
-					var set = Globals.sliderLinker.getViewerSetFromID(this.id);
+					var set = Globals.sliderLinker.getViewerSetFromID(this.id);					
 					var scanViewer = set.viewer;
 					var viewerGroup = set.viewerset;
 					
@@ -190,10 +195,7 @@ var sliderLinker = function(args){
 					for (var k=0; k<viewerGroup.length; k++){	
 											
 						if (viewerGroup[k] != scanViewer){
-							
-							console.log("LINKING: ", viewerGroup[k].widget.id, "     WITH:     ", scanViewer.widget.id)
-							
-							//scanViewer.frameSlider.bindToMouseWheel(scanViewer.selectorBox);
+
 							scanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);	
 												
 						}
@@ -220,4 +222,5 @@ var sliderLinker = function(args){
 
 		
 	this.addGroup();
+	this.addLinkMenuPopup();
 }

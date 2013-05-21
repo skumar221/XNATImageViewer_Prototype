@@ -508,6 +508,43 @@ __horizontalSlider__.prototype.linkSlider = function(b){
 
 
 
+//******************************************************
+//  Links the inputted slider (b)
+//******************************************************
+__horizontalSlider__.prototype.unlinkSlider = function(b){
+	
+	var that = this;
+	
+	if (this.linkedSliders){
+		for (var i=0;i<this.linkedSliders.length; i++){
+			if(b == this.linkedSliders[i]){
+				return;
+			}				
+		}
+		this.linkedSliders.push(b);		
+	}
+	else{
+		this.linkedSliders = [];
+		this.linkedSliders.push(b);	
+		console.log("ADDINGLINKD: ", b)
+	}
+
+	this.addLinkedCallback(function(a){  
+			
+		var aDiff = a.currArgs().max - a.currArgs().min;
+		
+		var bDiff = b.currArgs().max - b.currArgs().min;
+		// percentage-based linking
+		var bVal = Math.round(bDiff * (a.value / aDiff));
+		
+		b.updateProperties({value: bVal});
+		b.runSlideCallbacks();
+		
+  	});
+}
+
+
+
 
 
 

@@ -46,13 +46,14 @@ sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
 
 			
 			if (box.selected){
-
+					
 				Globals.sliderLinker.lastViewerSelected = viewer;
 				Globals.sliderLinker.addToLastGroup(viewer);
 				
 			}
 			else{
-
+				
+				
 				Globals.sliderLinker.removeFromGroup(viewer);
 				
 			}
