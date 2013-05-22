@@ -5,10 +5,10 @@
 scanViewer.prototype.addViewPlaneMenu = function(){
 
 	var that = this;	
-	var iconStartLeft = 5;
-	var iconStartTop = 5;
+	var iconStartLeft = 7;
+	var iconStartTop = 7;
 	var imgDiv = 7;
-	var iconDimSmall = 20;
+	var iconDimSmall = 23;
 	var iconDimMed = 35;
 	var spacer = iconDimMed*1.2;	
 	var iconVals = ['Sagittal', 'Coronal', 'Transverse', '3D'];
@@ -26,6 +26,23 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		width: iconDimMed * (iconVals.length + 2),
 		border: "sold 1px rgba(100,100,100,1)"
 	});
+	
+	
+	
+	
+	//------------------------------
+	// ADD TO DEFAULT MOUSE EVENTS
+	//------------------------------
+	this.widget.defaultMouseEvents.push(function(){
+		$(that.axisMenu).fadeOut(0);
+		$(that.widget).bind('mouseenter.axismenu', function(){
+			$(that.axisMenu).stop().fadeTo(Globals.animFast,1);
+		}).bind('mouseleave.axismenu', function(){
+			$(that.axisMenu).stop().fadeTo(Globals.animFast,0);
+		})		
+	})
+	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
+	
 	
 	
 	
@@ -75,7 +92,7 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		// SET hover events
 		//
 		$(icon).fadeOut(0);		
-		$(icon).mouseover(function(){
+		$(icon).mouseenter(function(){
 			$(this).stop().fadeTo(200,1);
 		}).mouseleave(function(){
 			$(this).stop().fadeTo(0,.5);
@@ -134,7 +151,7 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 
 		$(axisMenu_Image).fadeTo(0, .5);
 		
-		$(axisMenu_Image).mouseover(function(){
+		$(axisMenu_Image).mouseenter(function(){
 			
 			$(this).stop().fadeTo(300,1);				
 			fadeInMenuIcons();
@@ -178,9 +195,9 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function clearMenuHover(){
 		
-		$(that.axisMenu).unbind('mouseover');
+		$(that.axisMenu).unbind('mouseenter');
 		$(that.axisMenu).unbind('mouseleave');
-		$(axisMenu_Image).unbind('mouseover');		
+		$(axisMenu_Image).unbind('mouseenter');		
 		$(axisMenu_Image).unbind('mouseleave');		
 		
 	}

@@ -41,6 +41,26 @@ xmiv.prototype.updateCSS = function(args){
 			} 
 		}  
 	} 
+	
+	
+	
+	//----------------------------------
+	//	SELECTOR BOXES
+	//----------------------------------		
+	for (var i in this.scanViewers){
+		for (var j in this.scanViewers[i]){ 
+			
+			if (this.scanViewers[i][j].selectorBox){
+				
+				__setCSS__(this.scanViewers[i][j].selectorBox, {
+					height: modalDims.scanViewer.height,// - this.args.marginTop*2,
+					width: modalDims.scanViewer.width,
+					left: modalDims.scanViewer.lefts[i][j],
+					top: modalDims.scanViewer.tops[i][j],
+				});				
+			} 
+		}  
+	} 
     
 	
 		
@@ -55,15 +75,16 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	HORIZONTAL EXPAND BUTTON
 	//----------------------------------
-	if (this.horizontalExpandButtons){
-		for (var i in this.horizontalExpandButtons){
+	if (this.horizontalExpandButtons){		
+		for (var i in this.horizontalExpandButtons){	
 			
 			$(this.horizontalExpandButtons[i]).css({
 				left: modalDims["horizontalExpandButtons"].left,
-				height: modalDims["horizontalExpandButtons"].height,
+				height: modalDims.height - Globals.expandButtonWidth,
 				top: modalDims["horizontalExpandButtons"].tops[i][0],
 				width: Globals.expandButtonWidth
-			})		
+			})
+					
 		}		
 	}	
 	
@@ -73,54 +94,15 @@ xmiv.prototype.updateCSS = function(args){
 	//	VERTICAL EXPAND BUTTONS
 	//----------------------------------
 	if (this.verticalExpandButtons){
-		for (var j = 0; j<this.verticalExpandButtons.length; j++){
+		for (var i in this.verticalExpandButtons){
 			
-			//console.log("VER EXPAND: ", j)
-			var nullCount = 0;
-			var i = 0;
-			
-			for (var k=0; k<this.scanViewers.length; k++){
-				if (!arrayValueValid(this.scanViewers , k , j)) { 
-					
-					nullCount++;
-					 
-				}
-				else { 
-					
-					i = k; 
-					
-				}
-			}
-			
-			if (nullCount == this.scanViewers.length){
-				
-				throw "Encountered an error in updatecheck management of scanViewers"
-				
-			}
-			
-
-			$(this.verticalExpandButtons[j]).css({
-				left:  $(this.scanViewers[i][j].widget).position().left,
+			$(this.verticalExpandButtons[0]).css({
+				left:  modalDims.scanViewer.lefts[0][0],
 				height: Globals.expandButtonWidth,
-				width: $(this.scanViewers[i][j].widget).width(),
-				top: $(this.modal).height() - Globals.expandButtonWidth,
-			})	
-		}
-			
+				width: modalDims.width - modalDims.scanViewer.lefts[0][0] - Globals.expandButtonWidth,
+				top: modalDims.height - Globals.expandButtonWidth,
+			});	
+	
+		}	
 	}	
-	
-	
-	
-	//----------------------------------
-	//	SCROLL LINKS
-	//----------------------------------
-	/*
-	for (var i=0;i<this.scrollLinks.length;i++){
-		__setCSS__(this.scrollLinks[i], {
-			left: modalDims.scrollLink.lefts[i],
-			top: modalDims.scrollLink.tops[i],
-		})	
-	}
-	*/
-	
-}
+}

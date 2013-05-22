@@ -9,12 +9,12 @@
 scanViewer.prototype.addLinkMenu = function(){
 
 	var that = this;	
-	var iconStartLeft = 5;
-	var iconStartTop = 25;
+	
+	var iconStartTop = 5;
 	var imgDiv = 7;
-	var iconDimSmall = 20;
+	var iconDimSmall = 25;
 	var iconDimMed = 35;
-
+	var iconStartLeft = $(this.widget).width() - 20;
 
 	//
 	//  Add viewer to sliderLinker list
@@ -36,7 +36,23 @@ scanViewer.prototype.addLinkMenu = function(){
 	this.linkMenu.closed = false;
 
 
-	
+
+
+	//------------------------------
+	// ADD TO DEFAULT MOUSE EVENTS
+	//------------------------------
+	this.widget.defaultMouseEvents.push(function(){
+		$(that.linkMenu).fadeOut(0);
+		$(that.widget).bind('mouseenter.linkmenu', function(){
+			$(that.linkMenu).stop().fadeTo(Globals.animFast,1);
+		}).bind('mouseleave.linkmenu', function(){
+			$(that.linkMenu).stop().fadeTo(Globals.animFast,0);
+		})	
+	})
+	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
+
+
+
 	
 	//------------------------------
 	// ADD Menu img (child of Menu DIV)
@@ -48,35 +64,33 @@ scanViewer.prototype.addLinkMenu = function(){
 		height: iconDimSmall , 
 		width: iconDimSmall ,
 		cursor: "pointer", 
-		opacity: .5
 	});	
 	this.linkMenu_Image.src = "./icons/Chain-Broken.png";
+
+
 
 	
 	//
 	//  HOVER FADES
 	//
-	$(this.linkMenu).mouseover(function(){
+	$(this.linkMenu).mouseenter(function(){
 		$(this).find("img").stop().fadeTo(Globals.animFast, 1);
 	}).mouseleave(function(){
 		$(this).find("img").stop().fadeTo(Globals.animFast, .5);
 	})
 	
+
 	
 	
 	this.linkMenu.onclick = function(){	
 		
-		if (that.selectorBox)
-			console.log(that.selectorBox.selected)
 		if (that.selectorBox && that.selectorBox.selected){
 			Globals.sliderLinker.removeFromGroup(that);
 		}
 		else{
 			$(Globals.sliderLinker.linkMenu_Popup).fadeIn(Globals.animFast);	
-	
-			Globals.sliderLinker.lastViewerSelected = that;
-			
-			Globals.sliderLinker.setScanViewerClickListen(that);	
+
+			Globals.sliderLinker.setScanViewerClickListen(that);
 		}
 	}
 

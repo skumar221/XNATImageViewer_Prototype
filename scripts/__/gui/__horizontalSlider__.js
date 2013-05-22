@@ -489,7 +489,6 @@ __horizontalSlider__.prototype.linkSlider = function(b){
 	else{
 		this.linkedSliders = [];
 		this.linkedSliders.push(b);	
-		console.log("ADDINGLINKD: ", b)
 	}
 
 	this.addLinkedCallback(function(a){  

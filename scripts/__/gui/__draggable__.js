@@ -153,8 +153,7 @@ function __draggable__(element, dragBounds, callbacks){
 				for (var i=0; i<callbacks.length; i++){
 					callbacks[i](element);
 				}
-			}		
-					
+			}							
 		}]
 	});
 

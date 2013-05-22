@@ -173,7 +173,7 @@ scanThumbnail.prototype.setHoverMethods = function(){
 
 
 	//--------------------------
-	// Setup procedure, defines the mouseovers
+	// Setup procedure, defines the mouseenters
 	//--------------------------		
 	//console.log("thumb deactivate");
 	this.deactivate();
@@ -201,7 +201,7 @@ scanThumbnail.prototype.deactivate = function(){
 	//--------------------------
 	// SHOW HOVERING METADATA
 	//--------------------------
-	$(this.widget).mouseover(function(){
+	$(this.widget).mouseenter(function(){
 		that.hoverOn(that.args.animtime);
 	}).mouseleave(function(){
 		that.hoverOff(that.args.animtime);
@@ -226,7 +226,7 @@ scanThumbnail.prototype.activate = function(activeDropZoneID){
 	
 	
 	// Unbind all hover existing methods
-	$(this.widget).unbind('mouseover').unbind('mouseleave');
+	$(this.widget).unbind('mouseenter').unbind('mouseleave');
 	
 
 	// Since we're unbinding everything we have to rebind

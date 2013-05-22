@@ -122,6 +122,15 @@ scanViewer.prototype.updateCSS = function(args){
 		top: 3,
 		left: widgetWidth - __toInt__(this.closeButton.style.width) - 3,
 	});
+	
+
+
+	//----------------------------------
+	// LINK MENU
+	//----------------------------------		
+	__setCSS__(this.linkMenu, {
+		left: widgetWidth - 30
+	});
 	 
 	 
 	 

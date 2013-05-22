@@ -19,7 +19,7 @@ function borderHighlightOnHover(elt, beforeCSS, afterCSS, animtime, beforeCallba
 	if (!afterCallback)
 		afterCallback = function(){};
 		
-	$(elt).mouseover(function(){
+	$(elt).mouseenter(function(){
 	  $(elt).stop().animate(afterCSS, animtime, beforeCallback);
 	}).mouseleave(
 		function(){ 

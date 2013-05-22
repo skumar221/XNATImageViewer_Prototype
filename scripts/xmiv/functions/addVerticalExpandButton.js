@@ -34,7 +34,7 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(currButton).mouseover(function(){
+	$(currButton).mouseenter(function(){
 	  $(currButton).stop().fadeTo(200, .8);
 	}).mouseleave(
 		function(){ 
@@ -56,6 +56,6 @@ xmiv.prototype.addVerticalExpandButton = function(rowPos, colPos){
 	// Button onlclick
 	//-------------------------		
 	currButton.onclick = function(){ 
-		that.expandByRow(that.verticalExpandButtons.indexOf(this)); 
+		that.addRow(that.verticalExpandButtons.indexOf(this)); 
 	}	
 }

@@ -37,7 +37,7 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(hB).mouseover(function(){
+	$(hB).mouseenter(function(){
 	  $(hB).stop().fadeTo(200, .8);
 	}).mouseleave(
 		function(){ 
@@ -60,7 +60,6 @@ xmiv.prototype.addHorizontalExpandButton = function(){
 	//-------------------------		
 
 	hB.onclick = function(){
-//		console.log("ONCLICK")
-		that.expandByColumn(that.horizontalExpandButtons.indexOf(this));
+		that.addColumn(that.horizontalExpandButtons.indexOf(this));
 	}; 
 }

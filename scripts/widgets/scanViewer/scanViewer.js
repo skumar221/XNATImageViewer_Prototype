@@ -52,7 +52,7 @@ var scanViewer = function(args){
   	var that = this;
 	 INIT(this, defaultArgs_scanViewer, args);
 
-
+	this.widget.defaultMouseEvents = [];
 
     	
 	 //----------------------------------
@@ -188,9 +188,9 @@ var scanViewer = function(args){
 	$(this.closeButton).fadeTo(0, .5);
 	
 	//
-	// mouseover / mouseleave	
+	// mouseenter / mouseleave	
 	//
-	$(this.closeButton).mouseover(function(){
+	$(this.closeButton).mouseenter(function(){
 		
 	  $(that.closeButton).stop().fadeTo(200, 1);
 	

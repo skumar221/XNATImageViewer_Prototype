@@ -160,8 +160,6 @@ var xmiv = function(args){
 	this.scanViewers = [[]];	
 	this.addScanViewer(0, 0);	
 	this.addScanViewer(0, 1);	
-	this.addScanViewer(1, 0);	
-	this.addScanViewer(1, 1);	
 
 		
 	

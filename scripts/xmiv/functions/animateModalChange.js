@@ -54,13 +54,15 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		for (var i in this.scanViewers){
 			for (var j in this.scanViewers[i]){ 
 				
-
+			
 				//
 				// FADE OUT/IN: scanViewer contents
 				//
 				 if (modalDims.scanViewer.height != __toInt__(this.scanViewers[0][0].widget.style.height)){
 				 	
 				 	if (this.scanViewers[i][j]){
+
+
 				 		
 					 	for (var k in this.scanViewers[i][j].widget.childNodes){
 					 		
@@ -90,7 +92,8 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 				    top: modalDims.scanViewer.tops[i][j],
 				    width: modalDims.scanViewer.width,
 				    height: modalDims.scanViewer.height,
-				  }, animLen, function() {});	
+				  }, animLen, function(){			  	
+				  });	
 				  
 				  
 				  		

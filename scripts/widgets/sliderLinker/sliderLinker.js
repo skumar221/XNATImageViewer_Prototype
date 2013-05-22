@@ -68,6 +68,12 @@ var sliderLinker = function(args){
 		scanViewer.selectorBox.selected = false;	
 		scanViewer.linkMenu_Image.src =  "./icons/Chain-Broken.png";
 		$(scanViewer.widget).unbind();
+		
+		for (var i=0; i<scanViewer.widget.defaultMouseEvents.length; i++){
+			
+			scanViewer.widget.defaultMouseEvents[i]();
+			
+		}
 		scanViewer.frameSlider.clearLinked();		
 	}
 	
@@ -83,7 +89,7 @@ var sliderLinker = function(args){
 				var viewer = groups[i].scanViewers[tempInd];
 				groups[i].scanViewers.splice(tempInd, 1);		
 				
-				
+				scanViewer.selectorBox.selected = false;
 				this.clearScanViewerSliderLink(viewer);				
 			}
 		}
@@ -170,6 +176,7 @@ var sliderLinker = function(args){
 			//scanViewer.selectorBox.style.cursor = "default";
 			$(scanViewers[i].selectorBox).unbind();
 			$(scanViewers[i].selectorBox).css({'pointer-events': 'none'});
+			$(scanViewers[i].selectorBox).fadeTo(Globals.animFast,0);
 		}
 		
 		
@@ -183,8 +190,9 @@ var sliderLinker = function(args){
 
 				var scanViewer = groups[i].scanViewers[j];
 				var viewerSet = groups[i].scanViewers;
+
 				
-				$(scanViewer.widget).mouseover(function(){
+				$(scanViewer.widget).mouseenter(function(){
 					
 					var set = Globals.sliderLinker.getViewerSetFromID(this.id);					
 					var scanViewer = set.viewer;
@@ -203,7 +211,7 @@ var sliderLinker = function(args){
 					}	
 					
 
-				}).mouseout(function(){	
+				}).mouseleave(function(){	
 					
 					var set = Globals.sliderLinker.getViewerSetFromID(this.id);
 					if (set){
@@ -214,7 +222,7 @@ var sliderLinker = function(args){
 					
 				});	
 						
-				//$(scanViewer.widget).mouseover();	
+				//$(scanViewer.widget).mouseenter();	
 			}
 			
 		}
