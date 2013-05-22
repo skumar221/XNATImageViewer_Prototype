@@ -53,6 +53,9 @@ var scanViewer = function(args){
 	 INIT(this, defaultArgs_scanViewer, args);
 
 	this.widget.defaultMouseEvents = [];
+	
+	
+	this.setDraggable_jQuery();
 
     	
 	 //----------------------------------

@@ -75,8 +75,23 @@ scanViewer.prototype.addLinkMenu = function(){
 	//
 	$(this.linkMenu).mouseenter(function(){
 		$(this).find("img").stop().fadeTo(Globals.animFast, 1);
+				
+		if (that.selectorBox && that.selectorBox.selected){
+		
+			//$(that.selectorBox).fadeTo(Globals.animFast, 1);
+			
+		}	
+			
+
+		
 	}).mouseleave(function(){
-		$(this).find("img").stop().fadeTo(Globals.animFast, .5);
+		$(this).find("img").stop().fadeTo(Globals.animFast, .5)
+		
+		if (that.selectorBox && that.selectorBox.selected){
+			
+			//$(that.selectorBox).fadeOut(Globals.animFast);
+			
+		}	
 	})
 	
 

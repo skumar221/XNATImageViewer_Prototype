@@ -92,7 +92,7 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 				    top: modalDims.scanViewer.tops[i][j],
 				    width: modalDims.scanViewer.width,
 				    height: modalDims.scanViewer.height,
-				  }, animLen, function(){			  	
+				  }, Globals.animSlow, function(){			  	
 				  });	
 				  
 				  

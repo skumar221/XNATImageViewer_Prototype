@@ -38,7 +38,7 @@ var sliderLinker = function(args){
 	this.addGroup = function(){
 		var groupid = __uniqueID__();
 		groups.push({
-			border: "solid 1px rgba(" + borderColorSet[groups.length].toString() + ")",
+			border: "solid 2px rgba(" + borderColorSet[groups.length].toString() + ")",
 			groupID: groupid,
 			scanViewers: [],
 		})		
@@ -103,7 +103,7 @@ var sliderLinker = function(args){
 			left: Left,
 			height: Height,
 			width: Width,
-			border: "solid 2px rgba(255,0,0,1)",
+			border: "solid 3px rgba(255,0,0,1)",
 			cursor: "pointer"
 		})
 		return box;
