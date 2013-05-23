@@ -32,8 +32,22 @@ frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
 
 frameViewer.prototype.loadDroppable = function(droppable){
 	if (droppable.sagittalFrames){
+		
 		this.currDroppable = droppable;
 		this.loadFramesByAxis("sagittal");
+		
+		
+		//
+		//  Activate the relevant scanViewer icon
+		//
+		var k = $(this.args.parent).find('div[id*="AxisMenu"]')
+		for (var i=0; i<k.length; i++){
+			if (k[i].activateIcon){
+				k[i].activateIcon("sagittal");		
+				return;
+			}
+		}
+
 	}
 	else{
 		throw "FrameViewer.js: Invalid Droppable for frameViewer."

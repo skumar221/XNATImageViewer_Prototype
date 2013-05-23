@@ -41,6 +41,7 @@ scanViewer.prototype.addLinkMenu = function(){
 	//------------------------------
 	// ADD TO DEFAULT MOUSE EVENTS
 	//------------------------------
+	/*
 	this.widget.defaultMouseEvents.push(function(){
 		$(that.linkMenu).fadeOut(0);
 		$(that.widget).bind('mouseenter.linkmenu', function(){
@@ -50,7 +51,7 @@ scanViewer.prototype.addLinkMenu = function(){
 		})	
 	})
 	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
-
+	*/
 
 
 	

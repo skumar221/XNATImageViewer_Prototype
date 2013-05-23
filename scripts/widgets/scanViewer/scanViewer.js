@@ -68,7 +68,7 @@ var scanViewer = function(args){
 	 });
 
 	this.axisIcons = [];
- 	this.addViewPlaneMenu();
+ 	this.addAxisMenu();
  	
  	
 	// Modify the frameViewer such that it lets "this"

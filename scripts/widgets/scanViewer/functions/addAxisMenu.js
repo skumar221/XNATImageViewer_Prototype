@@ -1,0 +1,294 @@
+//******************************************************
+//  
+//
+//******************************************************
+scanViewer.prototype.addAxisMenu = function(){
+
+	var that = this;	
+	var iconStartLeft = 7;
+	var iconStartTop = 7;
+	var imgDiv = 7;
+	var iconDimSmall = 23;
+	var iconDimMed = 35;
+	var spacer = iconDimMed*1.2;	
+	var iconVals = ['Sagittal', 'Coronal', 'Transverse'];//, '3D'];
+
+	
+	
+	
+	//------------------------------
+	// MAIN MENU
+	//------------------------------	
+	this.axisMenu = __makeElement__("div", this.widget, this.args.id + "_AxisMenu",{
+		position: "absolute",
+		left: iconStartLeft,
+		top: iconStartTop,
+		height: iconDimSmall , 
+		width: iconDimSmall,
+	});
+	this.axisMenu.title  = "Select View Plane";	
+	
+	
+	
+	
+	//------------------------------
+	// MAIN MENU ICON
+	//------------------------------	
+	this.axisMenu.icon = __makeElement__("img", this.axisMenu, this.args.id + "_AxisMenu_MenuIcon",{
+		position: "absolute",
+		left: 0,
+		top: 0,// + spacer*i,
+		height: iconDimSmall , 
+		width: iconDimSmall ,
+		cursor: "pointer", 
+	});	
+	this.axisMenu.icon.src  = "./icons/Axes.png";	
+	
+	
+
+
+
+	//------------------------------
+	// SUB MENU
+	//------------------------------	
+	this.axisMenu.subMenu = __makeElement__("div", this.axisMenu, this.args.id + "_AxisMenu_SubMenu",{
+		position: "absolute",
+		left: 0,//iconStartLeft  + iconDimMed,
+		top: 0,// + spacer*i,
+		height: iconDimMed , 
+		width: spacer * iconVals.length,
+		cursor: "pointer"
+		//border: "solid 1px rgba(100,100,100,1)"
+	});	
+	// For onclick purposes
+	this.axisMenu.subMenu.pinned = false;
+	
+
+
+
+	//------------------------------
+	// ADD MENU ICONS
+	//------------------------------
+	this.axisMenu.subMenu.icons = [];	
+	
+	for (var i=0; i<iconVals.length; i++){
+			
+		//
+		// Icons
+		//	
+		var icon = __makeElement__("img", this.axisMenu.subMenu, this.args.id + "_AxisMenu_Icon_" + iconVals[i],{
+			position: "absolute",
+			top: 0,
+			left: iconDimMed + spacer*(i),
+			height: iconDimMed , 
+			width: iconDimMed ,
+			cursor: "pointer", 
+		});	
+		
+		icon.src = "./icons/" + iconVals[i] + ".png";
+		icon.axis = iconVals[i];
+		icon.title = iconVals[i];
+		
+		this.axisMenu.subMenu.icons.push(icon);				
+
+
+		
+		//
+		// SET onclick
+		//
+		if (icon.axis != "3D"){
+			icon.onclick = function(event){
+				event.stopPropagation(); 
+				if (that.frameViewer.frames.length > 0){
+					that.frameViewer.loadFramesByAxis(this.axis, that.axisIcons);
+					that.axisMenu.activateIcon(this.title);
+				} 
+			};		
+		}	
+	}	
+
+	
+	
+	//------------------------------
+	// ADD TO DEFAULT MOUSE EVENTS TO SCANVIEWER
+	//------------------------------
+	/*
+	this.widget.defaultMouseEvents.push(function(){
+		$(that.axisMenu).fadeOut(0);
+		$(that.widget).bind('mouseenter.axismenu', function(){
+			$(that.axisMenu).stop().fadeTo(Globals.animFast,1);
+		}).bind('mouseleave.axismenu', function(){
+			$(that.axisMenu).stop().fadeTo(Globals.animFast,0);
+		})		
+	})
+	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
+	*/
+	
+	
+	
+	
+	//------------------------------
+	// 
+	//------------------------------		
+	function setHoverEvents(){
+		
+		//
+		// MAIN MENU ICON - default fade state
+		//
+		$(that.axisMenu.icon).fadeTo(0,.5);
+		
+		
+		//
+		// SUB MENU - default fade state
+		//		
+		$(that.axisMenu.subMenu).fadeOut(0);
+		
+		
+		//
+		//  MAIN MENU ICON - mouseenter
+		//
+		$(that.axisMenu.icon).mouseenter(function(){
+			that.axisMenu.iconHovered = true;
+		})
+		
+		
+		//
+		// SUB MENU ICONS - mouseenter, mouseleave
+		//
+		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++){
+			
+			var icon = that.axisMenu.subMenu.icons[i];
+			$(icon).fadeTo(0,.5);
+			subMenuIconBind(icon, true);
+
+		}
+
+		superBind(false);
+	}
+
+
+	
+	
+	//
+	//  SUB MENU - mouseleave
+	//	
+	function subMenuIconBind(icon, bind){
+		
+		if (bind){
+			
+			$(icon).bind('mouseenter.default', function(){
+				if (that.axisMenu.iconHovered){
+					$(this).stop().fadeTo(Globals.animFast, 1);
+				}			
+			})
+			
+			$(icon).bind('mouseleave.default', function(){
+				if (that.axisMenu.iconHovered){
+					$(this).stop().fadeTo(Globals.animFast, .5);
+				}	
+			});	
+					
+		}
+		else{
+			
+			$(icon).unbind('mouseenter.default');
+			$(icon).unbind('mouseleave.default');
+
+		}
+		
+	}
+	
+	this.axisMenu.activateIcon = function(iconName){
+
+		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++){
+			
+			var icon = that.axisMenu.subMenu.icons[i];
+			
+			if (icon.title.toLowerCase() == iconName.toLowerCase()){
+			
+				subMenuIconBind(icon, false);				
+				$(icon).stop().fadeTo(Globals.animFast, 1);
+
+			}
+			else{
+				subMenuIconBind(icon, true);				
+				$(icon).stop().fadeTo(Globals.animFast, .5);				
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	//
+	//  SUB MENU - mouseleave
+	//	
+	function subLeave(){
+
+		$(that.axisMenu.subMenu).fadeOut(Globals.animFast);
+		$(that.axisMenu.icon).fadeTo(Globals.animFast, .5);
+		that.axisMenu.iconHovered = false;
+				
+	}
+	
+	
+	//
+	//  MAIN MENU - mouseenter
+	//	
+	function mainEnter(){
+
+		if (that.axisMenu.iconHovered){
+			
+			$(that.axisMenu.icon).fadeTo(Globals.animFast, 1);
+			$(that.axisMenu.subMenu).fadeIn(Globals.animFast);
+						
+		}	
+	}
+	
+	
+	//
+	//  MAIN BINDING FUNCTION
+	//
+	function superBind(subMenuPinned){
+		if (subMenuPinned){
+			//
+			// Unbind hover events to pin the subMenu
+			//
+			$(that.axisMenu.subMenu).unbind('mouseleave.axis');
+			$(that.axisMenu).unbind('mouseenter.axis');				
+		}
+		else{
+			//
+			// Bind the hover events to unpin subMenu
+			//
+			$(that.axisMenu.subMenu).bind('mouseleave.axis', subLeave);
+			$(that.axisMenu).bind('mouseenter.axis', mainEnter);
+		}	
+	}
+	
+	
+	//
+	//  ONCLICK
+	//
+	function setOnclickEvents(){
+		
+		$(that.axisMenu).click(function(){	
+			
+			that.axisMenu.subMenu.pinned = !that.axisMenu.subMenu.pinned;
+			
+			superBind(that.axisMenu.subMenu.pinned)			
+			
+		})
+	}
+	
+	
+
+
+
+	//
+	// Function calls
+	//
+	setHoverEvents();
+	setOnclickEvents();
+}
