@@ -71,10 +71,7 @@ function scanThumbnail(scanData, args){
 
 
 
-	//--------------------------------
-	// INTERACTION METHODS
-	//--------------------------------
-	
+
 	
 	
 	//--------------------------------
@@ -104,6 +101,25 @@ function scanThumbnail(scanData, args){
 	this.hoverData.text.innerHTML += "</div>";
 	this.setHoverMethods();
 	__Droppable__(this);
+	
+	
+	//--------------------------------
+	// DOUBLE CLICK
+	//--------------------------------
+	$(this.draggable).dblclick(function(){
+		if (that.dropZones){
+			for (var i=0; i<that.dropZones.length; i++){
+	
+					if (that.dropZones[i].frames.length == 0){
+						that.dropZones[i].loadDroppable(that);
+						that.activate(that.dropZones[i].args.id);
+						return;
+					}		
+			}			
+		}
+	})
+	
+	
 	this.updateCSS();	
 	
 	

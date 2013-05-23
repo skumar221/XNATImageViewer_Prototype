@@ -91,7 +91,7 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		//
 		// SET hover events
 		//
-		$(icon).fadeOut(0);		
+		$(icon).fadeTo(0,0);		
 		$(icon).mouseenter(function(){
 			$(this).stop().fadeTo(200,1);
 		}).mouseleave(function(){
@@ -123,7 +123,7 @@ scanViewer.prototype.addViewPlaneMenu = function(){
 		// Hide icons when leaving menu div
 		//
 		for (var x in that.menuIcons){
-			$(that.menuIcons[x]).stop().hide(300);
+			$(that.menuIcons[x]).stop().fadeTo(300, 0);
 		}
 	}
 	

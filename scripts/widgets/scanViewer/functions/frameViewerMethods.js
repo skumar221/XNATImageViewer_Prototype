@@ -33,7 +33,6 @@ frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
 frameViewer.prototype.loadDroppable = function(droppable){
 	if (droppable.sagittalFrames){
 		this.currDroppable = droppable;
-		//console.log("SAG FRAMES: ", droppable.sagittalFrames)
 		this.loadFramesByAxis("sagittal");
 	}
 	else{
