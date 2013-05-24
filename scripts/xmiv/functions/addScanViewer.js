@@ -84,7 +84,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//	
 	var v = new scanViewer({
 		parent: this.modal,
-		id: this.args.id + "_ScanViewer_" + __uniqueID__(),
+		id: "scanViewer_" + __uniqueID__(),
 	});		
 
 
@@ -129,6 +129,10 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 		this.addVerticalExpandButton();
 	}
 		
+		
+		
+		
+	Globals.setScanViewers(this.scanViewers);
 
 	//----------------------------------
 	//	SET closebutton onclick

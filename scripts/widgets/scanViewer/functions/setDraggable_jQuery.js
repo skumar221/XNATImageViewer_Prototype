@@ -42,9 +42,12 @@ scanViewer.prototype.setDraggable_jQuery = function(){
 							
 					var currArea = (vWidth - Math.abs(currPos.left - vPos.left)) * (vHeight - Math.abs(currPos.top - vPos.top));
 					
+					
+					//
+					// SWAP
+					//
 					if ((currArea/vArea) > .6){
 
-			
 						var w = this;
 
 						$(viewers[i]).stop().animate({

@@ -40,7 +40,7 @@ frameViewer.prototype.loadDroppable = function(droppable){
 		//
 		//  Activate the relevant scanViewer icon
 		//
-		var k = $(this.args.parent).find('div[id*="AxisMenu"]')
+		var k = $(this.args.parent).find('div[id*="axisMenu"]')
 		for (var i=0; i<k.length; i++){
 			if (k[i].activateIcon){
 				k[i].activateIcon("sagittal");		

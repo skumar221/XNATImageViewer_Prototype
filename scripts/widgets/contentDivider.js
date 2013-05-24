@@ -34,7 +34,7 @@ var contentDivider = function(args){
 	//-------------------------------
 	// Set the widget as draggable
 	//-------------------------------	
-	__draggable__(widget, this.currArgs().boundaryCSS, this.currArgs().boundaryCSS);
+	__draggable__(widget, this.currArgs().boundaryCSS);
 	
 
 

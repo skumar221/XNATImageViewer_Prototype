@@ -62,7 +62,7 @@ var scanViewer = function(args){
 	 // FRAME VIEWER
 	 //----------------------------------
 	 this.frameViewer = new frameViewer({
-	 	id: this.args.id + "_FrameViewer",
+	 	id: "frameViewer",
 	 	parent: this.widget,
 	 	"border-width": 0,
 	 });
@@ -84,7 +84,7 @@ var scanViewer = function(args){
 	 // FRAME SLIDER
 	 //----------------------------------	
 	this.frameSlider = new __horizontalSlider__(__mergeArgs__(this.args._sliderCSS, {
-		id: this.args.id + "_FrameSlider", 
+		id: "frameSlider", 
 		parent: this.widget,
 		round: true,
 	}));
@@ -146,7 +146,7 @@ var scanViewer = function(args){
 	//----------------------------------	
 	this.contentDivider = new contentDivider({
 		
-		id: this.args.id + "_contentDivider",
+		id: "contentDivider",
 		parent: this.widget,		
 		
 	});
@@ -162,7 +162,7 @@ var scanViewer = function(args){
 	
 	this.scanTabs = new scanTabs({
 		
-		id: this.args.id + "_tabs",
+		id: "tabs",
 		parent: this.widget,
 		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"],
 		
@@ -175,7 +175,7 @@ var scanViewer = function(args){
 	//----------------------------------
 	// CLOSE BUTTON
 	//----------------------------------		
-	this.closeButton = __makeElement__("img", this.widget, this.args.id + "_closeButton",{
+	this.closeButton = __makeElement__("img", this.widget, "closeButton",{
 		
 		position: "absolute",
 		//"cursor": "pointer",
@@ -241,9 +241,9 @@ var scanViewer = function(args){
 	// Create new slider set	
 	/*
 	  var ss = new sliderSet(sliderSetArgs, [    
-	    {id: this.args.id + "_brightnessSlider",
+	    {id: "_brightnessSlider",
 	    displayLabel: "Brightness:"},
-	    {id: this.args.id + "_contrastSlider",
+	    {id: "_contrastSlider",
 	    displayLabel: "Contrast:"},
 	  ]); 
 	
@@ -279,7 +279,7 @@ var scanViewer = function(args){
 
 
 	// DATA: Frame Number
-	this.displayableData.frameNumber = __makeElement__("div", this.frameViewer.widget, this.args.id + "_frameDisplay");
+	this.displayableData.frameNumber = __makeElement__("div", this.frameViewer.widget, "_frameDisplay");
 	$(this.displayableData.frameNumber).css(this.textCSS_small);		
 		
 		

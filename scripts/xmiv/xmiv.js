@@ -29,8 +29,8 @@ defaultArgs_xmiv = {
 	_modalcss: {
 		position: "absolute",
 		backgroundColor: "rgba(0,0,0,1)",
-		border: "solid rgba(95, 95, 95, 1) 1px",
-		"border-radius": "0px"	
+		border: "solid rgba(95, 95, 95, 1) 2px",
+		"border-radius": "20px"	
 		// for height mins and maxes, see below
 	}
 }
@@ -65,7 +65,7 @@ var xmiv = function(args){
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	this.modal = __makeElement__("div", this.widget, this.args.id + "_modal", this.args._modalcss);	
+	this.modal = __makeElement__("div", this.widget, "modal", this.args._modalcss);	
 	$(this.modal).css({
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
@@ -86,7 +86,7 @@ var xmiv = function(args){
 	//----------------------------------
 	//	CLOSE BUTTON
 	//----------------------------------
-	this.closeButton = __makeElement__("img", this.widget, this.args.id + "_closeIcon", {
+	this.closeButton = __makeElement__("img", this.widget, "closeIcon", {
 		position: "absolute", 
 		cursor: "pointer",
 		width: 20,

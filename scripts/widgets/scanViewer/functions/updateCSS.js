@@ -140,6 +140,8 @@ scanViewer.prototype.updateCSS = function(args){
 	 this.contentDivider.clearCallbacks();
 	 this.contentDivider.addMoveCallback(function(dividerElt){
 	 	
+	 	$(that.widget).draggable({ disabled: true });
+		
 		var divTop = __toInt__(dividerElt.style.top);
 		var divLeft = __toInt__(dividerElt.style.left);
 		var divHeight = __toInt__(dividerElt.style.height);
@@ -192,6 +194,8 @@ scanViewer.prototype.updateCSS = function(args){
 		 $(that.displayableData.frameNumber).css({
 		 	top: $(that.frameViewer.widget).height() - Globals.fontSizeSmall,// -2,
 		 });	
+		 
+		 $(that.widget).draggable({ disabled: false });
 		
 	 })
    	

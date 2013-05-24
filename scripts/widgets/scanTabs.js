@@ -183,7 +183,7 @@ scanTabs.prototype.updateCSS = function(){
 		"borderWidth": this.CSS.borderWidth,
 		 background: "none",
 		"borderColor": Globals.inactiveLineColor,
-		"backgroundColor": "rgba(25,25,25,1)",
+		//"backgroundColor": "rgba(25,25,25,1)",
 		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 
 	})
@@ -199,7 +199,7 @@ scanTabs.prototype.updateCSS = function(){
 			width: $(this.widget).width() - 20,
 			"padding": 10,
 			borderWidth: 1,
-			borderColor: Globals.activeLineColor,
+			borderColor: Globals.inactiveLineColor,
 			"border-bottom-right-radius": "0px",
 			"border-bottom-left-radius": "0px",
 			"color": "rgba(255,255,255,1)",
@@ -235,9 +235,9 @@ scanTabs.prototype.updateCSS = function(){
 	//------------------------------
 	for (var i=0;i<this.tabTitleObj.titlesA.length;i++){
 		
-		var bColor = (i == this.activeTab) ? Globals.activeLineColor : Globals.semiactiveLineColor;
+		var bColor = (i == this.activeTab) ? Globals.inactiveLineColor : Globals.inactiveLineColor;//Globals.activeLineColor : Globals.semiactiveLineColor;
 		var fColor = (i == this.activeTab) ? Globals.activeFontColor : Globals.semiactiveFontColor;
-		var op = (i == this.activeTab) ? .75 : .4;
+		var op = (i == this.activeTab) ? 1 : .4;
 		 
 		//------------------------------
 		// The Text

@@ -19,7 +19,7 @@ scanViewer.prototype.addAxisMenu = function(){
 	//------------------------------
 	// MAIN MENU
 	//------------------------------	
-	this.axisMenu = __makeElement__("div", this.widget, this.args.id + "_AxisMenu",{
+	this.axisMenu = __makeElement__("div", this.widget, "axisMenu",{
 		position: "absolute",
 		left: iconStartLeft,
 		top: iconStartTop,
@@ -34,7 +34,7 @@ scanViewer.prototype.addAxisMenu = function(){
 	//------------------------------
 	// MAIN MENU ICON
 	//------------------------------	
-	this.axisMenu.icon = __makeElement__("img", this.axisMenu, this.args.id + "_AxisMenu_MenuIcon",{
+	this.axisMenu.icon = __makeElement__("img", this.axisMenu, "menuIcon",{
 		position: "absolute",
 		left: 0,
 		top: 0,// + spacer*i,
@@ -42,7 +42,7 @@ scanViewer.prototype.addAxisMenu = function(){
 		width: iconDimSmall ,
 		cursor: "pointer", 
 	});	
-	this.axisMenu.icon.src  = "./icons/Axes.png";	
+	this.axisMenu.icon.src  = "./icons/axisMenu/Axes.png";	
 	
 	
 
@@ -51,7 +51,7 @@ scanViewer.prototype.addAxisMenu = function(){
 	//------------------------------
 	// SUB MENU
 	//------------------------------	
-	this.axisMenu.subMenu = __makeElement__("div", this.axisMenu, this.args.id + "_AxisMenu_SubMenu",{
+	this.axisMenu.subMenu = __makeElement__("div", this.axisMenu, "subMenu",{
 		position: "absolute",
 		left: 0,//iconStartLeft  + iconDimMed,
 		top: 0,// + spacer*i,
@@ -76,7 +76,7 @@ scanViewer.prototype.addAxisMenu = function(){
 		//
 		// Icons
 		//	
-		var icon = __makeElement__("img", this.axisMenu.subMenu, this.args.id + "_AxisMenu_Icon_" + iconVals[i],{
+		var icon = __makeElement__("img", this.axisMenu.subMenu, "icon_" + iconVals[i],{
 			position: "absolute",
 			top: 0,
 			left: iconDimMed + spacer*(i),
@@ -85,7 +85,7 @@ scanViewer.prototype.addAxisMenu = function(){
 			cursor: "pointer", 
 		});	
 		
-		icon.src = "./icons/" + iconVals[i] + ".png";
+		icon.src = "./icons/axisMenu/" + iconVals[i] + ".png";
 		icon.axis = iconVals[i];
 		icon.title = iconVals[i];
 		
@@ -149,6 +149,7 @@ scanViewer.prototype.addAxisMenu = function(){
 		//
 		$(that.axisMenu.icon).mouseenter(function(){
 			that.axisMenu.iconHovered = true;
+			mainEnter();
 		})
 		
 		

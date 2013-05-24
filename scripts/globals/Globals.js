@@ -1,4 +1,21 @@
-var Globals = {};
+var Globals= {
+	
+	setScanViewers: function(scanViewers){
+		this.scanViewers = [];
+		for (var i=0; i<scanViewers.length; i++){
+			for (var j=0; j<scanViewers[i].length; j++){
+				this.scanViewers.push(scanViewers[i][j])
+			}
+		}
+
+	},
+	
+	getScanViewers: function(){ return this.scanViewers},
+}
+
+
+
+
 
 
 //---------------------------
@@ -64,7 +81,7 @@ Globals.scrollGalleryWidth = 110;
 Globals.scanTabLabelHeight = 20;
 Globals.scanTabLabelWidth = 40;
 Globals.minScanTabHeight = Globals.scanTabLabelHeight;
-Globals.defaultScanTabHeight = 25;
+Globals.defaultScanTabHeight = Globals.minScanTabHeight;
 
 Globals.maxModalWidthPct = .90;
 Globals.maxModalHeightPct = .95;
@@ -75,5 +92,9 @@ Globals.maxModalHeightPct = .95;
 //---------------------------
 Globals.maxScrollLinkGroups = 10;
 Globals.sliderLinker = new sliderLinker();
+
+
+
+
 
 

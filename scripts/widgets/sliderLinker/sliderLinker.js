@@ -36,10 +36,10 @@ var sliderLinker = function(args){
 
 
 	this.addGroup = function(){
-		var groupid = __uniqueID__();
+
 		groups.push({
 			border: "solid 2px rgba(" + borderColorSet[groups.length].toString() + ")",
-			groupID: groupid,
+			groupID: "linkGroup_" + groups.length,
 			scanViewers: [],
 		})		
 
@@ -48,26 +48,37 @@ var sliderLinker = function(args){
 	
 	this.addToLastGroup = function(scanViewer){
 
+
+		//
+		//  Remove the scan viewer from group if it exists
+		//
+		this.removeFromGroup(scanViewer, false);
+		
+		
+		//
+		//  1. Add the scanViewer to the last group
+		//
 		if (groups[groups.length - 1].scanViewers.indexOf(scanViewer) == -1){
 		
 			groups[groups.length - 1].scanViewers.push(scanViewer);
-			
 			
 			//
 			//  Set the border color
 			//
 			scanViewer.selectorBox.style.border = this.lastGroup().border;
-			scanViewer.linkMenu_Image.src =  "./icons/Chain-Closed.png";
+
 		}
 	
 	}
 	
 	this.clearScanViewerSliderLink = function(scanViewer){
 		
+		console.log("CLEARING: ", scanViewer.id)
 		scanViewer.selectorBox.style.border = "none";	
 		scanViewer.selectorBox.selected = false;	
-		scanViewer.linkMenu_Image.src =  "./icons/Chain-Broken.png";
-		$(scanViewer.widget).unbind();
+
+		$(scanViewer.widget).unbind('mouseenter.sliderlink');
+		$(scanViewer.widget).unbind('mouseleave.sliderlink');
 		
 		for (var i=0; i<scanViewer.widget.defaultMouseEvents.length; i++){
 			
@@ -77,7 +88,9 @@ var sliderLinker = function(args){
 		scanViewer.frameSlider.clearLinked();		
 	}
 	
-	this.removeFromGroup = function(scanViewer){
+	
+	
+	this.removeFromGroup = function(scanViewer, clear){
 
 		var tempInd;
 		for (var i=0; i<groups.length; i++){
@@ -86,18 +99,53 @@ var sliderLinker = function(args){
 			
 			if (tempInd > -1){
 				
+				console.log("removing ", scanViewer.widget.id, " from group ", groups[i].groupID)
+				
 				var viewer = groups[i].scanViewers[tempInd];
 				groups[i].scanViewers.splice(tempInd, 1);		
 				
-				scanViewer.selectorBox.selected = false;
-				this.clearScanViewerSliderLink(viewer);				
+				if (clear){
+					scanViewer.selectorBox.selected = false;
+					this.clearScanViewerSliderLink(viewer);						
+				}
+	
+				return true;		
+			}
+		}
+		return false;
+	}
+	
+	
+	this.removeGroup = function(scanViewer){
+
+		var tempInd;
+		for (var i=0; i<groups.length; i++){
+			
+			tempInd = groups[i].scanViewers.indexOf(scanViewer);
+			
+			if (tempInd > -1){
+				
+				for (var j=0; j<groups[i].scanViewers.length; j++){
+					var viewer = groups[i].scanViewers[j];						
+					viewer.selectorBox.selected = false;
+					this.clearScanViewerSliderLink(viewer);						
+				}
+
+				if (i>0){
+					groups.splice(i, 1);
+				}
+				else{
+					groups[i].scanViewers = [];
+				}
+				return;
+			
 			}
 		}
 	}
 
 	
 	this.addSelectorBox = function(parent, Top, Left, Height, Width){
-		var box =  __makeElement__("div", parent,"SelectorBox", {
+		var box =  __makeElement__("div", parent, "selectorBox", {
 			position: "absolute",
 			top: Top,
 			left: Left,
@@ -107,50 +155,18 @@ var sliderLinker = function(args){
 			cursor: "pointer"
 		})
 		return box;
-	}
-
-
-	this.setScanViewers = function(viewers){
-		scanViewers = viewers;
-	}
-	
-	
-	
-	this.addScanViewer = function(viewer){
-		
-		if (scanViewers.indexOf(viewer) == -1){
-			
-			scanViewers.push(viewer);
-			
-		}
-	}
-	
-	
-	
-	this.addScanViewers = function(viewers){
-		
-		for (var i=0; i<viewers.length; i++){
-			var viewer = viewers[i];
-			
-			if (scanViewers.indexOf(viewer) == -1){
-				
-				scanViewers.push(viewer);
-				
-			}
-		}
-	}
-	
-	this.getScanViewers = function(){
-		return scanViewers;
-	}
+	}	
 	
 	this.clearAll = function(){
 		groups = [];	
-		for (var i=0;i<scanViewers.length;i++){
-			//scanViewer.selectorBox.style.cursor = "default";
-			$(scanViewers[i].selectorBox).remove();
+		var viewers = Globals.getScanViewers();
+		for (var i=0;i<viewers.length;i++){
+			
+			$(viewers[i].selectorBox).remove();
 		}
 	}
+	
+	
 	
 	this.getViewerSetFromID = function(ID){
 		for (var i=0; i<groups.length; i++){			
@@ -165,18 +181,78 @@ var sliderLinker = function(args){
 		}		
 	}
 	
+	
+	this.showExisting = function(delay ){
+		if (!delay){
+			var delay = 0;
+		}
+		for (var i=0; i<groups.length; i++){			
+			for (var j=0; j<groups[i].scanViewers.length; j++){
+				
+				var viewer = groups[i].scanViewers[j];
+				
+				$(viewer.selectorBox).delay(delay).fadeTo(Globals.animFast, 1)
+				
+			}
+		}
+	}
+	
+	
+	this.hideExisting = function(delay){
+		if (!delay){
+			var delay = 0;
+		}
+		for (var i=0; i<groups.length; i++){			
+			for (var j=0; j<groups[i].scanViewers.length; j++){
+				
+				var viewer = groups[i].scanViewers[j];
+				
+				$(viewer.selectorBox).delay(delay).fadeTo(Globals.animFast, 0)
+				
+			}
+		}
+	}
+	
+	
+	this.flashExisting = function(delay){
+		if (!delay){
+			var delay = 500;
+		}
+		for (var i=0; i<groups.length; i++){			
+			for (var j=0; j<groups[i].scanViewers.length; j++){
+				
+				var viewer = groups[i].scanViewers[j];
+				
+				$(viewer.selectorBox).fadeTo(Globals.animFast, 1).delay(delay).fadeTo(Globals.animFast, 0)
+				
+			}
+		}
+	}
+	
+	
+	
+	this.disableSelectorBox = function(selectorBox){
+		$(selectorBox).css({'pointer-events': 'none'});		
+	}
+	
+	
+	
+	this.enableSelectorBox = function(selectorBox){
+		$(selectorBox).css({'pointer-events': 'auto'});		
+	}
+	
+	
 	this.processGroups = function(){
 
 
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		
+		var scanViewers = Globals.getScanViewers();
 		for (var i=0;i<scanViewers.length;i++){
-			//scanViewer.selectorBox.style.cursor = "default";
-			$(scanViewers[i].selectorBox).unbind();
-			$(scanViewers[i].selectorBox).css({'pointer-events': 'none'});
-			$(scanViewers[i].selectorBox).fadeTo(Globals.animFast,0);
+
+			this.disableSelectorBox(scanViewers[i].selectorBox);
+			this.hideExisting(500);
 		}
 		
 		
@@ -192,7 +268,7 @@ var sliderLinker = function(args){
 				var viewerSet = groups[i].scanViewers;
 
 				
-				$(scanViewer.widget).mouseenter(function(){
+				$(scanViewer.widget).bind('mouseenter.sliderlink', function(){
 					
 					var set = Globals.sliderLinker.getViewerSetFromID(this.id);					
 					var scanViewer = set.viewer;
@@ -211,7 +287,7 @@ var sliderLinker = function(args){
 					}	
 					
 
-				}).mouseleave(function(){	
+				}).bind('mouseleave.sliderlink', function(){	
 					
 					var set = Globals.sliderLinker.getViewerSetFromID(this.id);
 					if (set){

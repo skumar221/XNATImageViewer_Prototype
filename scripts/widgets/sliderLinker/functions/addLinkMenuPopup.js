@@ -75,7 +75,7 @@ sliderLinker.prototype.addLinkMenuPopup = function(){
 		event.stopPropagation();
 		Globals.sliderLinker.clearAll();
 	}
-	
+	$(clearAllButton).hide();
 	
 		
 	var newGroupButton = __makeElement__("div", this.linkMenu_Popup, "SliderLinker_Popup_NewGroupButton",{
@@ -97,6 +97,7 @@ sliderLinker.prototype.addLinkMenuPopup = function(){
 		Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
 		Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
 	}
+	$(newGroupButton).hide();
 	
 	$(this.linkMenu_Popup).fadeOut(0);
 		
