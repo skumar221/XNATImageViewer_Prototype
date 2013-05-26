@@ -3,7 +3,7 @@ function __mouseListener__(parent, callbacks) {
 	var that = this;
 	parent.hasMouseListener = true;
 	
-	var mouseListenerElement =  __makeElement__("div", parent, parent.id + "_mouseListenerElement", {
+	var mouseListenerElement =  __makeElement__("div", parent, "__mouseListener__", {
 		position: "absolute",
 		top: 0,
 		left: 0,
