@@ -24,6 +24,7 @@ function __dialogBox__(args){
 	//-----------------------
 	var widget = __makeElement__("div", this.currArgs().parent, this.currArgs().id, this.currArgs().widgetCSS);
 	__draggable_jQuery__(widget);
+	this.widget = function(){return widget};
 
 
 	//-----------------------
@@ -140,7 +141,7 @@ __dialogBox__.prototype.defaultArgs = function() {
 	  		position: "absolute",
 	  		top: window.innerHeight/2 - 100,
 	  		left: window.innerWidth/2 - 150,
-	  		width: 300,
+	  		width: 330,
 	  		height: 140,
 	  		fontFamily: __globals__.fontFamily,
 	  		fontSize: __globals__.fontSizeS,
