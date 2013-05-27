@@ -30,19 +30,25 @@ function __dialogBox__(args){
 	//-----------------------
 	// BUTTONS	
 	//-----------------------
-	var buttons = [];
+	var buttonManager = {};
 	var buttonList = (this.currArgs().buttons && (this.currArgs().buttons.length > 0)) ? this.currArgs().buttons : this.currArgs().defaultButtons;
 
-	for (var i=0; i<buttonList.length; i++){
+	for (var i=buttonList.length-1; i>=0; i--){
 		
 		var b = __makeElement__("button", widget, 'button', this.currArgs().buttonCSS);
 
 		b.innerHTML = buttonList[i];
 		b.title = buttonList[i].toLowerCase();
-		buttons.push(b);
+		
+		
+		buttonManager[b.title] = {
+			element: b,
+			callbacks: [],
+		}
+		
 		
 		b.onclick = function(){
-			console.log("click!");
+			
 		}	
 	}
 	
@@ -95,9 +101,10 @@ function __dialogBox__(args){
 		var startT = this.currArgs().widgetCSS.height - buttonHeight;
 		var l = startL;
 		var t = startT;		
-		for (var i=buttons.length-1; i>-1; i--){
-			
-			__setCSS__(buttons[i], this.currArgs().buttonCSS);	
+		
+		for (var i in buttonManager){
+
+			__setCSS__(buttonManager[i].element, this.currArgs().buttonCSS);	
 
 			l -= buttonWidth;
 			
@@ -106,8 +113,8 @@ function __dialogBox__(args){
 				t -= buttonHeight;
 			}
 			
-			buttons[i].style.left = __toPx__(l);
-			buttons[i].style.top = __toPx__(t);
+			buttonManager[i].element.style.left = __toPx__(l);
+			buttonManager[i].element.style.top = __toPx__(t);
 
 		}
 		
@@ -122,6 +129,23 @@ function __dialogBox__(args){
 		}));	
 	}
 	
+	
+	
+	//
+	//  BUTTON CALLBACKS
+	//
+	this.setButtonOnclick = function(name, callback){
+		
+		for (var i in buttonManager){
+			
+			if (name.toLowerCase() == i.toLowerCase()){
+				
+				buttonManager[i].element.onclick = callback;
+				return;
+			}
+			
+		}			
+	}
 	
 	this.updateCSS();
 }

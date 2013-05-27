@@ -27,8 +27,10 @@ sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
 																  				 __toInt__(viewers[i].widget.style.left),
 																  				 __toInt__(viewers[i].widget.style.height),
 															  				 __toInt__(viewers[i].widget.style.width));	
+			
 			viewers[i].selectorBox.style.border = 'none';	
 			viewers[i].selectorBox.scanViewer = viewers[i];			
+			
 			viewers[i].selectorBox.onclick = function(){				
 				
 				var box = this;
@@ -51,12 +53,15 @@ sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
 					$(this.childNodes[0]).stop().fadeTo(Globals.animFast, 1, function(){});
 				
 				});
+				
 				$(viewer.linkMenu.childNodes[0]).stop().fadeTo(Globals.animFast, 1, function(){});
 	
 			}				
 		}
 		else{
+			
 			Globals.sliderLinker.enableSelectorBox(viewers[i].selectorBox);
+			
 		}
 
 

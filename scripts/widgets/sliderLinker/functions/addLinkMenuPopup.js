@@ -1,4 +1,10 @@
-sliderLinker.prototype.addLinkMenuPopup = function(){
+sliderLinker.prototype.addLinkMenuPopup = function(currViewer){
+	
+	var that = this;
+	
+	this.lastViewerSelected = currViewer;
+			
+	this.setScanViewerClickListen(currViewer);
 
 	var that = this;
 	
@@ -31,21 +37,31 @@ sliderLinker.prototype.addLinkMenuPopup = function(){
   	});
 	
 	this.linkMenu_Popup = b.widget();	
-	$(this.linkMenu_Popup).fadeOut(0);
 	
-	//b.setButtonCallback = function;
 	
-	doneButton.onclick = function(event){
+	b.setButtonOnclick("done", function(event){
 		event.stopPropagation();
 
 		$(that.linkMenu_Popup).fadeOut(Globals.animFast);
 		
-		Globals.sliderLinker.processGroups();
+		that.processGroups();
 
-	}
+	});
 
 
+	b.setButtonOnclick("cancel", function(event){
+		event.stopPropagation();
+		
+		console.log("CANCEL!");
+		
+		$(that.linkMenu_Popup).fadeOut(Globals.animFast);
+		
+		that.cancel();
+
+	});
+
+	this.takeSnapshot();
 	
-	$(this.linkMenu_Popup).fadeOut(0);
+	$(this.linkMenu_Popup).fadeOut(0).fadeIn(Globals.animFast);
 		
 }

@@ -128,12 +128,8 @@ scanViewer.prototype.addLinkMenu = function(){
 				icon.onclick = function(event){	
 
 					event.stopPropagation();
-					
-					$(Globals.sliderLinker.linkMenu_Popup).fadeIn(Globals.animFast);	
-			
-					Globals.sliderLinker.lastViewerSelected = that;
-			
-					Globals.sliderLinker.setScanViewerClickListen(that);	
+
+					Globals.sliderLinker.addLinkMenuPopup(that);
 				}				
 			}
 			

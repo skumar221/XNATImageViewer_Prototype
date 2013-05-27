@@ -25,6 +25,8 @@ var sliderLinker = function(args){
 
 	
 	var groups = [];
+	var prevGroups = [];
+	
 	this.getGroups = function(){
 		return groups;
 	}
@@ -242,9 +244,39 @@ var sliderLinker = function(args){
 	}
 	
 	
+	this.removePopup = function(){
+//
+		//  Remove the popup from the DOM
+		//
+		$(this.linkMenu_Popup).fadeOut(Globals.animFast).remove();		
+	}
+	
+	
+	this.takeSnapshot = function(){
+		
+		console.log(prevGroups)
+		$.extend(prevGroups,groups);
+		console.log(prevGroups)
+			
+	}
+	
+	this.cancel = function(){
+		
+		console.log("PREV ", prevGroups)
+		groups = [];
+		$.extend(groups,prevGroups);
+		console.log(groups);
+		this.processGroups();
+			
+	}
+	
 	this.processGroups = function(){
 
-
+		console.log("PROCESS GROUPS")
+		this.removePopup();
+		
+		
+		
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
@@ -253,6 +285,7 @@ var sliderLinker = function(args){
 
 			this.disableSelectorBox(scanViewers[i].selectorBox);
 			this.hideExisting(500);
+			
 		}
 		
 		
@@ -306,5 +339,5 @@ var sliderLinker = function(args){
 
 		
 	this.addGroup();
-	this.addLinkMenuPopup();
+	
 }
