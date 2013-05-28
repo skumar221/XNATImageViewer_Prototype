@@ -3,64 +3,55 @@
 //
 //
 //******************************************************
-sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
-		
-	//var linkImg = $(currViewer.widget).find("img[id*='LinkMenuImage']");
+SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
+	
+	var that = this;
 	
 	
-	Globals.sliderLinker.showExisting();
+	this.showExisting();
 	
 		
 	//--------------------------
 	//  GET VIEWERS
 	//--------------------------
-	var viewers = Globals.getScanViewers();
+	var viewers = GLOBALS.getScanViewers();
 	
 
 	
 	// loop through viewers
-	for (var i=0; i<viewers.length; i++){
+	for (var i=0; i<viewers.length; i++) {
 
-		if (!viewers[i].selectorBox){
-			viewers[i].selectorBox =  Globals.sliderLinker.addSelectorBox(			 viewers[i].widget.parentNode, 
+		if (!viewers[i].selectorBox) {
+
+			viewers[i].selectorBox =  GLOBALS.SliderLinker.addSelectorBox(			 viewers[i].widget.parentNode, 
 																  				 __toInt__(viewers[i].widget.style.top), 
 																  				 __toInt__(viewers[i].widget.style.left),
 																  				 __toInt__(viewers[i].widget.style.height),
 															  				 __toInt__(viewers[i].widget.style.width));	
 			
 			viewers[i].selectorBox.style.border = 'none';	
-			viewers[i].selectorBox.scanViewer = viewers[i];			
+			viewers[i].selectorBox.ScanViewer = viewers[i];			
 			
-			viewers[i].selectorBox.onclick = function(){				
+			viewers[i].selectorBox.onclick = function () {				
 				
 				var box = this;
-				var viewer = this.scanViewer;
-							
-				if (typeof box.selected === 'undefined'){
-					box.selected = false;											
-				}
-				
-				box.selected = !box.selected;
-	
-				Globals.sliderLinker.lastViewerSelected = viewer;
-				Globals.sliderLinker.addToLastGroup(viewer);
+				var viewer = this.ScanViewer;
+
+
+				that.lastViewerSelected = viewer;
+				that.addToLastGroup(viewer);
 				
 				$(viewer.widget).unbind('mouseleave.linkmenu');
 				$(viewer.widget).unbind('mouseenter.linkmenu');
-	
-				$(viewer.linkMenu).stop().fadeTo(Globals.animFast, 1, function(){
-	
-					$(this.childNodes[0]).stop().fadeTo(Globals.animFast, 1, function(){});
+
 				
-				});
 				
-				$(viewer.linkMenu.childNodes[0]).stop().fadeTo(Globals.animFast, 1, function(){});
 	
 			}				
 		}
 		else{
 			
-			Globals.sliderLinker.enableSelectorBox(viewers[i].selectorBox);
+			this.enableSelectorBox(viewers[i].selectorBox);
 			
 		}
 
@@ -70,9 +61,11 @@ sliderLinker.prototype.setScanViewerClickListen = function(currViewer){
 		//--------------------------
 		//  SELECT CURRVIEWER
 		//--------------------------
-		if (viewers[i] == currViewer){
+		if (viewers[i] == currViewer) {
+			
 			viewers[i].selectorBox.onclick();
-			viewers[i].selectorBox.selected = true;
+
+				
 		}		
 	}
 }

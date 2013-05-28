@@ -1,8 +1,8 @@
 //******************************************************
-//  Adds a scanViewer based on the arguments.
+//  Adds a ScanViewer based on the arguments.
 //
 //******************************************************
-xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
+XMIV.prototype.addScanViewer = function (rowPos, colPos, callback) {
 	var that = this;
 
 	
@@ -10,13 +10,13 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//----------------------------------
 	//	1a. Validate arguments by type
 	//----------------------------------
-	if ((typeof rowPos != 'number')){
+	if ((typeof rowPos != 'number')) {
 		
 		throw ("Invalid row argument for addScanViewer! Integer only! It's currently a " + (typeof rowPos));
 		
 	}
 	
-	if ((typeof colPos != 'number')){
+	if ((typeof colPos != 'number')) {
 		throw ("Invalid column argument for addScanViewer! Integer only! It's currently a " + (typeof colPos));
 	}
 
@@ -48,7 +48,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//
 	// Checks to see if the position is in use
 	//
-	if (__lengthMD__(that.scanViewers)> 0 && this.scanViewers[rowPos] && this.scanViewers[rowPos][colPos]){
+	if (__lengthMD__(that.ScanViewers)> 0 && this.ScanViewers[rowPos] && this.ScanViewers[rowPos][colPos]) {
 		throw("addScanViewer Error: rowPos and colPos in use!");
 	}	
 	
@@ -56,35 +56,35 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//	
 	// Checks the column preceder
 	//	
-	if (rowPos != 0){
-		if (this.scanViewers[rowPos])
-			if (this.scanViewers[rowPos][colPos-1]) { preceeding_row = true}	
+	if (rowPos != 0) {
+		if (this.ScanViewers[rowPos])
+			if (this.ScanViewers[rowPos][colPos-1]) { preceeding_row = true}	
 	}
 	
 	
 	//
 	// Checks the column preceder
 	//	
-	if (colPos != 0){
-		if (this.scanViewers[rowPos-1])
-			if (this.scanViewers[rowPos-1][colPos]) { preceeding_column = true}
+	if (colPos != 0) {
+		if (this.ScanViewers[rowPos-1])
+			if (this.ScanViewers[rowPos-1][colPos]) { preceeding_column = true}
 	}
 
 
 	//
 	// Throw an error if there's no preceder in row or column	
 	//	
-	if (preceeding_column === false && preceeding_row === false){
+	if (preceeding_column === false && preceeding_row === false) {
 		throw("addScanViewer Error: rowPos and colPos have no preceeding viewers");
 	}
 	
 
 	//	
-	// Create scanViewer
+	// Create ScanViewer
 	//	
-	var v = new scanViewer({
+	var v = new ScanViewer({
 		parent: this.modal,
-		id: "scanViewer_" + __uniqueID__(),
+		id: "ScanViewer_" + __uniqueID__(),
 	});		
 
 
@@ -92,19 +92,19 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	// create row if it doesn't exist by pushing
 	// ASSUMPTION: previous rows have been created!
 	//
-	if (!this.scanViewers[rowPos]) {this.scanViewers.push([]);}
+	if (!this.ScanViewers[rowPos]) {this.ScanViewers.push([]);}
 	
 
 	//	
 	// create column by pushing
 	//
-	this.scanViewers[rowPos][colPos] = (v);
+	this.ScanViewers[rowPos][colPos] = (v);
 	
 
 	//	
 	// test the rowPos + colPos to make sure
 	//	
-	if (!this.scanViewers[rowPos][colPos]) {
+	if (!this.ScanViewers[rowPos][colPos]) {
 		throw("addScanViewer Error: it appears that rowPos and colPos doesn't exist.  Code logic should be checked");
 	}
 	
@@ -115,7 +115,7 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	//----------------------------------
 	//	2. Allows thumbnails to be dropped into viewer
 	//----------------------------------
-	this.addDropZone(v.frameViewer);	
+	this.addDropZone(v.FrameViewer);	
 	
 	
 	
@@ -125,19 +125,19 @@ xmiv.prototype.addScanViewer = function(rowPos, colPos, callback){
 	if (!this.horizontalExpandButtons || this.horizontalExpandButtons.length == 0) {
 		this.addHorizontalExpandButton();
 	}
-	if (!this.verticalExpandButtons || this.verticalExpandButtons.length == 0){
+	if (!this.verticalExpandButtons || this.verticalExpandButtons.length == 0) {
 		this.addVerticalExpandButton();
 	}
 		
 		
 		
 		
-	Globals.setScanViewers(this.scanViewers);
+	GLOBALS.setScanViewers(this.ScanViewers);
 
 	//----------------------------------
 	//	SET closebutton onclick
 	//----------------------------------		
-	v.closeButtonClicked = function(event){ 
+	v.closeButtonClicked = function (event) { 
 		
 		that.deleteScanViewer(v); 
 	

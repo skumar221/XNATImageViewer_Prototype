@@ -1,16 +1,20 @@
-sliderLinker.prototype.addLinkMenuPopup = function(currViewer){
+SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	var that = this;
 	
+	this.takeSnapshot();
 	this.lastViewerSelected = currViewer;
 			
 	this.setScanViewerClickListen(currViewer);
 
 	var that = this;
 	
+	var messageVal = (typeof message === 'undefined') ?  "Select viewers to link. Click 'Done' when finished." : message;
+		
+	
 	var b = new __dialogBox__({	  	
 		buttons: ["DONE", "Cancel"],
-		message: " Select viewers to link. Click 'Done' when finished.",
+		message: messageVal,
 	  	widgetCSS: {
 	  		fontFamily: __globals__.fontFamily,
 	  		fontSize: __globals__.fontSizeM,
@@ -36,32 +40,30 @@ sliderLinker.prototype.addLinkMenuPopup = function(currViewer){
 	  	},
   	});
 	
-	this.linkMenu_Popup = b.widget();	
+	var popup = b.widget();	
 	
 	
-	b.setButtonOnclick("done", function(event){
+	b.setButtonOnclick("done", function (event) {
 		event.stopPropagation();
 
-		$(that.linkMenu_Popup).fadeOut(Globals.animFast);
+		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
 		that.processGroups();
 
 	});
 
 
-	b.setButtonOnclick("cancel", function(event){
+	b.setButtonOnclick("cancel", function (event) {
 		event.stopPropagation();
 		
-		console.log("CANCEL!");
-		
-		$(that.linkMenu_Popup).fadeOut(Globals.animFast);
+		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
 		that.cancel();
 
 	});
 
-	this.takeSnapshot();
 	
-	$(this.linkMenu_Popup).fadeOut(0).fadeIn(Globals.animFast);
+	
+	$(popup).fadeOut(0).fadeIn(GLOBALS.animFast);
 		
 }

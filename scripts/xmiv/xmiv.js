@@ -1,5 +1,5 @@
-defaultArgs_xmiv = {
-	id: "xmiv",
+defaultArgs_XMIV = {
+	id: "XMIV",
 	layout: "all_columns",
 	numViewers: 1,
 	parent: document.body,
@@ -45,17 +45,17 @@ defaultArgs_xmiv = {
 //  Init
 //
 //******************************************************
-var xmiv = function(args){
+var XMIV = function (args) {
 
 	var that = this;
-	INIT(this, defaultArgs_xmiv, args, function(){});
+	INIT(this, defaultArgs_XMIV, args, function () {});
 	
 	
 	
 	//----------------------------------
 	//	WIDGET
 	//----------------------------------			
-	this.widget.onclick = function(){ 
+	this.widget.onclick = function () { 
 		that.destroy();
 	}	
 	
@@ -72,7 +72,7 @@ var xmiv = function(args){
 	})
 	
 	// Don't destroy when clicking on window (i.e. don't propagate)				
-	this.modal.onclick = function(event, element) {
+	this.modal.onclick = function (event, element) {
 		  if (event.stopPropagation) {
 		      event.stopPropagation();   // W3C model
 		  } else {
@@ -109,7 +109,7 @@ var xmiv = function(args){
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
-	this.scrollGallery = new scrollGallery({
+	this.ScrollGallery = new ScrollGallery({
 		parent: this.modal,
 		orientation: "vertical",
 		widgetCSS: {
@@ -120,19 +120,19 @@ var xmiv = function(args){
 		}
 	});	
 	// set the contents
-	this.scrollGallery.setContents(function(){
-		that.scrollGallery.thumbs = [];
-		var thumbSpacing = that.scrollGallery.args.scrollMarginY;
+	this.ScrollGallery.setContents(function () {
+		that.ScrollGallery.thumbs = [];
+		var thumbSpacing = that.ScrollGallery.args.scrollMarginY;
 		var totalHeight = 0;
 		  	  
-		for (var i=0; i<that.scanDataPaths.length; i++){
-			var h = i*(100) + thumbSpacing*i + that.scrollGallery.args.scrollMarginY;  	
-			var scanThumb = new scanThumbnail(that.scanDataPaths[i], {
+		for (var i=0; i<that.scanDataPaths.length; i++) {
+			var h = i*(100) + thumbSpacing*i + that.ScrollGallery.args.scrollMarginY;  	
+			var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
 				  	id: "scrollContent_" + i.toString(),
-				  	parent: that.scrollGallery.scrollContent,
+				  	parent: that.ScrollGallery.scrollContent,
 				  	CSS: {
 				  		top: h, 
-				  		left: that.scrollGallery.args.scrollMarginX,
+				  		left: that.ScrollGallery.args.scrollMarginX,
 				  	}
 				  });
 	
@@ -140,16 +140,16 @@ var xmiv = function(args){
 			// We want to manage the active thumbnails...
 			// we need to "deactivate" them when another has replaced
 			// their slot.  
-			scanThumb.addActivatedCallback(function(thumb, args){
+			scanThumb.addActivatedCallback(function (thumb, args) {
 				that.manageActiveThumbs(thumb, args);
 			})
 			
 			
-			that.scrollGallery.thumbs.push(scanThumb);
+			that.ScrollGallery.thumbs.push(scanThumb);
 		}
 		  
-		  that.scrollGallery.scrollContent.style.height = __toPx__(h + that.scrollGallery.args.scrollMarginY*1 + 100);
-		  that.scrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
+		  that.ScrollGallery.scrollContent.style.height = __toPx__(h + that.ScrollGallery.args.scrollMarginY*1 + 100);
+		  that.ScrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
 	})
 	
 	
@@ -157,7 +157,7 @@ var xmiv = function(args){
 	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------	
-	this.scanViewers = [[]];	
+	this.ScanViewers = [[]];	
 	this.addScanViewer(0, 0);	
 	this.addScanViewer(0, 1);	
 

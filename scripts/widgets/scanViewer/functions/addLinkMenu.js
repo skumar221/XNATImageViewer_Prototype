@@ -6,7 +6,7 @@
 //  
 //
 //******************************************************
-scanViewer.prototype.addLinkMenu = function(){
+ScanViewer.prototype.addLinkMenu = function () {
 
 	var that = this;	
 	
@@ -39,8 +39,8 @@ scanViewer.prototype.addLinkMenu = function(){
 	// Calculate Width of subMenu
 	var maxColumns = 0;
 	var subMenuHeight = 0;
-	for (var i in iconVals){
-		if (maxColumns < iconVals[i].images.length){
+	for (var i in iconVals) {
+		if (maxColumns < iconVals[i].images.length) {
 			maxColumns = iconVals[i].images.length;
 		}
 		subMenuHeight += iconDimMed ;
@@ -101,8 +101,8 @@ scanViewer.prototype.addLinkMenu = function(){
 	//------------------------------
 	this.linkMenu.subMenu.icons = [];	
 	
-	for (var i in iconVals){
-		for (var j=0; j<iconVals[i].images.length; j++){
+	for (var i in iconVals) {
+		for (var j=0; j<iconVals[i].images.length; j++) {
 
 			var icon = __makeElement__("img", this.linkMenu.subMenu, "icon_" + iconVals[i].images[j],{
 				position: "absolute",
@@ -119,90 +119,94 @@ scanViewer.prototype.addLinkMenu = function(){
 			
 			this.linkMenu.subMenu.icons.push(icon);	
 			
-			if (icon.title == "Link slider to selected group"){
+			if (icon.title == "Link slider to selected group") {
 				
 			}	
 			
 			
-			else if (icon.title == "Link slider to current group"){
-				icon.onclick = function(event){	
+			else if (icon.title == "Link slider to current group") {
+				icon.onclick = function (event) {	
 
 					event.stopPropagation();
 
-					Globals.sliderLinker.addLinkMenuPopup(that);
+					GLOBALS.SliderLinker.addLinkMenuPopup(that);
+					
+					that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Closed.png";
 				}				
 			}
 			
 			
-			else if (icon.title == "Link slider to new group"){
-				icon.onclick = function(event){	
+			else if (icon.title == "Link slider to new group") {
+				icon.onclick = function (event) {	
 
 					
 					event.stopPropagation();
-					Globals.sliderLinker.addGroup();
-					Globals.sliderLinker.lastViewerSelected = that;
-					Globals.sliderLinker.setScanViewerClickListen(that);
-					Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
-					Globals.sliderLinker.lastViewerSelected.selectorBox.onclick();
-					$(Globals.sliderLinker.linkMenu_Popup).fadeIn(Globals.animFast);
+					GLOBALS.SliderLinker.addGroup();				
+					GLOBALS.SliderLinker.addLinkMenuPopup(that, "Select viewers for new link group.  Click 'Done' when finished.");
+					that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Closed.png";
 					
 				}				
 			}
 			
 			
-			else if (icon.title == "Unlink from group"){
-				icon.onclick = function(event){	
+			else if (icon.title == "Unlink from group") {
+				icon.onclick = function (event) {	
 					
-					Globals.sliderLinker.flashExisting();
+					GLOBALS.SliderLinker.flashExisting();
 					
-					if (that.selectorBox && that.selectorBox.selected){
-						Globals.sliderLinker.removeFromGroup(that, true);
+					if (that.selectorBox) {
+						GLOBALS.SliderLinker.removeFromGroup(that, true);
+						that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
 					}
 
 				}				
 			}
 			
-			else if (icon.title == "Remove group"){
-				icon.onclick = function(event){	
+			else if (icon.title == "Remove group") {
+				icon.onclick = function (event) {	
 					
-					Globals.sliderLinker.flashExisting();
+					GLOBALS.SliderLinker.flashExisting();
 					
-					if (that.selectorBox && that.selectorBox.selected){
-						Globals.sliderLinker.removeGroup(that);
+					if (that.selectorBox) {
+						GLOBALS.SliderLinker.removeGroup(that);
+						that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
 					}
 
 				}				
 			}
 			
 			
-			else if (icon.title == "Clear all groups"){
-				icon.onclick = function(event){	
-					
-					alert("Are you sure you want to clear all groups?")
-					Globals.sliderLinker.showExisting();
-					//Globals.sliderLinker.clearAll();
-					//if (that.selectorBox && that.selectorBox.selected){
-					//	Globals.sliderLinker.removeGroup(that);
-					//}
+			else if (icon.title == "Clear all groups") {
+				icon.onclick = function (event) {	
 
+					GLOBALS.SliderLinker.showExisting();
+					GLOBALS.SliderLinker.addClearAllPopup(that);
+					
+					var viewers = GLOBALS.ScanViewers();
+					
+					for (var i=0; i<viewers.length; i++) {
+						viewers[i].linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
+					}
 				}				
 			}
 			
-			else if (icon.title == "View all groups"){
-				icon.onclick = function(event){	
+			else if (icon.title == "View all groups") {
+				icon.onclick = function (event) {	
 					
-					if (typeof icon.viewAll === 'undefined'){
+					if (typeof icon.viewAll === 'undefined') {
 						icon.viewAll = false;
 					}
 					
 					icon.viewAll = !icon.viewAll;
 					
-					if (icon.viewAll){
-						Globals.sliderLinker.showExisting();
+					if (icon.viewAll) {
+						GLOBALS.SliderLinker.stayVisible = true;
+						GLOBALS.SliderLinker.showExisting();
 						subMenuIconBind(icon, false);
 					}
 					else{
-						Globals.sliderLinker.hideExisting();
+						GLOBALS.SliderLinker.stayVisible = false;
+						GLOBALS.SliderLinker.hideExisting();
 						subMenuIconBind(icon, true);
 					}
 				}				
@@ -217,18 +221,18 @@ scanViewer.prototype.addLinkMenu = function(){
 	//
 	//  SUB MENU - mouseleave
 	//	
-	function subMenuIconBind(icon, bind){
-		if (bind){
+	function subMenuIconBind(icon, bind) {
+		if (bind) {
 			
-			$(icon).bind('mouseenter.default', function(){
-				if (that.linkMenu.iconHovered){
-					$(this).stop().fadeTo(Globals.animFast, 1);
+			$(icon).bind('mouseenter.default', function () {
+				if (that.linkMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, 1);
 				}			
 			})
 			
-			$(icon).bind('mouseleave.default', function(){
-				if (that.linkMenu.iconHovered){
-					$(this).stop().fadeTo(Globals.animFast, .5);
+			$(icon).bind('mouseleave.default', function () {
+				if (that.linkMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, .5);
 				}	
 			});	
 					
@@ -247,10 +251,10 @@ scanViewer.prototype.addLinkMenu = function(){
 	//
 	//  SUB MENU - mouseleave
 	//	
-	function subLeave(){
+	function subLeave() {
 		
-		$(that.linkMenu.subMenu).fadeOut(Globals.animFast);
-		$(that.linkMenu.icon).fadeTo(Globals.animFast, .5);
+		$(that.linkMenu.subMenu).fadeOut(GLOBALS.animFast);
+		$(that.linkMenu.icon).fadeTo(GLOBALS.animFast, .5);
 		that.linkMenu.iconHovered = false;
 				
 	}
@@ -259,12 +263,12 @@ scanViewer.prototype.addLinkMenu = function(){
 	//
 	//  MAIN MENU - mouseenter
 	//	
-	function mainEnter(){
+	function mainEnter() {
 
-		if (that.linkMenu.iconHovered){
+		if (that.linkMenu.iconHovered) {
 			
-			$(that.linkMenu.icon).fadeTo(Globals.animFast, 1);
-			$(that.linkMenu.subMenu).fadeIn(Globals.animFast);
+			$(that.linkMenu.icon).fadeTo(GLOBALS.animFast, 1);
+			$(that.linkMenu.subMenu).fadeIn(GLOBALS.animFast);
 						
 		}	
 	}
@@ -275,8 +279,8 @@ scanViewer.prototype.addLinkMenu = function(){
 	//
 	//  MAIN BINDING FUNCTION
 	//
-	function superBind(subMenuPinned){
-		if (subMenuPinned){
+	function superBind(subMenuPinned) {
+		if (subMenuPinned) {
 			//
 			// Unbind hover events to pin the subMenu
 			//
@@ -296,7 +300,7 @@ scanViewer.prototype.addLinkMenu = function(){
 	//------------------------------
 	// 
 	//------------------------------		
-	function setHoverEvents(){
+	function setHoverEvents() {
 		
 		//
 		// MAIN MENU ICON - default fade state
@@ -313,7 +317,7 @@ scanViewer.prototype.addLinkMenu = function(){
 		//
 		//  MAIN MENU ICON - mouseenter
 		//
-		$(that.linkMenu.icon).mouseenter(function(){
+		$(that.linkMenu.icon).mouseenter(function () {
 			that.linkMenu.iconHovered = true;
 			mainEnter();
 		})
@@ -322,7 +326,7 @@ scanViewer.prototype.addLinkMenu = function(){
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.linkMenu.subMenu.icons.length; i++){
+		for (var i=0;i<that.linkMenu.subMenu.icons.length; i++) {
 			
 			var icon = that.linkMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);

@@ -2,7 +2,7 @@
 //  
 //
 //******************************************************
-scanViewer.prototype.addAxisMenu = function(){
+ScanViewer.prototype.addAxisMenu = function () {
 
 	var that = this;	
 	var iconStartLeft = 7;
@@ -71,7 +71,7 @@ scanViewer.prototype.addAxisMenu = function(){
 	//------------------------------
 	this.axisMenu.subMenu.icons = [];	
 	
-	for (var i=0; i<iconVals.length; i++){
+	for (var i=0; i<iconVals.length; i++) {
 			
 		//
 		// Icons
@@ -96,11 +96,11 @@ scanViewer.prototype.addAxisMenu = function(){
 		//
 		// SET onclick
 		//
-		if (icon.axis != "3D"){
-			icon.onclick = function(event){
+		if (icon.axis != "3D") {
+			icon.onclick = function (event) {
 				event.stopPropagation(); 
-				if (that.frameViewer.frames.length > 0){
-					that.frameViewer.loadFramesByAxis(this.axis, that.axisIcons);
+				if (that.FrameViewer.frames.length > 0) {
+					that.FrameViewer.loadFramesByAxis(this.axis, that.axisIcons);
 					that.axisMenu.activateIcon(this.title);
 				} 
 			};		
@@ -113,12 +113,12 @@ scanViewer.prototype.addAxisMenu = function(){
 	// ADD TO DEFAULT MOUSE EVENTS TO SCANVIEWER
 	//------------------------------
 	/*
-	this.widget.defaultMouseEvents.push(function(){
+	this.widget.defaultMouseEvents.push(function () {
 		$(that.axisMenu).fadeOut(0);
-		$(that.widget).bind('mouseenter.axismenu', function(){
-			$(that.axisMenu).stop().fadeTo(Globals.animFast,1);
-		}).bind('mouseleave.axismenu', function(){
-			$(that.axisMenu).stop().fadeTo(Globals.animFast,0);
+		$(that.widget).bind('mouseenter.axismenu', function () {
+			$(that.axisMenu).stop().fadeTo(GLOBALS.animFast,1);
+		}).bind('mouseleave.axismenu', function () {
+			$(that.axisMenu).stop().fadeTo(GLOBALS.animFast,0);
 		})		
 	})
 	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
@@ -130,7 +130,7 @@ scanViewer.prototype.addAxisMenu = function(){
 	//------------------------------
 	// 
 	//------------------------------		
-	function setHoverEvents(){
+	function setHoverEvents() {
 		
 		//
 		// MAIN MENU ICON - default fade state
@@ -147,7 +147,7 @@ scanViewer.prototype.addAxisMenu = function(){
 		//
 		//  MAIN MENU ICON - mouseenter
 		//
-		$(that.axisMenu.icon).mouseenter(function(){
+		$(that.axisMenu.icon).mouseenter(function () {
 			that.axisMenu.iconHovered = true;
 			mainEnter();
 		})
@@ -156,7 +156,7 @@ scanViewer.prototype.addAxisMenu = function(){
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++){
+		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++) {
 			
 			var icon = that.axisMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);
@@ -173,19 +173,19 @@ scanViewer.prototype.addAxisMenu = function(){
 	//
 	//  SUB MENU - mouseleave
 	//	
-	function subMenuIconBind(icon, bind){
+	function subMenuIconBind(icon, bind) {
 		
-		if (bind){
+		if (bind) {
 			
-			$(icon).bind('mouseenter.default', function(){
-				if (that.axisMenu.iconHovered){
-					$(this).stop().fadeTo(Globals.animFast, 1);
+			$(icon).bind('mouseenter.default', function () {
+				if (that.axisMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, 1);
 				}			
 			})
 			
-			$(icon).bind('mouseleave.default', function(){
-				if (that.axisMenu.iconHovered){
-					$(this).stop().fadeTo(Globals.animFast, .5);
+			$(icon).bind('mouseleave.default', function () {
+				if (that.axisMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, .5);
 				}	
 			});	
 					
@@ -199,21 +199,21 @@ scanViewer.prototype.addAxisMenu = function(){
 		
 	}
 	
-	this.axisMenu.activateIcon = function(iconName){
+	this.axisMenu.activateIcon = function (iconName) {
 
-		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++){
+		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++) {
 			
 			var icon = that.axisMenu.subMenu.icons[i];
 			
-			if (icon.title.toLowerCase() == iconName.toLowerCase()){
+			if (icon.title.toLowerCase() == iconName.toLowerCase()) {
 			
 				subMenuIconBind(icon, false);				
-				$(icon).stop().fadeTo(Globals.animFast, 1);
+				$(icon).stop().fadeTo(GLOBALS.animFast, 1);
 
 			}
 			else{
 				subMenuIconBind(icon, true);				
-				$(icon).stop().fadeTo(Globals.animFast, .5);				
+				$(icon).stop().fadeTo(GLOBALS.animFast, .5);				
 			}
 		}
 		
@@ -225,10 +225,10 @@ scanViewer.prototype.addAxisMenu = function(){
 	//
 	//  SUB MENU - mouseleave
 	//	
-	function subLeave(){
+	function subLeave() {
 
-		$(that.axisMenu.subMenu).fadeOut(Globals.animFast);
-		$(that.axisMenu.icon).fadeTo(Globals.animFast, .5);
+		$(that.axisMenu.subMenu).fadeOut(GLOBALS.animFast);
+		$(that.axisMenu.icon).fadeTo(GLOBALS.animFast, .5);
 		that.axisMenu.iconHovered = false;
 				
 	}
@@ -237,12 +237,12 @@ scanViewer.prototype.addAxisMenu = function(){
 	//
 	//  MAIN MENU - mouseenter
 	//	
-	function mainEnter(){
+	function mainEnter() {
 
-		if (that.axisMenu.iconHovered){
+		if (that.axisMenu.iconHovered) {
 			
-			$(that.axisMenu.icon).fadeTo(Globals.animFast, 1);
-			$(that.axisMenu.subMenu).fadeIn(Globals.animFast);
+			$(that.axisMenu.icon).fadeTo(GLOBALS.animFast, 1);
+			$(that.axisMenu.subMenu).fadeIn(GLOBALS.animFast);
 						
 		}	
 	}
@@ -251,8 +251,8 @@ scanViewer.prototype.addAxisMenu = function(){
 	//
 	//  MAIN BINDING FUNCTION
 	//
-	function superBind(subMenuPinned){
-		if (subMenuPinned){
+	function superBind(subMenuPinned) {
+		if (subMenuPinned) {
 			//
 			// Unbind hover events to pin the subMenu
 			//
@@ -272,9 +272,9 @@ scanViewer.prototype.addAxisMenu = function(){
 	//
 	//  ONCLICK
 	//
-	function setOnclickEvents(){
+	function setOnclickEvents() {
 		
-		$(that.axisMenu).click(function(){	
+		$(that.axisMenu).click(function () {	
 			
 			that.axisMenu.subMenu.pinned = !that.axisMenu.subMenu.pinned;
 			

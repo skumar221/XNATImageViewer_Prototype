@@ -1,4 +1,4 @@
-xmiv.prototype.addRow = function(){
+XMIV.prototype.addRow = function () {
 	
 	 var that = this;
 
@@ -13,10 +13,10 @@ xmiv.prototype.addRow = function(){
 	//-------------------------
 	// Add a scan viewer, then hide it
 	//-------------------------		
-	var newRow = this.scanViewers.length;
-	for (var i=0; i<this.scanViewers[0].length; i++){
+	var newRow = this.ScanViewers.length;
+	for (var i=0; i<this.ScanViewers[0].length; i++) {
 		this.addScanViewer(newRow, i);
-		$(this.scanViewers[newRow][i].widget).fadeTo(0,0);
+		$(this.ScanViewers[newRow][i].widget).fadeTo(0,0);
 	}
 
 
@@ -25,13 +25,13 @@ xmiv.prototype.addRow = function(){
 	//-------------------------
 	//  Animate Modal Change
 	//-------------------------	
-	this.animateModalChange(Globals.animMed, {
+	this.animateModalChange(GLOBALS.animMed, {
 		modal: [
-			function(){
+			function () {
 				
-				for (var i=0; i<that.scanViewers[0].length; i++){
+				for (var i=0; i<that.ScanViewers[0].length; i++) {
 					
-					$(that.scanViewers[that.scanViewers.length-1][i].widget).fadeTo(Globals.animMed,1);
+					$(that.ScanViewers[that.ScanViewers.length-1][i].widget).fadeTo(GLOBALS.animMed,1);
 					
 				}
 			}

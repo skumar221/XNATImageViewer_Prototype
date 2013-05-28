@@ -2,7 +2,7 @@
 //  ADD SCROLL LINK ICON
 //
 //******************************************************
-xmiv.prototype.addScrollLinkIcon = function(){
+XMIV.prototype.addScrollLinkIcon = function () {
 	
 	var that = this;
 
@@ -41,7 +41,7 @@ xmiv.prototype.addScrollLinkIcon = function(){
 		left: -10,
 		width: 200,
 		color: "rgba(255,255,255,1)",
-		fontSize: Globals.fontSizeSmall
+		fontSize: GLOBALS.fontSizeSmall
 	});
 	
 
@@ -74,7 +74,7 @@ xmiv.prototype.addScrollLinkIcon = function(){
 	//------------------------------------------
 	that.widgetOver = -1;
 	var c = this.scrollLinks[this.scrollLinks.length -1];
-	c.onclick = function(inputState, animTime){
+	c.onclick = function (inputState, animTime) {
 		
 		var animLen = (animTime || animTime === 0) ? animTime : 300;
 		//console.log("ANUIMN: ", animLen, inputState, animTime);
@@ -83,7 +83,7 @@ xmiv.prototype.addScrollLinkIcon = function(){
 		// Set it to the opposite
 		$(c).data('activated', !$(c).data('activated'));
 		
-		if ($(c).data('activated')){
+		if ($(c).data('activated')) {
 			// Change the icon's image
 			$(icon1).fadeTo(animLen,0);
 			$(icon2).fadeTo(animLen,1);
@@ -100,7 +100,7 @@ xmiv.prototype.addScrollLinkIcon = function(){
 			//console.log("linking: ", $(c).data('number'), "with ", $(c).data('number')+1);
 			that.linkViewers($(c).data('number'), $(c).data('number') + 1);
 		}
-		else if (!$(c).data('activated')){
+		else if (!$(c).data('activated')) {
 			$(icon1).fadeTo(animLen,1);
 			$(icon2).fadeTo(animLen,0);		
 			

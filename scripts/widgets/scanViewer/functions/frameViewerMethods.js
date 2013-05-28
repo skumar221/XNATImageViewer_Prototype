@@ -1,9 +1,9 @@
 //******************************************************
 //  Method for handling objects that are "Droppable".
-//  In this case, they are the scanThumbnails.
+//  In this case, they are the ScanThumbnails.
 //******************************************************
 
-frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
+FrameViewer.prototype.loadFramesByAxis = function (frameType, axisIcons) {
 	
 	if (frameType.toLowerCase() == "sagittal")
 		this.loadFrames(this.currDroppable.sagittalFrames);
@@ -12,11 +12,12 @@ frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
 	if (frameType.toLowerCase() == "coronal")
 		this.loadFrames(this.currDroppable.coronalFrames);
 	
+	$(this.canvas).fadeTo(GLOBALS.animFast, 1);
 //	console.log(axisIcons[0].axis);
-	if(axisIcons){
-		for (var i=0; i<axisIcons.length; i++){
+	if(axisIcons) {
+		for (var i=0; i<axisIcons.length; i++) {
 			console.log(axisIcons[0].axis, axisIcons[i].axis.toLowerCase(), frameType.toLowerCase());
-			if (axisIcons[i].axis.toLowerCase() == frameType.toLowerCase()){
+			if (axisIcons[i].axis.toLowerCase() == frameType.toLowerCase()) {
 				$(axisIcons[i]).unbind('mouseleave')
 				$(axisIcons[i]).fadeTo(0,1);
 				
@@ -30,19 +31,19 @@ frameViewer.prototype.loadFramesByAxis = function(frameType, axisIcons){
 }
 
 
-frameViewer.prototype.loadDroppable = function(droppable){
-	if (droppable.sagittalFrames){
+FrameViewer.prototype.loadDroppable = function (droppable) {
+	if (droppable.sagittalFrames) {
 		
 		this.currDroppable = droppable;
 		this.loadFramesByAxis("sagittal");
 		
 		
 		//
-		//  Activate the relevant scanViewer icon
+		//  Activate the relevant ScanViewer icon
 		//
 		var k = $(this.args.parent).find('div[id*="axisMenu"]')
-		for (var i=0; i<k.length; i++){
-			if (k[i].activateIcon){
+		for (var i=0; i<k.length; i++) {
+			if (k[i].activateIcon) {
 				k[i].activateIcon("sagittal");		
 				return;
 			}
@@ -50,7 +51,7 @@ frameViewer.prototype.loadDroppable = function(droppable){
 
 	}
 	else{
-		throw "FrameViewer.js: Invalid Droppable for frameViewer."
+		throw "FrameViewer.js: Invalid Droppable for FrameViewer."
 	}
 
 }

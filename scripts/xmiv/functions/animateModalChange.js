@@ -1,4 +1,4 @@
-xmiv.prototype.animateModalChange = function(animLen, callbacks){
+XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 		
 		var that = this;
 		
@@ -17,10 +17,10 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		//-------------------------
 		//  CHECK TO SEE IF THE VIEWERS ARE TOO SMALL 
 		//-------------------------	
-		if (__toInt__(this.scanViewers[0][0].widget.style.width) < Globals.minScanViewerWidth){
-			//this.modal.removeChild(this.scanViewers[__lengthMD__(this.scanViewers) - 1].widget);
-			//this.scanViewers.pop();
-			//$(this.scanViewers[__lengthMD__(this.scanViewers) - 1].widget).fadeTo(animLen,1);
+		if (__toInt__(this.ScanViewers[0][0].widget.style.width) < GLOBALS.minScanViewerWidth) {
+			//this.modal.removeChild(this.ScanViewers[__lengthMD__(this.ScanViewers) - 1].widget);
+			//this.ScanViewers.pop();
+			//$(this.ScanViewers[__lengthMD__(this.ScanViewers) - 1].widget).fadeTo(animLen,1);
 			//return;	
 		} 
 		
@@ -35,11 +35,11 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		    left: modalDims.left,
 		    height: modalDims.height,
 		    top: modalDims.top,
-		  }, animLen, function() {
+		  }, animLen, function () {
 		  	    
 		  	
 		    that.updateCSS();
-			if (callbacks && callbacks.modal && callbacks.modal.length > 0){
+			if (callbacks && callbacks.modal && callbacks.modal.length > 0) {
 		  		for (i in callbacks.modal) { callbacks.modal[i](that); }
 		  	}	
 			
@@ -51,48 +51,48 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		//-------------------------
 		// SCAN VIEWERS
 		//-------------------------	
-		for (var i in this.scanViewers){
-			for (var j in this.scanViewers[i]){ 
+		for (var i in this.ScanViewers) {
+			for (var j in this.ScanViewers[i]) { 
 				
 			
 				//
-				// FADE OUT/IN: scanViewer contents
+				// FADE OUT/IN: ScanViewer contents
 				//
-				 if (modalDims.scanViewer.height != __toInt__(this.scanViewers[0][0].widget.style.height)){
+				 if (modalDims.ScanViewer.height != __toInt__(this.ScanViewers[0][0].widget.style.height)) {
 				 	
-				 	if (this.scanViewers[i][j]){
+				 	if (this.ScanViewers[i][j]) {
 
 
 				 		
-					 	for (var k in this.scanViewers[i][j].widget.childNodes){
+					 	for (var k in this.ScanViewers[i][j].widget.childNodes) {
 					 		
 					 		
-					 		var childObj = this.scanViewers[i][j].widget.childNodes[k]
+					 		var childObj = this.ScanViewers[i][j].widget.childNodes[k]
 	
 						 	//
 						 	// Check if the childObject is DOM element otherwise jQuery throws errors
 						 	//  
-						 	if (__isElement__(childObj)){
+						 	if (__isElement__(childObj)) {
 						 		
-						 		$(this.scanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0).fadeTo(animLen, 1);		
+						 		$(this.ScanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0).fadeTo(animLen, 1);		
 						 		
 						 	}	
 						 }	
 						 
-						 var svWidget = this.scanViewers[i][j].widget;	
+						 var svWidget = this.ScanViewers[i][j].widget;	
 				 	}
 				 }
 				 
 
 				//
-				// ANIMATE: scanViewer widget
+				// ANIMATE: ScanViewer widget
 				//
 				 $(svWidget).stop().animate({
-				    left: modalDims.scanViewer.lefts[i][j],
-				    top: modalDims.scanViewer.tops[i][j],
-				    width: modalDims.scanViewer.width,
-				    height: modalDims.scanViewer.height,
-				  }, Globals.animSlow, function(){			  	
+				    left: modalDims.ScanViewer.lefts[i][j],
+				    top: modalDims.ScanViewer.tops[i][j],
+				    width: modalDims.ScanViewer.width,
+				    height: modalDims.ScanViewer.height,
+				  }, GLOBALS.animSlow, function () {			  	
 				  });	
 				  
 				  
@@ -109,7 +109,7 @@ xmiv.prototype.animateModalChange = function(animLen, callbacks){
 		 $(this.closeButton).stop().animate({
 		    left: modalDims.closeButton.left,
 		    top: modalDims.closeButton.top
-		  }, animLen, function() {
+		  }, animLen, function () {
 		    // Animation complete.
 		 });
 		 

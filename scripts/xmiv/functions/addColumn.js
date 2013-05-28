@@ -1,4 +1,4 @@
-xmiv.prototype.addColumn = function(rowPos){
+XMIV.prototype.addColumn = function (rowPos) {
 	
 	 var that = this;
 
@@ -13,10 +13,10 @@ xmiv.prototype.addColumn = function(rowPos){
 	//-------------------------
 	// Add scan viewer(s), then hide
 	//-------------------------		
-	var colPos = this.scanViewers[rowPos].length;
-	for (var i=0; i<this.scanViewers.length; i++){
+	var colPos = this.ScanViewers[rowPos].length;
+	for (var i=0; i<this.ScanViewers.length; i++) {
 		this.addScanViewer(i, colPos);	
-		$(this.scanViewers[i][colPos].widget).fadeTo(0,0);
+		$(this.ScanViewers[i][colPos].widget).fadeTo(0,0);
 	}
 	
 
@@ -24,13 +24,13 @@ xmiv.prototype.addColumn = function(rowPos){
 	//  GET THE MODAL DIMENSIONS, 
 	//-------------------------	
 
-	this.animateModalChange(Globals.animMed, {
+	this.animateModalChange(GLOBALS.animMed, {
 		modal: [
-			function(){
+			function () {
 				
-				for (var i=0; i<that.scanViewers.length; i++){
+				for (var i=0; i<that.ScanViewers.length; i++) {
 					
-					$(that.scanViewers[i][colPos].widget).fadeTo(Globals.animMed,1);
+					$(that.ScanViewers[i][colPos].widget).fadeTo(GLOBALS.animMed,1);
 				}
 			}
 		]

@@ -2,7 +2,7 @@
 //  Update CSS.
 //
 //******************************************************
-xmiv.prototype.updateCSS = function(args){
+XMIV.prototype.updateCSS = function (args) {
 
 	
 	var that = this;
@@ -13,30 +13,30 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	modalDims = this.modalDims();
 	$(this.modal).css(modalDims);	
-	if(args){$(this.modal).css(args);}	
+	if(args) {$(this.modal).css(args);}	
 	
 	
 	
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
-	this.scrollGallery.updateCSS(modalDims.scrollGallery);
+	this.ScrollGallery.updateCSS(modalDims.ScrollGallery);
 
 
  
  	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------		
-	for (var i in this.scanViewers){
-		for (var j in this.scanViewers[i]){ 
+	for (var i in this.ScanViewers) {
+		for (var j in this.ScanViewers[i]) { 
 			
-			if (this.scanViewers[i][j]){
+			if (this.ScanViewers[i][j]) {
 				
-				this.scanViewers[i][j].updateCSS({
-					height: modalDims.scanViewer.height,// - this.args.marginTop*2,
-					width: modalDims.scanViewer.width,
-					left: modalDims.scanViewer.lefts[i][j],
-					top: modalDims.scanViewer.tops[i][j],
+				this.ScanViewers[i][j].updateCSS({
+					height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
+					width: modalDims.ScanViewer.width,
+					left: modalDims.ScanViewer.lefts[i][j],
+					top: modalDims.ScanViewer.tops[i][j],
 				});				
 			} 
 		}  
@@ -47,16 +47,16 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	SELECTOR BOXES
 	//----------------------------------		
-	for (var i in this.scanViewers){
-		for (var j in this.scanViewers[i]){ 
+	for (var i in this.ScanViewers) {
+		for (var j in this.ScanViewers[i]) { 
 			
-			if (this.scanViewers[i][j].selectorBox){
+			if (this.ScanViewers[i][j].selectorBox) {
 				
-				__setCSS__(this.scanViewers[i][j].selectorBox, {
-					height: modalDims.scanViewer.height,// - this.args.marginTop*2,
-					width: modalDims.scanViewer.width,
-					left: modalDims.scanViewer.lefts[i][j],
-					top: modalDims.scanViewer.tops[i][j],
+				__setCSS__(this.ScanViewers[i][j].selectorBox, {
+					height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
+					width: modalDims.ScanViewer.width,
+					left: modalDims.ScanViewer.lefts[i][j],
+					top: modalDims.ScanViewer.tops[i][j],
 				});				
 			} 
 		}  
@@ -75,14 +75,14 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	HORIZONTAL EXPAND BUTTON
 	//----------------------------------
-	if (this.horizontalExpandButtons){		
-		for (var i in this.horizontalExpandButtons){	
+	if (this.horizontalExpandButtons) {		
+		for (var i in this.horizontalExpandButtons) {	
 			
 			$(this.horizontalExpandButtons[i]).css({
 				left: modalDims["horizontalExpandButtons"].left,
-				height: modalDims.height - Globals.expandButtonWidth,
+				height: modalDims.height - GLOBALS.expandButtonWidth,
 				top: modalDims["horizontalExpandButtons"].tops[i][0],
-				width: Globals.expandButtonWidth
+				width: GLOBALS.expandButtonWidth
 			})
 					
 		}		
@@ -93,14 +93,14 @@ xmiv.prototype.updateCSS = function(args){
 	//----------------------------------
 	//	VERTICAL EXPAND BUTTONS
 	//----------------------------------
-	if (this.verticalExpandButtons){
-		for (var i in this.verticalExpandButtons){
+	if (this.verticalExpandButtons) {
+		for (var i in this.verticalExpandButtons) {
 			
 			$(this.verticalExpandButtons[0]).css({
-				left:  modalDims.scanViewer.lefts[0][0],
-				height: Globals.expandButtonWidth,
-				width: modalDims.width - modalDims.scanViewer.lefts[0][0] - Globals.expandButtonWidth,
-				top: modalDims.height - Globals.expandButtonWidth,
+				left:  modalDims.ScanViewer.lefts[0][0],
+				height: GLOBALS.expandButtonWidth,
+				width: modalDims.width - modalDims.ScanViewer.lefts[0][0] - GLOBALS.expandButtonWidth,
+				top: modalDims.height - GLOBALS.expandButtonWidth,
 			});	
 	
 		}	

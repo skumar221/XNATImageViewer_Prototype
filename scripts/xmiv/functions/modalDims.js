@@ -8,12 +8,12 @@
 //  an element's dimensions if percentages were entered.
 //
 //******************************************************
-xmiv.prototype.modalDims = function(conversion){
+XMIV.prototype.modalDims = function (conversion) {
 		
 	var that = this;
 	
-	var scrollGalleryLeft = 0;
-	var maxModalWidth = Math.round(window.innerWidth * Globals.maxModalHeightPct);
+	var ScrollGalleryLeft = 0;
+	var maxModalWidth = Math.round(window.innerWidth * GLOBALS.maxModalHeightPct);
 	
 	
 	
@@ -24,29 +24,29 @@ xmiv.prototype.modalDims = function(conversion){
 	
 	
 	//	Get the prescribed height of the modal		
-	var modalHeight = Globals.maxModalHeightPct * window.innerHeight;
+	var modalHeight = GLOBALS.maxModalHeightPct * window.innerHeight;
 	
 	
 	//	Get the number of scan viewers
-	var scanViewerColumns = __numColumns__(that.scanViewers);
-	var scanViewerRows = __numRows__(that.scanViewers);
+	var ScanViewerColumns = __numColumns__(that.ScanViewers);
+	var ScanViewerRows = __numRows__(that.ScanViewers);
 	
 	
 	// determine the minimum modal width
-	var minModalWidth = Globals.scrollGalleryWidth + 
-						Globals.minScanViewerWidth * scanViewerColumns + 
-						Globals.scanViewerVerticalMargin * scanViewerColumns + 
-						Globals.expandButtonWidth;
+	var minModalWidth = GLOBALS.ScrollGalleryWidth + 
+						GLOBALS.minScanViewerWidth * ScanViewerColumns + 
+						GLOBALS.ScanViewerVerticalMargin * ScanViewerColumns + 
+						GLOBALS.expandButtonWidth;
 	
 	// determine the the modal width based on prescribed proportions
-	var scanViewerHeight = ( modalHeight - (scanViewerRows * Globals.expandButtonWidth)) / scanViewerRows;
-	var scanViewerWidth = Globals.scanViewerDimRatio * scanViewerHeight;
+	var ScanViewerHeight = ( modalHeight - (ScanViewerRows * GLOBALS.expandButtonWidth)) / ScanViewerRows;
+	var ScanViewerWidth = GLOBALS.ScanViewerDimRatio * ScanViewerHeight;
 	
 	// determine the minimum modal width
-	var modalWidth = Globals.scrollGalleryWidth + 
-					 scanViewerWidth  * scanViewerColumns + 
-					 Globals.scanViewerVerticalMargin * scanViewerColumns + 
-					 Globals.expandButtonWidth;
+	var modalWidth = GLOBALS.ScrollGalleryWidth + 
+					 ScanViewerWidth  * ScanViewerColumns + 
+					 GLOBALS.ScanViewerVerticalMargin * ScanViewerColumns + 
+					 GLOBALS.expandButtonWidth;
 
 
 
@@ -55,12 +55,12 @@ xmiv.prototype.modalDims = function(conversion){
 	// 2. If the modal is too wide, scale it down
 	//-------------------------
 	
-	if (modalWidth > maxModalWidth){	
+	if (modalWidth > maxModalWidth) {	
 							 		
-		scanViewerWidth = (maxModalWidth - (Globals.scrollGalleryWidth + Globals.scanViewerVerticalMargin * scanViewerColumns + Globals.expandButtonWidth))/scanViewerColumns;	
-		scanViewerHeight = scanViewerWidth / Globals.scanViewerDimRatio;
+		ScanViewerWidth = (maxModalWidth - (GLOBALS.ScrollGalleryWidth + GLOBALS.ScanViewerVerticalMargin * ScanViewerColumns + GLOBALS.expandButtonWidth))/ScanViewerColumns;	
+		ScanViewerHeight = ScanViewerWidth / GLOBALS.ScanViewerDimRatio;
 		modalWidth= maxModalWidth;
-		modalHeight = (scanViewerHeight * scanViewerRows) + (Globals.scanViewerVerticalMargin  * (scanViewerRows  - 1)) + Globals.expandButtonWidth;
+		modalHeight = (ScanViewerHeight * ScanViewerRows) + (GLOBALS.ScanViewerVerticalMargin  * (ScanViewerRows  - 1)) + GLOBALS.expandButtonWidth;
 
 	}
 	
@@ -75,7 +75,7 @@ xmiv.prototype.modalDims = function(conversion){
 	//-------------------------
 	// SCROLL GALLERY DIMS
 	//-------------------------	
-	var scrollGalleryCSS = {
+	var ScrollGalleryCSS = {
 		width: 110,
 		height: Math.round(modalHeight),
 		left: 0,
@@ -88,21 +88,21 @@ xmiv.prototype.modalDims = function(conversion){
 	//-------------------------
 	// SCAN VIEWER DIMS
 	//-------------------------	
-	var scanViewerLefts = [];
-	var scanViewerTops = [];
-	var viewerStart = scrollGalleryCSS.width + scrollGalleryCSS.left + Globals.scanViewerVerticalMargin;
+	var ScanViewerLefts = [];
+	var ScanViewerTops = [];
+	var viewerStart = ScrollGalleryCSS.width + ScrollGalleryCSS.left + GLOBALS.ScanViewerVerticalMargin;
 
-	for (var i in this.scanViewers){
-		for (var j in this.scanViewers[i]){ 
+	for (var i in this.ScanViewers) {
+		for (var j in this.ScanViewers[i]) { 
 			
-			l = viewerStart + j * (scanViewerWidth + Globals.scanViewerVerticalMargin);
+			l = viewerStart + j * (ScanViewerWidth + GLOBALS.ScanViewerVerticalMargin);
 			
 
-			if (j==0 || !scanViewerLefts[i]) scanViewerLefts.push([])
-			scanViewerLefts[i][j] = l;
+			if (j==0 || !ScanViewerLefts[i]) ScanViewerLefts.push([])
+			ScanViewerLefts[i][j] = l;
 			
-			if (j==0 || !scanViewerTops[i]) scanViewerTops.push([]);
-			scanViewerTops[i][j] = (-1 + i * (scanViewerHeight + Globals.scanViewerHorizontalMargin));
+			if (j==0 || !ScanViewerTops[i]) ScanViewerTops.push([]);
+			ScanViewerTops[i][j] = (-1 + i * (ScanViewerHeight + GLOBALS.ScanViewerHorizontalMargin));
 		}
 	} 
 	
@@ -114,11 +114,11 @@ xmiv.prototype.modalDims = function(conversion){
 	var scrollLinkLefts = [];
 	var scrollLinkTops = [];	
 	/*
-	for (var i=0;i<that.scrollLinks.length;i++){
-		scrollLinkLefts.push(scanViewerLefts[i] + scanViewerWidth - 
+	for (var i=0;i<that.scrollLinks.length;i++) {
+		scrollLinkLefts.push(ScanViewerLefts[i] + ScanViewerWidth - 
 							 $(that.scrollLinks[i]).width()/2 + 
-							 Globals.scanViewerVerticalMargin/2);
-		scrollLinkTops.push(scanViewerTops[i] + scanViewerHeight/2 - 2);
+							 GLOBALS.ScanViewerVerticalMargin/2);
+		scrollLinkTops.push(ScanViewerTops[i] + ScanViewerHeight/2 - 2);
 	}
 	*/
 	
@@ -131,17 +131,17 @@ xmiv.prototype.modalDims = function(conversion){
 		left: Math.round(_l),
 		height: Math.round(modalHeight),
 		top: Math.round(_t),
-		scanViewer: {
+		ScanViewer: {
 			
-			width: Math.round(scanViewerWidth),
-			height: Math.round(scanViewerHeight),
-			lefts: scanViewerLefts,
-			tops: scanViewerTops,	
+			width: Math.round(ScanViewerWidth),
+			height: Math.round(ScanViewerHeight),
+			lefts: ScanViewerLefts,
+			tops: ScanViewerTops,	
 			
 		},
-		scrollGallery: {
+		ScrollGallery: {
 			
-			widgetCSS: scrollGalleryCSS
+			widgetCSS: ScrollGalleryCSS
 		
 		},
 		closeButton: {
@@ -152,18 +152,18 @@ xmiv.prototype.modalDims = function(conversion){
 		},
 		horizontalExpandButtons: {
 			
-			left: Math.round(modalWidth) - Globals.expandButtonWidth,
-			tops: scanViewerTops,
-			height: Math.round(scanViewerHeight),
-			width: Globals.expandButtonWidth
+			left: Math.round(modalWidth) - GLOBALS.expandButtonWidth,
+			tops: ScanViewerTops,
+			height: Math.round(ScanViewerHeight),
+			width: GLOBALS.expandButtonWidth
 			
 		},
 		verticalExpandButtons:{
 			
-			lefts: scanViewerLefts[0],
-			top: Math.round(modalHeight) - Globals.expandButtonWidth,
-			width: Math.round(scanViewerWidth),
-			height: Globals.expandButtonWidth,
+			lefts: ScanViewerLefts[0],
+			top: Math.round(modalHeight) - GLOBALS.expandButtonWidth,
+			width: Math.round(ScanViewerWidth),
+			height: GLOBALS.expandButtonWidth,
 			
 		},
 		scrollLink:{

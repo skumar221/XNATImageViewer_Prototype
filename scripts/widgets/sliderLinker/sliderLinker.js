@@ -2,15 +2,14 @@
 //  Init
 //
 //******************************************************
-var sliderLinker = function(args){
+var SliderLinker = function (args) {
 	
 	
-	this.maxGroups = Globals.maxScrollLinkGroups;
+	this.maxGroups = GLOBALS.maxScrollLinkGroups;
 	
-	var scanViewers = [];
+	var ScanViewers = [];
 	
 	var borderColorSet = [
-		[255,255,255,1],
 		[155,205,5,1],
 		[21,2,200,1],
 		[25,200,55,1],
@@ -27,88 +26,90 @@ var sliderLinker = function(args){
 	var groups = [];
 	var prevGroups = [];
 	
-	this.getGroups = function(){
+	this.getGroups = function () {
 		return groups;
 	}
 
 
-	this.lastGroup = function(){
+	this.lastGroup = function () {
 		return groups[groups.length - 1];
 	}	 
 
 
-	this.addGroup = function(){
+	this.addGroup = function () {
 
 		groups.push({
 			border: "solid 2px rgba(" + borderColorSet[groups.length].toString() + ")",
 			groupID: "linkGroup_" + groups.length,
-			scanViewers: [],
+			ScanViewers: [],
+			prevViewers: [],
 		})		
 
 	}
 
 	
-	this.addToLastGroup = function(scanViewer){
+	this.addToLastGroup = function (ScanViewer) {
 
-
+		//("ADD TO LAST GROUP: ", ScanViewer.widget.id)
 		//
 		//  Remove the scan viewer from group if it exists
 		//
-		this.removeFromGroup(scanViewer, false);
+		this.removeFromGroup(ScanViewer, false);
 		
 		
 		//
-		//  1. Add the scanViewer to the last group
+		//  1. Add the ScanViewer to the last group
 		//
-		if (groups[groups.length - 1].scanViewers.indexOf(scanViewer) == -1){
+		if (groups[groups.length - 1].ScanViewers.indexOf(ScanViewer) == -1) {
 		
-			groups[groups.length - 1].scanViewers.push(scanViewer);
+			//("HERE - last group: ", this.lastGroup().border)
+			groups[groups.length - 1].ScanViewers.push(ScanViewer);
 			
 			//
 			//  Set the border color
 			//
-			scanViewer.selectorBox.style.border = this.lastGroup().border;
+			ScanViewer.selectorBox.style.border = this.lastGroup().border;
+			$(ScanViewer.selectorBox).fadeTo(GLOBALS.animFast, 1);
+			//(ScanViewer.selectorBox.style.border)
 
 		}
 	
 	}
 	
-	this.clearScanViewerSliderLink = function(scanViewer){
+	this.clearSelectorBox = function (ScanViewer) {
 		
-		console.log("CLEARING: ", scanViewer.id)
-		scanViewer.selectorBox.style.border = "none";	
-		scanViewer.selectorBox.selected = false;	
+		//("CLEARING SELECTOR BOX of ", ScanViewer.widget.id)
+		ScanViewer.selectorBox.style.border = "none";		
 
-		$(scanViewer.widget).unbind('mouseenter.sliderlink');
-		$(scanViewer.widget).unbind('mouseleave.sliderlink');
+		$(ScanViewer.widget).unbind('mouseenter.sliderlink');
+		$(ScanViewer.widget).unbind('mouseleave.sliderlink');
 		
-		for (var i=0; i<scanViewer.widget.defaultMouseEvents.length; i++){
+		for (var i=0; i<ScanViewer.widget.defaultMouseEvents.length; i++) {
 			
-			scanViewer.widget.defaultMouseEvents[i]();
+			ScanViewer.widget.defaultMouseEvents[i]();
 			
 		}
-		scanViewer.frameSlider.clearLinked();		
+		ScanViewer.frameSlider.clearLinked();		
 	}
 	
 	
 	
-	this.removeFromGroup = function(scanViewer, clear){
+	this.removeFromGroup = function (ScanViewer, clearSelectorBox) {
 
 		var tempInd;
-		for (var i=0; i<groups.length; i++){
+		for (var i=0; i<groups.length; i++) {
 			
-			tempInd = groups[i].scanViewers.indexOf(scanViewer);
+			tempInd = groups[i].ScanViewers.indexOf(ScanViewer);
 			
-			if (tempInd > -1){
+			if (tempInd > -1) {
 				
-				console.log("removing ", scanViewer.widget.id, " from group ", groups[i].groupID)
+				//("removing ", ScanViewer.widget.id, " from group ", groups[i].groupID)
 				
-				var viewer = groups[i].scanViewers[tempInd];
-				groups[i].scanViewers.splice(tempInd, 1);		
+				var viewer = groups[i].ScanViewers[tempInd];
+				groups[i].ScanViewers.splice(tempInd, 1);		
 				
-				if (clear){
-					scanViewer.selectorBox.selected = false;
-					this.clearScanViewerSliderLink(viewer);						
+				if (clearSelectorBox) {
+					this.clearSelectorBox(viewer);						
 				}
 	
 				return true;		
@@ -118,26 +119,26 @@ var sliderLinker = function(args){
 	}
 	
 	
-	this.removeGroup = function(scanViewer){
+	this.removeGroup = function (ScanViewer) {
 
 		var tempInd;
-		for (var i=0; i<groups.length; i++){
+		for (var i=0; i<groups.length; i++) {
 			
-			tempInd = groups[i].scanViewers.indexOf(scanViewer);
+			tempInd = groups[i].ScanViewers.indexOf(ScanViewer);
 			
-			if (tempInd > -1){
+			if (tempInd > -1) {
 				
-				for (var j=0; j<groups[i].scanViewers.length; j++){
-					var viewer = groups[i].scanViewers[j];						
-					viewer.selectorBox.selected = false;
-					this.clearScanViewerSliderLink(viewer);						
+				for (var j=0; j<groups[i].ScanViewers.length; j++) {
+					var viewer = groups[i].ScanViewers[j];						
+
+					this.clearSelectorBox(viewer);						
 				}
 
-				if (i>0){
+				if (i>0) {
 					groups.splice(i, 1);
 				}
 				else{
-					groups[i].scanViewers = [];
+					groups[i].ScanViewers = [];
 				}
 				return;
 			
@@ -146,7 +147,7 @@ var sliderLinker = function(args){
 	}
 
 	
-	this.addSelectorBox = function(parent, Top, Left, Height, Width){
+	this.addSelectorBox = function (parent, Top, Left, Height, Width) {
 		var box =  __makeElement__("div", parent, "selectorBox", {
 			position: "absolute",
 			top: Top,
@@ -159,24 +160,29 @@ var sliderLinker = function(args){
 		return box;
 	}	
 	
-	this.clearAll = function(){
-		groups = [];	
-		var viewers = Globals.getScanViewers();
-		for (var i=0;i<viewers.length;i++){
+	
+	this.clearAll = function () {
 			
-			$(viewers[i].selectorBox).remove();
+		
+		var viewers = GLOBALS.getScanViewers();
+		
+		for (var i=0;i<viewers.length;i++) {	
+			this.removeFromGroup(viewers[i], true);
 		}
+		
+		groups = [];
+		this.addGroup();
 	}
 	
 	
 	
-	this.getViewerSetFromID = function(ID){
-		for (var i=0; i<groups.length; i++){			
-			for (var j=0; j<groups[i].scanViewers.length; j++){
-				if (groups[i].scanViewers[j].widget.id == ID){
+	this.getViewerSetFromID = function (ID) {
+		for (var i=0; i<groups.length; i++) {			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+				if (groups[i].ScanViewers[j].widget.id == ID) {
 					return {
-						viewer: groups[i].scanViewers[j],
-						viewerset: groups[i].scanViewers,
+						viewer: groups[i].ScanViewers[j],
+						viewerset: groups[i].ScanViewers,
 					}
 				}
 			}
@@ -184,48 +190,51 @@ var sliderLinker = function(args){
 	}
 	
 	
-	this.showExisting = function(delay ){
-		if (!delay){
-			var delay = 0;
-		}
-		for (var i=0; i<groups.length; i++){			
-			for (var j=0; j<groups[i].scanViewers.length; j++){
+	this.showExisting = function (delay ) {
+		
+		var delayVal = (delay) ? delay: 0;
+
+		for (var i=0; i<groups.length; i++) {			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
 				
-				var viewer = groups[i].scanViewers[j];
+				var viewer = groups[i].ScanViewers[j];
 				
-				$(viewer.selectorBox).delay(delay).fadeTo(Globals.animFast, 1)
-				
-			}
-		}
-	}
-	
-	
-	this.hideExisting = function(delay){
-		if (!delay){
-			var delay = 0;
-		}
-		for (var i=0; i<groups.length; i++){			
-			for (var j=0; j<groups[i].scanViewers.length; j++){
-				
-				var viewer = groups[i].scanViewers[j];
-				
-				$(viewer.selectorBox).delay(delay).fadeTo(Globals.animFast, 0)
+				$(viewer.selectorBox).delay(delayVal).fadeTo(GLOBALS.animFast, 1)
 				
 			}
 		}
 	}
 	
 	
-	this.flashExisting = function(delay){
-		if (!delay){
-			var delay = 500;
-		}
-		for (var i=0; i<groups.length; i++){			
-			for (var j=0; j<groups[i].scanViewers.length; j++){
+	this.hideExisting = function (delay) {
+		
+		var delayVal = (delay) ? delay: 0;
+		
+		if (!this.stayVisible) { 
+			for (var i=0; i<groups.length; i++) {			
+				for (var j=0; j<groups[i].ScanViewers.length; j++) {
+					
+					var viewer = groups[i].ScanViewers[j];
+					
+					$(viewer.selectorBox).delay(delayVal).fadeTo(GLOBALS.animFast, 0)
+					
+				}
+			}		
+		};
+
+	}
+	
+	
+	this.flashExisting = function (delay) {
+		
+		var delayVal = (delay) ? delay: 500;
+		
+		for (var i=0; i<groups.length; i++) {			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
 				
-				var viewer = groups[i].scanViewers[j];
+				var viewer = groups[i].ScanViewers[j];
 				
-				$(viewer.selectorBox).fadeTo(Globals.animFast, 1).delay(delay).fadeTo(Globals.animFast, 0)
+				$(viewer.selectorBox).fadeTo(GLOBALS.animFast, 1).delay(delayVal).fadeTo(GLOBALS.animFast, 0)
 				
 			}
 		}
@@ -233,57 +242,61 @@ var sliderLinker = function(args){
 	
 	
 	
-	this.disableSelectorBox = function(selectorBox){
+	this.disableSelectorBox = function (selectorBox) {
 		$(selectorBox).css({'pointer-events': 'none'});		
 	}
 	
 	
-	
-	this.enableSelectorBox = function(selectorBox){
+
+	this.enableSelectorBox = function (selectorBox) {
 		$(selectorBox).css({'pointer-events': 'auto'});		
 	}
 	
-	
-	this.removePopup = function(){
-//
-		//  Remove the popup from the DOM
-		//
-		$(this.linkMenu_Popup).fadeOut(Globals.animFast).remove();		
-	}
-	
-	
-	this.takeSnapshot = function(){
-		
-		console.log(prevGroups)
-		$.extend(prevGroups,groups);
-		console.log(prevGroups)
-			
-	}
-	
-	this.cancel = function(){
-		
-		console.log("PREV ", prevGroups)
-		groups = [];
-		$.extend(groups,prevGroups);
-		console.log(groups);
-		this.processGroups();
-			
-	}
-	
-	this.processGroups = function(){
 
-		console.log("PROCESS GROUPS")
-		this.removePopup();
+	
+	this.takeSnapshot = function () {
 		
+		for (var i=0; i<groups.length; i++) {			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+				
+				var viewer = groups[i].ScanViewers[j];
+				groups[i].prevViewers.push(viewer);
+				
+			}
+		}
+			
+	}
+	
+	this.cancel = function () {
+		
+		for (var i=0; i<groups.length; i++) {		
+			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+				
+				this.clearSelectorBox(groups[i].ScanViewers[j]);
+				
+			}
+			
+			groups[i].ScanViewers = groups[i].prevViewers;
+			groups[i].prevViewers = [];		
+
+			this.hideExisting();
+		}	
+		
+
+		this.processGroups();			
+	}
+	
+	this.processGroups = function () {
 		
 		
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		var scanViewers = Globals.getScanViewers();
-		for (var i=0;i<scanViewers.length;i++){
+		var ScanViewers = GLOBALS.getScanViewers();
+		for (var i=0;i<ScanViewers.length;i++) {
 
-			this.disableSelectorBox(scanViewers[i].selectorBox);
+			this.disableSelectorBox(ScanViewers[i].selectorBox);
 			this.hideExisting(500);
 			
 		}
@@ -293,45 +306,45 @@ var sliderLinker = function(args){
 		//
 		//  PRocess viewers that are in an existing groups
 		//
-		for (var i=0; i<groups.length; i++){			
-			for (var j=0; j<groups[i].scanViewers.length; j++){
+		for (var i=0; i<groups.length; i++) {			
+			for (var j=0; j<groups[i].ScanViewers.length; j++) {
 					
 
-				var scanViewer = groups[i].scanViewers[j];
-				var viewerSet = groups[i].scanViewers;
+				var ScanViewer = groups[i].ScanViewers[j];
+				var viewerSet = groups[i].ScanViewers;
 
 				
-				$(scanViewer.widget).bind('mouseenter.sliderlink', function(){
+				$(ScanViewer.widget).bind('mouseenter.sliderlink', function () {
 					
-					var set = Globals.sliderLinker.getViewerSetFromID(this.id);					
-					var scanViewer = set.viewer;
+					var set = GLOBALS.SliderLinker.getViewerSetFromID(this.id);					
+					var ScanViewer = set.viewer;
 					var viewerGroup = set.viewerset;
 					
 
 					
-					for (var k=0; k<viewerGroup.length; k++){	
+					for (var k=0; k<viewerGroup.length; k++) {	
 											
-						if (viewerGroup[k] != scanViewer){
+						if (viewerGroup[k] != ScanViewer) {
 
-							scanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);	
+							ScanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);	
 												
 						}
 						
 					}	
 					
 
-				}).bind('mouseleave.sliderlink', function(){	
+				}).bind('mouseleave.sliderlink', function () {	
 					
-					var set = Globals.sliderLinker.getViewerSetFromID(this.id);
-					if (set){
-						var scanViewer = set.viewer;					
-						scanViewer.frameSlider.clearLinked();						
+					var set = GLOBALS.SliderLinker.getViewerSetFromID(this.id);
+					if (set) {
+						var ScanViewer = set.viewer;					
+						ScanViewer.frameSlider.clearLinked();						
 					}
 
 					
 				});	
 						
-				//$(scanViewer.widget).mouseenter();	
+				//$(ScanViewer.widget).mouseenter();	
 			}
 			
 		}
