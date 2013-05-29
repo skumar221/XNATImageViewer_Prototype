@@ -73,11 +73,9 @@ var XMIV = function (args) {
 	
 	// Don't destroy when clicking on window (i.e. don't propagate)				
 	this.modal.onclick = function (event, element) {
-		  if (event.stopPropagation) {
-		      event.stopPropagation();   // W3C model
-		  } else {
-		      event.cancelBubble = true; // IE model
-		  }
+
+		 __stopPropagation__(event);   // W3C model
+	
 	}
 
 	

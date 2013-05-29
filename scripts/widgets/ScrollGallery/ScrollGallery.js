@@ -89,7 +89,7 @@ ScrollGallery.prototype.defaultArgs = function () {
 		
 		_sliderCSS:	
 		{
-			id: "_frameSlider", 
+			id: "_FrameSlider", 
 			parent: document.body,
 			round: true,
 			handleOffsetLeft: 0,

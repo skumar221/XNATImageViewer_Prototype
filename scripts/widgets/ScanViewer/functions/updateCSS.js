@@ -4,22 +4,66 @@
 //******************************************************
 ScanViewer.prototype.updateCSS = function (args) {
 
-	var that = this;
-	var tabsHeight = $(this.ScanTabs.widget).height();
 
+	var that = this;
+	
+	
 	var widgetHeight = (args && args.height) ? args.height : $(this.widget).height();
 	var widgetWidth = (args && args.width) ? args.width : $(this.widget).width();
 	var widgetTop = (args && args.top) ? args.top : $(this.widget).position().top;
 	var widgetLeft = (args && args.left) ? args.left : $(this.widget).position().left;
 
+	
+	/*
+	 * CONTENT DIVIDER
+	 * 
+	 * The ContentDivider dictates the position of all of the
+	 * other widgets in the ScanViewer
+	 */
+	
+	//  Onload case: this only happens once
 
-	var scanTabTop = widgetHeight  - tabsHeight -1;
-	var contentDivTop = scanTabTop - $(this.ContentDivider.widget).height();
-	var sliderTop = contentDivTop - this.frameSlider.currArgs().handleCSS.height - 5;
+
+	if (!this.ContentDivider.widget.dragging){
+
+		var dimChange = !(__toInt__(this.ContentDivider.containmentDiv.style.width) === widgetWidth);
+		if (dimChange){
+
+			$(this.ContentDivider.widget).css( {
+				top: GLOBALS.minContentDividerTop(widgetHeight),
+			});
+			
+			
+			var t = GLOBALS.minFrameViewerHeight			
+			var h = widgetHeight - t - $(this.ContentDivider.widget).height() - GLOBALS.minScanTabHeight + 5;			
+			$(this.ContentDivider.containmentDiv).css({
+				top: t,			
+				left: 0,
+				height: h,
+				width: widgetWidth,			
+			})
+			
+		}
+	}
+
+	
+	
+	
+	
+	
+	var contentDividerPos = $(this.ContentDivider.widget).position();
+	var contentDividerHeight = $(this.ContentDivider.widget).height();
+	
+	var scanTabTop = contentDividerPos.top + contentDividerHeight;
+	var scanTabHeight = widgetHeight - scanTabTop;
+	var sliderTop = contentDividerPos.top - this.FrameSlider.currArgs().handleCSS.height - 5;
+	
 	var viewerWidth = sliderTop;
 	var viewerHeight = viewerWidth;
+	var viewerLeft = widgetWidth/2 - viewerWidth/2;
 	
 	
+
 
 
 	//----------------------------------
@@ -41,38 +85,24 @@ ScanViewer.prototype.updateCSS = function (args) {
  		left: 0,//marginLeft,
  	  	top: scanTabTop,
  	  	width: widgetWidth - 2,// + marginLeft * 2,
- 	  	height: tabsHeight -1,
+ 	  	height: scanTabHeight -1,
 	});	 
    this.ScanTabs.updateCSS();
 
 
 
 
-	//----------------------------------
-	// Content Divider
-	//----------------------------------
-	this.ContentDivider.updateCSS({
-		widgetCSS:{
-			left: 0,
-			width: widgetWidth,
-			top: contentDivTop,
-			backgroundColor: "rgba(0,0,0,0)"
-		},
-		boundaryCSS:{
-			width: widgetWidth,	
-			top: GLOBALS.minFrameViewerHeight,
-			left: 0,
-			height: __toInt__(this.widget.style.height) - GLOBALS.minScanTabHeight,
-		}
-	});
+
+	
 
 
+	
 
 
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------
-    this.frameSlider.updateCSS({
+    this.FrameSlider.updateCSS({
     	widgetCSS:{
  			top : sliderTop,
 			left : 4,//marginLeft,   		
@@ -83,16 +113,15 @@ ScanViewer.prototype.updateCSS = function (args) {
     })
 
 	
-		 
+	 
 	 //----------------------------------
 	 // CSS: FRAME VIEWER
 	 //----------------------------------
 	 $(this.FrameViewer.widget).css({
- 	    left: 0,//marginLeft,
- 		top: 0,//marginTop,
- 	  	width: widgetWidth,
- 	  	height: widgetWidth,
- 	  	top: (sliderTop - widgetWidth)/2,
+ 	    left: viewerLeft,
+ 		top: 0,
+ 	  	width: viewerWidth,
+ 	  	height: viewerWidth,
 	 });
 	 this.FrameViewer.updateCSS();
 	 
@@ -103,7 +132,8 @@ ScanViewer.prototype.updateCSS = function (args) {
 	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
-	 	top: $(this.FrameViewer.widget).height() - GLOBALS.fontSizeSmall,// -2,
+	 	top: $(this.FrameViewer.widget).height() -  20,// -2,
+	 	left: 10,
 	 });
 	 
 	 
@@ -111,7 +141,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// DRAW FRAME ON FRAMEVIEWER
 	//----------------------------------
-	 this.FrameViewer.drawFrame(this.frameSlider.value, true);
+	 this.FrameViewer.drawFrame(this.FrameSlider.value, true);
 	 
 	 
 	 
@@ -134,70 +164,5 @@ ScanViewer.prototype.updateCSS = function (args) {
 	 
 	 
 	 
-	 //----------------------------------
-	 // Content Divider CAllback
-	 //----------------------------------	 
-	 //$(this.ContentDivider.widget).draggable({drag: function (){}});
-	 $(this.ContentDivider.widget).draggable({
 
-	 	drag: function () {
-
-			var divTop = __toInt__(this.style.top);
-			var divLeft = __toInt__(this.style.left);
-			var divHeight = __toInt__(this.style.height);
-			var divWidth = __toInt__(this.style.width);
-			
-			
-			//----------------------------------
-			// Tabs
-			//----------------------------------	
-			$(that.ScanTabs.widget).css({
-		 	  	top: divTop + divHeight,
-		 	  	height: __toInt__(that.widget.style.height) - (divTop + divHeight) - 1,
-			});	 
-		   that.ScanTabs.updateCSS();	
-		   
-		   
-		   
-		   	//----------------------------------
-			// FRAME SLIDER
-			//----------------------------------
-		    that.frameSlider.updateCSS({
-		    	widgetCSS:{
-		 			top : divTop + divHeight - that.frameSlider.currArgs().handleCSS.height - 16,	
-		    	},
-		    })
-		
-			
-				 
-			 //----------------------------------
-			 // FRAME VIEWER
-			 //----------------------------------
-			 var prevHeight = __toInt__(that.FrameViewer.widget.style.height);
-			 var newHeight = that.frameSlider.currArgs().widgetCSS.top - 10;
-			 var prevWidth = __toInt__(that.FrameViewer.widget.style.width);
-			 var newWidth = prevWidth * (newHeight/prevHeight);
-			 var newLeft = __toInt__(that.widget.style.width)/2 - newWidth/2;
-			 $(that.FrameViewer.widget).css({
-		 	  	height: newHeight,
-		 	  	width: newWidth,
-		 	  	left:  newLeft
-			 });
-			 that.FrameViewer.updateCSS();
-			 
-		
-		
-		
-			 //----------------------------------
-			 // FRAME NUMBER DISPLAY
-			 //----------------------------------	 
-			 $(that.displayableData.frameNumber).css({
-			 	top: $(that.FrameViewer.widget).height() - GLOBALS.fontSizeSmall,// -2,
-			 });	
-			 
-			 //$(that.widget).draggable({ disabled: false });
-			
-		}
-	});
-   	
 }

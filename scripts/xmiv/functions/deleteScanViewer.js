@@ -20,7 +20,7 @@ XMIV.prototype.deleteScanViewer = function (ScanViewer) {
 		//-------------------------			
 		for (var i in this.ScanViewers) {
 			for (var j in this.ScanViewers[i]) {
-				//that.ScanViewers[i][j].frameSlider.clearLinked();
+				//that.ScanViewers[i][j].FrameSlider.clearLinked();
 				//$(that.ScanViewers[i][j].widget).unbind('mouseover');
 				//$(that.ScanViewers[i][j].widget).unbind('mouseout');
 			}	

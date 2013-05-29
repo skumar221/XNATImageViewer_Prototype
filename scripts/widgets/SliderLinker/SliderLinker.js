@@ -89,7 +89,7 @@ var SliderLinker = function (args) {
 			ScanViewer.widget.defaultMouseEvents[i]();
 			
 		}
-		ScanViewer.frameSlider.clearLinked();		
+		ScanViewer.FrameSlider.clearLinked();		
 	}
 	
 	
@@ -326,7 +326,7 @@ var SliderLinker = function (args) {
 											
 						if (viewerGroup[k] != ScanViewer) {
 
-							ScanViewer.frameSlider.linkSlider(viewerGroup[k].frameSlider);	
+							ScanViewer.FrameSlider.linkSlider(viewerGroup[k].FrameSlider);	
 												
 						}
 						
@@ -338,7 +338,7 @@ var SliderLinker = function (args) {
 					var set = GLOBALS.SliderLinker.getViewerSetFromID(this.id);
 					if (set) {
 						var ScanViewer = set.viewer;					
-						ScanViewer.frameSlider.clearLinked();						
+						ScanViewer.FrameSlider.clearLinked();						
 					}
 
 					
