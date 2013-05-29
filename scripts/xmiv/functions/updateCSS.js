@@ -78,11 +78,24 @@ XMIV.prototype.updateCSS = function (args) {
 	if (this.horizontalExpandButtons) {		
 		for (var i in this.horizontalExpandButtons) {	
 			
+			var flippedWidth = modalDims.height - GLOBALS.expandButtonWidth;
 			$(this.horizontalExpandButtons[i]).css({
-				left: modalDims["horizontalExpandButtons"].left,
-				height: modalDims.height - GLOBALS.expandButtonWidth,
-				top: modalDims["horizontalExpandButtons"].tops[i][0],
+				
+
+				/*
 				width: GLOBALS.expandButtonWidth
+				height: modalDims.height - GLOBALS.expandButtonWidth,				
+				left: modalDims["horizontalExpandButtons"].left,
+				top: modalDims["horizontalExpandButtons"].tops[i][0],
+				
+				*/
+				
+				// Doing some funny stuff because it's rotated
+				top: modalDims.height/2 - GLOBALS.expandButtonWidth,
+				left: modalDims["horizontalExpandButtons"].left - flippedWidth/2 + GLOBALS.expandButtonWidth - 15,
+				height: GLOBALS.expandButtonWidth,
+				width: flippedWidth,					
+				
 			})
 					
 		}		

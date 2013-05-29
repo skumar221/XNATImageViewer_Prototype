@@ -39,7 +39,7 @@ XMIV.prototype.modalDims = function (conversion) {
 						GLOBALS.expandButtonWidth;
 	
 	// determine the the modal width based on prescribed proportions
-	var ScanViewerHeight = ( modalHeight - (ScanViewerRows * GLOBALS.expandButtonWidth)) / ScanViewerRows;
+	var ScanViewerHeight = ( modalHeight - ((ScanViewerRows + 1) * GLOBALS.expandButtonWidth)) / ScanViewerRows;
 	var ScanViewerWidth = GLOBALS.ScanViewerDimRatio * ScanViewerHeight;
 	
 	// determine the minimum modal width
@@ -56,11 +56,11 @@ XMIV.prototype.modalDims = function (conversion) {
 	//-------------------------
 	
 	if (modalWidth > maxModalWidth) {	
-							 		
+
 		ScanViewerWidth = (maxModalWidth - (GLOBALS.ScrollGalleryWidth + GLOBALS.ScanViewerVerticalMargin * ScanViewerColumns + GLOBALS.expandButtonWidth))/ScanViewerColumns;	
 		ScanViewerHeight = ScanViewerWidth / GLOBALS.ScanViewerDimRatio;
 		modalWidth= maxModalWidth;
-		modalHeight = (ScanViewerHeight * ScanViewerRows) + (GLOBALS.ScanViewerVerticalMargin  * (ScanViewerRows  - 1)) + GLOBALS.expandButtonWidth;
+		modalHeight = (ScanViewerHeight * ScanViewerRows) + (GLOBALS.ScanViewerVerticalMargin  * (ScanViewerRows  - 1)) + GLOBALS.expandButtonWidth*2;
 
 	}
 	
@@ -76,10 +76,10 @@ XMIV.prototype.modalDims = function (conversion) {
 	// SCROLL GALLERY DIMS
 	//-------------------------	
 	var ScrollGalleryCSS = {
-		width: 110,
-		height: Math.round(modalHeight),
+		width: 170,
+		height: Math.round(modalHeight) - __toInt__(this.modal.style.borderRadius)*2,
 		left: 0,
-		top: 0,
+		top: __toInt__(this.modal.style.borderRadius),
 	}
 		
 		
@@ -99,10 +99,13 @@ XMIV.prototype.modalDims = function (conversion) {
 			
 
 			if (j==0 || !ScanViewerLefts[i]) ScanViewerLefts.push([])
-			ScanViewerLefts[i][j] = l;
+				ScanViewerLefts[i][j] = l;
 			
 			if (j==0 || !ScanViewerTops[i]) ScanViewerTops.push([]);
-			ScanViewerTops[i][j] = (-1 + i * (ScanViewerHeight + GLOBALS.ScanViewerHorizontalMargin));
+				ScanViewerTops[i][j] = (-1 + i * (ScanViewerHeight + GLOBALS.ScanViewerHorizontalMargin));
+			
+			//if (i==0)
+			ScanViewerTops[i][j] +=  GLOBALS.expandButtonWidth;
 		}
 	} 
 	
@@ -146,8 +149,8 @@ XMIV.prototype.modalDims = function (conversion) {
 		},
 		closeButton: {
 			
-			left: Math.round(_l) + Math.round(modalWidth) - (__toInt__(that.closeButton.style.width)/2),
-			top: Math.round(_t) - $(this.closeButton).height()/2,// (__toInt__(that.closeButton.style.width)/2),
+			left: Math.round(_l) + Math.round(modalWidth) - (__toInt__(that.closeButton.style.width)) - 13,
+			top: Math.round(_t) + 10,// + $(this.closeButton).height()/3,// (__toInt__(that.closeButton.style.width)/2),
 			
 		},
 		horizontalExpandButtons: {

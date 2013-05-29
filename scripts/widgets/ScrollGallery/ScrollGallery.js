@@ -89,7 +89,7 @@ ScrollGallery.prototype.defaultArgs = function () {
 		
 		_sliderCSS:	
 		{
-			id: "_FrameSlider", 
+			id: "FrameSlider", 
 			parent: document.body,
 			round: true,
 			handleOffsetLeft: 0,
@@ -98,7 +98,7 @@ ScrollGallery.prototype.defaultArgs = function () {
 			},
 			handleCSS:{
 				height: 70,
-				width: 9,
+				width: 7,
 				borderWidth: 0,
 				borderColor: GLOBALS.semiactiveLineColor,
 				backgroundColor: "rgba(105,105,105,1)"
@@ -158,10 +158,10 @@ ScrollGallery.prototype.setContents = function (obj) {
 	//-------------------------------
 	// IF OBJ IS A FUNCTION
 	//-------------------------------  
-	if (typeof obj == "function") {
+	if (typeof obj === "function") {
 		obj();
 	}
-	else if (typeof obj == "object") {
+	else if (typeof obj === "object") {
 		// if obj is a DOM Element
 		if(obj.tagName) {
 			that.scrollContent.appendChild(obj);

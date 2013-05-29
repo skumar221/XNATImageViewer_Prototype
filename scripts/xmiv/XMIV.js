@@ -20,16 +20,16 @@ defaultArgs_XMIV = {
 		position: "fixed",
 		height: "100%",
 		width: "100%",
-		backgroundColor: "rgba(0,0,0,.95)",
+		backgroundColor: "rgba(0,0,0,.5)",
 		//"overflow-x": "hidden",
 		//"overflow-y": "hidden",
 		"display": "inline-block",
 		"font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
 	},
-	_modalcss: {
+	modalCSS: {
 		position: "absolute",
 		backgroundColor: "rgba(0,0,0,1)",
-		border: "solid rgba(95, 95, 95, 1) 2px",
+		//border: "solid rgba(95, 95, 95, 1) 2px",
 		"border-radius": "20px"	
 		// for height mins and maxes, see below
 	}
@@ -65,7 +65,7 @@ var XMIV = function (args) {
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	this.modal = __makeElement__("div", this.widget, "modal", this.args._modalcss);	
+	this.modal = __makeElement__("div", this.widget, "modal", this.args.modalCSS);	
 	$(this.modal).css({
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
@@ -87,11 +87,11 @@ var XMIV = function (args) {
 	this.closeButton = __makeElement__("img", this.widget, "closeIcon", {
 		position: "absolute", 
 		cursor: "pointer",
-		width: 20,
-		height: 20,
+		width: 10,
+		height: 10,
 		zIndex: 103
 	});	
-	this.closeButton.src = "./icons/closeButton.png";
+	this.closeButton.src = "./icons/closeX.png";
 
 
 	
@@ -114,7 +114,7 @@ var XMIV = function (args) {
 			left: this.args.gutter,
 			top: this.args.marginTop,
 			height: 700,
-			border: "solid rgba(90,90,90,1) 0px"
+			//border: "solid rgba(90,90,90,1) 1px"
 		}
 	});	
 	// set the contents
@@ -124,13 +124,15 @@ var XMIV = function (args) {
 		var totalHeight = 0;
 		  	  
 		for (var i=0; i<that.scanDataPaths.length; i++) {
-			var h = i*(100) + thumbSpacing*i + that.ScrollGallery.args.scrollMarginY;  	
+			var h = i*(80) + thumbSpacing*i + that.ScrollGallery.args.scrollMarginY;  	
 			var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
 				  	id: "scrollContent_" + i.toString(),
 				  	parent: that.ScrollGallery.scrollContent,
 				  	CSS: {
 				  		top: h, 
 				  		left: that.ScrollGallery.args.scrollMarginX,
+				  		width: 70,
+				  		height: 70,
 				  	}
 				  });
 	

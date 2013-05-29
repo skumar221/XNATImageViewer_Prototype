@@ -24,17 +24,18 @@ var defaultArgs_ScanViewer = {
 		widgetCSS:{
 		},
 		handleCSS:{
-			height: 10,
-			width: 10,
+			height: 8,
+			width: 8,
 			borderRadius: 2,
 			borderColor: GLOBALS.semiactiveLineColor,
 			backgroundColor: "rgba(255,255,255,1)"
 		},
 		trackCSS:{
-			height: 5,
+			height: 3,
 			borderWidth: 1,
 			borderColor: GLOBALS.semiactiveLineColor,
-			backgroundColor: "rgba(50, 50, 50, 1)"
+			backgroundColor: "rgba(70, 70, 70, 1)",
+			borderRadius: "3px"
 		}
 	}
 }

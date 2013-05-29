@@ -11,15 +11,15 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	//-------------------------
 	// The button CSS
 	//-------------------------
-	var currButton = __makeElement__("button", this.modal, this.args.id + "_verticalExpandButton", {
+	var currButton = __makeElement__("button", this.modal, "VerticalExpandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
-		"font-size": 18,
-		"font-weight": "bold",
+		"font-size": GLOBALS.fontSizeMed,
+		fontFamily: GLOBALS.fontFamily,
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
-		backgroundColor: "rgba(70, 70, 70, 1)",
+		backgroundColor: "rgba(0, 0, 0, 0)",
 		zIndex: 100
 	})	
 
@@ -34,13 +34,12 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(currButton).mouseenter(function () {
+	$(currButton).mouseenter( function () {
 	  $(currButton).stop().fadeTo(200, .8);
-	}).mouseleave(
-		function () { 
-			if (that.changeState != "expanding") {
-				$(currButton).stop().fadeTo(200, .5);
-			}			
+	}).mouseleave( function () { 
+		//if (that.changeState != "expanding") {
+			$(currButton).stop().fadeTo(200, .5);
+		//}			
     });
 
 	
@@ -48,7 +47,7 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	//-------------------------
 	// Its inner text
 	//-------------------------			
-	currButton.innerHTML = "+";
+	currButton.innerHTML = "+ row";
 
 
 
@@ -56,6 +55,7 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	// Button onlclick
 	//-------------------------		
 	currButton.onclick = function () { 
+		$(currButton).stop().fadeTo(200, .5);
 		that.addRow(that.verticalExpandButtons.indexOf(this)); 
 	}	
 }

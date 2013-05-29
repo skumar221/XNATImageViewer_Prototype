@@ -12,39 +12,46 @@ XMIV.prototype.addHorizontalExpandButton = function () {
 	//-------------------------
 	// The button CSS
 	//-------------------------
-	var hB = __makeElement__("button", this.modal, this.args.id + "_expandButton", {
+	var currButton = __makeElement__("button", this.modal, "HorizontalExpandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
-		"font-size": 18,
-		"font-weight": "bold",
+		"font-size": GLOBALS.fontSizeMed,
+		fontFamily: GLOBALS.fontFamily,
+		//"font-weight": "bold",
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
-		backgroundColor: "rgba(70, 70, 70, 1)",
+		//backgroundColor: "rgba(70, 70, 70, 1)",
+		backgroundColor: "rgba(0, 0, 0, 0)",
 		width: this.args.expandButtonWidth,
 		zIndex: 100,
+		"-webkit-transform": "rotate(90deg)",
+		"-moz-transform": "rotate(90deg)",   
+		"-o-transform": "rotate(90deg)",
 		//"vertical-align": "middle",
 		//align: "middle"
+		//width: 500,
 	});
-	this.horizontalExpandButtons.push(hB);
+	this.horizontalExpandButtons.push(currButton);
 	
 	
 	
 	//-------------------------
 	// Its natural state -- slightly faded
 	//-------------------------
-	$(hB).fadeTo(0, .5);
+	$(currButton).fadeTo(0, .5);
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(hB).mouseenter(function () {
-	  $(hB).stop().fadeTo(200, .8);
-	}).mouseleave(
-		function () { 
-			if (that.changeState != "expanding") {
-				$(hB).stop().fadeTo(200, .5);
-
-			}			
+	$(currButton).mouseenter(function () {
+	  $(currButton).stop().fadeTo(200, .8);
+	}).mouseleave( function () { 
+		
+		//if (that.changeState != "expanding") {
+			
+			$(currButton).stop().fadeTo(200, .5);
+		
+		//}			
     });
 
 	
@@ -52,14 +59,15 @@ XMIV.prototype.addHorizontalExpandButton = function () {
 	//-------------------------
 	// Its inner text
 	//-------------------------			
-	hB.innerHTML = "+";
+	currButton.innerHTML = "+ column";
 
 
 	//-------------------------
 	// Button onlclick
 	//-------------------------		
 
-	hB.onclick = function () {
+	currButton.onclick = function () {
+		$(currButton).stop().fadeTo(200, .5);
 		that.addColumn(that.horizontalExpandButtons.indexOf(this));
 	}; 
 }

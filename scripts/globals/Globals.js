@@ -70,7 +70,7 @@ GLOBALS.thumbnailWidth = 85;
 //---------------------------
 //  EXPAND BUTTON
 //---------------------------
-GLOBALS.expandButtonWidth = 20;
+GLOBALS.expandButtonWidth = 30;
 
 //---------------------------
 //  SCROLL GALLERY

@@ -332,7 +332,7 @@ __verticalSlider__.prototype.moveHandle = function (moveType, args) {
 				
 		// Do not want to propagate to the DOM
 		// For either mouse or mouseWheel events
-		if (args.event) { args.__stopPropagation__(event); } 
+		if (args.event) { __stopPropagation__(args.event); } 
 
 
 
