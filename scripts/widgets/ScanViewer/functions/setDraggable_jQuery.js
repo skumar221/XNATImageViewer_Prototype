@@ -3,8 +3,7 @@
 //
 //******************************************************
 ScanViewer.prototype.setDraggable_jQuery = function () {
-	
-	console.log("HERE2")
+
 	
 	$(this.widget).draggable( {
 		

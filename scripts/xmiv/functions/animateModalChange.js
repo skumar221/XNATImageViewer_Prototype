@@ -91,6 +91,7 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 				
 				//$(svWidget).off();
 				
+
 				 $(svWidget).off().stop().animate({
 				    
 				    left: modalDims.ScanViewer.lefts[i][j],
@@ -99,12 +100,14 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 				    height: modalDims.ScanViewer.height,
 				    
 				  }, GLOBALS.animSlow, function () {	
-				  		
+				  	
+				  	//$(this).on();
 				  	 for (var i in that.ScanViewers) {
 						for (var j in that.ScanViewers[i]) { 	
 							
-							console.log("HERE")
-							that.ScanViewers[i][j].setDraggable_jQuery();	
+							
+							that.ScanViewers[i][j].setJQueryEvents();
+
 						}
 					}  	
 				 

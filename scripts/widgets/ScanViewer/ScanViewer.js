@@ -56,7 +56,7 @@ var ScanViewer = function (args) {
 	this.widget.defaultMouseEvents = [];
 	
 	
-	this.setDraggable_jQuery();
+	
 
     	
 	 //----------------------------------
@@ -322,6 +322,16 @@ var ScanViewer = function (args) {
 	// Setup procedure, defines the mouseenters
 	//--------------------------		
 	
+	this.setJQueryEvents();
+
+
+}
+
+ScanViewer.prototype.setJQueryEvents = function () {
+	
+	var that = this;
+	
+	this.setDraggable_jQuery();
 	
 	$(this.widget).bind('mouseenter.hover', function () {
 
@@ -343,12 +353,9 @@ var ScanViewer = function (args) {
 		
 	});
 	
-	$(this.widget).mouseleave();
+	$(this.widget).mouseleave();	
 	
-
-
 }
-
 
 
 
