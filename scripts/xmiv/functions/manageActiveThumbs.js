@@ -7,7 +7,7 @@ XMIV.prototype.manageActiveThumbs = function (thumb, args) {
 	
 
 	// We basically want to cycle through the manager
-	// so that any thumbnail associated with args.activeDropZoneID
+	// so that any Thumbnail associated with args.activeDropZoneID
 	// is removed and replaced with thumb
 	if (args.activeDropZoneID) {
 		for (var i=0;i<this.ScanViewers.length;i++) {

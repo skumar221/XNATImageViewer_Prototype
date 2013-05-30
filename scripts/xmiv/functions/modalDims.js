@@ -76,10 +76,8 @@ XMIV.prototype.modalDims = function (conversion) {
 	// SCROLL GALLERY DIMS
 	//-------------------------	
 	var ScrollGalleryCSS = {
-		width: 170,
-		height: Math.round(modalHeight) - __toInt__(this.modal.style.borderRadius)*2,
-		left: 0,
-		top: __toInt__(this.modal.style.borderRadius),
+		height: Math.round(modalHeight) - GLOBALS.expandButtonWidth*2,
+		top: GLOBALS.expandButtonWidth,
 	}
 		
 		
@@ -90,7 +88,7 @@ XMIV.prototype.modalDims = function (conversion) {
 	//-------------------------	
 	var ScanViewerLefts = [];
 	var ScanViewerTops = [];
-	var viewerStart = ScrollGalleryCSS.width + ScrollGalleryCSS.left + GLOBALS.ScanViewerVerticalMargin;
+	var viewerStart = $(this.ScrollGallery.widget).width() +  $(this.ScrollGallery.widget).position().left + GLOBALS.ScanViewerVerticalMargin;
 
 	for (var i in this.ScanViewers) {
 		for (var j in this.ScanViewers[i]) { 

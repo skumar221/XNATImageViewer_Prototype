@@ -30,7 +30,8 @@ defaultArgs_XMIV = {
 		position: "absolute",
 		backgroundColor: "rgba(0,0,0,1)",
 		//border: "solid rgba(95, 95, 95, 1) 2px",
-		"border-radius": "20px"	
+		border: "none",
+		"border-radius": "20px"	,
 		// for height mins and maxes, see below
 	}
 }
@@ -65,7 +66,7 @@ var XMIV = function (args) {
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	this.modal = __makeElement__("div", this.widget, "modal", this.args.modalCSS);	
+	this.modal = __makeElement__("div", this.widget, GLOBALS.ModalID, this.args.modalCSS);	
 	$(this.modal).css({
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
@@ -107,50 +108,7 @@ var XMIV = function (args) {
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
-	this.ScrollGallery = new ScrollGallery({
-		parent: this.modal,
-		orientation: "vertical",
-		widgetCSS: {
-			left: this.args.gutter,
-			top: this.args.marginTop,
-			height: 700,
-			//border: "solid rgba(90,90,90,1) 1px"
-		}
-	});	
-	// set the contents
-	this.ScrollGallery.setContents(function () {
-		that.ScrollGallery.thumbs = [];
-		var thumbSpacing = that.ScrollGallery.args.scrollMarginY;
-		var totalHeight = 0;
-		  	  
-		for (var i=0; i<that.scanDataPaths.length; i++) {
-			var h = i*(80) + thumbSpacing*i + that.ScrollGallery.args.scrollMarginY;  	
-			var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
-				  	id: "scrollContent_" + i.toString(),
-				  	parent: that.ScrollGallery.scrollContent,
-				  	CSS: {
-				  		top: h, 
-				  		left: that.ScrollGallery.args.scrollMarginX,
-				  		width: 70,
-				  		height: 70,
-				  	}
-				  });
-	
-				
-			// We want to manage the active thumbnails...
-			// we need to "deactivate" them when another has replaced
-			// their slot.  
-			scanThumb.addActivatedCallback(function (thumb, args) {
-				that.manageActiveThumbs(thumb, args);
-			})
-			
-			
-			that.ScrollGallery.thumbs.push(scanThumb);
-		}
-		  
-		  that.ScrollGallery.scrollContent.style.height = __toPx__(h + that.ScrollGallery.args.scrollMarginY*1 + 100);
-		  that.ScrollGallery.scrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
-	})
+	this.addScrollGallery();
 	
 	
 	

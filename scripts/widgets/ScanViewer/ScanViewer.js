@@ -14,7 +14,7 @@ var defaultArgs_ScanViewer = {
 	 	"overflow-x": "visible",
 	 	"overflow-y": "visible"
 	},
-	_sliderCSS:	
+	sliderCSS:	
 	{
 		id: "_FrameSlider", 
 		parent: document.body,
@@ -84,7 +84,7 @@ var ScanViewer = function (args) {
 	 //----------------------------------
 	 // FRAME SLIDER
 	 //----------------------------------	
-	this.FrameSlider = new __horizontalSlider__(__mergeArgs__(this.args._sliderCSS, {
+	this.FrameSlider = new __horizontalSlider__(__mergeArgs__(this.args.sliderCSS, {
 		id: "FrameSlider", 
 		parent: this.widget,
 		round: true,
@@ -312,6 +312,41 @@ var ScanViewer = function (args) {
 	});
 	
 	this.updateCSS();
+	
+	
+	var that = this;
+	var inactiveFade = .6;
+	
+	
+	//--------------------------
+	// Setup procedure, defines the mouseenters
+	//--------------------------		
+	
+	
+	$(this.widget).bind('mouseenter.hover', function () {
+
+		$(that.AxisMenu).stop().show();
+		$(that.LinkMenu).stop().show();
+		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, 1);
+		$(that.widget).stop().animate({
+			//borderColor: "rgb(115,115,115)"
+		}, GLOBALS.animFast)
+	
+	}).bind('mouseleave.hover', function(){
+
+		$(that.AxisMenu).stop().hide();
+		$(that.LinkMenu).stop().hide();
+		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, .7);
+		$(that.widget).stop().animate({
+			//borderColor: "rgb(85,85,85)"
+		}, GLOBALS.animFast)
+		
+	});
+	
+	$(this.widget).mouseleave();
+	
+
+
 }
 
 

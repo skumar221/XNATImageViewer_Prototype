@@ -2,7 +2,7 @@ var defaultArgs_FrameViewer = {
 	id: "FrameViewer",
 	parent: document.body,
 	onloadFrame: 0,
-	blankMsg : "drag and drop thumbnail here",
+	blankMsg : "drag and drop Thumbnail here",
 	contrastThreshold: .1,
 	CSS: {
 			position: 'absolute',

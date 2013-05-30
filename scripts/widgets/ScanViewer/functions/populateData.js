@@ -83,7 +83,7 @@ ScanViewer.prototype.populateData = function (data) {
 			}
 		});	
 
-		var contents = __makeElement__("div", that.sessionInfoScrollGallery.scrollContent, that.args.id + "_contents");
+		var contents = __makeElement__("div", that.sessionInfoScrollGallery.ScrollContent, that.args.id + "_contents");
 		var counter = 0;
 		for (i in labelObj) {
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			

@@ -51,7 +51,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 	//------------------------------
 	// ADD Menu div
 	//------------------------------	
-	this.linkMenu = __makeElement__("div", this.widget, "linkMenu",{
+	this.LinkMenu = __makeElement__("div", this.widget, "LinkMenu",{
 		position: "absolute",
 		left: iconStartLeft,
 		top: iconStartTop,// + spacer*i,
@@ -59,14 +59,14 @@ ScanViewer.prototype.addLinkMenu = function () {
 		width: iconDimMed,
 		//border: "sold 1px rgba(100,100,100,1)"
 	});
-	this.linkMenu.closed = false;
+	this.LinkMenu.closed = false;
 	
 	
 	
 	//------------------------------
 	// ADD Menu img (child of Menu DIV)
 	//------------------------------	
-	this.linkMenu.icon = __makeElement__("img", this.linkMenu, "icon",{
+	this.LinkMenu.icon = __makeElement__("img", this.LinkMenu, "icon",{
 		position: "absolute",
 		left: 0,
 		top: 0,// + spacer*i,
@@ -74,15 +74,15 @@ ScanViewer.prototype.addLinkMenu = function () {
 		width: iconDimSmall ,
 		cursor: "pointer", 
 	});	
-	this.linkMenu.icon.src = "./icons/linkMenu/Chain-Broken.png";
-	that.linkMenu.iconHovered = false;
+	this.LinkMenu.icon.src = "./icons/LinkMenu/Chain-Broken.png";
+	that.LinkMenu.iconHovered = false;
 
 
 
 	//------------------------------
 	// SUB MENU
 	//------------------------------	
-	this.linkMenu.subMenu = __makeElement__("div", this.linkMenu, "subMenu",{
+	this.LinkMenu.subMenu = __makeElement__("div", this.LinkMenu, "subMenu",{
 		position: "absolute",
 		left: -subMenuWidth + iconDimMed,
 		top: 0,
@@ -92,19 +92,19 @@ ScanViewer.prototype.addLinkMenu = function () {
 		//border: "solid 1px rgba(100,100,100,1)"
 	});	
 	// For onclick purposes
-	this.linkMenu.subMenu.pinned = false;
+	this.LinkMenu.subMenu.pinned = false;
 
 
 
 	//------------------------------
 	// ADD MENU ICONS
 	//------------------------------
-	this.linkMenu.subMenu.icons = [];	
+	this.LinkMenu.subMenu.icons = [];	
 	
 	for (var i in iconVals) {
 		for (var j=0; j<iconVals[i].images.length; j++) {
 
-			var icon = __makeElement__("img", this.linkMenu.subMenu, "icon_" + iconVals[i].images[j],{
+			var icon = __makeElement__("img", this.LinkMenu.subMenu, "icon_" + iconVals[i].images[j],{
 				position: "absolute",
 				top: iconDimMed  * (i-1),
 				// Right justify
@@ -114,10 +114,10 @@ ScanViewer.prototype.addLinkMenu = function () {
 				cursor: "pointer", 
 			});	
 			
-			icon.src = "./icons/linkMenu/" + iconVals[i].images[j] + ".png";
+			icon.src = "./icons/LinkMenu/" + iconVals[i].images[j] + ".png";
 			icon.title = iconVals[i].titles[j];
 			
-			this.linkMenu.subMenu.icons.push(icon);	
+			this.LinkMenu.subMenu.icons.push(icon);	
 			
 			if (icon.title == "Link slider to selected group") {
 				
@@ -131,7 +131,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 
 					GLOBALS.SliderLinker.addLinkMenuPopup(that);
 					
-					that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Closed.png";
+					that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Closed.png";
 				}				
 			}
 			
@@ -143,7 +143,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					__stopPropagation__(event);
 					GLOBALS.SliderLinker.addGroup();				
 					GLOBALS.SliderLinker.addLinkMenuPopup(that, "Select viewers for new link group.  Click 'Done' when finished.");
-					that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Closed.png";
+					that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Closed.png";
 					
 				}				
 			}
@@ -156,7 +156,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					
 					if (that.selectorBox) {
 						GLOBALS.SliderLinker.removeFromGroup(that, true);
-						that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
+						that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					}
 
 				}				
@@ -169,7 +169,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					
 					if (that.selectorBox) {
 						GLOBALS.SliderLinker.removeGroup(that);
-						that.linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
+						that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					}
 
 				}				
@@ -185,7 +185,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					var viewers = GLOBALS.ScanViewers();
 					
 					for (var i=0; i<viewers.length; i++) {
-						viewers[i].linkMenu.childNodes[0].src = "./icons/linkMenu/Chain-Broken.png";
+						viewers[i].LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					}
 				}				
 			}
@@ -225,13 +225,13 @@ ScanViewer.prototype.addLinkMenu = function () {
 		if (bind) {
 			
 			$(icon).bind('mouseenter.default', function () {
-				if (that.linkMenu.iconHovered) {
+				if (that.LinkMenu.iconHovered) {
 					$(this).stop().fadeTo(GLOBALS.animFast, 1);
 				}			
 			})
 			
 			$(icon).bind('mouseleave.default', function () {
-				if (that.linkMenu.iconHovered) {
+				if (that.LinkMenu.iconHovered) {
 					$(this).stop().fadeTo(GLOBALS.animFast, .5);
 				}	
 			});	
@@ -253,9 +253,9 @@ ScanViewer.prototype.addLinkMenu = function () {
 	//	
 	function subLeave() {
 		
-		$(that.linkMenu.subMenu).fadeOut(GLOBALS.animFast);
-		$(that.linkMenu.icon).fadeTo(GLOBALS.animFast, .5);
-		that.linkMenu.iconHovered = false;
+		$(that.LinkMenu.subMenu).fadeOut(GLOBALS.animFast);
+		$(that.LinkMenu.icon).fadeTo(GLOBALS.animFast, .5);
+		that.LinkMenu.iconHovered = false;
 				
 	}
 	
@@ -265,10 +265,10 @@ ScanViewer.prototype.addLinkMenu = function () {
 	//	
 	function mainEnter() {
 
-		if (that.linkMenu.iconHovered) {
+		if (that.LinkMenu.iconHovered) {
 			
-			$(that.linkMenu.icon).fadeTo(GLOBALS.animFast, 1);
-			$(that.linkMenu.subMenu).fadeIn(GLOBALS.animFast);
+			$(that.LinkMenu.icon).fadeTo(GLOBALS.animFast, 1);
+			$(that.LinkMenu.subMenu).fadeIn(GLOBALS.animFast);
 						
 		}	
 	}
@@ -284,15 +284,15 @@ ScanViewer.prototype.addLinkMenu = function () {
 			//
 			// Unbind hover events to pin the subMenu
 			//
-			$(that.linkMenu.subMenu).unbind('mouseleave.link');
-			$(that.linkMenu).unbind('mouseenter.link');				
+			$(that.LinkMenu.subMenu).unbind('mouseleave.link');
+			$(that.LinkMenu).unbind('mouseenter.link');				
 		}
 		else{
 			//
 			// Bind the hover events to unpin subMenu
 			//
-			$(that.linkMenu.subMenu).bind('mouseleave.link', subLeave);
-			$(that.linkMenu).bind('mouseenter.link', mainEnter);
+			$(that.LinkMenu.subMenu).bind('mouseleave.link', subLeave);
+			$(that.LinkMenu).bind('mouseenter.link', mainEnter);
 		}	
 	}
 	
@@ -305,20 +305,20 @@ ScanViewer.prototype.addLinkMenu = function () {
 		//
 		// MAIN MENU ICON - default fade state
 		//
-		$(that.linkMenu.icon).fadeTo(0,.5);
+		$(that.LinkMenu.icon).fadeTo(0,.5);
 		
 		
 		//
 		// SUB MENU - default fade state
 		//		
-		$(that.linkMenu.subMenu).fadeOut(0);
+		$(that.LinkMenu.subMenu).fadeOut(0);
 		
 		
 		//
 		//  MAIN MENU ICON - mouseenter
 		//
-		$(that.linkMenu.icon).mouseenter(function () {
-			that.linkMenu.iconHovered = true;
+		$(that.LinkMenu.icon).mouseenter(function () {
+			that.LinkMenu.iconHovered = true;
 			mainEnter();
 		})
 		
@@ -326,9 +326,9 @@ ScanViewer.prototype.addLinkMenu = function () {
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.linkMenu.subMenu.icons.length; i++) {
+		for (var i=0;i<that.LinkMenu.subMenu.icons.length; i++) {
 			
-			var icon = that.linkMenu.subMenu.icons[i];
+			var icon = that.LinkMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);
 			subMenuIconBind(icon, true);
 

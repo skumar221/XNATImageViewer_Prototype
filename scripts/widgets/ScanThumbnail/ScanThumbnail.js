@@ -4,18 +4,30 @@ defaultArgs_ScanThumbnail = {
 	draggableParent: document.body,
 	returnAnimMax: 300,
 	activated: false,
-	CSS: {
+	widgetCSS: {
 		position: "absolute",
-		width: GLOBALS.thumbnailWidth,
-		height: GLOBALS.thumbnailHeight,
+		width: GLOBALS.ThumbnailWidgetWidth,
+		height: GLOBALS.ThumbnailWidgetHeight,
+		top: 0,
+		left: 0,			
+	    "border" : "solid",
+		"border-color": "rgba(50,50,50,1)",
+		"color": "rgba(0,0,0,1)",
+	  	//"background-color" : "rgba(120,31,60,1)",
+	  	"border-width" : 1,
+	  	"border-radius": 0,	 
+	  	"cursor": "pointer"
+	},
+	ThumbnailImageCSS: {
+		position: "absolute",
+		width: GLOBALS.ThumbnailImageWidth - 2,
+		height: GLOBALS.ThumbnailImageHeight - 2,
 		top: 0,
 		left: 0,	
 		"overflow-y": "hidden",
 		"overflow-x": "hidden",
-		"font-size": 12,			
-	    "font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
 	    "border" : "solid",
-		"border-color": "rgba(50,50,50,1)",
+		"border-color": "rgba(255,255,255,1)",
 		"color": "rgba(0,0,0,1)",
 	  	//"background-color" : "rgba(120,31,60,1)",
 	  	"border-width" : 1,
@@ -38,9 +50,12 @@ function ScanThumbnail(scanData, args) {
 
 	this.mouseDown = false;
 
+	__setCSS__(this.widget, __mergeArgs__(defaultArgs_ScanThumbnail.widgetCSS, args.widgetCSS))
+	
+	
 	
 	//--------------------------------
-	// THUMBNAIL IMAGE
+	// T
 	//--------------------------------
 	// AJAX QUERY WOULD BE HERE
 	this.scanData = scanData;	
@@ -48,17 +63,18 @@ function ScanThumbnail(scanData, args) {
 	
 	
 	//--------------------------------
-	// THUMBNAIL IMAGE
+	// THUMBNAIL IMAGE (goes Into Canvas)
 	//--------------------------------	
-	this.thumbImage = new Image();
-	this.thumbImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
+	this.ThumbnailImage = new Image();
+	this.ThumbnailImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
+
 	
 	
 	//--------------------------------
 	// THUMBNAIL CANVAS
 	//--------------------------------
-	this.thumb = this.makeThumbnailCanvas("_thumb");
-	this.cloneable = this.thumb; // for __Droppable__.js
+	this.ThumbnailCanvas = this.makeThumbnailCanvas("ThumbCanvas");
+	this.cloneable = this.ThumbnailCanvas; // for __Droppable__.js
 	
 	
 	
@@ -68,38 +84,40 @@ function ScanThumbnail(scanData, args) {
 	this.sagittalFrames = this.getFrameList("sagittal"); 
 	this.coronalFrames = this.getFrameList("coronal");
 	this.axialFrames = this.getFrameList("axial");
-
-
-
-
+	
 	
 	
 	//--------------------------------
-	// HOVER STUFF
+	// TEXT ELEMENT
 	//--------------------------------
-	this.hoverData = __makeElement__("div", this.widget, this.args.id + "_hoverData", {
+	var thumbPos = $(this.ThumbnailCanvas).position()
+	var textTop = thumbPos.top;
+	var textLeft = thumbPos.left + $(this.ThumbnailCanvas).width() + GLOBALS.ThumbnailImageMarginX;
+	
+	
+	this.TextElement = __makeElement__("div", this.widget, "TextElement", {
 		position: "absolute",
-		height: this.args.CSS.height,
-		width: this.args.CSS.width,
-		top: 0,
-		left: 0,
+		height: this.args.ThumbnailImageCSS.height,
+		width: this.args.ThumbnailImageCSS.width,
+		top: textTop,
+		left: textLeft,
 		color: "rgba(255,255,255,1)",
-		backgroundColor: "rgba(80,80,80,.5)",
+		fontSize: 11,		
+	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif',	
 	});
-	$(this.hoverData).fadeTo(0,0)
-	this.hoverData.align = "left";
-	this.hoverData.text = __makeElement__("div", this.hoverData, this.hoverData.id + "_text",{
-		position: "absolute",
-		padding: 6,
-		fontSize: 10
-		//marginRight: 10
-	})
-	this.hoverData.text.innerHTML += "<div style='margin-right:10px'>";
-	this.hoverData.text.innerHTML += this.scanData.sessionInfo["SessionID"].value + "<br>";
-	this.hoverData.text.innerHTML += this.scanData.sessionInfo["type"].value + "<br>";
-	this.hoverData.text.innerHTML += "SCAN: " + __toInt__(this.scanData.sessionInfo["Scan"].value) + "<br>";
-	this.hoverData.text.innerHTML += "</div>";
-	this.setHoverMethods();
+
+	this.TextElement.innerHTML += "<b><font size = '3'>" + __toInt__(this.scanData.sessionInfo["Scan"].value) + "</font></b><br>";
+	this.TextElement.innerHTML += this.scanData.sessionInfo["type"].value.toString().toLowerCase() + "<br>";
+	this.TextElement.innerHTML += (this.scanData["sagittalPaths"].length.toString().toLowerCase() + " frames<br>");
+
+	
+
+	
+	this.addHoverMethods();
+	this.addDraggableMethods();
+
+	
+	/*
 	__Droppable__(this);
 	
 	
@@ -121,17 +139,25 @@ function ScanThumbnail(scanData, args) {
 	})
 	
 	
-	this.updateCSS();	
-	
+
+	*/
 	
 	// Once the image lods, we want to make sure it is also the draggable image
-	// and that it's draw on the thumbnail canvas.
-	$(this.thumbImage).load(function () {		
-		if (that.thumb && that.thumb.nodeName == "CANVAS")
-			that.thumb.getContext("2d").drawImage(that.thumbImage, 0, 0, that.CSS.width, that.CSS.height);
+	// and that it's draw on the Thumbnail canvas.
+
+	$(this.ThumbnailImage).load(function () {		
+		if (that.ThumbnailCanvas)
+		
+			that.ThumbnailCanvas.getContext("2d").drawImage(
+				 that.ThumbnailImage, 0, 0, 
+				 that.args.ThumbnailImageCSS.width, 
+				 that.args.ThumbnailImageCSS.height
+			);
+		
 		else
 			console.log("No thumb canvas")
 	});
+
 }
 
 
@@ -144,17 +170,14 @@ ScanThumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	
 	var that = this;
 	
-	var elt = __makeElement__("canvas", this.widget, this.args.id + idAppend, __mergeArgs__(this.CSS,{
-		top: 0,
-		left: 0,
-		"border-width": 0,
-		"font-size": 12,			
-	    "font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
-		color: "rgb(255,255,255)"
+	var elt = __makeElement__("canvas", this.widget, idAppend, __mergeArgs__(this.args.ThumbnailImageCSS,{
+		top: GLOBALS.ThumbnailImageMarginY,
+		left: GLOBALS.ThumbnailImageMarginX,
+		 color: "rgb(255,255,255)"
 	}));
 
-	elt.width = this.CSS.width;
-	elt.height = this.CSS.height;
+	elt.width = this.args.ThumbnailImageCSS.width;
+	elt.height = this.args.ThumbnailImageCSS.height;
 	
 	// Might want to put the progress indicator here.
 	return elt;
@@ -162,38 +185,57 @@ ScanThumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 
 
 
-//****************************************
-// Hover On
-//****************************************
-ScanThumbnail.prototype.hoverOn = function (animtime) {
-	$(this.hoverData).stop().fadeTo(animtime,1);
-}
 
 
 
 
-//****************************************
-// Hover Off
-//****************************************
-ScanThumbnail.prototype.hoverOff = function (animtime) { 
-	$(this.hoverData).stop().fadeTo(animtime,0);
-}
 
 
-
-//****************************************
-// SET HOVER HIGHLIGHTING
-//****************************************
-ScanThumbnail.prototype.setHoverMethods = function () {
+ScanThumbnail.prototype.addHoverMethods = function () {
+	
 	var that = this;
-	that.args.animtime = 100;
-
-
+	var inactiveFade = .6;
+	
+	
 	//--------------------------
 	// Setup procedure, defines the mouseenters
 	//--------------------------		
-	//console.log("thumb deactivate");
-	this.deactivate();
+	
+	
+	$(this.widget).bind('mouseenter.browse', function () {
+
+		$(that.widget).stop().animate({
+			
+			opacity: 1,
+			borderColor: "rgb(255,255,255)"
+			
+		}, 0);
+		
+		$(that.ThumbnailCanvas).stop().animate({
+
+			borderColor: "rgb(155,155,155)"
+			
+		}, 0);
+	
+	}).bind('mouseleave.browse', function(){
+		
+		$(that.widget).stop().animate({
+			
+			opacity: inactiveFade,
+			borderColor: "rgb(0,0,0)"
+			
+		}, 0);
+
+		$(that.ThumbnailCanvas).stop().animate({
+
+			borderColor: "rgb(85,85,85)"
+			
+		}, 0);
+		
+	});
+	
+	$(this.widget).mouseleave();
+	
 }
 
 
@@ -278,7 +320,7 @@ ScanThumbnail.prototype.getFrameList = function (type) {
 // WINDOW RESIZING
 //****************************************
 ScanThumbnail.prototype.updateCSS = function () {
-	$(this.widget).css(this.CSS);
+
 }
 
 

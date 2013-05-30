@@ -87,12 +87,27 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 				//
 				// ANIMATE: ScanViewer widget
 				//
-				 $(svWidget).stop().animate({
+				//$(svWidget).draggable( "option", "disabled", true );
+				
+				//$(svWidget).off();
+				
+				 $(svWidget).off().stop().animate({
+				    
 				    left: modalDims.ScanViewer.lefts[i][j],
 				    top: modalDims.ScanViewer.tops[i][j],
 				    width: modalDims.ScanViewer.width,
 				    height: modalDims.ScanViewer.height,
-				  }, GLOBALS.animSlow, function () {			  	
+				    
+				  }, GLOBALS.animSlow, function () {	
+				  		
+				  	 for (var i in that.ScanViewers) {
+						for (var j in that.ScanViewers[i]) { 	
+							
+							console.log("HERE")
+							that.ScanViewers[i][j].setDraggable_jQuery();	
+						}
+					}  	
+				 
 				  });	
 				  
 				  

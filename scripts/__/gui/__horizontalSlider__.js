@@ -19,6 +19,10 @@ function __horizontalSlider__(args) {
 	var handle =  __makeElement__("div", widget, this.currArgs().id + "_handle", this.currArgs().handleCSS);
 	
 	
+	this.getWidget = function(){
+		return widget;
+	}
+	
 	
 	// Defining the update css version
 	this.updateCSS = function (args) {

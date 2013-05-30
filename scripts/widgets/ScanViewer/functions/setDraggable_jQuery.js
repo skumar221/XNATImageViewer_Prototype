@@ -4,6 +4,7 @@
 //******************************************************
 ScanViewer.prototype.setDraggable_jQuery = function () {
 	
+	console.log("HERE2")
 	
 	$(this.widget).draggable( {
 		
@@ -13,61 +14,52 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			this.prevBorder = this.style.border;
 			this.style.border = "solid 1px rgba(255,255,255,1)";
 			
-			var viewers = this.parentNode.childNodes;
+			var viewers = $(this.parentNode).find("div[id*=" + "ScanViewer" + "]");
 
 			for (var i=0; i<viewers.length; i++) {
-				
-				if ((viewers[i].id.toLowerCase().indexOf("scanviewer")>-1)) {
-
-					var vPos = $(viewers[i]).position();
-					viewers[i].originTop = vPos.top;
-					viewers[i].originLeft = vPos.left;
-					
-				}
+				viewers[i].origin  = $(viewers[i]).position();
 			}
+			
 		},
 		
 		drag: function () {
 
-			var viewers = $(this.parentNode.childNodes);
-			
-			var currPos = $(this).position();
+			var viewers = $(this).collision("div[id*=" + "ScanViewer" + "]");
 			
 			for (var i=0; i<viewers.length; i++) {
 				
-				if (viewers[i] != this && (viewers[i].id.toLowerCase().indexOf("scanviewer") > -1)) {
+				if (viewers[i] != this) {
 					
-					var vPos = $(viewers[i]).position();
-					var vHeight = $(viewers[i]).height();
-					var vWidth = $(viewers[i]).width();
-					var vArea = vHeight * vWidth;
 
-							
-					var currArea = (vWidth - Math.abs(currPos.left - vPos.left)) * 
-								   (vHeight - Math.abs(currPos.top - vPos.top));
+					var targetArea = $(viewers[i]).height() * $(viewers[i]).width();;
+					var collisionDiv = $(this).collision(viewers[i], {as : "<div />"});	
+					var collisionArea = $(collisionDiv).width() * $(collisionDiv).height()
 					
 					
 					//
 					// SWAP
 					//
-					if ((currArea/vArea) > .6) {
+					if ((collisionArea/targetArea) > .4) {
 
-						var w = this;
-
+						var draggable = this;				
+							
+						$(draggable).draggable( "option", "disabled", true );
 						
 						$(viewers[i]).stop().animate({
 							
-							top: w.originTop,
-							left: w.originLeft,
+							top: draggable.origin.top,
+							left: draggable.origin.left,
 							
-						}, 100, function () {
-
-							w.originTop = this.originTop;
-							w.originLeft = this.originLeft;	
+						}, GLOBALS.animVeryFast, function () { 
 							
+							var tempOrigin = this.origin;
+							this.origin = draggable.origin;
+							draggable.origin = tempOrigin;
 							
-
+							$(draggable).draggable( "option", "disabled", false );
 						});
+						
+						return;
 					}			
 				}
 			}
@@ -76,10 +68,10 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 
 			$(this).stop().animate({
 				
-				top: Math.round(this.originTop),
-				left: Math.round(this.originLeft),
+				top: Math.round(this.origin.top),
+				left: Math.round(this.origin.left),
 				
-				}, 100, function () {	
+				}, GLOBALS.animFast, function () {	
 					
 					//
 					//  Cleanup custom attributes
@@ -87,12 +79,11 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					var viewers = $(this.parentNode.childNodes);	
 					for (var i=0; i<viewers.length; i++) {
 	
-						if (viewers[i].originTop) {
-							viewers[i].originTop= undefined;
+						/*
+						if (viewers[i].origin) {
+							viewers[i].origin = undefined;
 						}
-						if (viewers[i].originLeft) {
-							viewers[i].originLeft= undefined;
-						}																					
+						*/													
 						
 						if (viewers[i].prevBorder){
 							viewers[i].style.border = viewers[i].prevBorder;

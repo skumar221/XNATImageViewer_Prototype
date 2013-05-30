@@ -6,7 +6,9 @@
 var INIT = function (obj, defaultArgs, args, initRoutine) {
 	obj.defaultArgs = defaultArgs;
 	obj.args = (args) ? __mergeArgs__(obj.defaultArgs, args) : obj.defaultArgs;
-	obj.CSS = obj.args.CSS;
+	
+	obj.CSS = (obj.args.CSS) ? obj.args.CSS : obj.args.widgetCSS;
+	
 	obj.widget = __makeElement__("div", obj.args.parent, obj.args.id, obj.CSS);
 	$(window).resize(function () {
 	  obj.updateCSS();

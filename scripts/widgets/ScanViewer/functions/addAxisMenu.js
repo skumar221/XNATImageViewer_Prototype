@@ -19,14 +19,14 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//------------------------------
 	// MAIN MENU
 	//------------------------------	
-	this.axisMenu = __makeElement__("div", this.widget, "axisMenu",{
+	this.AxisMenu = __makeElement__("div", this.widget, "AxisMenu",{
 		position: "absolute",
 		left: iconStartLeft,
 		top: iconStartTop,
 		height: iconDimSmall , 
 		width: iconDimSmall,
 	});
-	this.axisMenu.title  = "Select View Plane";	
+	this.AxisMenu.title  = "Select View Plane";	
 	
 	
 	
@@ -34,7 +34,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//------------------------------
 	// MAIN MENU ICON
 	//------------------------------	
-	this.axisMenu.icon = __makeElement__("img", this.axisMenu, "menuIcon",{
+	this.AxisMenu.icon = __makeElement__("img", this.AxisMenu, "menuIcon",{
 		position: "absolute",
 		left: 0,
 		top: 0,// + spacer*i,
@@ -42,7 +42,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 		width: iconDimSmall ,
 		cursor: "pointer", 
 	});	
-	this.axisMenu.icon.src  = "./icons/axisMenu/Axes.png";	
+	this.AxisMenu.icon.src  = "./icons/AxisMenu/Axes.png";	
 	
 	
 
@@ -51,7 +51,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//------------------------------
 	// SUB MENU
 	//------------------------------	
-	this.axisMenu.subMenu = __makeElement__("div", this.axisMenu, "subMenu",{
+	this.AxisMenu.subMenu = __makeElement__("div", this.AxisMenu, "subMenu",{
 		position: "absolute",
 		left: 0,//iconStartLeft  + iconDimMed,
 		top: 0,// + spacer*i,
@@ -61,7 +61,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 		//border: "solid 1px rgba(100,100,100,1)"
 	});	
 	// For onclick purposes
-	this.axisMenu.subMenu.pinned = false;
+	this.AxisMenu.subMenu.pinned = false;
 	
 
 
@@ -69,14 +69,14 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//------------------------------
 	// ADD MENU ICONS
 	//------------------------------
-	this.axisMenu.subMenu.icons = [];	
+	this.AxisMenu.subMenu.icons = [];	
 	
 	for (var i=0; i<iconVals.length; i++) {
 			
 		//
 		// Icons
 		//	
-		var icon = __makeElement__("img", this.axisMenu.subMenu, "icon_" + iconVals[i],{
+		var icon = __makeElement__("img", this.AxisMenu.subMenu, "icon_" + iconVals[i],{
 			position: "absolute",
 			top: 0,
 			left: iconDimMed + spacer*(i),
@@ -85,11 +85,11 @@ ScanViewer.prototype.addAxisMenu = function () {
 			cursor: "pointer", 
 		});	
 		
-		icon.src = "./icons/axisMenu/" + iconVals[i] + ".png";
+		icon.src = "./icons/AxisMenu/" + iconVals[i] + ".png";
 		icon.axis = iconVals[i];
 		icon.title = iconVals[i];
 		
-		this.axisMenu.subMenu.icons.push(icon);				
+		this.AxisMenu.subMenu.icons.push(icon);				
 
 
 		
@@ -102,7 +102,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 				if (that.FrameViewer.frames.length > 0) {
 					
 					that.FrameViewer.loadFramesByAxis(this.axis, that.axisIcons);
-					that.axisMenu.activateIcon(this.title);
+					that.AxisMenu.activateIcon(this.title);
 				} 
 			};		
 		}	
@@ -115,11 +115,11 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//------------------------------
 	/*
 	this.widget.defaultMouseEvents.push(function () {
-		$(that.axisMenu).fadeOut(0);
+		$(that.AxisMenu).fadeOut(0);
 		$(that.widget).bind('mouseenter.axismenu', function () {
-			$(that.axisMenu).stop().fadeTo(GLOBALS.animFast,1);
+			$(that.AxisMenu).stop().fadeTo(GLOBALS.animFast,1);
 		}).bind('mouseleave.axismenu', function () {
-			$(that.axisMenu).stop().fadeTo(GLOBALS.animFast,0);
+			$(that.AxisMenu).stop().fadeTo(GLOBALS.animFast,0);
 		})		
 	})
 	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
@@ -136,20 +136,20 @@ ScanViewer.prototype.addAxisMenu = function () {
 		//
 		// MAIN MENU ICON - default fade state
 		//
-		$(that.axisMenu.icon).fadeTo(0,.5);
+		$(that.AxisMenu.icon).fadeTo(0,.5);
 		
 		
 		//
 		// SUB MENU - default fade state
 		//		
-		$(that.axisMenu.subMenu).fadeOut(0);
+		$(that.AxisMenu.subMenu).fadeOut(0);
 		
 		
 		//
 		//  MAIN MENU ICON - mouseenter
 		//
-		$(that.axisMenu.icon).mouseenter(function () {
-			that.axisMenu.iconHovered = true;
+		$(that.AxisMenu.icon).mouseenter(function () {
+			that.AxisMenu.iconHovered = true;
 			mainEnter();
 		})
 		
@@ -157,9 +157,9 @@ ScanViewer.prototype.addAxisMenu = function () {
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++) {
+		for (var i=0;i<that.AxisMenu.subMenu.icons.length; i++) {
 			
-			var icon = that.axisMenu.subMenu.icons[i];
+			var icon = that.AxisMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);
 			subMenuIconBind(icon, true);
 
@@ -179,13 +179,13 @@ ScanViewer.prototype.addAxisMenu = function () {
 		if (bind) {
 			
 			$(icon).bind('mouseenter.default', function () {
-				if (that.axisMenu.iconHovered) {
+				if (that.AxisMenu.iconHovered) {
 					$(this).stop().fadeTo(GLOBALS.animFast, 1);
 				}			
 			})
 			
 			$(icon).bind('mouseleave.default', function () {
-				if (that.axisMenu.iconHovered) {
+				if (that.AxisMenu.iconHovered) {
 					$(this).stop().fadeTo(GLOBALS.animFast, .5);
 				}	
 			});	
@@ -200,11 +200,11 @@ ScanViewer.prototype.addAxisMenu = function () {
 		
 	}
 	
-	this.axisMenu.activateIcon = function (iconName) {
+	this.AxisMenu.activateIcon = function (iconName) {
 
-		for (var i=0;i<that.axisMenu.subMenu.icons.length; i++) {
+		for (var i=0;i<that.AxisMenu.subMenu.icons.length; i++) {
 			
-			var icon = that.axisMenu.subMenu.icons[i];
+			var icon = that.AxisMenu.subMenu.icons[i];
 			
 			if (icon.title.toLowerCase() == iconName.toLowerCase()) {
 			
@@ -228,9 +228,9 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//	
 	function subLeave() {
 
-		$(that.axisMenu.subMenu).fadeOut(GLOBALS.animFast);
-		$(that.axisMenu.icon).fadeTo(GLOBALS.animFast, .5);
-		that.axisMenu.iconHovered = false;
+		$(that.AxisMenu.subMenu).fadeOut(GLOBALS.animFast);
+		$(that.AxisMenu.icon).fadeTo(GLOBALS.animFast, .5);
+		that.AxisMenu.iconHovered = false;
 				
 	}
 	
@@ -240,10 +240,10 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//	
 	function mainEnter() {
 
-		if (that.axisMenu.iconHovered) {
+		if (that.AxisMenu.iconHovered) {
 			
-			$(that.axisMenu.icon).fadeTo(GLOBALS.animFast, 1);
-			$(that.axisMenu.subMenu).fadeIn(GLOBALS.animFast);
+			$(that.AxisMenu.icon).fadeTo(GLOBALS.animFast, 1);
+			$(that.AxisMenu.subMenu).fadeIn(GLOBALS.animFast);
 						
 		}	
 	}
@@ -257,15 +257,15 @@ ScanViewer.prototype.addAxisMenu = function () {
 			//
 			// Unbind hover events to pin the subMenu
 			//
-			$(that.axisMenu.subMenu).unbind('mouseleave.axis');
-			$(that.axisMenu).unbind('mouseenter.axis');				
+			$(that.AxisMenu.subMenu).unbind('mouseleave.axis');
+			$(that.AxisMenu).unbind('mouseenter.axis');				
 		}
 		else{
 			//
 			// Bind the hover events to unpin subMenu
 			//
-			$(that.axisMenu.subMenu).bind('mouseleave.axis', subLeave);
-			$(that.axisMenu).bind('mouseenter.axis', mainEnter);
+			$(that.AxisMenu.subMenu).bind('mouseleave.axis', subLeave);
+			$(that.AxisMenu).bind('mouseenter.axis', mainEnter);
 		}	
 	}
 	
@@ -275,11 +275,11 @@ ScanViewer.prototype.addAxisMenu = function () {
 	//
 	function setOnclickEvents() {
 		
-		$(that.axisMenu).click(function () {	
+		$(that.AxisMenu).click(function () {	
 			
-			that.axisMenu.subMenu.pinned = !that.axisMenu.subMenu.pinned;
+			that.AxisMenu.subMenu.pinned = !that.AxisMenu.subMenu.pinned;
 			
-			superBind(that.axisMenu.subMenu.pinned)			
+			superBind(that.AxisMenu.subMenu.pinned)			
 			
 		})
 	}

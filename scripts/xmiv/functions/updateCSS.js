@@ -32,12 +32,15 @@ XMIV.prototype.updateCSS = function (args) {
 			
 			if (this.ScanViewers[i][j]) {
 				
+				
 				this.ScanViewers[i][j].updateCSS({
 					height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
 					width: modalDims.ScanViewer.width,
 					left: modalDims.ScanViewer.lefts[i][j],
 					top: modalDims.ScanViewer.tops[i][j],
-				});				
+				});		
+				
+				
 			} 
 		}  
 	} 

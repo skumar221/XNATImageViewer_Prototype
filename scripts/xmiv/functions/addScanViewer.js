@@ -113,9 +113,9 @@ XMIV.prototype.addScanViewer = function (rowPos, colPos, callback) {
 	
 	
 	//----------------------------------
-	//	2. Allows thumbnails to be dropped into viewer
+	//	2. Allows Thumbnails to be dropped into viewer
 	//----------------------------------
-	this.addDropZone(v.FrameViewer);	
+	//this.addDropZone(v.FrameViewer);	
 	
 	
 	

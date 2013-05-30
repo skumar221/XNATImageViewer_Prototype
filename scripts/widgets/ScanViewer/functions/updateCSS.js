@@ -13,6 +13,8 @@ ScanViewer.prototype.updateCSS = function (args) {
 	var widgetTop = (args && args.top) ? args.top : $(this.widget).position().top;
 	var widgetLeft = (args && args.left) ? args.left : $(this.widget).position().left;
 
+
+	
 	
 	/*
 	 * CONTENT DIVIDER
@@ -158,11 +160,11 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// LINK MENU
 	//----------------------------------		
-	__setCSS__(this.linkMenu, {
+	__setCSS__(this.LinkMenu, {
 		left: widgetWidth - 30
 	});
 	 
 	 
-	 
+
 
 }

@@ -11,11 +11,25 @@ var GLOBALS = {
 	},
 	
 	getScanViewers: function () { return this.ScanViewers},
+	
+	getScanViewerById: function (id) {
+		
+		for (var i=0; i<this.ScanViewers.length; i++){
+			
+			if (this.ScanViewers[i].widget.id == id){
+				
+				return this.ScanViewers[i]
+				
+			}
+			
+		}
+		
+	}
 }
 
 
 
-
+GLOBALS.ModalID = "XNATImageViewerModal";
 
 
 //---------------------------
@@ -39,10 +53,10 @@ GLOBALS.fontFamily = 'Helvetica, Helvetica neue, Arial, sans-serif';
 //---------------------------
 //  ANIMATION LENGTHS
 //---------------------------
-
+GLOBALS.animVeryFast = 100;
 GLOBALS.animFast = 200;
 GLOBALS.animMed = 500;
-GLOBALS.animSlow = 100;
+GLOBALS.animSlow = 1000;
 
 
 
@@ -51,6 +65,7 @@ GLOBALS.animSlow = 100;
 //---------------------------
 GLOBALS.minFrameViewerHeight = 150;
 GLOBALS.minFrameViewerWidth = 150;
+
 
 //---------------------------
 //  SCAN VIEWER
@@ -64,8 +79,15 @@ GLOBALS.ScanViewerHorizontalMargin = 20;
 //---------------------------
 //  THUMBNAILS
 //---------------------------
-GLOBALS.thumbnailHeight = 85;
-GLOBALS.thumbnailWidth = 85;
+GLOBALS.ThumbnailImageHeight = 72;
+GLOBALS.ThumbnailImageWidth = 72;
+GLOBALS.ThumbnailImageMarginX = 8;
+GLOBALS.ThumbnailImageMarginY = 8;
+
+
+
+GLOBALS.ThumbnailWidgetHeight = GLOBALS.ThumbnailImageHeight + GLOBALS.ThumbnailImageMarginX*2;
+GLOBALS.ThumbnailWidgetWidth = 200;
 
 //---------------------------
 //  EXPAND BUTTON
@@ -75,7 +97,7 @@ GLOBALS.expandButtonWidth = 30;
 //---------------------------
 //  SCROLL GALLERY
 //---------------------------
-GLOBALS.ScrollGalleryWidth = 110;
+GLOBALS.ScrollGalleryWidth = 180;
 
 //---------------------------
 //  SCAN TABS

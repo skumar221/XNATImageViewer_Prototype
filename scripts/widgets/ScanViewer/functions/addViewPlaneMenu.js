@@ -18,7 +18,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------
 	// ADD Menu div
 	//------------------------------	
-	this.axisMenu = __makeElement__("div", this.widget, this.args.id + "_ViewTypeTab_AxisMenu",{
+	this.AxisMenu = __makeElement__("div", this.widget, this.args.id + "_ViewTypeTab_AxisMenu",{
 		position: "absolute",
 		left: iconStartLeft,
 		top: iconStartTop,// + spacer*i,
@@ -34,11 +34,11 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	// ADD TO DEFAULT MOUSE EVENTS
 	//------------------------------
 	this.widget.defaultMouseEvents.push(function(){
-		$(that.axisMenu).fadeOut(0);
+		$(that.AxisMenu).fadeOut(0);
 		$(that.widget).bind('mouseenter.axismenu', function(){
-			$(that.axisMenu).stop().fadeTo(Globals.animFast,1);
+			$(that.AxisMenu).stop().fadeTo(Globals.animFast,1);
 		}).bind('mouseleave.axismenu', function(){
-			$(that.axisMenu).stop().fadeTo(Globals.animFast,0);
+			$(that.AxisMenu).stop().fadeTo(Globals.animFast,0);
 		})		
 	})
 	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
@@ -49,7 +49,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------
 	// ADD Menu img (child of Menu DIV)
 	//------------------------------	
-	var axisMenu_Image = __makeElement__("img", this.axisMenu, this.args.id + "_ViewTypeTab_AxisMenuImage",{
+	var AxisMenu_Image = __makeElement__("img", this.AxisMenu, this.args.id + "_ViewTypeTab_AxisMenuImage",{
 		position: "absolute",
 		left: 0,
 		top: 0,// + spacer*i,
@@ -57,7 +57,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 		width: iconDimSmall ,
 		cursor: "pointer", 
 	});	
-	axisMenu_Image.src = "./icons/Axes.png";
+	AxisMenu_Image.src = "./icons/Axes.png";
 
 
 
@@ -70,7 +70,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 		//
 		// ADD Menu Icon
 		//	
-		var icon = __makeElement__("img", this.axisMenu, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
+		var icon = __makeElement__("img", this.AxisMenu, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
 			position: "absolute",
 			left: iconStartLeft + spacer*(i+1),
 			top: 0,
@@ -119,7 +119,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function fadeOutMenuIcons(){
 		
-		axisMenu_Image.hasmouseover = false;
+		AxisMenu_Image.hasmouseover = false;
 		//
 		// Hide icons when leaving menu div
 		//
@@ -134,7 +134,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function fadeInMenuIcons(){
 		
-		axisMenu_Image.hasmouseover = true;
+		AxisMenu_Image.hasmouseover = true;
 		//
 		// Fade in when hovering over menu image
 		//
@@ -150,9 +150,9 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function setMenuImageHover(){
 
-		$(axisMenu_Image).fadeTo(0, .5);
+		$(AxisMenu_Image).fadeTo(0, .5);
 		
-		$(axisMenu_Image).mouseenter(function(){
+		$(AxisMenu_Image).mouseenter(function(){
 			
 			$(this).stop().fadeTo(300,1);				
 			fadeInMenuIcons();
@@ -171,7 +171,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function setMenuDivMouseleave(){
 		
-		$(that.axisMenu).mouseleave(function(){		
+		$(that.AxisMenu).mouseleave(function(){		
 			
 			fadeOutMenuIcons();
 			
@@ -196,10 +196,10 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function clearMenuHover(){
 		
-		$(that.axisMenu).unbind('mouseenter');
-		$(that.axisMenu).unbind('mouseleave');
-		$(axisMenu_Image).unbind('mouseenter');		
-		$(axisMenu_Image).unbind('mouseleave');		
+		$(that.AxisMenu).unbind('mouseenter');
+		$(that.AxisMenu).unbind('mouseleave');
+		$(AxisMenu_Image).unbind('mouseenter');		
+		$(AxisMenu_Image).unbind('mouseleave');		
 		
 	}
 	
@@ -209,10 +209,10 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	//------------------------------		
 	function setMenuImageClick(){	
 			
-		axisMenu_Image.clicked = false;	
-		$(axisMenu_Image).stop().fadeTo(300, .5);
+		AxisMenu_Image.clicked = false;	
+		$(AxisMenu_Image).stop().fadeTo(300, .5);
 		
-		$(axisMenu_Image).click(function(){
+		$(AxisMenu_Image).click(function(){
 			
 			this.clicked = !this.clicked;
 			

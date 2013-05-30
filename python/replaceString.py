@@ -47,8 +47,8 @@ def main():
     htmlFile = "../XMIV.html"
     backupDir = "scriptsBackup"
       
-    findStr = "frameSlider"
-    replaceStr = "FrameSlider"
+    findStr = "linkMenu"
+    replaceStr = "LinkMenu"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     
