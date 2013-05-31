@@ -1,26 +1,6 @@
 var GLOBALS = {
 	
-	XMIV: function (args) {
-		
-		if (typeof args === 'undefined') {
-			
-			return this.XNATImageViewer;
-			
-		}
-		
-		
-		var isString = (typeof args === 'string');
-		if (isString){
-			var isWidgetString = (args.toLowerCase().indexOf("widget")  === 0 );
-			if (isWidgetString){
-				return this.XNATImageViewer.widget;
-			}
-		}
-		
-		
-		this.XNATImageViewer = args;
-	
-	}
+	XMIV: undefined
 	
 
 }

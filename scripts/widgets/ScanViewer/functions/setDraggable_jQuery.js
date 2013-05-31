@@ -13,10 +13,8 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			this.prevBorder = this.style.border;
 			this.style.border = "solid 1px rgba(255,255,255,1)";
 			
-			GLOBALS.XMIV().runScanViewerLoop( function (ScanViewer) {
-
-				ScanViewer.widget.origin  = $(ScanViewer.widget).position();				
-								
+			GLOBALS.XMIV.SCANViewers(function (ScanViewer) {
+				ScanViewer.widget.origin  = $(ScanViewer.widget).position();									
 			});
 
 
@@ -25,7 +23,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 		
 		drag: function () {
 
-			var viewers = $(this).collision(GLOBALS.XMIV().getScanViewers("widget"));
+			var viewers = $(this).collision(GLOBALS.XMIV.SCANViewers("widgets"));
 			
 			for (var i=0; i<viewers.length; i++) {
 				
@@ -50,7 +48,8 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 							var tempOrigin = draggable.origin;
 							draggable.origin = target.origin;
 							target.origin = tempOrigin;
-							GLOBALS.XMIV().swapScanViewers(draggable, target);	
+							
+							GLOBALS.XMIV.SCANViewers({"swap" : [draggable, target]});	
 							
 							$(target).stop().animate({
 								
@@ -77,13 +76,13 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					//
 					//  Cleanup custom attributes
 					//
-					GLOBALS.XMIV().runScanViewerLoop( function(ScanViewer) { 
+					GLOBALS.XMIV.SCANViewers( function(ScanViewer) { 
 						if (ScanViewer.widget.prevBorder){
 							ScanViewer.widget.style.border = ScanViewer.widget.prevBorder;
 						}						
 					});
 					
-					GLOBALS.XMIV().updateCSS();
+					GLOBALS.XMIV.updateCSS();
 			});				
 			
 		}

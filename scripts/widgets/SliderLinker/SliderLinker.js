@@ -164,13 +164,10 @@ var SliderLinker = function (args) {
 	this.clearAll = function () {
 			
 		
-		var ScanViewers = GLOBALS.XMIV().ScanViewers;
-		for (var i=0; i<ScanViewers.length; i++) {
-			for (var j=0; j<ScanViewers[i].length; j++) {
-				
-				this.removeFromGroup(viewers[i][j], true);
-			}
-		}
+		GLOBALS.XMIV.SCANViewers( function(ScanViewer) {
+				that.removeFromGroup(ScanViewer, true);
+		});
+
 		groups = [];
 		this.addGroup();
 	}
@@ -294,7 +291,7 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		var ScanViewers = GLOBALS.XMIV().ScanViewers;
+		var ScanViewers = GLOBALS.XMIV.ScanViewers;
 	
 		// loop through viewers
 		for (var i=0; i<ScanViewers.length; i++) {

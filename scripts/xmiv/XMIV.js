@@ -51,7 +51,7 @@ var XMIV = function (args) {
 	var that = this;
 	INIT(this, defaultArgs_XMIV, args, function () {});
 	
-	GLOBALS.XMIV(this);
+	GLOBALS.XMIV = this;
 
 	
 	//----------------------------------
@@ -121,6 +121,10 @@ var XMIV = function (args) {
 	this.addScanViewer(0, 1);	
 
 
+	this.manageScanViewers();
+	this.SCANViewers()
+	
+	
 	this.swapScanViewers = function(v1, v2){
 		
 	
