@@ -16,14 +16,14 @@ ScanViewer.prototype.populateData = function (data) {
 //			console.log(labelObj[i])
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
-			that.displayableData[noSpace] = __makeElement__("div", that.ScanTabs.getTab("View Type"), that.args.id + "_data_" + noSpace);
+			that.displayableData[noSpace] = __makeElement__("div", that.ScanTabs.getTab("View Type"), "_data_" + noSpace);
 			$(that.displayableData[noSpace]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label;		
 
-			that.displayableData[noSpace + "_dropdown"] = __makeElement__("select", that.ScanTabs.tabs[0], that.args.id + "_data_" + noSpace);
+			that.displayableData[noSpace + "_dropdown"] = __makeElement__("select", that.ScanTabs.tabs[0], "_data_" + noSpace);
 			$(that.displayableData[noSpace + "_dropdown"]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 110,
@@ -72,8 +72,8 @@ ScanViewer.prototype.populateData = function (data) {
 		//----------------------------------
 
 		that.sessionInfoScrollGallery = new ScrollGallery({
-			parent: that.ScanTabs.getTab("Session Info"),
-			id: that.args.id + ("_sessionInfoTab_data"),
+			parent: that.ScanTabs.getTab("Info"),
+			id: ("SessionInfoTab_data"),
 			orientation: "vertical",
 			CSS: {
 				left: 0,
@@ -83,19 +83,23 @@ ScanViewer.prototype.populateData = function (data) {
 			}
 		});	
 
-		var contents = __makeElement__("div", that.sessionInfoScrollGallery.ScrollContent, that.args.id + "_contents");
+		var contents = __makeElement__("div", that.sessionInfoScrollGallery.ScrollContent, "Contents");
 		var counter = 0;
 		for (i in labelObj) {
+			
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
-			that.displayableData[noSpace] = __makeElement__("div", contents, that.args.id + "_data_" + noSpace);
+			
+			console.log("MAKING, ", labelObj[i])
+			
+			that.displayableData[noSpace] = __makeElement__("div", contents, "Data_" + noSpace);
 			$(that.displayableData[noSpace]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
-			that.displayableData[noSpace + "_value"] = __makeElement__("div", contents, that.args.id + "_value_" + noSpace);
+			that.displayableData[noSpace + "_value"] = __makeElement__("div", contents, "Value_" + noSpace);
 			$(that.displayableData[noSpace + "_value"]).css(__mergeArgs__(that.textCSS_small,{
 				top: currTop,
 				left: 160,

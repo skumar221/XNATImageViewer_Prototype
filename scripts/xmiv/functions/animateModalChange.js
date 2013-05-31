@@ -87,9 +87,9 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 				//
 				// ANIMATE: ScanViewer widget
 				//
-				//$(svWidget).draggable( "option", "disabled", true );
+				$(svWidget).draggable( "destroy");
 				
-				//$(svWidget).off();
+				$(svWidget).off();
 				
 
 				 $(svWidget).off().stop().animate({

@@ -16,6 +16,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			var viewers = $(this.parentNode).find("div[id*=" + "ScanViewer" + "]");
 
 			for (var i=0; i<viewers.length; i++) {
+				console.log(viewers[i].id)
 				viewers[i].origin  = $(viewers[i]).position();
 			}
 			
@@ -42,20 +43,26 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 
 						var draggable = this;				
 							
-						$(draggable).draggable( "option", "disabled", true );
+						$(draggable).stop();
+						
+						console.log("DRAGGABIE ORIGIN: ", draggable.origin);
+						console.log("SW ORIGIN:        ", viewers[i].origin)
+						
+						$(draggable).draggable({ disabled: true });
 						
 						$(viewers[i]).stop().animate({
 							
-							top: draggable.origin.top,
-							left: draggable.origin.left,
+							top: Math.round(draggable.origin.top),
+							left: Math.round(draggable.origin.left),
 							
 						}, GLOBALS.animVeryFast, function () { 
 							
+							console.log("SWITHC! ")
 							var tempOrigin = this.origin;
 							this.origin = draggable.origin;
 							draggable.origin = tempOrigin;
 							
-							$(draggable).draggable( "option", "disabled", false );
+							//$(draggable).draggable( "option", "disabled", false );
 						});
 						
 						return;
