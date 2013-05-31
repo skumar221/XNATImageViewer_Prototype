@@ -13,59 +13,54 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			this.prevBorder = this.style.border;
 			this.style.border = "solid 1px rgba(255,255,255,1)";
 			
-			var viewers = $(this.parentNode).find("div[id*=" + "ScanViewer" + "]");
+			GLOBALS.XMIV().runScanViewerLoop( function (ScanViewer) {
 
-			for (var i=0; i<viewers.length; i++) {
-				console.log(viewers[i].id)
-				viewers[i].origin  = $(viewers[i]).position();
-			}
+				ScanViewer.widget.origin  = $(ScanViewer.widget).position();				
+								
+			});
+
+
 			
 		},
 		
 		drag: function () {
 
-			var viewers = $(this).collision("div[id*=" + "ScanViewer" + "]");
+			var viewers = $(this).collision(GLOBALS.XMIV().getScanViewers("widget"));
 			
 			for (var i=0; i<viewers.length; i++) {
 				
 				if (viewers[i] != this) {
 					
-
-					var targetArea = $(viewers[i]).height() * $(viewers[i]).width();;
-					var collisionDiv = $(this).collision(viewers[i], {as : "<div />"});	
-					var collisionArea = $(collisionDiv).width() * $(collisionDiv).height()
+					var target = viewers[i];
 					
-					
-					//
-					// SWAP
-					//
-					if ((collisionArea/targetArea) > .4) {
+					if( !$(target).is(':animated') ) {
+						
+						var targetPos = $(target).position();
+						var targetArea = $(target).height() * $(target).width();
+						var collisionDiv = $(this).collision(target, {as : "<div />"});	
+						var collisionArea = $(collisionDiv).width() * $(collisionDiv).height()						
 
-						var draggable = this;				
+						//
+						// SWAP
+						//
+						if ((collisionArea/targetArea) > .4) {
+	
+							var draggable = this;				
+														
+							var tempOrigin = draggable.origin;
+							draggable.origin = target.origin;
+							target.origin = tempOrigin;
+							GLOBALS.XMIV().swapScanViewers(draggable, target);	
 							
-						$(draggable).stop();
-						
-						console.log("DRAGGABIE ORIGIN: ", draggable.origin);
-						console.log("SW ORIGIN:        ", viewers[i].origin)
-						
-						$(draggable).draggable({ disabled: true });
-						
-						$(viewers[i]).stop().animate({
-							
-							top: Math.round(draggable.origin.top),
-							left: Math.round(draggable.origin.left),
-							
-						}, GLOBALS.animVeryFast, function () { 
-							
-							console.log("SWITHC! ")
-							var tempOrigin = this.origin;
-							this.origin = draggable.origin;
-							draggable.origin = tempOrigin;
-							
-							//$(draggable).draggable( "option", "disabled", false );
-						});
-						
-						return;
+							$(target).stop().animate({
+								
+								top: Math.round(target.origin.top),
+								left: Math.round(target.origin.left),
+		
+								
+							}, GLOBALS.animFast, function () { });
+						}
+											
 					}			
 				}
 			}
@@ -82,20 +77,13 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					//
 					//  Cleanup custom attributes
 					//
-					var viewers = $(this.parentNode.childNodes);	
-					for (var i=0; i<viewers.length; i++) {
-	
-						/*
-						if (viewers[i].origin) {
-							viewers[i].origin = undefined;
-						}
-						*/													
-						
-						if (viewers[i].prevBorder){
-							viewers[i].style.border = viewers[i].prevBorder;
-						}
-							
-					}  	
+					GLOBALS.XMIV().runScanViewerLoop( function(ScanViewer) { 
+						if (ScanViewer.widget.prevBorder){
+							ScanViewer.widget.style.border = ScanViewer.widget.prevBorder;
+						}						
+					});
+					
+					GLOBALS.XMIV().updateCSS();
 			});				
 			
 		}

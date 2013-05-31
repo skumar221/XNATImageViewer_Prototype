@@ -24,7 +24,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			//
 			// Get modal dims
 			//
-			var modal = $(this).closest("div[id*=" + GLOBALS.ModalID + "]");
+			var modal = GLOBALS.XMIV("widget");
 			var modalOffset = $(modal).offset();
 	
 			
@@ -68,27 +68,31 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				],
 				
 				drag: function () {
-
-					var viewers = $(this).collision("div[id*=" + "ScanViewer" + "]");
-					this.viewerObj = undefined;
 					
-					if (viewers && viewers.length > 0){
+					this.targetId = undefined;
+					var collidables = $(this).collision(GLOBALS.XMIV().getScanViewers("widgets"));
+					
+					for (var i=0; i<collidables.length; i++) {
 						
-						revertBorders();
+						revertBorders(); 
 						
-						var currViewer = viewers[viewers.length -1];
-						
-						$(currViewer).mouseenter();
-						
-						if (!currViewer.prevBorder){
-							currViewer.prevBorder = viewers[viewers.length -1].style.border;	
+						var collideDiv = $(this).collision(collidables[i], {as : "<div />"});	
+						var collisionArea = $(collideDiv).width() * $(collideDiv).height()
+						var draggableArea = $(this).height() * $(this).width();
+												
+						if (collisionArea/draggableArea > .6){
+				
+							$(collidables[i]).mouseenter();
+							
+							if (!collidables[i].prevBorder) {
+								collidables[i].prevBorder = collidables[i].style.border;	
+							}
+							
+							collidables[i].style.border = "solid rgba(255,255,255,1) 1px"
+							this.targetId = collidables[i].id;							
 						}
 						
-						currViewer.style.border = "solid rgba(255,255,255,1) 1px"
 						
-						this.viewerObj = GLOBALS.getScanViewerById(currViewer.id);
-						
-
 					}
 				},
 				
@@ -96,32 +100,30 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 					
 					var clone = this;
 					
-					function destroy() {
-						
+					function destroy() {					
 						clone.parentNode.removeChild(clone);
 						that.widget.clone = undefined;						
-						
 					}
 
-
 					
+					revertBorders();					
 					
-					revertBorders();
-					
-					
-					
-					if (!this.viewerObj){
+					if (!this.targetId) {
+						
+						//  Fly back to original position
 						$(this).animate({
 							top: offset.top,
 							left: offset.left
 						}, GLOBALS.animFast, function() {
-						
 							destroy();
-						})						
+						})		
+										
 					}
-					else{
+					else {
+						
+						// Load the thumbnail into the ScanViewer
+						GLOBALS.XMIV().ScanViewer(this.targetId).FrameViewer.loadDroppable(that);
 						destroy();
-						this.viewerObj.FrameViewer.loadDroppable(that);
 					}
 				}	
 			});

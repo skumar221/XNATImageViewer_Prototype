@@ -73,24 +73,23 @@ ScanViewer.prototype.populateData = function (data) {
 
 		that.sessionInfoScrollGallery = new ScrollGallery({
 			parent: that.ScanTabs.getTab("Info"),
-			id: ("SessionInfoTab_data"),
+			id: "SessionData-ScrollGallery",
 			orientation: "vertical",
-			CSS: {
+			widgetCSS: {
 				left: 0,
-				top: 0,
 				height: that.ScanTabs.CSS.height * .80,
-				width: 440
+				width: 440,
+				top: GLOBALS.scanTabLabelHeight + 10,
 			}
 		});	
 
-		var contents = __makeElement__("div", that.sessionInfoScrollGallery.ScrollContent, "Contents");
+		var contents = __makeElement__("div", that.sessionInfoScrollGallery.ScrollContent, "Contents", {});
+		
 		var counter = 0;
 		for (i in labelObj) {
 			
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
-			
-			console.log("MAKING, ", labelObj[i])
 			
 			that.displayableData[noSpace] = __makeElement__("div", contents, "Data_" + noSpace);
 			$(that.displayableData[noSpace]).css(__mergeArgs__(that.textCSS_small,{
@@ -108,7 +107,7 @@ ScanViewer.prototype.populateData = function (data) {
 			counter++;
 		}
 		
-		contents.style.height = __toPx__(currTop + 300);
+		contents.style.height = __toPx__(currTop);
 		that.sessionInfoScrollGallery.setContents(contents);
 	}
 	// NOTE:  Ajax query would be here

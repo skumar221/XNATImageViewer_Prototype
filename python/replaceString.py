@@ -47,8 +47,8 @@ def main():
     htmlFile = "../XMIV.html"
     backupDir = "scriptsBackup"
       
-    findStr = "linkMenu"
-    replaceStr = "LinkMenu"
+    findStr = ".ScanViewerLoop"
+    replaceStr = ".runScanViewerLoop"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     

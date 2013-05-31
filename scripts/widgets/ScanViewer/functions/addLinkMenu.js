@@ -182,11 +182,10 @@ ScanViewer.prototype.addLinkMenu = function () {
 					GLOBALS.SliderLinker.showExisting();
 					GLOBALS.SliderLinker.addClearAllPopup(that);
 					
-					var viewers = GLOBALS.ScanViewers();
-					
-					for (var i=0; i<viewers.length; i++) {
-						viewers[i].LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
-					}
+					GLOBALS.XMIV().runScanViewerLoop( function(ScanViewer) {
+						ScanViewer.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
+					});
+
 				}				
 			}
 			

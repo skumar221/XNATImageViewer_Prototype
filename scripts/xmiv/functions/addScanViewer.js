@@ -129,10 +129,6 @@ XMIV.prototype.addScanViewer = function (rowPos, colPos, callback) {
 		this.addVerticalExpandButton();
 	}
 		
-		
-		
-		
-	GLOBALS.setScanViewers(this.ScanViewers);
 
 	//----------------------------------
 	//	SET closebutton onclick

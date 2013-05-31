@@ -154,12 +154,10 @@ ScanTabs.prototype.getTab = function (value) {
 	if (typeof value == "string") {
 		
 		value = value.toLowerCase();
-		console.log("SEARCHING FOR: ", value)
 		
 		for (var i=0; i<this.tabs.length; i++) {
 			
 			var v = (this.tabs[i].label).toLowerCase();
-			console.log("BL: ", v);
 			
 			if (v.indexOf(value) > -1) {
 				return this.tabs[i];

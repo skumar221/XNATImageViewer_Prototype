@@ -1,30 +1,28 @@
 var GLOBALS = {
 	
-	setScanViewers: function (ScanViewers) {
-		this.ScanViewers = [];
-		for (var i=0; i<ScanViewers.length; i++) {
-			for (var j=0; j<ScanViewers[i].length; j++) {
-				this.ScanViewers.push(ScanViewers[i][j])
-			}
-		}
-
-	},
-	
-	getScanViewers: function () { return this.ScanViewers},
-	
-	getScanViewerById: function (id) {
+	XMIV: function (args) {
 		
-		for (var i=0; i<this.ScanViewers.length; i++){
+		if (typeof args === 'undefined') {
 			
-			if (this.ScanViewers[i].widget.id == id){
-				
-				return this.ScanViewers[i]
-				
-			}
+			return this.XNATImageViewer;
 			
 		}
 		
+		
+		var isString = (typeof args === 'string');
+		if (isString){
+			var isWidgetString = (args.toLowerCase().indexOf("widget")  === 0 );
+			if (isWidgetString){
+				return this.XNATImageViewer.widget;
+			}
+		}
+		
+		
+		this.XNATImageViewer = args;
+	
 	}
+	
+
 }
 
 

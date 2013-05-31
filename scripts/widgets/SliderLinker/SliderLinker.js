@@ -164,12 +164,13 @@ var SliderLinker = function (args) {
 	this.clearAll = function () {
 			
 		
-		var viewers = GLOBALS.getScanViewers();
-		
-		for (var i=0;i<viewers.length;i++) {	
-			this.removeFromGroup(viewers[i], true);
+		var ScanViewers = GLOBALS.XMIV().ScanViewers;
+		for (var i=0; i<ScanViewers.length; i++) {
+			for (var j=0; j<ScanViewers[i].length; j++) {
+				
+				this.removeFromGroup(viewers[i][j], true);
+			}
 		}
-		
 		groups = [];
 		this.addGroup();
 	}
@@ -293,12 +294,16 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		var ScanViewers = GLOBALS.getScanViewers();
-		for (var i=0;i<ScanViewers.length;i++) {
+		var ScanViewers = GLOBALS.XMIV().ScanViewers;
+	
+		// loop through viewers
+		for (var i=0; i<ScanViewers.length; i++) {
+			for (var j=0; j<ScanViewers[i].length; j++) {
 
-			this.disableSelectorBox(ScanViewers[i].selectorBox);
-			this.hideExisting(500);
+				this.disableSelectorBox(ScanViewers[i].selectorBox);
+				this.hideExisting(500);
 			
+			}
 		}
 		
 		
@@ -308,7 +313,6 @@ var SliderLinker = function (args) {
 		//
 		for (var i=0; i<groups.length; i++) {			
 			for (var j=0; j<groups[i].ScanViewers.length; j++) {
-					
 
 				var ScanViewer = groups[i].ScanViewers[j];
 				var viewerSet = groups[i].ScanViewers;
@@ -343,8 +347,6 @@ var SliderLinker = function (args) {
 
 					
 				});	
-						
-				//$(ScanViewer.widget).mouseenter();	
 			}
 			
 		}

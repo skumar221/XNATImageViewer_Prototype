@@ -14,25 +14,20 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 	//--------------------------
 	//  GET VIEWERS
 	//--------------------------
-	var viewers = GLOBALS.getScanViewers();
+	GLOBALS.XMIV().runScanViewerLoop( function (ScanViewer) {
 	
+		if (!ScanViewer.selectorBox) {
 
-	
-	// loop through viewers
-	for (var i=0; i<viewers.length; i++) {
-
-		if (!viewers[i].selectorBox) {
-
-			viewers[i].selectorBox =  GLOBALS.SliderLinker.addSelectorBox(			 viewers[i].widget.parentNode, 
-																  				 __toInt__(viewers[i].widget.style.top), 
-																  				 __toInt__(viewers[i].widget.style.left),
-																  				 __toInt__(viewers[i].widget.style.height),
-															  				 __toInt__(viewers[i].widget.style.width));	
+			ScanViewer.selectorBox =  GLOBALS.SliderLinker.addSelectorBox(			 ScanViewer.widget.parentNode, 
+																  				 __toInt__(ScanViewer.widget.style.top), 
+																  				 __toInt__(ScanViewer.widget.style.left),
+																  				 __toInt__(ScanViewer.widget.style.height),
+															  				 __toInt__(ScanViewer.widget.style.width));	
 			
-			viewers[i].selectorBox.style.border = 'none';	
-			viewers[i].selectorBox.ScanViewer = viewers[i];			
+			ScanViewer.selectorBox.style.border = 'none';	
+			ScanViewer.selectorBox.ScanViewer = ScanViewer;			
 			
-			viewers[i].selectorBox.onclick = function () {				
+			ScanViewer.selectorBox.onclick = function () {				
 				
 				var box = this;
 				var viewer = this.ScanViewer;
@@ -51,7 +46,7 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 		}
 		else{
 			
-			this.enableSelectorBox(viewers[i].selectorBox);
+			this.enableSelectorBox(ScanViewer.selectorBox);
 			
 		}
 
@@ -61,11 +56,12 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 		//--------------------------
 		//  SELECT CURRVIEWER
 		//--------------------------
-		if (viewers[i] == currViewer) {
+		if (ScanViewer == currViewer) {
 			
-			viewers[i].selectorBox.onclick();
+			ScanViewer.selectorBox.onclick();
 
 				
 		}		
-	}
+	});
+
 }
