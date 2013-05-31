@@ -19,6 +19,10 @@ function __horizontalSlider__(args) {
 	var handle =  __makeElement__("div", widget, this.currArgs().id + "_handle", this.currArgs().handleCSS);
 	
 	
+	this.getWidget = function(){
+		return widget;
+	}
+	
 	
 	// Defining the update css version
 	this.updateCSS = function (args) {
@@ -396,7 +400,7 @@ __horizontalSlider__.prototype.moveHandle = function (moveType, args) {
 				
 		// Do not want to propagate to the DOM
 		// For either mouse or mouseWheel events
-		if (args.event) { args.event.stopPropagation(); } 
+		if (args.event) { __stopPropagation__(args.event); } 
 
 
 		// MOUSEWHEEL

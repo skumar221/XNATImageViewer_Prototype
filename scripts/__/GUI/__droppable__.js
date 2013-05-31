@@ -129,7 +129,7 @@ var __Droppable__mousedown = function (that) {
 	// MOUSE MOVE
 	//--------------------------------	
 	that.args.draggableParent.onmousemove = function () {
-		
+		//$(this).show();
 		var dz = checkIfOverDropZone(that.draggable, that.dropZones);
 		
 		if (dz > -1) {
@@ -146,6 +146,8 @@ var __Droppable__mousedown = function (that) {
 	// DROP
 	//--------------------------------			
 	that.args.draggableParent.onmouseup = function () {	
+
+		
 		var wPos = $(that.widget).offset();
 		var dPos = $(that.draggable).offset();
 		
@@ -168,7 +170,7 @@ var __Droppable__mousedown = function (that) {
 			});		
 			that.restoreDrag(that);
 			if (that.dropZones && that.dropZones.length >0) {
-				//that.dropZones[dz].loadFrames(that.frames);		
+				//that.dropZones[dz].loadFrames(that.frames);	
 				that.dropZones[dz].loadDroppable(that);		
 			}
 			
@@ -208,8 +210,9 @@ var __Droppable__mousedown = function (that) {
 		for (var i=0;i< that.dropZones.length; i++) {
 			that.dropZoneMouseout(that.dropZones[i].widget);	
 			$(that.dropZones[i]).unbind('mouseenter').unbind('mouseleave');
+			that.args.draggableParent.onmouseup = function () {};
 		}
-	
+		
 	}
 }
 
