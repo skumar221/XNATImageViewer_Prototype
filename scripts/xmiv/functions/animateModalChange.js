@@ -31,13 +31,14 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 		// Animate the window
 		//-------------------------	
 		 $(this.modal).stop().animate({
+		 	
 		    width: modalDims.width,
 		    left: modalDims.left,
 		    height: modalDims.height,
 		    top: modalDims.top,
+		    
 		  }, animLen, function () {
-		  	    
-		  	
+
 		    that.updateCSS();
 			if (callbacks && callbacks.modal && callbacks.modal.length > 0) {
 		  		for (i in callbacks.modal) { callbacks.modal[i](that); }
@@ -51,72 +52,38 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 		//-------------------------
 		// SCAN VIEWERS
 		//-------------------------	
-		for (var i in this.ScanViewers) {
-			for (var j in this.ScanViewers[i]) { 
-				
+		GLOBALS.XMIV.SCANViewers( function(ScanViewer, i, j) { 
 			
-				//
-				// FADE OUT/IN: ScanViewer contents
-				//
-				 if (modalDims.ScanViewer.height != __toInt__(this.ScanViewers[0][0].widget.style.height)) {
-				 	
-				 	if (this.ScanViewers[i][j]) {
 
+			//
+			// FADE OUT/IN: ScanViewer contents
+			//
+			 if (modalDims.ScanViewer.height != __toInt__(ScanViewer.widget.style.height)) {
+			 	$(ScanViewer.widget.childNodes).stop().fadeTo(animLen, 0).fadeTo(animLen, 1);	
+			 }
+			 
 
-				 		
-					 	for (var k in this.ScanViewers[i][j].widget.childNodes) {
-					 		
-					 		
-					 		var childObj = this.ScanViewers[i][j].widget.childNodes[k]
-	
-						 	//
-						 	// Check if the childObject is DOM element otherwise jQuery throws errors
-						 	//  
-						 	if (__isElement__(childObj)) {
-						 		
-						 		$(this.ScanViewers[i][j].widget.childNodes[k]).stop().fadeTo(animLen, 0).fadeTo(animLen, 1);		
-						 		
-						 	}	
-						 }	
-						 
-						 var svWidget = this.ScanViewers[i][j].widget;	
-				 	}
-				 }
-				 
+			//
+			// ANIMATE: ScanViewer widget
+			//
 
-				//
-				// ANIMATE: ScanViewer widget
-				//
-				$(svWidget).draggable( "destroy");
+			 $(ScanViewer.widget).draggable( "destroy").off().stop().animate({
+			    
+			    left: modalDims.ScanViewer.lefts[i][j],
+			    top: modalDims.ScanViewer.tops[i][j],
+			    width: modalDims.ScanViewer.width,
+			    height: modalDims.ScanViewer.height,
+			    
+			  }, GLOBALS.animSlow, function () {	
+
+			  	 GLOBALS.XMIV.SCANViewers( function(ScanViewer) { 	
+
+					ScanViewer.setJQueryEvents();
 				
-				$(svWidget).off();
-				
-
-				 $(svWidget).off().stop().animate({
-				    
-				    left: modalDims.ScanViewer.lefts[i][j],
-				    top: modalDims.ScanViewer.tops[i][j],
-				    width: modalDims.ScanViewer.width,
-				    height: modalDims.ScanViewer.height,
-				    
-				  }, GLOBALS.animSlow, function () {	
-				  	
-				  	//$(this).on();
-				  	 for (var i in that.ScanViewers) {
-						for (var j in that.ScanViewers[i]) { 	
-							
-							
-							that.ScanViewers[i][j].setJQueryEvents();
-
-						}
-					}  	
-				 
-				  });	
-				  
-				  
-				  		
-			}
-		} 
+				 });  	
+			 
+			  });				
+		});
 
 
 	

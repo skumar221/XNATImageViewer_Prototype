@@ -90,22 +90,27 @@ XMIV.prototype.modalDims = function (conversion) {
 	var ScanViewerTops = [];
 	var viewerStart = $(this.ScrollGallery.widget).width() +  $(this.ScrollGallery.widget).position().left + GLOBALS.ScanViewerVerticalMargin;
 
-	for (var i in this.ScanViewers) {
-		for (var j in this.ScanViewers[i]) { 
+	GLOBALS.XMIV.SCANViewers( function(ScanViewer, i, j) { 
 			
-			l = viewerStart + j * (ScanViewerWidth + GLOBALS.ScanViewerVerticalMargin);
-			
+		l = viewerStart + j * (ScanViewerWidth + GLOBALS.ScanViewerVerticalMargin);
+		
 
-			if (j==0 || !ScanViewerLefts[i]) ScanViewerLefts.push([])
-				ScanViewerLefts[i][j] = l;
-			
-			if (j==0 || !ScanViewerTops[i]) ScanViewerTops.push([]);
-				ScanViewerTops[i][j] = (-1 + i * (ScanViewerHeight + GLOBALS.ScanViewerHorizontalMargin));
-			
-			//if (i==0)
-			ScanViewerTops[i][j] +=  GLOBALS.expandButtonWidth;
+		if (j==0 || !ScanViewerLefts[i]) {
+			ScanViewerLefts.push([])
 		}
-	} 
+		
+		ScanViewerLefts[i][j] = l;
+		
+		if (j==0 || !ScanViewerTops[i]) {
+			ScanViewerTops.push([]);
+		}
+		
+		ScanViewerTops[i][j] = (-1 + i * (ScanViewerHeight + GLOBALS.ScanViewerHorizontalMargin));
+		
+		//if (i==0)
+		ScanViewerTops[i][j] +=  GLOBALS.expandButtonWidth;
+		
+	});
 	
 	
    
