@@ -276,7 +276,7 @@ ScanThumbnail.prototype.deactivate = function () {
 //****************************************
 // ACTIVATE
 //****************************************
-ScanThumbnail.prototype.activate = function (activeDropZoneID) { 
+ScanThumbnail.prototype.activate = function (activeTarget) { 
 	var that = this;
 	this.args.activated = true;
 	
@@ -296,7 +296,7 @@ ScanThumbnail.prototype.activate = function (activeDropZoneID) {
 	if (this.activatedCallbacks && this.activatedCallbacks.length > 0) {
 		for (var i=0;i<this.activatedCallbacks.length;i++) {
 			this.activatedCallbacks[i](that, {
-				"activeDropZoneID": activeDropZoneID
+				"activeTarget": activeTarget
 			});
 		}
 	}

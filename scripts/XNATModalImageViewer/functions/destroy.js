@@ -2,7 +2,7 @@
 //  Clears the modal out of the DOM.
 //
 //******************************************************
-XMIV.prototype.destroy = function (fadeOut) {
+XNATModalImageViewer.prototype.destroy = function (fadeOut) {
 	var fadeOut = (fadeOut) ? fadeOut: 500;	
 	console.log("Destroying! " + this.args.id);
 	var that = this;

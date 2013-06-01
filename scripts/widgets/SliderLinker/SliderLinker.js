@@ -164,7 +164,7 @@ var SliderLinker = function (args) {
 	this.clearAll = function () {
 			
 		
-		GLOBALS.XMIV.SCANViewers( function(ScanViewer) {
+		XMIV.SCANViewers( function(ScanViewer) {
 				that.removeFromGroup(ScanViewer, true);
 		});
 
@@ -291,7 +291,7 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		var ScanViewers = GLOBALS.XMIV.ScanViewers;
+		var ScanViewers = XMIV.ScanViewers;
 	
 		// loop through viewers
 		for (var i=0; i<ScanViewers.length; i++) {

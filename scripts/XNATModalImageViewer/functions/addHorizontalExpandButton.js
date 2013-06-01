@@ -2,30 +2,39 @@
 //  Expand button
 //
 //******************************************************
-XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
+XNATModalImageViewer.prototype.addHorizontalExpandButton = function () {
+	
+//	console.log("*************************HORIZONTAL ADD!")
 	var that = this;
-
-//	console.log("*************************add Vertical!")
-	if (!this.verticalExpandButtons) {this.verticalExpandButtons = []};
+	
+	if (!this.horizontalExpandButtons) { this.horizontalExpandButtons = []};
 	
 	//-------------------------
 	// The button CSS
 	//-------------------------
-	var currButton = __makeElement__("button", this.modal, "VerticalExpandButton", {
+	var currButton = __makeElement__("button", this.modal, "HorizontalExpandButton", {
 		position: "absolute",
 		"color": "rgba(255,255,255,1)",
 		"font-size": GLOBALS.fontSizeMed,
 		fontFamily: GLOBALS.fontFamily,
+		//"font-weight": "bold",
 		"cursor": "pointer",
 		"border": "solid rgba(255, 255, 255, 0) 0px",
 		"border-radius": 0,
+		//backgroundColor: "rgba(70, 70, 70, 1)",
 		backgroundColor: "rgba(0, 0, 0, 0)",
-		zIndex: 100
-	})	
-
-		
-	this.verticalExpandButtons.push(currButton);
-
+		width: this.args.expandButtonWidth,
+		zIndex: 100,
+		"-webkit-transform": "rotate(90deg)",
+		"-moz-transform": "rotate(90deg)",   
+		"-o-transform": "rotate(90deg)",
+		//"vertical-align": "middle",
+		//align: "middle"
+		//width: 500,
+	});
+	this.horizontalExpandButtons.push(currButton);
+	
+	
 	
 	//-------------------------
 	// Its natural state -- slightly faded
@@ -34,11 +43,14 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	//-------------------------
 	// What do do when the mouse leaves
 	//-------------------------		
-	$(currButton).mouseenter( function () {
+	$(currButton).mouseenter(function () {
 	  $(currButton).stop().fadeTo(200, .8);
 	}).mouseleave( function () { 
+		
 		//if (that.changeState != "expanding") {
+			
 			$(currButton).stop().fadeTo(200, .5);
+		
 		//}			
     });
 
@@ -47,15 +59,15 @@ XMIV.prototype.addVerticalExpandButton = function (rowPos, colPos) {
 	//-------------------------
 	// Its inner text
 	//-------------------------			
-	currButton.innerHTML = "+ row";
-
+	currButton.innerHTML = "+ column";
 
 
 	//-------------------------
 	// Button onlclick
 	//-------------------------		
-	currButton.onclick = function () { 
+
+	currButton.onclick = function () {
 		$(currButton).stop().fadeTo(200, .5);
-		that.addRow(that.verticalExpandButtons.indexOf(this)); 
-	}	
+		that.addColumn(that.horizontalExpandButtons.indexOf(this));
+	}; 
 }

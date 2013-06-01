@@ -1,4 +1,3 @@
-
 window.onload = function () {
-	var XNATModal = new XMIV();
+	var _ooo = new XNATModalImageViewer();
 }

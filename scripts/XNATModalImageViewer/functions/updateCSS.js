@@ -2,7 +2,7 @@
 //  Update CSS.
 //
 //******************************************************
-XMIV.prototype.updateCSS = function (args) {
+XNATModalImageViewer.prototype.updateCSS = function (args) {
 
 	
 	var that = this;
@@ -27,43 +27,29 @@ XMIV.prototype.updateCSS = function (args) {
  	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------		
-	for (var i in this.ScanViewers) {
-		for (var j in this.ScanViewers[i]) { 
+	XMIV.SCANViewers( function(ScanViewer, i, j) { 
+				
+		ScanViewer.updateCSS({
 			
-			if (this.ScanViewers[i][j]) {
-				
-				
-				this.ScanViewers[i][j].updateCSS({
-					height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
-					width: modalDims.ScanViewer.width,
-					left: modalDims.ScanViewer.lefts[i][j],
-					top: modalDims.ScanViewer.tops[i][j],
-				});		
-				
-				
-			} 
-		}  
-	} 
-	
-	
-	
-	//----------------------------------
-	//	SELECTOR BOXES
-	//----------------------------------		
-	for (var i in this.ScanViewers) {
-		for (var j in this.ScanViewers[i]) { 
+			height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
+			width: modalDims.ScanViewer.width,
+			left: modalDims.ScanViewer.lefts[i][j],
+			top: modalDims.ScanViewer.tops[i][j],
 			
-			if (this.ScanViewers[i][j].selectorBox) {
-				
-				__setCSS__(this.ScanViewers[i][j].selectorBox, {
-					height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
-					width: modalDims.ScanViewer.width,
-					left: modalDims.ScanViewer.lefts[i][j],
-					top: modalDims.ScanViewer.tops[i][j],
-				});				
-			} 
-		}  
-	} 
+		});	
+		
+		if (ScanViewer.selectorBox) {
+			
+			__setCSS__(ScanViewer.selectorBox, {
+				height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
+				width: modalDims.ScanViewer.width,
+				left: modalDims.ScanViewer.lefts[i][j],
+				top: modalDims.ScanViewer.tops[i][j],
+			});				
+		} 	
+		
+	}); 
+
     
 	
 		

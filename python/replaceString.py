@@ -44,11 +44,11 @@ def replaceInFile(src, findStr, replaceStr):
 def main():
     
     rootDir = "../scripts"
-    htmlFile = "../XMIV.html"
+    htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "GLOBALS.XMIV()"
-    replaceStr = "GLOBALS.XMIV"
+    findStr = "asdfsdf"
+    replaceStr = "efefefe"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     

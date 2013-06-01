@@ -1,4 +1,4 @@
-XMIV.prototype.animateModalChange = function (animLen, callbacks) {
+XNATModalImageViewer.prototype.animateModalChange = function (animLen, callbacks) {
 		
 		var that = this;
 		
@@ -17,12 +17,7 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 		//-------------------------
 		//  CHECK TO SEE IF THE VIEWERS ARE TOO SMALL 
 		//-------------------------	
-		if (__toInt__(this.ScanViewers[0][0].widget.style.width) < GLOBALS.minScanViewerWidth) {
-			//this.modal.removeChild(this.ScanViewers[__lengthMD__(this.ScanViewers) - 1].widget);
-			//this.ScanViewers.pop();
-			//$(this.ScanViewers[__lengthMD__(this.ScanViewers) - 1].widget).fadeTo(animLen,1);
-			//return;	
-		} 
+
 		
 		
 		
@@ -52,7 +47,7 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 		//-------------------------
 		// SCAN VIEWERS
 		//-------------------------	
-		GLOBALS.XMIV.SCANViewers( function(ScanViewer, i, j) { 
+		XMIV.SCANViewers( function(ScanViewer, i, j) { 
 			
 
 			//
@@ -76,7 +71,7 @@ XMIV.prototype.animateModalChange = function (animLen, callbacks) {
 			    
 			  }, GLOBALS.animSlow, function () {	
 
-			  	 GLOBALS.XMIV.SCANViewers( function(ScanViewer) { 	
+			  	 XMIV.SCANViewers( function(ScanViewer) { 	
 
 					ScanViewer.setJQueryEvents();
 				

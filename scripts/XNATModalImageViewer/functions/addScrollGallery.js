@@ -1,4 +1,4 @@
-XMIV.prototype.addScrollGallery = function (rowPos) {	
+XNATModalImageViewer.prototype.addScrollGallery = function (rowPos) {	
 	
 	var that = this;
 	

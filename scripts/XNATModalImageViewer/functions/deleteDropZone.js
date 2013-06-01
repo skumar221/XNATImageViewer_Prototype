@@ -1,9 +1,9 @@
-XMIV.prototype.addDropZone = function (dz) {
+XNATModalImageViewer.prototype.deleteDropZone = function (dz) {
 	
 	//----------------------------------
-	//	SET DROPZONES
+	//	DELETE DROPZONES
 	//----------------------------------			
 	for (var i=0; i < this.ScrollGallery.thumbs.length; i++) {
-		this.ScrollGallery.thumbs[i].addDropZone(dz);	
+		this.ScrollGallery.thumbs[i].deleteDropZone(dz);	
 	}
 }

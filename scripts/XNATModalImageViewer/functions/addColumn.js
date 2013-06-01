@@ -1,4 +1,4 @@
-XMIV.prototype.addColumn = function (rowPos) {
+XNATModalImageViewer.prototype.addColumn = function (rowPos) {
 	
 	 var that = this;
 

@@ -14,7 +14,7 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 	//--------------------------
 	//  GET VIEWERS
 	//--------------------------
-	GLOBALS.XMIV.SCANViewers( function (ScanViewer) {
+	XMIV.SCANViewers( function (ScanViewer) {
 		
 		if (!ScanViewer.selectorBox) {
 

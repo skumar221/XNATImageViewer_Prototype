@@ -1,4 +1,4 @@
-XMIV.prototype.addRow = function () {
+XNATModalImageViewer.prototype.addRow = function () {
 	
 	 var that = this;
 

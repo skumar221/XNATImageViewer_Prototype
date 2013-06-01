@@ -182,7 +182,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					GLOBALS.SliderLinker.showExisting();
 					GLOBALS.SliderLinker.addClearAllPopup(that);
 					
-					GLOBALS.XMIV.SCANViewers( function(ScanViewer) {
+					XMIV.SCANViewers( function(ScanViewer) {
 							ScanViewer.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					});
 

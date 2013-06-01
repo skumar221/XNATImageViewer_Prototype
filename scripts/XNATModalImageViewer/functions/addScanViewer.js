@@ -2,7 +2,7 @@
 //  Adds a ScanViewer based on the arguments.
 //
 //******************************************************
-XMIV.prototype.addScanViewer = function (rowPos, colPos, callback) {
+XNATModalImageViewer.prototype.addScanViewer = function (rowPos, colPos, callback) {
 	var that = this;
 
 	

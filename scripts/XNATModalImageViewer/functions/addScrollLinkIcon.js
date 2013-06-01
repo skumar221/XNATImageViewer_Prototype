@@ -2,7 +2,7 @@
 //  ADD SCROLL LINK ICON
 //
 //******************************************************
-XMIV.prototype.addScrollLinkIcon = function () {
+XNATModalImageViewer.prototype.addScrollLinkIcon = function () {
 	
 	var that = this;
 

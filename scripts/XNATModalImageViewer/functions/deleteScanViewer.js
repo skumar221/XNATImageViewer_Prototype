@@ -1,6 +1,6 @@
 
 
-XMIV.prototype.deleteScanViewer = function (ScanViewer) {
+XNATModalImageViewer.prototype.deleteScanViewer = function (ScanViewer) {
 		 
 		 var that = this;
 		 var animLen = 500;

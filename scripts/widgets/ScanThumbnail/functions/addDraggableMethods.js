@@ -6,7 +6,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 		//
 		// Revert viewer borders back to original
 		//
-		var viewers = GLOBALS.XMIV.SCANViewers("widgets");
+		var viewers = XMIV.SCANViewers("widgets");
 		for (var i=0; i<viewers.length; i++){
 			if (viewers[i].prevBorder){
 
@@ -24,7 +24,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			//
 			// Get modal dims
 			//
-			var modal = GLOBALS.XMIV.widget;
+			var modal = XMIV.widget;
 			var modalOffset = $(modal).offset();
 	
 			
@@ -70,7 +70,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				drag: function () {
 					
 					this.targetId = undefined;
-					var collidables = $(this).collision(GLOBALS.XMIV.SCANViewers("widgets"));
+					var collidables = $(this).collision(XMIV.SCANViewers("widgets"));
 					
 					for (var i=0; i<collidables.length; i++) {
 						
@@ -122,7 +122,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 					else {
 						
 						// Load the thumbnail into the ScanViewer
-						GLOBALS.XMIV.ScanViewer(this.targetId).FrameViewer.loadDroppable(that);
+						XMIV.ScanViewer(this.targetId).FrameViewer.loadDroppable(that);
 						destroy();
 					}
 				}	

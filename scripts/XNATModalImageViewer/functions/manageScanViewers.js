@@ -1,4 +1,4 @@
-XMIV.prototype.manageScanViewers = function() {
+XNATModalImageViewer.prototype.manageScanViewers = function() {
 	
 	var viewers = this.ScanViewers;
 	

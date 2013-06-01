@@ -8,7 +8,7 @@
 //  an element's dimensions if percentages were entered.
 //
 //******************************************************
-XMIV.prototype.modalDims = function (conversion) {
+XNATModalImageViewer.prototype.modalDims = function (conversion) {
 		
 	var that = this;
 	
@@ -90,7 +90,7 @@ XMIV.prototype.modalDims = function (conversion) {
 	var ScanViewerTops = [];
 	var viewerStart = $(this.ScrollGallery.widget).width() +  $(this.ScrollGallery.widget).position().left + GLOBALS.ScanViewerVerticalMargin;
 
-	GLOBALS.XMIV.SCANViewers( function(ScanViewer, i, j) { 
+	XMIV.SCANViewers( function(ScanViewer, i, j) { 
 			
 		l = viewerStart + j * (ScanViewerWidth + GLOBALS.ScanViewerVerticalMargin);
 		
