@@ -13,7 +13,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			this.prevBorder = this.style.border;
 			this.style.border = "solid 1px rgba(255,255,255,1)";
 			
-			XMIV.SCANViewers(function (ScanViewer) {
+			XV.ScanViewers(function (ScanViewer) {
 				ScanViewer.widget.origin  = $(ScanViewer.widget).position();									
 			});
 
@@ -23,7 +23,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 		
 		drag: function () {
 
-			var viewers = $(this).collision(XMIV.SCANViewers("widgets"));
+			var viewers = $(this).collision(XV.ScanViewers("widgets"));
 			
 			for (var i=0; i<viewers.length; i++) {
 				
@@ -49,7 +49,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 							draggable.origin = target.origin;
 							target.origin = tempOrigin;
 							
-							XMIV.SCANViewers({"swap" : [draggable, target]});	
+							XV.ScanViewers({"swap" : [draggable, target]});	
 							
 							$(target).stop().animate({
 								
@@ -76,13 +76,13 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					//
 					//  Cleanup custom attributes
 					//
-					XMIV.SCANViewers( function(ScanViewer) { 
+					XV.ScanViewers( function(ScanViewer) { 
 						if (ScanViewer.widget.prevBorder){
 							ScanViewer.widget.style.border = ScanViewer.widget.prevBorder;
 						}						
 					});
 					
-					XMIV.updateCSS();
+					XV.updateCSS();
 			});				
 			
 		}

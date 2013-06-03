@@ -14,7 +14,9 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 	//--------------------------
 	//  GET VIEWERS
 	//--------------------------
-	XMIV.SCANViewers( function (ScanViewer) {
+	XV.ScanViewers( function (ScanViewer) {
+		
+		
 		
 		if (!ScanViewer.selectorBox) {
 
@@ -25,28 +27,27 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 															  				 __toInt__(ScanViewer.widget.style.width));	
 			
 			ScanViewer.selectorBox.style.border = 'none';	
-			ScanViewer.selectorBox.ScanViewer = ScanViewer;			
+			ScanViewer.selectorBox.ScanViewer = ScanViewer;	
+			
+			
 			
 			ScanViewer.selectorBox.onclick = function () {				
 				
 				var box = this;
-				var viewer = this.ScanViewer;
-
+				var viewer = box.ScanViewer;
 
 				that.lastViewerSelected = viewer;
 				that.addToLastGroup(viewer);
 				
 				$(viewer.widget).unbind('mouseleave.linkmenu');
 				$(viewer.widget).unbind('mouseenter.linkmenu');
-
-				
-				
+	
 	
 			}				
 		}
 		else{
 			
-			this.enableSelectorBox(ScanViewer.selectorBox);
+			that.enableSelectorBox(ScanViewer.selectorBox);
 			
 		}
 

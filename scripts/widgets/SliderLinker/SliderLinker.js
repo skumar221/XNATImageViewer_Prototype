@@ -4,6 +4,7 @@
 //******************************************************
 var SliderLinker = function (args) {
 	
+	var that = this;
 	
 	this.maxGroups = GLOBALS.maxScrollLinkGroups;
 	
@@ -164,7 +165,7 @@ var SliderLinker = function (args) {
 	this.clearAll = function () {
 			
 		
-		XMIV.SCANViewers( function(ScanViewer) {
+		XV.ScanViewers( function(ScanViewer) {
 				that.removeFromGroup(ScanViewer, true);
 		});
 
@@ -247,7 +248,9 @@ var SliderLinker = function (args) {
 	
 
 	this.enableSelectorBox = function (selectorBox) {
+		
 		$(selectorBox).css({'pointer-events': 'auto'});		
+	
 	}
 	
 
@@ -291,18 +294,13 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		var ScanViewers = XMIV.ScanViewers;
-	
-		// loop through viewers
-		for (var i=0; i<ScanViewers.length; i++) {
-			for (var j=0; j<ScanViewers[i].length; j++) {
-
-				this.disableSelectorBox(ScanViewers[i].selectorBox);
-				this.hideExisting(500);
+		XV.ScanViewers( function(ScanViewer) {
 			
-			}
-		}
-		
+			that.disableSelectorBox(ScanViewer.selectorBox);
+			that.hideExisting(500);
+							
+		});
+
 		
 		
 		//

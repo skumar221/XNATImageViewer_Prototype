@@ -10,7 +10,10 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	var that = this;
 	
 	var messageVal = (typeof message === 'undefined') ?  "Select viewers to link. Click 'Done' when finished." : message;
-		
+	
+	XV.ScanViewers( function(ScanViewer) { 
+		ScanViewer.updateCSS();
+	})	
 	
 	var b = new __dialogBox__({	  	
 		buttons: ["DONE", "Cancel"],
@@ -49,7 +52,12 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
 		that.processGroups();
+		
+		XV.ScanViewers( function(ScanViewer) { 
+			$(ScanViewer.widget).draggable({ disabled: false });
+		})
 
+		
 	});
 
 
@@ -59,11 +67,20 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
 		that.cancel();
+		
+		XV.ScanViewers( function(ScanViewer) { 
+			$(ScanViewer.widget).draggable({ disabled: false });
+		})
 
 	});
 
 	
-	
+	XV.updateCSS();
 	$(popup).fadeOut(0).fadeIn(GLOBALS.animFast);
+	
+	XV.ScanViewers( function(ScanViewer) { 
+		$(ScanViewer.widget).draggable({ disabled: true });
+	})
+	
 		
 }

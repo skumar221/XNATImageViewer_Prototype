@@ -36,8 +36,10 @@ ScanViewer.prototype.updateCSS = function (args) {
 			});
 			
 			
-			var t = GLOBALS.minFrameViewerHeight			
-			var h = widgetHeight - t - $(this.ContentDivider.widget).height() - GLOBALS.minScanTabHeight + 5;			
+			var t = GLOBALS.minFrameViewerHeight		
+			
+			var h = widgetHeight - t - $(this.ContentDivider.widget).height() - GLOBALS.minScanTabHeight + 5;	
+			
 			$(this.ContentDivider.containmentDiv).css({
 				top: t,			
 				left: 0,
@@ -76,6 +78,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	this.widget.style.top = __toPx__(widgetTop);
 	this.widget.style.left = __toPx__(widgetLeft);
 	this.widget.style.overflow = "hidden";
+	this.widget.style.border =  this.args.CSS.border;
 	
 
 	
@@ -83,6 +86,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// Tabs
 	//----------------------------------	
+
 	$(this.ScanTabs.widget).css({
  		left: 0,//marginLeft,
  	  	top: scanTabTop,
@@ -144,16 +148,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	// DRAW FRAME ON FRAMEVIEWER
 	//----------------------------------
 	 this.FrameViewer.drawFrame(this.FrameSlider.value, true);
-	 
-	 
-	 
-	//----------------------------------
-	// CLOSE BUTTON
-	//----------------------------------		
-	__setCSS__(this.closeButton, {
-		top: 3,
-		left: widgetWidth - __toInt__(this.closeButton.style.width) - 3,
-	});
+
 	
 
 

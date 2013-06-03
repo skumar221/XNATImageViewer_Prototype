@@ -1,8 +1,6 @@
-var XMIV;
+var XV;
 
 var GLOBALS = {
-	
-	XMIV: undefined
 
 }
 

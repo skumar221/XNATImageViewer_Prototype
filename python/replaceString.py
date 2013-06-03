@@ -47,8 +47,8 @@ def main():
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "GLOBALS.ModalID"
-    replaceStr = "GLOBALS.ModalId"
+    findStr = "SCANViewers"
+    replaceStr = "ScanViewers"
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     

@@ -211,9 +211,6 @@ var ScanViewer = function (args) {
 			}			
 		}			
 
-
-
-
 		that.updateCSS();
 	})
 
@@ -221,45 +218,6 @@ var ScanViewer = function (args) {
 
 
 
-	//----------------------------------
-	// CLOSE BUTTON
-	//----------------------------------		
-	this.closeButton = __makeElement__("img", this.widget, "closeButton",{
-		
-		position: "absolute",
-		//"cursor": "pointer",
-		width: 10,
-		height: 10,
-		
-	});
-	//this.closeButton.src = "./icons/closeX.png";
-
-	//
-	// Its natural state -- slightly faded
-	//
-	$(this.closeButton).fadeTo(0, .5);
-	
-	//
-	// mouseenter / mouseleave	
-	//
-	$(this.closeButton).mouseenter(function () {
-		
-	  $(that.closeButton).stop().fadeTo(200, 1);
-	
-	}).mouseleave(function () {
-		 
-		$(that.closeButton).stop().fadeTo(200, .5);
-    
-    });
-
-	//
-	// onclick
-	//	
-	this.closeButton.onclick = function (event) {
-		
-		that.closeButtonClicked(event)
-		
-	}
 
 
 	//----------------------------------
@@ -311,11 +269,7 @@ var ScanViewer = function (args) {
 													 " / " + that.FrameViewer.frames.length;	
 	});
 	
-	this.updateCSS();
-	
-	
-	var that = this;
-	var inactiveFade = .6;
+
 	
 	
 	//--------------------------
@@ -323,6 +277,8 @@ var ScanViewer = function (args) {
 	//--------------------------		
 	
 	this.setJQueryEvents();
+	
+	this.updateCSS();
 
 
 }

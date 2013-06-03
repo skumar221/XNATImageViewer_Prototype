@@ -182,32 +182,63 @@ ScanViewer.prototype.addLinkMenu = function () {
 					GLOBALS.SliderLinker.showExisting();
 					GLOBALS.SliderLinker.addClearAllPopup(that);
 					
-					XMIV.SCANViewers( function(ScanViewer) {
+					XV.ScanViewers( function(ScanViewer) {
 							ScanViewer.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					});
 
 				}				
 			}
 			
-			else if (icon.title == "View all groups") {
+			else if (icon.title == 'View all groups') {
 				icon.onclick = function (event) {	
 					
-					if (typeof icon.viewAll === 'undefined') {
-						icon.viewAll = false;
-					}
+					// Create the viewAll parameter
+					if (typeof icon.viewAll === 'undefined') { 
+						icon.viewAll = false; 
+					}	
 					
+					// Invert		
 					icon.viewAll = !icon.viewAll;
 					
-					if (icon.viewAll) {
-						GLOBALS.SliderLinker.stayVisible = true;
-						GLOBALS.SliderLinker.showExisting();
-						subMenuIconBind(icon, false);
+					// If there is an event...
+					if (typeof event !== 'undefined') {
+						// Initiate global view
+						if (icon.viewAll) {
+							GLOBALS.SliderLinker.stayVisible = true;
+							GLOBALS.SliderLinker.showExisting();
+						}
+						else{
+							GLOBALS.SliderLinker.stayVisible = false;
+							GLOBALS.SliderLinker.hideExisting();
+						}	
+						
+						// Re-invert on the button pressed
+						icon.viewAll = !icon.viewAll;
+						
+						XV.ScanViewers( function (ScanViewer) { 
+							
+							// CAll onclick on all ScanViewer eye buttons
+							// this will send you below
+							var icons = ScanViewer.LinkMenu.subMenu.icons;
+							for (var i=0; i < icons.length; i++) {
+								if (icons[i].title == 'View all groups') {
+									icons[i].onclick();
+								}
+							}
+							
+						})					
 					}
-					else{
-						GLOBALS.SliderLinker.stayVisible = false;
-						GLOBALS.SliderLinker.hideExisting();
-						subMenuIconBind(icon, true);
+					else {
+						if (icon.viewAll === true) {
+							subMenuIconBind(icon, false); 
+							$(this).fadeTo(0, 1); 
+						}
+						else {
+							subMenuIconBind(icon, true); 
+							$(this).fadeTo(0, .5); 
+						}
 					}
+
 				}				
 			}
 	
