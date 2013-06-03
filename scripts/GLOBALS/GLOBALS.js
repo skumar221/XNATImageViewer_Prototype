@@ -8,7 +8,8 @@ var GLOBALS = {
 
 
 
-GLOBALS.ModalID = "XNATImageViewerModal";
+GLOBALS.ModalId = "XNATImageViewerModal";
+GLOBALS.ScanViewerPreId = "ScanViewer";
 
 
 //---------------------------

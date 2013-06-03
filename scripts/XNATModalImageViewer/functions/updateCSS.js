@@ -64,47 +64,30 @@ XNATModalImageViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	//	HORIZONTAL EXPAND BUTTON
 	//----------------------------------
-	if (this.horizontalExpandButtons) {		
-		for (var i in this.horizontalExpandButtons) {	
-			
-			var flippedWidth = modalDims.height - GLOBALS.expandButtonWidth;
-			$(this.horizontalExpandButtons[i]).css({
-				
 
-				/*
-				width: GLOBALS.expandButtonWidth
-				height: modalDims.height - GLOBALS.expandButtonWidth,				
-				left: modalDims["horizontalExpandButtons"].left,
-				top: modalDims["horizontalExpandButtons"].tops[i][0],
-				
-				*/
-				
-				// Doing some funny stuff because it's rotated
-				top: modalDims.height/2 - GLOBALS.expandButtonWidth,
-				left: modalDims["horizontalExpandButtons"].left - flippedWidth/2 + GLOBALS.expandButtonWidth - 15,
-				height: GLOBALS.expandButtonWidth,
-				width: flippedWidth,					
-				
-			})
+	$(this.ColumnMenu).css({
+		
+		top: modalDims["ColumnMenu"].top,
+		left: modalDims["ColumnMenu"].left,
+		height: modalDims["ColumnMenu"].height,
+		width: modalDims["ColumnMenu"].width,					
+			
+	})
 					
-		}		
-	}	
+			
+			
 	
 	
 	
 	//----------------------------------
 	//	VERTICAL EXPAND BUTTONS
 	//----------------------------------
-	if (this.verticalExpandButtons) {
-		for (var i in this.verticalExpandButtons) {
+	$(this.RowMenu).css({
+		
+		top: modalDims["RowMenu"].top,
+		left: modalDims["RowMenu"].left,
+		height: modalDims["RowMenu"].height,
+		width: modalDims["RowMenu"].width,					
 			
-			$(this.verticalExpandButtons[0]).css({
-				left:  modalDims.ScanViewer.lefts[0][0],
-				height: GLOBALS.expandButtonWidth,
-				width: modalDims.width - modalDims.ScanViewer.lefts[0][0] - GLOBALS.expandButtonWidth,
-				top: modalDims.height - GLOBALS.expandButtonWidth,
-			});	
-	
-		}	
-	}	
+	})
 }

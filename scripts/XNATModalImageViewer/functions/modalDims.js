@@ -130,7 +130,7 @@ XNATModalImageViewer.prototype.modalDims = function (conversion) {
 	
 		
 				
-				
+	//console.log(ScanViewerLefts[0])	
 	return  {
 		
 		width: Math.round(modalWidth),
@@ -156,28 +156,23 @@ XNATModalImageViewer.prototype.modalDims = function (conversion) {
 			top: Math.round(_t) + 10,// + $(this.closeButton).height()/3,// (__toInt__(that.closeButton.style.width)/2),
 			
 		},
-		horizontalExpandButtons: {
+		ColumnMenu: {
 			
 			left: Math.round(modalWidth) - GLOBALS.expandButtonWidth,
-			tops: ScanViewerTops,
-			height: Math.round(ScanViewerHeight),
-			width: GLOBALS.expandButtonWidth
+			top: ScanViewerTops[0][0] + Math.round(modalHeight)/2 - GLOBALS.expandButtonWidth - 20,
+			width: GLOBALS.expandButtonWidth - 1,
+			height: 40
 			
 		},
-		verticalExpandButtons:{
+		RowMenu:{
 			
-			lefts: ScanViewerLefts[0],
+			left: ScanViewerLefts[0][0] + (Math.round(modalWidth) - ScanViewerLefts[0][0] - GLOBALS.expandButtonWidth)/2 - 17,
 			top: Math.round(modalHeight) - GLOBALS.expandButtonWidth,
-			width: Math.round(ScanViewerWidth),
-			height: GLOBALS.expandButtonWidth,
+			width: 40,
+			height: GLOBALS.expandButtonWidth - 1,
 			
 		},
-		scrollLink:{
-			
-			tops:  scrollLinkTops,
-			lefts: scrollLinkLefts,
-			
-		}
+
 	}
 
 }

@@ -1,6 +1,6 @@
 
 var defaultArgs_ScanViewer = {
-	id: "ScanViewer",
+	id: GLOBALS.ScanViewerPreId,
 	parent: document.body,
 	CSS: {
 		top: 0,

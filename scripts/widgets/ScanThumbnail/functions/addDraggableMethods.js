@@ -122,7 +122,10 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 					else {
 						
 						// Load the thumbnail into the ScanViewer
-						XMIV.ScanViewer(this.targetId).FrameViewer.loadDroppable(that);
+						var v = XMIV.SCANViewers(this.targetId);
+						if (v) {
+							v.FrameViewer.loadDroppable(that); 
+						}
 						destroy();
 					}
 				}	
