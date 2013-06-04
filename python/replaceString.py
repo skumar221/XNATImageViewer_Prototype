@@ -47,8 +47,10 @@ def main():
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "SCANViewers"
-    replaceStr = "ScanViewers"
+    findStr = "__globals__"
+    replaceStr = "utils.globals"
+    fileReplaceStr = "globals" #replaceStr.split(".")[2]
+
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
     
@@ -68,7 +70,7 @@ def main():
            #
            # RENAME FILE IF IT HAS THE STRING
            # 
-           dst = src.replace(findStr, replaceStr)
+           dst = src.replace(findStr, fileReplaceStr)
            os.rename(src, dst)
 
 
@@ -79,7 +81,7 @@ def main():
     #
     # REPLACE IN MAIN HTML
     #
-    replaceInFile(htmlFile, findStr, replaceStr)
+    replaceInFile(htmlFile, findStr, fileReplaceStr)
 
 if __name__ == "__main__":
     main()

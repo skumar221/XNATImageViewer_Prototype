@@ -7,12 +7,12 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	var messageVal = (typeof message === 'undefined') ?  "Are you sure you want to clear all links?" : message;
 		
 	
-	var b = new __dialogBox__({	  	
+	var b = new utils.gui.dialogBox({	  	
 		buttons: ["Yes", "Cancel"],
 		message: messageVal,
 	  	widgetCSS: {
-	  		fontFamily: __globals__.fontFamily,
-	  		fontSize: __globals__.fontSizeM,
+	  		fontFamily: utils.globals.fontFamily,
+	  		fontSize: utils.globals.fontSizeM,
 	  		color: "rgba(255,255,255,1)",
 	  		border: "solid",
 	  		borderWidth: 1,
@@ -23,7 +23,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	  	},
 	  	
 	  	buttonCSS: {
-	  		height: __globals__.fontSizeM * 2,
+	  		height: utils.globals.fontSizeM * 2,
 	  		position: "absolute",
 	  		border: "solid",
 	  		color: "rgba(255,255,255,1)",	  		
@@ -38,7 +38,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	var popup = b.widget();	
 	
 	b.setButtonOnclick("yes", function (event) {
-		__stopPropagation__(event);
+		utils.dom.stopPropagation(event);
 
 		$(popup).fadeOut(GLOBALS.animFast, function () {
 			that.clearAll();
@@ -49,7 +49,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 
 
 	b.setButtonOnclick("cancel", function (event) {
-		__stopPropagation__(event);
+		utils.dom.stopPropagation(event);
 		
 		console.log("CANCEL!");
 		

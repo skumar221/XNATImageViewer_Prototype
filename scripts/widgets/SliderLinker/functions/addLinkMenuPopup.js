@@ -15,12 +15,12 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		ScanViewer.updateCSS();
 	})	
 	
-	var b = new __dialogBox__({	  	
+	var b = new utils.gui.dialogBox({	  	
 		buttons: ["DONE", "Cancel"],
 		message: messageVal,
 	  	widgetCSS: {
-	  		fontFamily: __globals__.fontFamily,
-	  		fontSize: __globals__.fontSizeM,
+	  		fontFamily: utils.globals.fontFamily,
+	  		fontSize: utils.globals.fontSizeM,
 	  		color: "rgba(255,255,255,1)",
 	  		border: "solid",
 	  		borderWidth: 1,
@@ -31,7 +31,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	  	},
 	  	
 	  	buttonCSS: {
-	  		height: __globals__.fontSizeM * 2,
+	  		height: utils.globals.fontSizeM * 2,
 	  		position: "absolute",
 	  		border: "solid",
 	  		color: "rgba(255,255,255,1)",	  		
@@ -47,7 +47,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	
 	b.setButtonOnclick("done", function (event) {
-		__stopPropagation__(event);
+		utils.dom.stopPropagation(event);
 
 		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
@@ -62,7 +62,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 
 
 	b.setButtonOnclick("cancel", function (event) {
-		__stopPropagation__(event);
+		utils.dom.stopPropagation(event);
 		
 		$(popup).fadeOut(GLOBALS.animFast).remove();
 		
