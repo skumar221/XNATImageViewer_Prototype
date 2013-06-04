@@ -1,7 +1,7 @@
 ## Overview
 
 The basic organizational structure of the XNATViewer centers on javascript objects which control various DOM elements.
-The XNATImageViewer makes use of jquery, jquery-ui, and jquery-collision.
+The XNATViewer makes use of jquery, jquery-ui, and jquery-collision.
 
 Usually there's a centralizing div element called a "widget" for every javascript object.  Most objects
 utilize an "init" paradigm that allows it to manage its arguments and set up its "widget" element. 
