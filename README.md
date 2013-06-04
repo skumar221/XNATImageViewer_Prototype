@@ -1,18 +1,7 @@
 ## Overview
 
 
-Most of the "objects" (or widgets) are organized around standard
-object-oriented principles.  Since JavaScript makes everything
-first-class, I do some modification to impart more "object-like" qualities into the widgets. 
 
-UPDATE 4/22/12
-I'll be refactoring the code to get tighter control of jQuery use and public 
-variables.  As it stands, jQuery use is a little indescriminate, and I am to 
-reorganize the code (GUI especially) to have very selective use of jQuery.
-With public variables, there currently exist too many opportunities to 
-access elements/objects that are better left out of the public scope.  In general, 
-I'm trying to limit the direct-element access the user has and keep it
-oriented on javaScript.
 
 
 __ toolkit:
