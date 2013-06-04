@@ -90,7 +90,7 @@ function __dialogBox__(args) {
 		if (args) { this.setArgs(args) };
 		
 		
-		__setCSS__(widget, this.currArgs().widgetCSS);
+		utils.css.setCSS(widget, this.currArgs().widgetCSS);
 		
 		
 
@@ -104,7 +104,7 @@ function __dialogBox__(args) {
 
 		for (var i in buttonManager) {
 
-			__setCSS__(buttonManager[i].element, this.currArgs().buttonCSS);	
+			utils.css.setCSS(buttonManager[i].element, this.currArgs().buttonCSS);	
 
 			l -= (70 + this.currArgs().widgetCSS.margin);
 
@@ -115,8 +115,8 @@ function __dialogBox__(args) {
 				t -= buttonHeight;
 			}
 			
-			buttonManager[i].element.style.left = __toPx__(l);
-			buttonManager[i].element.style.top = __toPx__(t);
+			buttonManager[i].element.style.left = utils.convert.px(l);
+			buttonManager[i].element.style.top = utils.convert.px(t);
 
 		}
 		
@@ -124,10 +124,10 @@ function __dialogBox__(args) {
 		//
 		//  Message
 		//
-		__setCSS__(message, __mergeArgs__(this.currArgs().messageCSS, {
-			top: __toInt__(moveBar.style.height) + this.currArgs().widgetCSS.margin,
+		utils.css.setCSS(message, __mergeArgs__(this.currArgs().messageCSS, {
+			top: utils.convert.int(moveBar.style.height) + this.currArgs().widgetCSS.margin,
 			left: this.currArgs().widgetCSS.margin,
-			width: __toInt__(widget.style.width) - this.currArgs().widgetCSS.margin * 2,
+			width: utils.convert.int(widget.style.width) - this.currArgs().widgetCSS.margin * 2,
 		}));	
 	}
 	

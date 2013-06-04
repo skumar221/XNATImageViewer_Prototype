@@ -47,10 +47,10 @@ function __draggable__(element, dragBounds, callbacks) {
 	//  Recalculate the drag bounds in case the element is outside of it.
 	//------------------------	
 	
-	var eltTop = __toInt__(element.style.top);
-	var eltLeft = __toInt__(element.style.left);
-	var eltHeight = __toInt__(element.style.height);
-	var eltWidth = __toInt__(element.style.width);
+	var eltTop = utils.convert.int(element.style.top);
+	var eltLeft = utils.convert.int(element.style.left);
+	var eltHeight = utils.convert.int(element.style.height);
+	var eltWidth = utils.convert.int(element.style.width);
 	
 	if (eltTop < dragBounds.top) {
 		dragBounds.top = eltTop
@@ -79,10 +79,10 @@ function __draggable__(element, dragBounds, callbacks) {
 			
 			
 			var newPt = __getMouseXY__(event);	
-			var elementWidth = __toInt__(element.style.width);
-			var elementHeight = __toInt__(element.style.height);
-			var elementTop = __toInt__(element.style.top);
-			var elementLeft = __toInt__(element.style.left);
+			var elementWidth = utils.convert.int(element.style.width);
+			var elementHeight = utils.convert.int(element.style.height);
+			var elementTop = utils.convert.int(element.style.top);
+			var elementLeft = utils.convert.int(element.style.left);
 
 
 
@@ -140,8 +140,8 @@ function __draggable__(element, dragBounds, callbacks) {
 			//------------------------
 			//  Apply to style
 			//------------------------	
-			element.style.left = __toPx__(tempLeft);
-			element.style.top = __toPx__(tempTop);	
+			element.style.left = utils.convert.px(tempLeft);
+			element.style.top = utils.convert.px(tempTop);	
 			
 
 			

@@ -29,9 +29,9 @@ function __horizontalSlider__(args) {
 		// If there are inputted args, we need to set + validate them
 		if (args) { this.setArgs(args) };
 		
-		__setCSS__(widget, this.currArgs().widgetCSS);
-		__setCSS__(track, this.currArgs().trackCSS);
-		__setCSS__(handle, this.currArgs().handleCSS);	
+		utils.css.setCSS(widget, this.currArgs().widgetCSS);
+		utils.css.setCSS(track, this.currArgs().trackCSS);
+		utils.css.setCSS(handle, this.currArgs().handleCSS);	
 		
 		this.value = this.currArgs().value;
 		
@@ -52,8 +52,8 @@ function __horizontalSlider__(args) {
 	// GLOBALS - Positioning
 	this.handleStart = function () { 
 		return { 
-			left: __absolutePosition__(handle).left, 
-			top: __absolutePosition__(handle).top 		  
+			left: utils.css.absolutePosition(handle).left, 
+			top: utils.css.absolutePosition(handle).top 		  
 		} 
 	}
 
@@ -420,7 +420,7 @@ __horizontalSlider__.prototype.moveHandle = function (moveType, args) {
 			
 			
 			// generate a tempLeft
-			var tempLeft = __toInt__(args.handle.style.left) + (args.wheelDelta * step);
+			var tempLeft = utils.convert.int(args.handle.style.left) + (args.wheelDelta * step);
 			this.setMouseWheelEventTime();		
 		}
 
@@ -431,7 +431,7 @@ __horizontalSlider__.prototype.moveHandle = function (moveType, args) {
 				   
 			var tempLeft = newPt.x - // mouseclick x
 						   args.track.getBoundingClientRect().left - // current abs position of the handle
-						   __toInt__(args.handle.style.width)/2; // centers the handle on the mouse pointer		
+						   utils.convert.int(args.handle.style.width)/2; // centers the handle on the mouse pointer		
 
 		}
 		
@@ -465,7 +465,7 @@ __horizontalSlider__.prototype.moveHandle = function (moveType, args) {
 		if (that.currArgs.round) {that.value = Math.round(that.value);}
 		
 		// move the handle
-		args.handle.style.left = __toPx__(tempLeft);
+		args.handle.style.left = utils.convert.px(tempLeft);
 		
 		// run callbacks
 		that.runSlideCallbacks();	

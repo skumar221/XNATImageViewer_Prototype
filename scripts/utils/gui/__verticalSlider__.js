@@ -23,9 +23,9 @@ function __verticalSlider__(args) {
 		// If there are inputted args, we need to set + validate them
 		if (args) { this.setArgs(args) };
 		
-		__setCSS__(widget, this.currArgs().widgetCSS);
-		__setCSS__(track, this.currArgs().trackCSS);
-		__setCSS__(handle, this.currArgs().handleCSS);	
+		utils.css.setCSS(widget, this.currArgs().widgetCSS);
+		utils.css.setCSS(track, this.currArgs().trackCSS);
+		utils.css.setCSS(handle, this.currArgs().handleCSS);	
 		
 		this.value = this.currArgs().value;
 		
@@ -54,8 +54,8 @@ function __verticalSlider__(args) {
 	// GLOBALS - Positioning
 	this.handleStart = function () { 
 		return { 
-			left: __absolutePosition__(handle).left, 
-			top: __absolutePosition__(handle).top 		  
+			left: utils.css.absolutePosition(handle).left, 
+			top: utils.css.absolutePosition(handle).top 		  
 		} 
 	}
 
@@ -357,7 +357,7 @@ __verticalSlider__.prototype.moveHandle = function (moveType, args) {
 			
 			// generate a tempLeft.  with verticalScrolling, we need to invert
 			// the direction of the step
-			var tempTop = __toInt__(args.handle.style.top) + (args.wheelDelta * -1 * step);
+			var tempTop = utils.convert.int(args.handle.style.top) + (args.wheelDelta * -1 * step);
 			
 			
 			
@@ -379,7 +379,7 @@ __verticalSlider__.prototype.moveHandle = function (moveType, args) {
 					   
 			var tempTop = newPt.y - // mouseclick x
 						   args.track.getBoundingClientRect().top - // current abs position of the handle
-						   __toInt__(args.handle.style.height)/2; // centers the handle on the mouse pointer		
+						   utils.convert.int(args.handle.style.height)/2; // centers the handle on the mouse pointer		
 
 		}
 		
@@ -423,7 +423,7 @@ __verticalSlider__.prototype.moveHandle = function (moveType, args) {
 		if (that.currArgs.round) {that.value = Math.round(that.value);}
 		
 		// move the handle
-		args.handle.style.top = __toPx__(tempTop);
+		args.handle.style.top = utils.convert.px(tempTop);
 		
 		// run callbackls
 		that.runSlideCallbacks();	
