@@ -1,53 +1,53 @@
 ## Overview
 
+The basic organizational structure of the XNATViewer centers on javascript objects which control various DOM elements.
+The XNATImageViewer makes use of jquery, jquery-ui, and jquery-collision.
+
+Usually there's a centralizing div element called a "widget" for every javascript object.  Most objects
+utilize an "init" paradigm that allows it to manage its arguments and set up its "widget" element. 
+
+The main controller object is the XNATViewer, which contains the following objects: ScrollGallery, ScanViewers, and ExpandMenus.
+
+The CSS is updated dynamically using the function call "updateCSS", which all widget-containing javascript objects have.  This is
+heirarchically controlled: the XNATImageViewer.updateCSS() function controls the updateCSS functions of the other widgets.  That said,
+individual updateCSS calls can also be (and are) applied when needed.
+
+### Code organization
+
+	1. "utils": Contains various conversion tools where jquery either
+doesn't have the functionality or a new type of functionality is desired.
 
 
-
-
-__ toolkit:
-The first phase entails rewriting the __Slider__.js widget to be jQueryGUI free.
-Now there will be two widgets called __horizontalSlider__.js and __verticalSlider__.js
-
-
-### Workflow
-
-A general overview of the XNATModalImageViewer flow is as follows:
-
-	1. XNATModalImageViewer.js (Holds a "scrollGallery" and multiple "scanViewers"):
+	1. ./XNATViewer (Manages "ScrollGallery", the ScanViewer manager (known globally as XV.ScanViewers()), and expand menus):
 Manages all of the various "widgets" that comprise the viewer.
-This is where AJAX calls would be.  Right now, we're working with a very basic
-data set called TESTSCANDATA_1 found in the ./TESTSCANS directory
+This is where AJAX calls would be.  (Right now, we're working with a local
+data set called TESTSCANDATA found in the ./testscans directory)
 
 
-	2. scrollGallery.js (Holds "scanThumbnails"):
-Mousewheel responsive filmstrip gallery that hosts "scanThumbnails", which are
-"__Draggable__" widgets that can be dropped into "__DropZones__". 
+	2. ./widgets/ScrollGallery (Manages "ScanThumbnails"):
+Mousewheel responsive filmstrip gallery that hosts "scanThumbnails", which contain are
+jquery draggable divs that can be dropped into ScanViewers. 
 
 
-	3. scanThumbnail.js  (is a "__Draggable__"):
-A quasi-intelligent JavaScript object (comprised of several elements, mostly divs)
-that contains the basic information of the scan itself, and its metadata.  The images
+	3. ./widgets/ScanThumbnail (comprised of several elements, mostly divs):
+Contains the basic information of the scan itself, a thumbnail, and its metadata.  The images
 are themselves not loaded onto the thumbnail, but their paths are.
 
 
-	4. scanViewer.js (Holds: frameViewer, scanTabs and a slider):
-This is the "view" widget thats comprised of the metadata tabs, the frame slider and 
-the frameViewer
+	4. ./widgets/ScanViewer (Manages: FrameViewer, ScanTabs, a utils.gui.horizontalSlider, LinkMenu, OrientationMenu):
+Main manager for viewing scans.
 
 
-	5. frameViewer.js (is a "__DropZone__"):
-Holds a number of Image elements (frames) that are subsequently drawn onto an html5 canvas
-using the drawImage function. 
+	5. ./widgets/FrameViewer:
+A div containing a canvas.  The javascript object holds a number of img elements (frames) that are subsequently drawn 
+onto an HTML5 canvas using the drawImage function. Movement of the ScanViewer slider initiates a traversal through
+the images, which are then drawn onto the canvas.
 
 
-	6. imageManip.js:
+	6. ./widgets/imaging/imageProcessingFunctions.js:
 Contains utility methods for brightness and contrast.
 
 
-	7. scanTabs.js:
-Modified jQueryUI tabs for hosting metadata/
-
-	8. The "__" toolkit:
-jQuery + JavaScript toolkit, developed by Sunil Kumar.  Contains a lot of useful stuff.
-
+	7. ScanTabs.js:
+Modified jquery-ui tabs for hosting metadata, brightness and contrast sliders
 
