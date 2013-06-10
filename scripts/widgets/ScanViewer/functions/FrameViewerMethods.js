@@ -11,9 +11,7 @@ FrameViewer.prototype.loadFramesByAxis = function (frameType, axisIcons) {
 		this.loadFrames(this.currDroppable.axialFrames);
 	if (frameType.toLowerCase() == "coronal")
 		this.loadFrames(this.currDroppable.coronalFrames);
-	
-	$(this.canvas).fadeTo(GLOBALS.animFast, 1);
-//	console.log(axisIcons[0].axis);
+
 	if(axisIcons) {
 		for (var i=0; i<axisIcons.length; i++) {
 			console.log(axisIcons[0].axis, axisIcons[i].axis.toLowerCase(), frameType.toLowerCase());

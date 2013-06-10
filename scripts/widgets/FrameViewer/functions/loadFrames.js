@@ -46,10 +46,10 @@ FrameViewer.prototype.loadFrames = function (frames) {
 	    	if (this == that.endImage) {
 				
 				// Show canvas
-				$(that.canvas).fadeIn(0);
+				that.progBar.hide(GLOBALS.animFast, function() {});	
+				$(that.canvas).fadeIn(GLOBALS.animFast);
 				
-				// Hide progess bar
-				that.progBar.hide();
+				
 				
 				// check to see that there are enough frames to acommodate the currFrame number;
 				if (that.currFrame > that.frames.length) { 
