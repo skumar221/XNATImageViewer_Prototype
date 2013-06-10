@@ -20,7 +20,7 @@ utils.gui.progressBar = function (parent, args) {
 	progBar.label = utils.dom.makeElement('div', progBar.widget, 'ProgressBar_Label', {
 		fontFamily: GLOBALS.fontFamily,
 		color: 'rgba(255,255,255)',
-		fontSize: GLOBALS.fontSizeMed,
+		fontSize: 11,
 	});
 	progBar.label.innerHTML = 'Loading...'
 	

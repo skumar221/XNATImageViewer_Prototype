@@ -49,7 +49,7 @@ ScanViewer.prototype.populateData = function (data) {
 				dd.innerHTML += "<option>" + "coronal" + "</option>";
 				
 				dd.onchange = function () {
-					that.FrameViewer.loadFramesByAxis(dd.value)
+					that.FrameViewer.loadFramesByViewPlane(dd.value)
 					//console.log(dd.value);
 				}				
 			}

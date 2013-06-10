@@ -101,7 +101,7 @@ ScanViewer.prototype.addAxisMenu = function () {
 				utils.dom.stopPropagation(event); 
 				if (that.FrameViewer.frames.length > 0) {
 					
-					that.FrameViewer.loadFramesByAxis(this.axis, that.axisIcons);
+					that.FrameViewer.loadFramesByViewPlane(this.axis, that.axisIcons);
 					that.AxisMenu.activateIcon(this.title);
 				} 
 			};		

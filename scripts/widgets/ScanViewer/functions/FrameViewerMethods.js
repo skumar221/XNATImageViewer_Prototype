@@ -3,15 +3,35 @@
 //  In this case, they are the ScanThumbnails.
 //******************************************************
 
-FrameViewer.prototype.loadFramesByAxis = function (frameType, axisIcons) {
+FrameViewer.prototype.loadFramesByViewPlane = function (frameType, axisIcons) {
 
-	if (frameType.toLowerCase() == "sagittal")
+	this.currViewPlane = frameType.toLowerCase();
+	
+	
+	if (this.currViewPlane == "sagittal"){		
 		this.loadFrames(this.currDroppable.sagittalFrames);
-	if (frameType.toLowerCase() == "transverse" || frameType.toLowerCase() == "axial")
+	}
+		
+	else if (this.currViewPlane == "transverse" || this.currViewPlane == "axial") {
 		this.loadFrames(this.currDroppable.axialFrames);
-	if (frameType.toLowerCase() == "coronal")
+	}
+		
+	else if (this.currViewPlane == "coronal") {
 		this.loadFrames(this.currDroppable.coronalFrames);
+	}
+		
+	
+	var viewPlaneStr = "<b>" + this.currViewPlane.charAt(0).toUpperCase() + this.currViewPlane.slice(1) + " View Plane</b>";
 
+	var loadStr = "<br> Scan " + (this.currDroppable.scanData.sessionInfo["Scan"].value).toString() + " / "
+				  + viewPlaneStr + " / "
+	              + this.frames.length.toString() + " frames <br>";
+	              
+	this.progBar.update({
+		'label': "Loading...  "  + loadStr
+	});
+	
+	
 	if(axisIcons) {
 		for (var i=0; i<axisIcons.length; i++) {
 			console.log(axisIcons[0].axis, axisIcons[i].axis.toLowerCase(), frameType.toLowerCase());
@@ -35,7 +55,7 @@ FrameViewer.prototype.loadDroppable = function (droppable) {
 
 		this.currDroppable = droppable;
 
-		this.loadFramesByAxis("sagittal");
+		this.loadFramesByViewPlane("sagittal");
 		
 		
 		//

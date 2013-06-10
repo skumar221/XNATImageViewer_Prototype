@@ -106,7 +106,7 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 			icon.onclick = function(){ 
 				if (that.FrameViewer.frames.length > 0){
 					
-					that.FrameViewer.loadFramesByAxis(this.axis, that.axisIcons);
+					that.FrameViewer.loadFramesByViewPlane(this.axis, that.axisIcons);
 				} 
 			};		
 		}	
