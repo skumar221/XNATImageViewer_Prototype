@@ -51,7 +51,7 @@ var defaultArgs_ScanViewer = {
 //******************************************************
 var ScanViewer = function (args) {
   	
-	INIT(this, defaultArgs_ScanViewer, args);
+	utils.oo.init(this, defaultArgs_ScanViewer, args);
 	var that = this;
 	this.widget.defaultMouseEvents = [];
 	

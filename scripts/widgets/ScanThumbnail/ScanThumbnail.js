@@ -45,7 +45,7 @@ defaultArgs_ScanThumbnail = {
 //******************************************************
 function ScanThumbnail(scanData, args) {
 	var that = this;
-	INIT(this, defaultArgs_ScanThumbnail, args, function () {});
+	utils.oo.init(this, defaultArgs_ScanThumbnail, args, function () {});
 
 
 	this.mouseDown = false;

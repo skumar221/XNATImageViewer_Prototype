@@ -107,5 +107,11 @@ GLOBALS.minContentDividerTop = function(widgetHeight){
 } 
 
 
+//---------------------------
+//  DRAG AND DROP IMAGE
+//---------------------------
+GLOBALS.dragAndDropImage = new Image();
+GLOBALS.dragAndDropImage.src = "./icons/DragAndDrop-3pt.png";
+$(GLOBALS.dragAndDropImage).hide();	
 
 

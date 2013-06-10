@@ -4,6 +4,7 @@
 //******************************************************
 FrameViewer.prototype.loadFrames = function (frames) {
 
+	
 	var framePaths = (this.args.framePaths) ? this.args.framePaths : frames
 	// Check if there are frame paths given
 	if (!framePaths) {
@@ -12,7 +13,19 @@ FrameViewer.prototype.loadFrames = function (frames) {
 	var that = this;
 	
 	
+	//
+	// Update progress bar
+	//
+	this.progBar.update({
+		"max" : framePaths.length,
+		"clear": true
+	});
+	$(this.canvas).stop().fadeOut(0);
+	this.progBar.show();
+	
+	//
 	// track frames as image objects.  store them in an array.
+	//
 	this.frames = [];
 	for (var i=0; i < framePaths.length; i++) {
 		var img = new Image();
@@ -23,8 +36,20 @@ FrameViewer.prototype.loadFrames = function (frames) {
 		// Once the image is loaded, check to see if it's an "endImage",
 		// if so, draw it to the frame.
 	    img.onload = function () {
+	    	
+	    	//
+	    	// Update progress bar
+	    	//
+	    	that.progBar.update({"add": 1})
+	    	
+	    	
 	    	if (this == that.endImage) {
-//				console.log("1 ", that.currFrame, that.frames.length, that.frames[Math.round(that.currFrame)]);
+				
+				// Show canvas
+				$(that.canvas).fadeIn(0);
+				
+				// Hide progess bar
+				that.progBar.hide();
 				
 				// check to see that there are enough frames to acommodate the currFrame number;
 				if (that.currFrame > that.frames.length) { 

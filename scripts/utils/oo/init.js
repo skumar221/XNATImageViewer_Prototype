@@ -1,9 +1,8 @@
 //******************************************************
-//  This is a general set of init procedures that is appllied
-//  to the majority of javaScript objects/widgets I use.  
-//  This basically creates a semblance of object-oriented programming.
+//  
 //******************************************************
-var INIT = function (obj, defaultArgs, args, initRoutine) {
+
+utils.oo.init = function (obj, defaultArgs, args, initRoutine) {
 	obj.defaultArgs = defaultArgs;
 	obj.args = (args) ? utils.dom.mergeArgs(obj.defaultArgs, args) : obj.defaultArgs;
 	

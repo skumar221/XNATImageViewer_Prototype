@@ -49,7 +49,7 @@ defaultArgsXNATViewer= {
 var XNATViewer = function (args) {
 
 	var that = this;
-	INIT(this, defaultArgsXNATViewer, args, function () {});
+	utils.oo.init(this, defaultArgsXNATViewer, args, function () {});
 	XV = this;
 
 	

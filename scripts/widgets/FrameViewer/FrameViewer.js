@@ -31,11 +31,18 @@ var defaultArgs_FrameViewer = {
 //******************************************************
 function FrameViewer(args) {
 
-	INIT(this, defaultArgs_FrameViewer, args);
+	utils.oo.init(this, defaultArgs_FrameViewer, args);
 	this.currFrame = this.args.onloadFrame;
 	
 
-
+	//----------------------------------
+	//	PROGRESS BAR
+	//----------------------------------
+	this.progBar = utils.gui.progressBar(this.widget);
+	this.progBar.hide();
+	
+	
+	
 	//----------------------------------
 	//	CANVAS AND CONTEXT
 	//----------------------------------

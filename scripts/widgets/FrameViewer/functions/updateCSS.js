@@ -28,21 +28,20 @@ FrameViewer.prototype.updateCSS = function () {
 	    //
 	    this.context.fillStyle = "black";
 	    this.context.fillRect(0,0, this.canvas.height, this.canvas.width);
-		
-		
-		//
-		// Add empty image to add to canvas
-		//
-		var img = utils.dom.makeElement("img", this.canvas, this.widget.id + "_dragAndDropImage");
-		img.src = "./icons/DragAndDrop-3pt.png";
+
+
 		
 		
 		//
 		// Rescale image		
 		//
-		img.width = 249/2.5;
-		img.height = 156/2.5; 
-		this.context.drawImage(img, this.canvas.width/2 - img.width/2, this.canvas.height/2 - img.height/2, img.width, img.height);
+		
+		var ddImg = GLOBALS.dragAndDropImage;
+		ddImg.width = 249/2.5;
+		ddImg.height = 156/2.5; 
+		this.context.drawImage(ddImg, this.canvas.width/2 - ddImg.width/2, 
+								    this.canvas.height/2 - ddImg.height/2, 
+								    ddImg.width, ddImg.height);
 		this.canvas.style.opacity = .6;
 
 	}

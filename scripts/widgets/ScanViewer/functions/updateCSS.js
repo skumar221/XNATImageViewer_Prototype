@@ -62,7 +62,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	var scanTabHeight = widgetHeight - scanTabTop;
 	var sliderTop = contentDividerPos.top - this.FrameSlider.currArgs().handleCSS.height - 5;
 	
-	var viewerWidth = sliderTop;
+	var viewerWidth = widgetWidth;
 	var viewerHeight = viewerWidth;
 	var viewerLeft = widgetWidth/2 - viewerWidth/2;
 	

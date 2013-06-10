@@ -43,13 +43,13 @@ def replaceInFile(src, findStr, replaceStr):
         
 def main():
     
-    rootDir = "../scripts"
+    rootDir = "../scripts/widgets"
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "__globals__"
-    replaceStr = "utils.globals"
-    fileReplaceStr = "globals" #replaceStr.split(".")[2]
+    findStr = "init("
+    replaceStr = "utils.oo.init("
+    fileReplaceStr = "init" #replaceStr.split(".")[2]
 
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
