@@ -5,6 +5,18 @@ ScanThumbnail.prototype.asyncLoad = function (args) {
 	var pFrames;
 	var rFrames;
 
+	/*
+	 function loadNextImage() {
+    if (imgQueue.length > 0) {
+        var imgN = new Image();
+        imgN.src = imgQueue.shift();
+        $(imgN).load(function(){
+            $("#main").append(imgN);
+            loadNextImage();
+        });
+    }
+}
+	 */
 	
 	this.sagittalFrames_preloaded = [];
 	this.coronalFrames_preloaded = [];

@@ -1,7 +1,16 @@
 ScanThumbnail.prototype.addDraggableMethods = function () {
 	
 	var that = this;
-	
+
+
+	function destroy() {		
+		if (that.widget.clone) {
+			that.widget.clone.parentNode.removeChild(that.widget.clone);
+			that.widget.clone = undefined;				
+		}					
+	}
+					
+						
 	function revertBorders () {
 		//
 		// Revert viewer borders back to original
@@ -17,6 +26,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 		}
 	}
 	
+
 	
 	$(this.widget).bind('mousedown.drag', function(event) {
 	
@@ -46,16 +56,75 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			var offset = $(this).offset();
 			var pDims = [$(this).width(), $(this).height()];
 			
+			
+			this.clone.stopper = function () {
+				var clone = this;
+
+				revertBorders();					
+				
+				if (!this.targetId) {
+					
+					//  Fly back to original position
+					$(this).animate({
+						top: offset.top,
+						left: offset.left
+					}, GLOBALS.animFast, function() {
+						destroy();
+					})		
+									
+				}
+				else {
+					
+					// Load the thumbnail into the ScanViewer
+					var v = XV.ScanViewers(this.targetId);
+					if (v) {
+
+						v.FrameViewer.loadDroppable(that); 
+						if (v.widget.prevBorder) {
+							v.widget.style.border = v.widget.prevBorder;	
+						}							
+					}
+					destroy();
+				}
+			}
+			
+			
+			
 			$(this.clone).css({
 				
 				top: offset.top,
 				left: offset.left,
+		
+			})
 			
 			
+			
+			
+			$(this.clone).bind('mouseup.drag', function(event) { 
+				
+				var clone = this;
+				var v = XV.ScanViewers( function (ScanViewer, i, j) {
+					
+					if (i==0) {
+						console.log(ScanViewer.widget.id)
+						clone.targetId = ScanViewer.widget.id; 
+					}
+					
+				});
+				
+				clone.stopper();
+
+			})
+			
+			
+
+			
+
+
 			//
 			// Define clone draggable
-			//
-			}).draggable({
+			//			
+			$(this.clone).draggable({
 				
 				opacity: .7, 
 				
@@ -66,6 +135,10 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 					modalOffset.top + $(modal).height() - pDims[1] -1
 					
 				],
+				
+				start: function () {
+
+				},
 				
 				drag: function () {
 					
@@ -98,48 +171,23 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				
 				stop: function () {
 					
-					var clone = this;
-					
-					function destroy() {					
-						clone.parentNode.removeChild(clone);
-						that.widget.clone = undefined;						
-					}
-
-					
-					revertBorders();					
-					
-					if (!this.targetId) {
-						
-						//  Fly back to original position
-						$(this).animate({
-							top: offset.top,
-							left: offset.left
-						}, GLOBALS.animFast, function() {
-							destroy();
-						})		
-										
-					}
-					else {
-						
-						// Load the thumbnail into the ScanViewer
-						var v = XV.ScanViewers(this.targetId);
-						if (v) {
-	
-							v.FrameViewer.loadDroppable(that); 
-							if (v.widget.prevBorder) {
-								v.widget.style.border = v.widget.prevBorder;	
-							}							
-						}
-						destroy();
-					}
+					this.stopper();
 				}	
 			});
-			
+
+			//--------------------------------
+			// DOUBLE CLICK
+			//--------------------------------
+			//$(this.clone).dblclick(function () {
+
+			//})			
 			
 			//
 			// Programatically trigger mouseDown to initiate clone drag
 			//
 			$(this.clone).data("ui-draggable")._mouseDown(event);
+			
+
 		}
 	)	
 	

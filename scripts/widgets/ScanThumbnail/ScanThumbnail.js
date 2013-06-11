@@ -117,30 +117,9 @@ function ScanThumbnail(scanData, args) {
 	this.addDraggableMethods();
 
 	
-	/*
-	__Droppable__(this);
-	
-	
-	//--------------------------------
-	// DOUBLE CLICK
-	//--------------------------------
-	$(this.draggable).dblclick(function () {
-		if (that.dropZones) {
-			for (var i=0; i<that.dropZones.length; i++) {
-	
-					if (that.dropZones[i].frames.length == 0) {
-						console.log("1")
-						that.dropZones[i].loadDroppable(that);
-						that.activate(that.dropZones[i].args.id);
-						return;
-					}		
-			}			
-		}
-	})
-	
-	
+		
 
-	*/
+	
 	
 	// Once the image lods, we want to make sure it is also the draggable image
 	// and that it's draw on the Thumbnail canvas.
