@@ -3,6 +3,9 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 	var that = this;
 
 
+	//
+	// Destroy clone
+	//
 	function destroy() {		
 		if (that.widget.clone) {
 			that.widget.clone.parentNode.removeChild(that.widget.clone);
@@ -10,11 +13,11 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 		}					
 	}
 					
-						
+
+	//
+	// Revert viewer borders back to original
+	//
 	function revertBorders () {
-		//
-		// Revert viewer borders back to original
-		//
 		var viewers = XV.ScanViewers("widgets");
 		for (var i=0; i<viewers.length; i++){
 			if (viewers[i].prevBorder){
@@ -29,19 +32,17 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 
 	
 	$(this.widget).bind('mousedown.drag', function(event) {
-	
-			
 			//
 			// Get modal dims
 			//
 			var modal = XV.widget;
 			var modalOffset = $(modal).offset();
-	
+			
 			
 			//
 			// Create clone
 			//
-			this.clone = $(this).clone()[0]
+			this.clone = $(this).clone()[0];
 			
 			
 			//
@@ -57,7 +58,10 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			var pDims = [$(this).width(), $(this).height()];
 			
 			
-			this.clone.stopper = function () {
+			//
+			// Define generic mouse event end 
+			//			
+			this.clone.mouseEventEnd = function () {
 				var clone = this;
 
 				revertBorders();					
@@ -89,7 +93,9 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			}
 			
 			
-			
+			//
+			// Set style
+			//
 			$(this.clone).css({
 				
 				top: offset.top,
@@ -97,30 +103,35 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 		
 			})
 			
-			
-			
-			
+						
+			//
+			// Set clicking (will populate ScanViewer)
+			//
 			$(this.clone).bind('mouseup.drag', function(event) { 
 				
 				var clone = this;
-				var v = XV.ScanViewers( function (ScanViewer, i, j) {
+				var inserted = false;
+				
+				XV.ScanViewers( function (ScanViewer, i, j) {
 					
-					if (i==0) {
-						console.log(ScanViewer.widget.id)
+					if (!inserted && ScanViewer.FrameViewer.frames.length == 0) {
 						clone.targetId = ScanViewer.widget.id; 
+						inserted = true;
 					}
 					
 				});
 				
-				clone.stopper();
+				if (!inserted) { 
+				
+					XV.ScanViewers.
+				}
+				
+				clone.mouseEventEnd();
 
 			})
 			
 			
-
 			
-
-
 			//
 			// Define clone draggable
 			//			
@@ -171,16 +182,11 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				
 				stop: function () {
 					
-					this.stopper();
+					this.mouseEventEnd();
+				
 				}	
 			});
-
-			//--------------------------------
-			// DOUBLE CLICK
-			//--------------------------------
-			//$(this.clone).dblclick(function () {
-
-			//})			
+		
 			
 			//
 			// Programatically trigger mouseDown to initiate clone drag
