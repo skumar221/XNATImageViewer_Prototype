@@ -106,13 +106,6 @@ FrameViewer.prototype.addOnloadCallback = function (callback) {
 
 
 
-//******************************************************
-//  Method for handling objects that are "Droppable".
-//  In this case, they are the ScanThumbnails.
-//******************************************************
-FrameViewer.prototype.loadDroppable = function (droppable) {}
-
-
 
 
 //******************************************************

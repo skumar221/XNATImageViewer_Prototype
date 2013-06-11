@@ -2,7 +2,7 @@
 //  
 //
 //******************************************************
-ScanViewer.prototype.addViewPlaneMenu = function(){
+ScanViewer.prototype.addViewPlaneMenu = function () {
 
 	var that = this;	
 	var iconStartLeft = 7;
@@ -11,45 +11,31 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 	var iconDimSmall = 23;
 	var iconDimMed = 35;
 	var spacer = iconDimMed*1.2;	
-	var iconVals = ['Sagittal', 'Coronal', 'Transverse', '3D'];
+	var iconVals = ['Sagittal', 'Coronal', 'Transverse'];//, '3D'];
 
-
-
+	
+	
+	
 	//------------------------------
-	// ADD Menu div
+	// MAIN MENU
 	//------------------------------	
-	this.AxisMenu = utils.dom.makeElement("div", this.widget, this.args.id + "_ViewTypeTab_AxisMenu",{
+	this.ViewPlaneMenu = utils.dom.makeElement("div", this.widget, "ViewPlaneMenu",{
 		position: "absolute",
 		left: iconStartLeft,
-		top: iconStartTop,// + spacer*i,
-		height: iconDimMed , 
-		width: iconDimMed * (iconVals.length + 2),
-		border: "sold 1px rgba(100,100,100,1)"
+		top: iconStartTop,
+		height: iconDimSmall , 
+		width: iconDimSmall,
+		cursor: "pointer", 
 	});
+	this.ViewPlaneMenu.title  = "Select View Plane";	
 	
 	
 	
 	
 	//------------------------------
-	// ADD TO DEFAULT MOUSE EVENTS
-	//------------------------------
-	this.widget.defaultMouseEvents.push(function(){
-		$(that.AxisMenu).fadeOut(0);
-		$(that.widget).bind('mouseenter.axismenu', function(){
-			$(that.AxisMenu).stop().fadeTo(Globals.animFast,1);
-		}).bind('mouseleave.axismenu', function(){
-			$(that.AxisMenu).stop().fadeTo(Globals.animFast,0);
-		})		
-	})
-	this.widget.defaultMouseEvents[this.widget.defaultMouseEvents.length -1]();
-	
-	
-	
-	
-	//------------------------------
-	// ADD Menu img (child of Menu DIV)
+	// MAIN MENU ICON
 	//------------------------------	
-	var AxisMenu_Image = utils.dom.makeElement("img", this.AxisMenu, this.args.id + "_ViewTypeTab_AxisMenuImage",{
+	this.ViewPlaneMenu.icon = utils.dom.makeElement("img", this.ViewPlaneMenu, "menuIcon",{
 		position: "absolute",
 		left: 0,
 		top: 0,// + spacer*i,
@@ -57,185 +43,239 @@ ScanViewer.prototype.addViewPlaneMenu = function(){
 		width: iconDimSmall ,
 		cursor: "pointer", 
 	});	
-	AxisMenu_Image.src = "./icons/Axes.png";
+	this.ViewPlaneMenu.icon.src  = "./icons/ViewPlaneMenu/Axes.png";	
+	
+	
+
+
+
+	//------------------------------
+	// SUB MENU
+	//------------------------------	
+	this.ViewPlaneMenu.subMenu = utils.dom.makeElement("div", this.ViewPlaneMenu, "subMenu",{
+		position: "absolute",
+		left: 0,//iconStartLeft  + iconDimMed,
+		top: 0,// + spacer*i,
+		height: iconDimMed , 
+		width: spacer * iconVals.length,
+		cursor: "pointer"
+		//border: "solid 1px rgba(100,100,100,1)"
+	});	
+	// For onclick purposes
+	this.ViewPlaneMenu.subMenu.pinned = false;
+	
 
 
 
 	//------------------------------
 	// ADD MENU ICONS
 	//------------------------------
-	this.menuIcons = [];	
-	for (var i=0; i<iconVals.length; i++){
-		
+	this.ViewPlaneMenu.subMenu.icons = [];	
+	
+	for (var i=0; i<iconVals.length; i++) {
+			
 		//
-		// ADD Menu Icon
+		// Icons
 		//	
-		var icon = utils.dom.makeElement("img", this.AxisMenu, this.args.id + "_ViewTypeTab_" + iconVals[i] + "Icon",{
+		var icon = utils.dom.makeElement("img", this.ViewPlaneMenu.subMenu, "icon_" + iconVals[i],{
 			position: "absolute",
-			left: iconStartLeft + spacer*(i+1),
 			top: 0,
+			left: iconDimMed + spacer*(i),
 			height: iconDimMed , 
 			width: iconDimMed ,
 			cursor: "pointer", 
 		});	
-		icon.src = "./icons/" + iconVals[i] + ".png";
+		
+		icon.src = "./icons/ViewPlaneMenu/" + iconVals[i] + ".png";
 		icon.axis = iconVals[i];
+		icon.title = iconVals[i];
 		
-		
-		//
-		// ADD Menu Icon to global list	
-		//		
-		this.menuIcons.push(icon);				
-		
-		
-		//
-		// SET hover events
-		//
-		$(icon).fadeTo(0,0);		
-		$(icon).mouseenter(function(){
-			$(this).stop().fadeTo(200,1);
-		}).mouseleave(function(){
-			$(this).stop().fadeTo(0,.5);
-		});				
-		
+		this.ViewPlaneMenu.subMenu.icons.push(icon);				
+
+
 		
 		//
 		// SET onclick
 		//
-		if (icon.axis != "3D"){
-			icon.onclick = function(){ 
-				if (that.FrameViewer.frames.length > 0){
+		if (icon.axis != "3D") {
+			icon.onclick = function (event) {
+				utils.dom.stopPropagation(event); 
+				if (that.FrameViewer.frames.length > 0) {
 					
-					that.FrameViewer.loadFramesByViewPlane(this.axis, that.axisIcons);
+					that.FrameViewer.loadFramesByViewPlane(this.axis);
+					that.ViewPlaneMenu.activateIcon(this.title);
 				} 
 			};		
 		}	
 	}	
-	
-	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function fadeOutMenuIcons(){
-		
-		AxisMenu_Image.hasmouseover = false;
-		//
-		// Hide icons when leaving menu div
-		//
-		for (var x in that.menuIcons){
-			$(that.menuIcons[x]).stop().fadeTo(300, 0);
-		}
-	}
-	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function fadeInMenuIcons(){
-		
-		AxisMenu_Image.hasmouseover = true;
-		//
-		// Fade in when hovering over menu image
-		//
-		for (var x in that.menuIcons){
-			$(that.menuIcons[x]).stop().fadeTo(300, .5);
-		}
-		
-	}
-	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function setMenuImageHover(){
 
-		$(AxisMenu_Image).fadeTo(0, .5);
-		
-		$(AxisMenu_Image).mouseenter(function(){
-			
-			$(this).stop().fadeTo(300,1);				
-			fadeInMenuIcons();
-			
-		}).mouseleave(function(){
-			
-			$(this).stop().fadeTo(300, .5);
-			
-		});			
-	}
-	
+
 	
 	
 	//------------------------------
 	// 
 	//------------------------------		
-	function setMenuDivMouseleave(){
+	function setHoverEvents() {
 		
-		$(that.AxisMenu).mouseleave(function(){		
+		//
+		// MAIN MENU ICON - default fade state
+		//
+		$(that.ViewPlaneMenu.icon).fadeTo(0,.5);
+		
+		
+		//
+		// SUB MENU - default fade state
+		//		
+		$(that.ViewPlaneMenu.subMenu).fadeOut(0);
+		
+		
+		//
+		//  MAIN MENU ICON - mouseenter
+		//
+		$(that.ViewPlaneMenu.icon).mouseenter(function () {
+
+			that.ViewPlaneMenu.iconHovered = true;
+			mainEnter();
+		})
+		
+		
+		//
+		// SUB MENU ICONS - mouseenter, mouseleave
+		//
+		for (var i=0;i<that.ViewPlaneMenu.subMenu.icons.length; i++) {
 			
-			fadeOutMenuIcons();
+			var icon = that.ViewPlaneMenu.subMenu.icons[i];
+			$(icon).fadeTo(0,.5);
+			subMenuIconBind(icon, true);
+
+		}
+
+		superBind(false);
+	}
+
+
+	
+	
+	//
+	//  SUB MENU - mouseleave
+	//	
+	function subMenuIconBind(icon, bind) {
+		
+		if (bind) {
 			
-		});			
+			$(icon).bind('mouseenter.default', function () {
+				if (that.ViewPlaneMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, 1);
+				}			
+			})
+			
+			$(icon).bind('mouseleave.default', function () {
+				if (that.ViewPlaneMenu.iconHovered) {
+					$(this).stop().fadeTo(GLOBALS.animFast, .5);
+				}	
+			});	
+					
+		}
+		else{
+			
+			$(icon).unbind('mouseenter.default');
+			$(icon).unbind('mouseleave.default');
+
+		}
 		
 	}
 	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function setMenuHover(){
-		
-		setMenuImageHover();
-		setMenuDivMouseleave();		
-		
-	}
-	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function clearMenuHover(){
-		
-		$(that.AxisMenu).unbind('mouseenter');
-		$(that.AxisMenu).unbind('mouseleave');
-		$(AxisMenu_Image).unbind('mouseenter');		
-		$(AxisMenu_Image).unbind('mouseleave');		
-		
-	}
-	
-	
-	//------------------------------
-	// 
-	//------------------------------		
-	function setMenuImageClick(){	
+	this.ViewPlaneMenu.activateIcon = function (iconName) {
+
+		for (var i=0;i<that.ViewPlaneMenu.subMenu.icons.length; i++) {
 			
-		AxisMenu_Image.clicked = false;	
-		$(AxisMenu_Image).stop().fadeTo(300, .5);
-		
-		$(AxisMenu_Image).click(function(){
+			var icon = that.ViewPlaneMenu.subMenu.icons[i];
 			
-			this.clicked = !this.clicked;
+			if (icon.title.toLowerCase() == iconName.toLowerCase()) {
 			
-			if (this.clicked){
-				
-				$(this).stop().fadeTo(300,1);
-				fadeInMenuIcons();		
-				clearMenuHover();
-			
+				subMenuIconBind(icon, true);				
+				$(icon).stop().fadeTo(GLOBALS.animFast, 1);
+
 			}
 			else{
-				
-				$(this).stop().fadeTo(300, .5);
-				fadeOutMenuIcons();		
-				setMenuHover();
-				
-			}	
-		})		
+				subMenuIconBind(icon, true);				
+				$(icon).stop().fadeTo(GLOBALS.animFast, .5);				
+			}
+		}
+		
 	}
+	
+	
+	
+	
+	//
+	//  SUB MENU - mouseleave
+	//	
+	function subLeave() {
+
+		$(that.ViewPlaneMenu.subMenu).fadeOut(GLOBALS.animFast);
+		$(that.ViewPlaneMenu.icon).fadeTo(GLOBALS.animFast, .5);
+		that.ViewPlaneMenu.iconHovered = false;
+				
+	}
+	
+	
+	//
+	//  MAIN MENU - mouseenter
+	//	
+	function mainEnter() {
+
+		if (that.ViewPlaneMenu.iconHovered) {
+			
+			$(that.ViewPlaneMenu.icon).fadeTo(GLOBALS.animFast, 1);
+			$(that.ViewPlaneMenu.subMenu).fadeIn(GLOBALS.animFast);
+						
+		}	
+	}
+	
+	
+	//
+	//  MAIN BINDING FUNCTION
+	//
+	function superBind(subMenuPinned) {
+		if (subMenuPinned) {
+			//
+			// Unbind hover events to pin the subMenu
+			//
+			$(that.ViewPlaneMenu.subMenu).unbind('mouseleave.axis');
+			$(that.ViewPlaneMenu).unbind('mouseenter.axis');				
+		}
+		else{
+			//
+			// Bind the hover events to unpin subMenu
+			//
+			$(that.ViewPlaneMenu.subMenu).bind('mouseleave.axis', subLeave);
+			$(that.ViewPlaneMenu).bind('mouseenter.axis', mainEnter);
+		}	
+	}
+	
+	
+	//
+	//  ONCLICK
+	//
+	function setOnclickEvents() {
+		
+		$(that.ViewPlaneMenu).click(function () {	
+			
+			that.ViewPlaneMenu.subMenu.pinned = !that.ViewPlaneMenu.subMenu.pinned;
+			
+			superBind(that.ViewPlaneMenu.subMenu.pinned)			
+			
+		})
+	}
+	
+	
 
 
 
-	setMenuImageHover();
-	setMenuDivMouseleave();
-	setMenuImageClick();
+	//
+	// Function calls
+	//
+	setHoverEvents();
+	setOnclickEvents();
 }

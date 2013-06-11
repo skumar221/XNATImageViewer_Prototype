@@ -22,7 +22,7 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		    
 		  }, GLOBALS.animMed, function () {
 			
-			
+			that.updateCSS();
 		    $.when(that.updateCSS()).then(function(){
 				
 				$.when(callback()).then(function() { 
@@ -33,7 +33,8 @@ XNATViewer.prototype.animateModal  = function (callback) {
 						ScanViewer.setJQueryEvents();
 					
 					}); 						
-				
+					
+					
 				});
 			  	    	
 		    });

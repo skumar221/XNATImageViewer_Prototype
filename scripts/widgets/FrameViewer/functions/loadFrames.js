@@ -3,71 +3,24 @@
 //  them in an array.
 //******************************************************
 FrameViewer.prototype.loadFrames = function (frames) {
-
 	
-	var framePaths = (this.args.framePaths) ? this.args.framePaths : frames
 	// Check if there are frame paths given
-	if (!framePaths) {
+	if (!frames) {
 		throw("Load Frames error: invalid method parameter -- you need frame paths!")
 	} 
-	var that = this;
+
+	var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);	
+	this.frames = frames;	
+	this.currFrame = Math.round(this.frames.length/2);
+	this.drawImage_MaintainProportions(this.frames[this.currFrame], this.canvas, this.context);
 	
 	
-	//
-	// Update progress bar
-	//
-	this.progBar.update({
-		"max" : framePaths.length,
-		"clear": true
-	});
-	$(this.canvas).stop().fadeOut(0);
-	this.progBar.show();
+	// Need to get the appropriate contrast threshold for the data set.
+	this.args.contrastThreshold = thresholdAutoDetect(imageData.data);
 	
-	//
-	// track frames as image objects.  store them in an array.
-	//
-	this.frames = [];
-	for (var i=0; i < framePaths.length; i++) {
-		var img = new Image();
-		if (i == framePaths.length-1) {
-			that.endImage = img;
-		}
-		
-		// Once the image is loaded, check to see if it's an "endImage",
-		// if so, draw it to the frame.
-	    img.onload = function () {
-	    	
-	    	//
-	    	// Update progress bar
-	    	//
-	    	that.progBar.update({"add": 1})
-	    	
-	    	
-	    	if (this == that.endImage) {
-				
-				// Show canvas
-				that.progBar.hide(GLOBALS.animFast, function() {});	
-				$(that.canvas).fadeIn(GLOBALS.animFast);
-				
-				
-				
-				// check to see that there are enough frames to acommodate the currFrame number;
-				if (that.currFrame > that.frames.length) { 
-					that.currFrame = Math.round(that.frames.length/2);
-				}
-	   			that.drawImage_MaintainProportions(that.frames[Math.round(that.currFrame)], that.canvas, that.context);
-	   			// Need to get the appropriate contrast 
-	   			// threshold for the data set.
-	   			var imageData = that.context.getImageData(0, 0, that.canvas.width, that.canvas.height);	
-	   			that.args.contrastThreshold = thresholdAutoDetect(imageData.data);
-	   			
-	   			// Run any callbacks once everything is loaded
-	   			for (var k=0; k<that.onloadCallbacks.length; k++) {
-	   				that.onloadCallbacks[k]();
-	   			}		    		
-	    	}
-	  	};
-	  	img.src = framePaths[i];
-	  	this.frames.push(img);
-	 }
+	
+	// Run any callbacks once everything is loaded
+	for (var k=0; k<this.onloadCallbacks.length; k++) {
+		this.onloadCallbacks[k]();
+	}		    		
 }

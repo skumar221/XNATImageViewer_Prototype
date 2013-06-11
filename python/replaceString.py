@@ -47,8 +47,8 @@ def main():
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "loadFramesByAxis"
-    replaceStr = "loadFramesByViewPlane"
+    findStr = "AxisMenu"
+    replaceStr = "ViewPlaneMenu"
     fileReplaceStr = "init" #replaceStr.split(".")[2]
 
     

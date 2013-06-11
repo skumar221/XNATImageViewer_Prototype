@@ -83,7 +83,7 @@ function ScanThumbnail(scanData, args) {
 	//--------------------------------
 	this.sagittalFrames = this.getFrameList("sagittal"); 
 	this.coronalFrames = this.getFrameList("coronal");
-	this.axialFrames = this.getFrameList("axial");
+	this.transverseFrames = this.getFrameList("axial");
 	
 	
 	

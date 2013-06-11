@@ -15,14 +15,14 @@ def main():
     s = []
     
     
-    prependStr = '<script src="'
-    appendStr = '"></script>'
+    prependStr = '' #'<script src="'
+    appendStr = '' #"></script>'
     
     for root, dirs, files in os.walk(scriptPath):
        for f in files:
            a = root + os.sep + f
            a = prependStr + a.replace("\\", "/").replace("..",".") + appendStr
-           print a
+           print '"' + a  + '"' + " ,"
            s.append(a)
  
     print s

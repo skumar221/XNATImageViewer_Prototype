@@ -58,7 +58,10 @@ var ScanViewer = function (args) {
 	
 	
 
-    	
+	this.axisIcons = [];
+
+ 	
+ 	    	
 	 //----------------------------------
 	 // FRAME VIEWER
 	 //----------------------------------
@@ -67,19 +70,20 @@ var ScanViewer = function (args) {
 	 	parent: this.widget,
 	 	"border-width": 0,
 	 });
+	this.FrameViewer.ScanViewer = this;
 
-	this.axisIcons = [];
- 	this.addAxisMenu();
- 	
  	
 	// Modify the FrameViewer such that it lets "this"
 	// know of the currentScan when it's dropped in.
 	this.FrameViewer.addOnloadCallback(function () {
-		if(that.FrameViewer.currDroppable.scanData) {that.populateData(that.FrameViewer.currDroppable.scanData)}
+		if(that.FrameViewer.currDroppable.scanData) {
+			that.populateData(that.FrameViewer.currDroppable.scanData)
+		}
 	})
 
 
-
+ 	this.addViewPlaneMenu();
+ 	
 
 	 //----------------------------------
 	 // FRAME SLIDER
@@ -291,7 +295,7 @@ ScanViewer.prototype.setJQueryEvents = function () {
 	
 	$(this.widget).bind('mouseenter.hover', function () {
 
-		$(that.AxisMenu).stop().show();
+		$(that.ViewPlaneMenu).stop().show();
 		$(that.LinkMenu).stop().show();
 		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, 1);
 		$(that.widget).stop().animate({
@@ -300,7 +304,7 @@ ScanViewer.prototype.setJQueryEvents = function () {
 	
 	}).bind('mouseleave.hover', function(){
 
-		$(that.AxisMenu).stop().hide();
+		$(that.ViewPlaneMenu).stop().hide();
 		$(that.LinkMenu).stop().hide();
 		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, .7);
 		$(that.widget).stop().animate({

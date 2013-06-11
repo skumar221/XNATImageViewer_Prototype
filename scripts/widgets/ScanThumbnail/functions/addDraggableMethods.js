@@ -124,6 +124,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 						// Load the thumbnail into the ScanViewer
 						var v = XV.ScanViewers(this.targetId);
 						if (v) {
+	
 							v.FrameViewer.loadDroppable(that); 
 							if (v.widget.prevBorder) {
 								v.widget.style.border = v.widget.prevBorder;	
