@@ -98,18 +98,48 @@ function ScanThumbnail(scanData, args) {
 		} 
 
 	}
-	
-	this.getPreloadedFrames = function(viewPlane) {
-		var imgArr = [];
-		for (i in that.frames) {
 
-			if (that.frames[i]['viewPlane'] == viewPlane) {
-				if (that.frames[i]['img']) {
-					imgArr.push(that.frames[i]['img']);	
+	this.getFrames = function(args1) {
+
+		var isObject = (typeof args1 === 'object');
+		var isString = (typeof args1 === 'string');
+		
+		if (isString) {
+			var viewPlane = args1;
+			var returnArr = [];	
+
+			for (var i in that.frames) {
+				if (that.frames[i]['viewPlane'] == viewPlane) {
+					returnArr.push(that.frames[i])					
+				}
+			}	
+
+			return returnArr;			
+		}		
+		
+		else if (isObject) {
+			
+			var viewPlane = args1["viewPlane"];
+			var isFilter = args1['filter'] ? args1['filter'] : false;
+			var returnArr = [];
+	
+			
+			for (var i in that.frames) {
+				if (that.frames[i]['viewPlane'] == viewPlane) {
+					
+					
+					if (isFilter && that.frames[i][args1['filter']]) {
+						//utils.dom.debug(that.frames[i]['img'])
+						returnArr.push(that.frames[i][args1['filter']]);	
+					}
+
 				}
 			}
+			return returnArr;			
 		}
-		return imgArr;
+		
+
+
 	}
 
 	populateFramesObject("sagittal");

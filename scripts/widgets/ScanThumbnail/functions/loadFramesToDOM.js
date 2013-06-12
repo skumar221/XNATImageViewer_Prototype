@@ -2,59 +2,50 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 
 	var that = this;
 	var primaryQ = [];
-	var secondaryQ = [];
-	
-	var prioritySetLength = 0;
-	
-	// Create a priority ladder based on view plane of frames
+	var setLen = this.getFrames(args['viewPlane']).length;
+
+				
+	// Call any before methods
+	if (args["before"]) {  args["before"] (setLen) };	
+
+
 	for (i in this.frames) {
 		
-		var vp = this.frames[i]['viewPlane'];
+		var viewPlane = this.frames[i]['viewPlane'];
 		
-		// only add to queue if there's no img object -- no need if it's already cashed in the DOM
+		// only add to queue if if it's not cached
 		if (!this.frames[i]['img']) {
-			if (args['priority'] && vp == args['priority']) {
-				
-				// since the preloader reverses the array, we want prioritised loads at the end
+			if (args['viewPlane'] && viewPlane == args['viewPlane']) {
 				primaryQ.push(this.frames[i]['src']);
-				prioritySetLength++;
-			}
-			else{
-				
-				// and unprioritised loads in the beginning
-				secondaryQ.push(this.frames[i]['src']);
-			}			
+			}		
 		}
 		else {
 			//utils.dom.debug("image already loaded!: ", this.frames[i]['img'])
 		}
 	}
 	
-	
-	// Add to queue
-	GLOBALS.imagePreloader.addToPrimaryQueue(primaryQ);
-	GLOBALS.imagePreloader.addToBackgroundQueue(secondaryQ);
-	
-	// Call any preload methods
-	if (args["before"]) { args["before"] (prioritySetLength) };
 
-	// Begin chain
-	GLOBALS.imagePreloader.loadNextImage({ 
-		"onload"  : args["onload"], 
-	});
-	
-	// if already loaded
-	if (primaryQ.length == 0 && secondaryQ.length == 0) {
-		utils.dom.debug("already loaded")
+
+		
+		
+	// if already cached
+	if (primaryQ.length == 0) {
 		
 		XV.ScanViewers( function (ScanViewer, i, j) { 
 			if (ScanViewer.FrameViewer.currDroppable == that) {
+				utils.dom.debug("Using cached images for " + ScanViewer.FrameViewer.currViewPlane + " plane.");
 				ScanViewer.FrameViewer.loadCurrViewPlane();	
 			}	
 		})
-	
+		
 	}
-	
+	// otherwise send to loader
+	else {
+		// Add to queue
+		GLOBALS.imagePreloader.addToPrimaryQueue(primaryQ);	
+		// Begin chain
+		GLOBALS.imagePreloader.loadNextImage({ "onload"  : args["onload"], });		
+	}
 }
 
 ScanThumbnail.prototype.pathSplitter = function (path) {	

@@ -101,8 +101,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			icon.onclick = function (event) {
 				utils.dom.stopPropagation(event); 
 				if (that.FrameViewer.frames.length > 0) {
-					
-					that.FrameViewer.loadFramesByViewPlane(this.axis);
+					that.FrameViewer.loadDroppable(that.FrameViewer.currDroppable, this.axis.toLowerCase());
 					that.ViewPlaneMenu.activateIcon(this.title);
 				} 
 			};		

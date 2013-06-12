@@ -4,12 +4,18 @@ utils.ajax.imagePreloader = function(){
 	var primaryQueue = [];
 	var backgroundQueue = [];
 	
+	var primaryLoadDone = false;
+	var bgLoadDone = false;
+	
 	function loadBG(args) {
 		var primaryDone = primaryQueue.length == 0;
 		var backgroundDone = backgroundQueue.length == 0;
 
 		if (primaryDone && backgroundDone) {
-			utils.dom.debug("All downloads complete.");
+			if (!bgLoadDone) { 
+				//utils.dom.debug("All downloads complete.");
+				bgLoadDone = true;
+			}
 			return;
 		}
 				
@@ -18,6 +24,8 @@ utils.ajax.imagePreloader = function(){
 			that.loadNextImage(args); 
 		}		
 	}
+	
+	
 	
 	this.loadNextImage = function (args) {
 		
@@ -35,6 +43,12 @@ utils.ajax.imagePreloader = function(){
 			}
 			else if (primaryDone && !backgroundDone) {
 				imgN.src = backgroundQueue.shift();
+				
+				if (!primaryLoadDone) {
+					
+					utils.dom.debug("primary load done: ", primaryQueue)
+					primaryLoadDone = true;
+				}
 			}
 			
 			imgN.onload = function(){
@@ -66,7 +80,8 @@ utils.ajax.imagePreloader = function(){
 			}		
 			// Add to top of heap
 
-			queue.unshift(val);
+			//queue.unshift(val);
+			queue.push(val);
 				
 		}
 		
@@ -88,13 +103,21 @@ utils.ajax.imagePreloader = function(){
 	
 	this.addToBackgroundQueue = function (arg1) {	
 
+		bgLoadDone = false;
+		
 		addToQueue(arg1, backgroundQueue)
+		
+		utils.dom.debug("add to background queue")
+		//utils.dom.debug(backgroundQueue)
 
 	}
 	
 	this.addToPrimaryQueue = function (arg1) {	
 
+		primaryLoadDone = false;
 		addToQueue(arg1, primaryQueue)
+		//utils.dom.debug("add to primary queue")
+		//utils.dom.debug(primaryQueue)
 
 	}
 	

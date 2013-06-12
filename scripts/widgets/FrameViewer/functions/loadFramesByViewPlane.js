@@ -7,6 +7,12 @@ FrameViewer.prototype.loadFramesByViewPlane = function (viewPlane) {
 
 	this.currViewPlane = viewPlane.toLowerCase();
 	this.ScanViewer.ViewPlaneMenu.activateIcon(this.currViewPlane, true);
-	this.loadFrames(this.currDroppable.getPreloadedFrames(viewPlane.toLowerCase()));
+	
+	var frames = this.currDroppable.getFrames({
+		'viewPlane' : this.currViewPlane,
+		'filter' : 'img',
+	});
+				
+	this.loadFrames(frames);
 	
 }
