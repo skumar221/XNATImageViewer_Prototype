@@ -14,6 +14,7 @@ utils.ajax.imagePreloader = function(){
 		}
 				
 		else if (primaryDone && !backgroundDone)	{
+			utils.dom.debug("DOWNLOADING BG: " + backgroundQueue.length + " left.")
 			that.loadNextImage(args); 
 		}		
 	}
