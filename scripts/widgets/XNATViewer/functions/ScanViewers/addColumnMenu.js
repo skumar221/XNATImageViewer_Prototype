@@ -10,7 +10,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 		position: "absolute",
 		textAlign: "right",
 		display: "inline-block",
-		bottom: "0px",
+		bottom: "0px"
 	});
 	
 	
@@ -27,7 +27,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 			width: GLOBALS.expandButtonWidth * .5,
 			left: GLOBALS.expandButtonWidth * .25,
 			top: args.top,
-			"vertical-align": "bottom",
+			"vertical-align": "bottom"
 		})	
 	
 		//-------------------------

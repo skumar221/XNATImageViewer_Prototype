@@ -43,7 +43,7 @@ utils.gui.dialogBox = function (args) {
 		
 		buttonManager[b.title] = {
 			element: b,
-			callbacks: [],
+			callbacks: []
 		}
 		
 		
@@ -125,9 +125,9 @@ utils.gui.dialogBox = function (args) {
 		//  Message
 		//
 		utils.css.setCSS(message, utils.dom.mergeArgs(this.currArgs().messageCSS, {
-			top: utils.convert.int(moveBar.style.height) + this.currArgs().widgetCSS.margin,
+			top: utils.convert.toInt(moveBar.style.height) + this.currArgs().widgetCSS.margin,
 			left: this.currArgs().widgetCSS.margin,
-			width: utils.convert.int(widget.style.width) - this.currArgs().widgetCSS.margin * 2,
+			width: utils.convert.toInt(widget.style.width) - this.currArgs().widgetCSS.margin * 2
 		}));	
 	}
 	
@@ -155,9 +155,8 @@ utils.gui.dialogBox = function (args) {
 
 utils.gui.dialogBox.prototype.defaultArgs = function () {
 	
-	return {
-		
-	  	id: "utils.gui.dialogBox",			//def "sliderScroller"
+	var args =  { 
+		id: "utils.gui.dialogBox",			//def "sliderScroller"
 	  	parent: document.body,
 		defaultButtons: ["OK", "Cancel"],
 		defaultButtonList: ["OK", "Done", "Cancel", "Next", "Yes", "No"],
@@ -182,17 +181,17 @@ utils.gui.dialogBox.prototype.defaultArgs = function () {
 	  		marginLeft: 10,
 	  		marginRight: 10,
 	  		marginTop: 10,
-	  		marginBottom: 10,
+	  		marginBottom: 10
 	  	},
 	  	messageCSS: {
-			position: "absolute",
+			position: "absolute"
 	  	},	
 	  	mouseListenerCSS: {
 	  		top: 0,
 	  		left: 0,
 	  		width: "100%",
 	  		height: 15,
-	  		backgroundColor: "rgba(55,55,55,1)",
+	  		backgroundColor: "rgba(55,55,55,1)"
 	  	},  	
 	  	buttonCSS: {
 	  		height: 15,
@@ -203,6 +202,8 @@ utils.gui.dialogBox.prototype.defaultArgs = function () {
 	  		backgroundColor: "rgba(125,125,125,1)",
 	  		borderRadius: 0,
 	  		cursor: "pointer"
-	  	},
+	  	}
   }
+  
+  return args;
 }

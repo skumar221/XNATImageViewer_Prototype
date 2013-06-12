@@ -34,7 +34,7 @@ var makeTabTitles = function (parent, titles) {
 	var iconList = [{	
 			src: "./icons/InfoIcon.png",
 			w: 15,
-			h: 16,
+			h: 16
 		} , 
 		{
 			src: "./icons/Adjust.png",
@@ -54,8 +54,9 @@ var makeTabTitles = function (parent, titles) {
 		a.style.color = "rgba(0,0,0,0)";
 		
 		var img = utils.dom.makeElement("img", a, a.id + " _img", {
-			position: "absolute",
+			position: "absolute"
 		});
+		
 		img.src = iconList[i].src;
 		img.height = iconList[i].h;
 		img.width = iconList[i].w;
@@ -70,7 +71,7 @@ var makeTabTitles = function (parent, titles) {
 	return {
 		titleElt: titleElt,
 		titlesA: titlesA,
-		titlesLi: titlesLi,
+		titlesLi: titlesLi
 	}
 }
 
@@ -95,7 +96,7 @@ var ScanTabs = function (args) {
 	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.CSS);	
 	$(this.widget).css({
 		top: $(this.widget.parentNode).height() - GLOBALS.minScanTabHeight,
-		height: GLOBALS.minScanTabHeight,
+		height: GLOBALS.minScanTabHeight
 	})
 
 	
@@ -227,7 +228,7 @@ ScanTabs.prototype.updateCSS = function () {
 		 background: "none",
 		"borderColor": GLOBALS.inactiveLineColor,
 		//"backgroundColor": "rgba(25,25,25,1)",
-		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
+		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif'
 	})
 
 
@@ -253,7 +254,7 @@ ScanTabs.prototype.updateCSS = function () {
 			"backgroundColor": "rgba(0,0,0,1)",
 			height: contentsHeight,// compensating for the padding,
 			marginLeft:-1,
-			overflow: "hidden",
+			overflow: "hidden"
 
 		})
 	}
@@ -302,7 +303,7 @@ ScanTabs.prototype.updateCSS = function () {
 			"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 			borderRadius: 0,
 			opacity: op,
-			cursor: "pointer",
+			cursor: "pointer"
 		})
 		
 		
@@ -317,7 +318,7 @@ ScanTabs.prototype.updateCSS = function () {
 			height: GLOBALS.scanTabLabelHeight,
 			width: GLOBALS.scanTabLabelWidth,
 			marginTop: -1* this.CSS.borderWidth,
-			marginLeft:-1* this.CSS.borderWidth,
+			marginLeft:-1* this.CSS.borderWidth
 		})
 	}	
 

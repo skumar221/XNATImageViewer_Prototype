@@ -164,10 +164,10 @@ function ScanThumbnail(scanData, args) {
 		left: textLeft,
 		color: "rgba(255,255,255,1)",
 		fontSize: 11,		
-	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif',	
+	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
 
-	this.TextElement.innerHTML += "<b><font size = '3'>" + utils.convert.int(this.scanData.sessionInfo["Scan"].value) + "</font></b><br>";
+	this.TextElement.innerHTML += "<b><font size = '3'>" + utils.convert.toInt(this.scanData.sessionInfo["Scan"].value) + "</font></b><br>";
 	this.TextElement.innerHTML += this.scanData.sessionInfo["type"].value.toString().toLowerCase() + "<br>";
 	this.TextElement.innerHTML += (this.scanData["sagittalPaths"].length.toString().toLowerCase() + " frames<br>");
 

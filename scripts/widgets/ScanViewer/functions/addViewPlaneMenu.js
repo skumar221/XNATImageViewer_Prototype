@@ -25,7 +25,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 		top: iconStartTop,
 		height: iconDimSmall , 
 		width: iconDimSmall,
-		cursor: "pointer", 
+		cursor: "pointer"
 	});
 	this.ViewPlaneMenu.title  = "Select View Plane";	
 	
@@ -41,7 +41,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 		top: 0,// + spacer*i,
 		height: iconDimSmall , 
 		width: iconDimSmall ,
-		cursor: "pointer", 
+		cursor: "pointer" 
 	});	
 	this.ViewPlaneMenu.icon.src  = "./icons/ViewPlaneMenu/Axes.png";	
 	
@@ -83,7 +83,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			left: iconDimMed + spacer*(i),
 			height: iconDimMed , 
 			width: iconDimMed ,
-			cursor: "pointer", 
+			cursor: "pointer" 
 		});	
 		
 		icon.src = "./icons/ViewPlaneMenu/" + iconVals[i] + ".png";

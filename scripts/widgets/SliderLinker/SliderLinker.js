@@ -19,7 +19,7 @@ var SliderLinker = function (args) {
 		[0,200,0,1],
 		[0,0,200,1],
 		[200,0,0,1],
-		[200,200,0,1],
+		[200,200,0,1]
 	];
 	
 
@@ -43,7 +43,7 @@ var SliderLinker = function (args) {
 			border: "solid 2px rgba(" + borderColorSet[groups.length].toString() + ")",
 			groupID: "linkGroup_" + groups.length,
 			ScanViewers: [],
-			prevViewers: [],
+			prevViewers: []
 		})		
 
 	}
@@ -181,7 +181,7 @@ var SliderLinker = function (args) {
 				if (groups[i].ScanViewers[j].widget.id == ID) {
 					return {
 						viewer: groups[i].ScanViewers[j],
-						viewerset: groups[i].ScanViewers,
+						viewerset: groups[i].ScanViewers
 					}
 				}
 			}

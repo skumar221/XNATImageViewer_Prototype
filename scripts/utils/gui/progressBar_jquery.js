@@ -20,7 +20,7 @@ utils.gui.progressBar = function (parent, args) {
 	progBar.label = utils.dom.makeElement('div', progBar.widget, 'ProgressBar_Label', {
 		fontFamily: GLOBALS.fontFamily,
 		color: 'rgba(255,255,255)',
-		fontSize: 11,
+		fontSize: 11
 	});
 	progBar.label.innerHTML = 'Loading...'
 	
@@ -46,7 +46,7 @@ utils.gui.progressBar = function (parent, args) {
 	$(progBar.bar).removeClass('ui-widget-content');
 	var pVal =  $(progBar.bar).find( '.ui-progressbar-value' );
 	pVal.css({
-    	'background': 'rgb(180,180,180)',
+    	'background': 'rgb(180,180,180)'
     });	
 
 

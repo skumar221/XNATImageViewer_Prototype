@@ -20,7 +20,7 @@ var defaultArgs_FrameViewer = {
 		  	"border-width" : 0,
 		  	"border-radius": 0,	 
 		  	 overflow: "visible"
-  		 },
+  		 }
 }
 
 

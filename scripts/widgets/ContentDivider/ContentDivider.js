@@ -52,13 +52,13 @@ ContentDivider.prototype.defaultArgs = function () {
 			height: 6,
 			cursor: "n-resize",
 			//backgroundColor: "rgba(250,50,50, 1)",
-			opacity: 1,
+			opacity: 1
 		},
 		boundaryCSS: {
 			top: 0,
 			left: 0,
 			width: 650,
-			height: 400,
+			height: 400
 		}
 	}
 }

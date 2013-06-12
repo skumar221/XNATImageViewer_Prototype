@@ -28,11 +28,11 @@ ScanViewer.prototype.updateCSS = function (args) {
 
 	if (!this.ContentDivider.widget.dragging){
 
-		var dimChange = !(utils.convert.int(this.ContentDivider.containmentDiv.style.width) === widgetWidth);
+		var dimChange = !(utils.convert.toInt(this.ContentDivider.containmentDiv.style.width) === widgetWidth);
 		if (dimChange){
 
 			$(this.ContentDivider.widget).css( {
-				top: GLOBALS.minContentDividerTop(widgetHeight),
+				top: GLOBALS.minContentDividerTop(widgetHeight)
 			});
 			
 			
@@ -44,7 +44,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 				top: t,			
 				left: 0,
 				height: h,
-				width: widgetWidth,			
+				width: widgetWidth	
 			})
 			
 		}
@@ -91,7 +91,7 @@ ScanViewer.prototype.updateCSS = function (args) {
  		left: 0,//marginLeft,
  	  	top: scanTabTop,
  	  	width: widgetWidth - 2,// + marginLeft * 2,
- 	  	height: scanTabHeight -1,
+ 	  	height: scanTabHeight -1
 	});	 
    this.ScanTabs.updateCSS();
 
@@ -111,10 +111,10 @@ ScanViewer.prototype.updateCSS = function (args) {
     this.FrameSlider.updateCSS({
     	widgetCSS:{
  			top : sliderTop,
-			left : 4,//marginLeft,   		
+			left : 4//marginLeft,   		
     	},
     	trackCSS:{
-    		width: Math.round(widgetWidth) - 10,// + marginLeft * 2
+    		width: Math.round(widgetWidth) - 10// + marginLeft * 2
     	}
     })
 
@@ -127,7 +127,7 @@ ScanViewer.prototype.updateCSS = function (args) {
  	    left: viewerLeft,
  		top: 0,
  	  	width: viewerWidth,
- 	  	height: viewerWidth,
+ 	  	height: viewerWidth
 	 });
 	 this.FrameViewer.updateCSS();
 	 
@@ -139,7 +139,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	 //----------------------------------	 
 	 $(this.displayableData.frameNumber).css({
 	 	top: $(this.FrameViewer.widget).height() -  20,// -2,
-	 	left: 10,
+	 	left: 10
 	 });
 	 
 	 

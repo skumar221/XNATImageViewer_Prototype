@@ -9,7 +9,7 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 		position: "absolute",
 		textAlign: "right",
 		display: "inline-block",
-		"vertical-align": "middle",
+		"vertical-align": "middle"
 	});
 	
 	

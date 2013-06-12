@@ -79,7 +79,7 @@ ScanViewer.prototype.populateData = function (data) {
 				left: 0,
 				height: that.ScanTabs.CSS.height * .80,
 				width: 440,
-				top: GLOBALS.scanTabLabelHeight + 10,
+				top: GLOBALS.scanTabLabelHeight + 10
 			}
 		});	
 
@@ -101,7 +101,7 @@ ScanViewer.prototype.populateData = function (data) {
 			that.displayableData[noSpace + "_value"] = utils.dom.makeElement("div", contents, "Value_" + noSpace);
 			$(that.displayableData[noSpace + "_value"]).css(utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
-				left: 160,
+				left: 160
 			}));	
 			that.displayableData[noSpace + "_value"].innerHTML = labelObj[i]["value"][0]
 			counter++;

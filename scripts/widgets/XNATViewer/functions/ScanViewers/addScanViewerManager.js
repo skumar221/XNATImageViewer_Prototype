@@ -14,7 +14,7 @@ XNATViewer.prototype.addScanViewerManager = function() {
 		var isFunction = (typeof args1 === 'function');	
 	
 		function widget(args1, args2) {
-			return viewers[args1],[args2]
+			return viewers[args1][args2]
 		}
 		
 			
@@ -60,7 +60,7 @@ XNATViewer.prototype.addScanViewerManager = function() {
 			//	
 			var v = new ScanViewer({
 				parent: XV.modal,
-				id: "ScanViewer_" + utils.dom.uniqueId(),
+				id: "ScanViewer_" + utils.dom.uniqueId()
 			});	
 			return v;
 			
@@ -79,7 +79,7 @@ XNATViewer.prototype.addScanViewerManager = function() {
 				if (byObj || byElement || byId) {
 					return {
 						"i" : i,
-						"j" : j,
+						"j" : j
 					}				
 				}
 				

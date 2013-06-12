@@ -43,45 +43,27 @@ def replaceInFile(src, findStr, replaceStr):
         
 def main():
     
-    rootDir = "../scripts/utils"
-    htmlFile = "../index.html"
-    backupDir = "scriptsBackup"
-      
-    findStr = "utils.convert.int"
-    replaceStr = "utils.convert.toInt"
-    fileReplaceStr = "init" #replaceStr.split(".")[2]
+    indexFile = "../index.html"
 
+
+    textArr = [];
+
+    lines = [line for line in open(indexFile)]
     
-    backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
-    
-    #  make a backup folder
-    # clear it
-    if (not os.path.exists(backupPath)):
-         os.mkdir(backupPath)
-    
-    createBackup(rootDir, backupPath)
-    
-    for root, dirs, files in os.walk(rootDir):
-       for f in files:
-           
-           filename = (f).replace('\\', "/")          
-           src = os.path.join(root, filename)
+    for l in lines:
+        if (".js" in l):
+            if (not "testscans" in l):
+                
+                scr = l.split("src=")[1].split('"')[1]
+                print scr
+                textArr.append(scr)
 
-           #
-           # RENAME FILE IF IT HAS THE STRING
-           # 
-           dst = src.replace(findStr, fileReplaceStr)
-           os.rename(src, dst)
+    cmdStr = "java -jar ./compiler.jar "
+    endStr = "--js_output_file ../XNATImageViewerTesting/XMIV-compiled.js"
 
+    for t in textArr:
+        cmdStr += "--js=" + t.replace("./", "../XNATImageViewerTesting/") + " "
 
-           replaceInFile(dst, findStr, replaceStr)
-
-
-
-    #
-    # REPLACE IN MAIN HTML
-    #
-    replaceInFile(htmlFile, findStr, fileReplaceStr)
-
+    print cmdStr + endStr
 if __name__ == "__main__":
     main()

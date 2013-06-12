@@ -22,15 +22,15 @@ ScanViewer.prototype.addLinkMenu = function () {
 	var iconVals = { 
 					 1: { 
 					 		images: ["Chain-Closed", "Chain-Closed_GroupPlus", "Chain-Closed_Group"],
-					 		titles: ["Link slider to current group", "Link slider to new group", "Link slider to selected group"],
+					 		titles: ["Link slider to current group", "Link slider to new group", "Link slider to selected group"]
 					 	},
 					 2: {
 					 		images: ["Chain-Broken_Minus",  "Chain-Broken_GroupMinus", "Broom_Minus" ],
-					 		titles: ["Unlink from group", "Remove group", "Clear all groups"],
+					 		titles: ["Unlink from group", "Remove group", "Clear all groups"]
 					 	},
 					 3: {
 							images: ["Eye"],
-							titles: ["View all groups", ],
+							titles: ["View all groups"]
 						}
 
 					}
@@ -56,7 +56,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 		left: iconStartLeft,
 		top: iconStartTop,// + spacer*i,
 		height: iconDimMed , 
-		width: iconDimMed,
+		width: iconDimMed
 		//border: "sold 1px rgba(100,100,100,1)"
 	});
 	this.LinkMenu.closed = false;
@@ -72,7 +72,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 		top: 0,// + spacer*i,
 		height: iconDimSmall , 
 		width: iconDimSmall ,
-		cursor: "pointer", 
+		cursor: "pointer"
 	});	
 	this.LinkMenu.icon.src = "./icons/LinkMenu/Chain-Broken.png";
 	that.LinkMenu.iconHovered = false;
@@ -88,7 +88,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 		top: 0,
 		height: subMenuHeight, 
 		width: subMenuWidth,
-		cursor: "pointer",
+		cursor: "pointer"
 		//border: "solid 1px rgba(100,100,100,1)"
 	});	
 	// For onclick purposes
@@ -111,7 +111,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 				left: (subMenuWidth - iconDimMed*2 - spacer) - (j)*(iconDimMed + spacer),
 				height: iconDimMed , 
 				width: iconDimMed ,
-				cursor: "pointer", 
+				cursor: "pointer" 
 			});	
 			
 			icon.src = "./icons/LinkMenu/" + iconVals[i].images[j] + ".png";

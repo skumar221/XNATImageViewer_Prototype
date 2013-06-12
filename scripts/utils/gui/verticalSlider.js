@@ -83,7 +83,7 @@ utils.gui.verticalSlider = function (args) {
 			that.moveHandle("byMouseWheel", {
 				"event": e, 
 				handle: handle,
-				wheelDelta: delta,
+				wheelDelta: delta
 			});
 			return false;
 		}	
@@ -209,7 +209,7 @@ utils.gui.verticalSlider.prototype.defaultArgs = function () {
 	  	widgetCSS: {
 	  		position: "absolute",
 	  		top: 50,
-	  		left: 50,
+	  		left: 50
 	  	},
 	  	
 	  	trackCSS: {
@@ -220,7 +220,7 @@ utils.gui.verticalSlider.prototype.defaultArgs = function () {
 	  		borderWidth: 1,
 	  		borderColor: "rgba(0,0,0,1)",
 	  		backgroundColor: "rgba(125,125,125,1)",
-	  		borderRadius: 0,
+	  		borderRadius: 0
 	  	},
 	  	
 	  	handleCSS: {
@@ -295,7 +295,7 @@ utils.gui.verticalSlider.prototype.setArgs = function (newArgs) {
 	this.handleDomain = function () {
 		return 	{
 			start: this.currArgs().handleOffsetTop,
-			end:   this.currArgs().trackCSS.height  - this.currArgs().handleCSS.height - this.currArgs().handleOffsetTop,
+			end:   this.currArgs().trackCSS.height  - this.currArgs().handleCSS.height - this.currArgs().handleOffsetTop
 		}	
 	}
 	
@@ -357,7 +357,7 @@ utils.gui.verticalSlider.prototype.moveHandle = function (moveType, args) {
 			
 			// generate a tempLeft.  with verticalScrolling, we need to invert
 			// the direction of the step
-			var tempTop = utils.convert.int(args.handle.style.top) + (args.wheelDelta * -1 * step);
+			var tempTop = utils.convert.toInt(args.handle.style.top) + (args.wheelDelta * -1 * step);
 			
 			
 			
@@ -379,7 +379,7 @@ utils.gui.verticalSlider.prototype.moveHandle = function (moveType, args) {
 					   
 			var tempTop = newPt.y - // mouseclick x
 						   args.track.getBoundingClientRect().top - // current abs position of the handle
-						   utils.convert.int(args.handle.style.height)/2; // centers the handle on the mouse pointer		
+						   utils.convert.toInt(args.handle.style.height)/2; // centers the handle on the mouse pointer		
 
 		}
 		

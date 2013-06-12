@@ -99,7 +99,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			$(this.clone).css({
 				
 				top: offset.top,
-				left: offset.left,
+				left: offset.left
 		
 			})
 			

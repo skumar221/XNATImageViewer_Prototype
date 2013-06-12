@@ -10,7 +10,7 @@ FrameViewer.prototype.loadFramesByViewPlane = function (viewPlane) {
 	
 	var frames = this.currDroppable.getFrames({
 		'viewPlane' : this.currViewPlane,
-		'filter' : 'img',
+		'filter' : 'img'
 	});
 				
 	this.loadFrames(frames);

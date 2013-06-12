@@ -18,7 +18,7 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		    width: modalDims.width,
 		    left: modalDims.left,
 		    height: modalDims.height,
-		    top: modalDims.top,
+		    top: modalDims.top
 		    
 		  }, GLOBALS.animMed, function () {
 
@@ -54,7 +54,7 @@ XNATViewer.prototype.animateModal  = function (callback) {
 			//
 			// FADE OUT/IN: ScanViewer contents
 			//
-			 if (modalDims.ScanViewer.height != utils.convert.int(ScanViewer.widget.style.height)) {
+			 if (modalDims.ScanViewer.height != utils.convert.toInt(ScanViewer.widget.style.height)) {
 			 	$(ScanViewer.widget.childNodes).stop().fadeTo(GLOBALS.animFast, 0);	
 			 }
 			 
@@ -68,11 +68,11 @@ XNATViewer.prototype.animateModal  = function (callback) {
 			    left: modalDims.ScanViewer.lefts[i][j],
 			    top: modalDims.ScanViewer.tops[i][j],
 			    width: modalDims.ScanViewer.width,
-			    height: modalDims.ScanViewer.height,
+			    height: modalDims.ScanViewer.height
 			    
 			  }, GLOBALS.animMed, function () {	});		
 			  		
-		});
+		})
 		
 
 	
@@ -85,6 +85,6 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		    top: modalDims.closeButton.top
 		  }, GLOBALS.animMed, function () {
 		    // Animation complete.
-		 });
+		 })
 		
 }

@@ -21,10 +21,10 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 		if (!ScanViewer.selectorBox) {
 
 			ScanViewer.selectorBox =  GLOBALS.SliderLinker.addSelectorBox(			 ScanViewer.widget.parentNode, 
-																  				 utils.convert.int(ScanViewer.widget.style.top), 
-																  				 utils.convert.int(ScanViewer.widget.style.left),
-																  				 utils.convert.int(ScanViewer.widget.style.height),
-															  				 utils.convert.int(ScanViewer.widget.style.width));	
+																  				 utils.convert.toInt(ScanViewer.widget.style.top), 
+																  				 utils.convert.toInt(ScanViewer.widget.style.left),
+																  				 utils.convert.toInt(ScanViewer.widget.style.height),
+															  				 utils.convert.toInt(ScanViewer.widget.style.width));	
 			
 			ScanViewer.selectorBox.style.border = 'none';	
 			ScanViewer.selectorBox.ScanViewer = ScanViewer;	

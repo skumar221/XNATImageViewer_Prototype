@@ -40,7 +40,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 			height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
 			width: modalDims.ScanViewer.width,
 			left: modalDims.ScanViewer.lefts[i][j],
-			top: modalDims.ScanViewer.tops[i][j],
+			top: modalDims.ScanViewer.tops[i][j]
 			
 		});	
 		
@@ -50,7 +50,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 				height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
 				width: modalDims.ScanViewer.width,
 				left: modalDims.ScanViewer.lefts[i][j],
-				top: modalDims.ScanViewer.tops[i][j],
+				top: modalDims.ScanViewer.tops[i][j]
 			});				
 		} 	
 		
@@ -76,7 +76,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 		top: modalDims["ColumnMenu"].top,
 		left: modalDims["ColumnMenu"].left,
 		height: modalDims["ColumnMenu"].height,
-		width: modalDims["ColumnMenu"].width,					
+		width: modalDims["ColumnMenu"].width				
 			
 	})
 					
@@ -93,7 +93,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 		top: modalDims["RowMenu"].top,
 		left: modalDims["RowMenu"].left,
 		height: modalDims["RowMenu"].height,
-		width: modalDims["RowMenu"].width,					
+		width: modalDims["RowMenu"].width				
 			
 	})
 }

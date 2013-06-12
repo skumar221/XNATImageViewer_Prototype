@@ -24,14 +24,14 @@ defaultArgsXNATViewer= {
 		//"overflow-x": "hidden",
 		//"overflow-y": "hidden",
 		"display": "inline-block",
-		"font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif',
+		"font-family": 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	},
 	modalCSS: {
 		position: "absolute",
 		backgroundColor: "rgba(0,0,0,1)",
 		//border: "solid rgba(95, 95, 95, 1) 2px",
 		border: "none",
-		"border-radius": "20px"	,
+		"border-radius": "20px"	
 		// for height mins and maxes, see below
 	}
 }
@@ -121,7 +121,7 @@ var XNATViewer = function (args) {
 	this.addScanViewerManager();
 	this.ScanViewers({
 		"insert" : "column",
-		"animate" : "off",
+		"animate" : "off"
 	});
 
 

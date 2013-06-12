@@ -68,7 +68,7 @@ var ScanViewer = function (args) {
 	 this.FrameViewer = new FrameViewer({
 	 	id: "FrameViewer",
 	 	parent: this.widget,
-	 	"border-width": 0,
+	 	"border-width": 0
 	 });
 	this.FrameViewer.ScanViewer = this;
 
@@ -91,7 +91,7 @@ var ScanViewer = function (args) {
 	this.FrameSlider = new utils.gui.horizontalSlider(utils.dom.mergeArgs(this.args.sliderCSS, {
 		id: "FrameSlider", 
 		parent: this.widget,
-		round: true,
+		round: true
 	}));
 
 
@@ -129,7 +129,7 @@ var ScanViewer = function (args) {
 				
 				min : 0,
 				max : that.FrameViewer.frames.length-1,
-				value : Math.round(that.FrameViewer.frames.length/2),
+				value : Math.round(that.FrameViewer.frames.length/2)
 			
 			});
 
@@ -152,7 +152,7 @@ var ScanViewer = function (args) {
 	//----------------------------------	
 
 	this.ContentDivider = new ContentDivider( {	
-		parent: this.widget,		
+		parent: this.widget
 	});
 	
 	 //----------------------------------
@@ -192,9 +192,10 @@ var ScanViewer = function (args) {
 		
 		id: "tabs",
 		parent: this.widget,
-		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"],
+		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"]
 		
 	});
+	
 	this.ScanTabs.addCallback( 'setActiveTab', function() {
 		
 		//if (that.ScanTabs.minClick){
@@ -205,13 +206,13 @@ var ScanViewer = function (args) {
 		
 		if (minDiff < 10 ) {
 			$(that.ContentDivider.widget).css( {
-				top: $(that.widget).height() - GLOBALS.tabClickHeight - cHeight,
+				top: $(that.widget).height() - GLOBALS.tabClickHeight - cHeight
 			});			
 		}
 		else{
 			if (that.ScanTabs.minClick) {
 				$(that.ContentDivider.widget).css( {
-					top: minCTop,
+					top: minCTop
 				});	
 			}			
 		}			

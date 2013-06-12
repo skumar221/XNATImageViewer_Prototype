@@ -4,7 +4,7 @@ FrameViewer.prototype.loadCurrViewPlane = function() {
 	var cCount = that.currDroppable[that.currViewPlane + "FrameCount"];
 	var preload = that.currDroppable.getFrames({
 		'viewPlane' : that.currViewPlane,
-		'filter' : 'img',
+		'filter' : 'img'
 	});
 	
 	//console.log(cCount, preload.length, that.loaded)
@@ -53,7 +53,7 @@ FrameViewer.prototype.loadDroppable = function (droppable, viewPlane) {
 				//---------------------------------
 				that.progBar.update({
 					"max" : setLength,
-					"clear": true,
+					"clear": true
 				});
 				$(that.canvas).stop().fadeOut(0);
 				that.progBar.show();	
@@ -67,7 +67,7 @@ FrameViewer.prototype.loadDroppable = function (droppable, viewPlane) {
 				
 				var preload = that.currDroppable.getFrames({
 					'viewPlane' : that.currViewPlane,
-					'filter' : 'img',
+					'filter' : 'img'
 				});
 				
 				//console.log(preload[0])

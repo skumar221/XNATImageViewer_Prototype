@@ -19,7 +19,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	  		borderColor: "rgba(255,255,255,1)",
 	  		backgroundColor: "rgba(0,0,0,1)",
 	  		borderRadius: 0,
-	  		zIndex: 10000,
+	  		zIndex: 10000
 	  	},
 	  	
 	  	buttonCSS: {
@@ -32,7 +32,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	  		backgroundColor: "rgba(125,125,125,1)",
 	  		borderRadius: 0,
 	  		cursor: "pointer"
-	  	},
+	  	}
   	});
 	
 	var popup = b.widget();	

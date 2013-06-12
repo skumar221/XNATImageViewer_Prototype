@@ -30,7 +30,7 @@ var ScrollGallery = function (args) {
 		//backgroundColor: "rgba(0,0,255,.5)",
 		top: 0,
 		left: sliderWidth,
-		width: $(this.widget).width() - sliderWidth,
+		width: $(this.widget).width() - sliderWidth
 	})
 
 
@@ -42,7 +42,7 @@ var ScrollGallery = function (args) {
 	this.contentSlider = new utils.gui.verticalSlider(utils.dom.mergeArgs(this.args.sliderCSS,{
 		parent: this.widget,
 		id: "VerticalSlider",
-		round: true,
+		round: true
 	}));
   
   
@@ -84,7 +84,7 @@ ScrollGallery.prototype.defaultArgs = function () {
 			position: "absolute",
 		 	overflow: "hidden",
 		 	"overflow-x": "hidden",
-		 	"overflow-y": "hidden",
+		 	"overflow-y": "hidden"
 		 	//backgroundColor: "rgba(200,20,20,1)",
 		 	//border: "solid 1px rgba(255,0,0,1)"
 		},
@@ -132,7 +132,7 @@ ScrollGallery.prototype.mapSliderToContents = function () {
 	  		var t = -1 * utils.convert.remap1D(_slider.value, [_slider.currArgs().min, _slider.currArgs().max], 
 	   							    [0, $(that.ScrollContent).outerHeight() - $(that.widget).height() - that.args.scrollMarginY]).newVal;	
 	   		$(that.ScrollContent).css({
-	  			top: t,
+	  			top: t
 	  		});
 		}
    }
@@ -196,10 +196,10 @@ ScrollGallery.prototype.updateCSS = function (args) {
     this.contentSlider.updateCSS({
     	widgetCSS:{
  			top : 0,
-			left : 0,   		
+			left : 0 		
     	},
     	trackCSS:{
-    		height: $(this.widget).height(),
+    		height: $(this.widget).height()
     	}
     })
 }

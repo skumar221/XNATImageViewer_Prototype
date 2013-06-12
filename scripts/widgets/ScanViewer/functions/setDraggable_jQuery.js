@@ -54,7 +54,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 							$(target).stop().animate({
 								
 								top: Math.round(target.origin.top),
-								left: Math.round(target.origin.left),
+								left: Math.round(target.origin.left)
 		
 								
 							}, GLOBALS.animFast, function () { });
@@ -69,7 +69,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			$(this).stop().animate({
 				
 				top: Math.round(this.origin.top),
-				left: Math.round(this.origin.left),
+				left: Math.round(this.origin.left)
 				
 				}, GLOBALS.animFast, function () {	
 					

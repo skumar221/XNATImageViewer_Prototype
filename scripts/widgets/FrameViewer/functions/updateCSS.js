@@ -13,7 +13,7 @@ FrameViewer.prototype.updateCSS = function () {
 	this.canvas.width = $(this.widget).width();
 	$(this.canvas).css({
 		height: $(this.widget).height(),
-		width: $(this.widget).width(),
+		width: $(this.widget).width()
 	})
 
 

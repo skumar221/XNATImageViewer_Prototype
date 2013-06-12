@@ -11,7 +11,7 @@ XNATViewer.prototype.addScrollGallery = function (rowPos) {
 		widgetCSS: {
 			left: 0,
 			top: this.args.marginTop,
-			height: 700,
+			height: 700
 		}
 	});	
 	

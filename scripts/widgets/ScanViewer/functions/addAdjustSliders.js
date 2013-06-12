@@ -42,7 +42,7 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		fontSize: GLOBALS.fontSizeMed,
 		fontFamily: GLOBALS.fontFamily,
 		//border: "solid 1px rgba(255,255,0,1)",
-		width: sliderLeft * .75,
+		width: sliderLeft * .75
 	}
 	
 	
@@ -57,15 +57,15 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		round: true,
 		widgetCSS:{
 			top: sliderMargin * 1,
-			left: sliderLeft,
-		},
+			left: sliderLeft
+		}
 	}));
 	
     
     // Label
     var bLabel = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
     	top: (sliderMargin * 1) + imgProcSliderCSS.handleCSS.height/2 - GLOBALS.fontSizeMed/2 - 2,
-    	left: labelLeft,
+    	left: labelLeft
     }))
     bLabel.innerHTML = "Brightness";
     
@@ -74,7 +74,7 @@ ScanViewer.prototype.addAdjustSliders = function () {
     var bNum = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
     	top: (sliderMargin * 1) + imgProcSliderCSS.handleCSS.height/2 - GLOBALS.fontSizeMed/2 - 2,
     	left: numLeft ,
-    	fontSize: GLOBALS.fontSizeLarge,
+    	fontSize: GLOBALS.fontSizeLarge
     }))
     bNum.innerHTML = "0";
     
@@ -97,15 +97,15 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		round: true,
 		widgetCSS:{
 			top: sliderMargin * 2,
-			left: sliderLeft,
-		},
+			left: sliderLeft
+		}
 	}));
 	
 
     
     var cLabel = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
     	top: (sliderMargin * 2) + imgProcSliderCSS.handleCSS.height/2 - GLOBALS.fontSizeMed/2 - 2,
-    	left: labelLeft,
+    	left: labelLeft
     }))
     cLabel.innerHTML = "Contrast";
     
@@ -114,7 +114,7 @@ ScanViewer.prototype.addAdjustSliders = function () {
     var cNum = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
     	top: (sliderMargin * 2) + imgProcSliderCSS.handleCSS.height/2 - GLOBALS.fontSizeMed/2 - 2,
     	left: numLeft ,
-    	fontSize: GLOBALS.fontSizeLarge,
+    	fontSize: GLOBALS.fontSizeLarge
     }))
     cNum.innerHTML = "0";
     

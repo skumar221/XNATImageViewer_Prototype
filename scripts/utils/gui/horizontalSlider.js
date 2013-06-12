@@ -118,7 +118,7 @@ utils.gui.horizontalSlider = function (args) {
 			that.moveHandle("byMouseWheel", {
 				"event": e, 
 				handle: handle,
-				wheelDelta: delta,
+				wheelDelta: delta
 			});
 			return false;
 		}	
@@ -246,7 +246,7 @@ utils.gui.horizontalSlider.prototype.defaultArgs = function () {
 	  		position: "absolute",
 	  		top: 50,
 	  		left: 50,
-	  		width: 300,
+	  		width: 300
 	  		//backgroundColor: "rgba(255,0,0,1)",
 	  	},
 	  	
@@ -258,7 +258,7 @@ utils.gui.horizontalSlider.prototype.defaultArgs = function () {
 	  		borderWidth: 1,
 	  		borderColor: "rgba(0,0,0,1)",
 	  		backgroundColor: "rgba(125,125,125,1)",
-	  		borderRadius: 0,
+	  		borderRadius: 0
 	  	},
 	  	
 	  	handleCSS: {
@@ -333,7 +333,7 @@ utils.gui.horizontalSlider.prototype.setArgs = function (newArgs) {
 	this.handleDomain = function () {
 		return 	{
 			start: this.currArgs().handleOffsetLeft,
-			end:   this.currArgs().widgetCSS.width - this.currArgs().handleCSS.width - this.currArgs().handleOffsetLeft,
+			end:   this.currArgs().widgetCSS.width - this.currArgs().handleCSS.width - this.currArgs().handleOffsetLeft
 		}	
 	}
 }
@@ -420,7 +420,7 @@ utils.gui.horizontalSlider.prototype.moveHandle = function (moveType, args) {
 			
 			
 			// generate a tempLeft
-			var tempLeft = utils.convert.int(args.handle.style.left) + (args.wheelDelta * step);
+			var tempLeft = utils.convert.toInt(args.handle.style.left) + (args.wheelDelta * step);
 			this.setMouseWheelEventTime();		
 		}
 
@@ -431,7 +431,7 @@ utils.gui.horizontalSlider.prototype.moveHandle = function (moveType, args) {
 				   
 			var tempLeft = newPt.x - // mouseclick x
 						   args.track.getBoundingClientRect().left - // current abs position of the handle
-						   utils.convert.int(args.handle.style.width)/2; // centers the handle on the mouse pointer		
+						   utils.convert.toInt(args.handle.style.width)/2; // centers the handle on the mouse pointer		
 
 		}
 		

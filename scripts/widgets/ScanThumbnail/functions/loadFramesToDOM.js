@@ -44,7 +44,7 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 		// Add to queue
 		GLOBALS.imagePreloader.addToPrimaryQueue(primaryQ);	
 		// Begin chain
-		GLOBALS.imagePreloader.loadNextImage({ "onload"  : args["onload"], });		
+		GLOBALS.imagePreloader.loadNextImage({ "onload"  : args["onload"] });		
 	}
 }
 

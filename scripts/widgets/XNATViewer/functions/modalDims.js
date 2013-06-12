@@ -78,7 +78,7 @@ XNATViewer.prototype.modalDims = function (conversion) {
 	//-------------------------	
 	var ScrollGalleryCSS = {
 		height: Math.round(modalHeight) - GLOBALS.expandButtonWidth*2,
-		top: GLOBALS.expandButtonWidth,
+		top: GLOBALS.expandButtonWidth
 	}
 		
 		
@@ -143,7 +143,7 @@ XNATViewer.prototype.modalDims = function (conversion) {
 			width: Math.round(ScanViewerWidth),
 			height: Math.round(ScanViewerHeight),
 			lefts: ScanViewerLefts,
-			tops: ScanViewerTops,	
+			tops: ScanViewerTops	
 			
 		},
 		ScrollGallery: {
@@ -153,8 +153,8 @@ XNATViewer.prototype.modalDims = function (conversion) {
 		},
 		closeButton: {
 			
-			left: Math.round(_l) + Math.round(modalWidth) - (utils.convert.int(that.closeButton.style.width)) - 13,
-			top: Math.round(_t) + 10,// + $(this.closeButton).height()/3,// (utils.convert.int(that.closeButton.style.width)/2),
+			left: Math.round(_l) + Math.round(modalWidth) - (utils.convert.toInt(that.closeButton.style.width)) - 13,
+			top: Math.round(_t) + 10// + $(this.closeButton).height()/3,// (utils.convert.toInt(that.closeButton.style.width)/2),
 			
 		},
 		ColumnMenu: {
@@ -165,14 +165,14 @@ XNATViewer.prototype.modalDims = function (conversion) {
 			height: 40
 			
 		},
-		RowMenu:{
+		RowMenu: {
 			
 			left: ScanViewerLefts[0][0] + (Math.round(modalWidth) - ScanViewerLefts[0][0] - GLOBALS.expandButtonWidth)/2 - 17,
 			top: Math.round(modalHeight) - GLOBALS.expandButtonWidth,
 			width: 40,
-			height: GLOBALS.expandButtonWidth - 1,
+			height: GLOBALS.expandButtonWidth - 1
 			
-		},
+		}
 
 	}
 
