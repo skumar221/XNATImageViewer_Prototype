@@ -1,5 +1,27 @@
+FrameViewer.prototype.loadCurrViewPlane = function() {
+	
+	var that = this;
+	var cCount = that.currDroppable[that.currViewPlane + "FrameCount"];
+	var preload = that.currDroppable.getPreloadedFrames(that.currViewPlane);
+					
+	if ((cCount == preload.length) && !that.loaded) {
+		that.loaded = true;
+		utils.dom.debug("loaded...")
+		// Show canvas
+		that.progBar.hide(GLOBALS.animFast, function() {});	
+		$(that.canvas).fadeIn(GLOBALS.animFast);
+		
+		// Load Frames By ViewPlane
+		that.loadFramesByViewPlane(that.currViewPlane);					
+	}		
+}
+
+
+
 FrameViewer.prototype.loadDroppable = function (droppable) {
 
+	var that = this;
+	
 	if (droppable.frames) {
 		
 
@@ -50,7 +72,7 @@ FrameViewer.prototype.loadDroppable = function (droppable) {
 					// vars
 					var vp = that.currDroppable.frames[mPath]["viewPlane"];				
 					var lCount = that.currDroppable[that.currViewPlane + "LoadCount"];
-					var cCount = that.currDroppable[that.currViewPlane + "FrameCount"];
+
 
 	
 					// increments
@@ -58,24 +80,11 @@ FrameViewer.prototype.loadDroppable = function (droppable) {
 					that.currDroppable[vp + "LoadCount"] += 1;
 					that.progBar.update({"add": 1});
 
-					//if (vp == 'sagittal')
-					//	console.log("Scan ", utils.convert.int(that.currDroppable.scanData.sessionInfo["Scan"].value), ":  ", vp, lCount, cCount, that.frames.length);
 											
 					// load if at the appropriate pint
-					var equalFrameCounts = (that.frames.length ==  that.currDroppable[that.currViewPlane + "FrameCount"]);
 					
+					that.loadCurrViewPlane();
 					
-					
-					if (($(that.progBar.bar).progressbar( "option", "value" ) == cCount) && !that.loaded) {
-						that.loaded = true;
-						utils.dom.debug("loaded...")
-						// Show canvas
-						that.progBar.hide(GLOBALS.animFast, function() {});	
-						$(that.canvas).fadeIn(GLOBALS.animFast);
-						
-						// Load Frames By ViewPlane
-						that.loadFramesByViewPlane(that.currViewPlane);					
-					}					
 				}
 
 			}

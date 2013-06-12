@@ -9,12 +9,12 @@ utils.ajax.imagePreloader = function(){
 		var backgroundDone = backgroundQueue.length == 0;
 
 		if (primaryDone && backgroundDone) {
-			//utils.dom.debug("All downloads complete.");
+			utils.dom.debug("All downloads complete.");
 			return;
 		}
 				
 		else if (primaryDone && !backgroundDone)	{
-			utils.dom.debug("DOWNLOADING BG: " + backgroundQueue.length + " left.")
+			//utils.dom.debug("DOWNLOADING BG: " + backgroundQueue.length + " left.")
 			that.loadNextImage(args); 
 		}		
 	}

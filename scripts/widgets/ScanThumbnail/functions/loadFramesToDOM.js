@@ -25,6 +25,9 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 				secondaryQ.push(this.frames[i]['src']);
 			}			
 		}
+		else {
+			//utils.dom.debug("image already loaded!: ", this.frames[i]['img'])
+		}
 	}
 	
 	
@@ -39,6 +42,18 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	GLOBALS.imagePreloader.loadNextImage({ 
 		"onload"  : args["onload"], 
 	});
+	
+	// if already loaded
+	if (primaryQ.length == 0 && secondaryQ.length == 0) {
+		utils.dom.debug("already loaded")
+		
+		XV.ScanViewers( function (ScanViewer, i, j) { 
+			if (ScanViewer.FrameViewer.currDroppable == that) {
+				ScanViewer.FrameViewer.loadCurrViewPlane();	
+			}	
+		})
+	
+	}
 	
 }
 
