@@ -79,6 +79,10 @@ var XNATViewer = function (args) {
 	
 	}
 
+	$(this.modal).css( {
+		height: "50%",
+		width: "50%"
+	});
 	
 	
 	
