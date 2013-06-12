@@ -21,15 +21,15 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		    top: modalDims.top,
 		    
 		  }, GLOBALS.animMed, function () {
-			
-			that.updateCSS();
+
 		    $.when(that.updateCSS()).then(function(){
 				
 				$.when(callback()).then(function() { 
 					
 					XV.ScanViewers( function(ScanViewer) { 	
-						
-						$(ScanViewer.widget).fadeTo(0,1)
+
+						$(ScanViewer.widget).stop().fadeTo(0, 1);
+						$(ScanViewer.widget.childNodes).stop().fadeTo(0, 1);	
 						ScanViewer.setJQueryEvents();
 					
 					}); 						
@@ -49,13 +49,13 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		//-------------------------	
 		
 		XV.ScanViewers( function(ScanViewer, i, j) { 
+			//$(ScanViewer.widget).stop().fadeTo( GLOBALS.animMed, 0);
 			
-
 			//
 			// FADE OUT/IN: ScanViewer contents
 			//
 			 if (modalDims.ScanViewer.height != utils.convert.int(ScanViewer.widget.style.height)) {
-			 	$(ScanViewer.widget.childNodes).stop().fadeTo(GLOBALS.animMed, 0).fadeTo(GLOBALS.animMed, 1);	
+			 	$(ScanViewer.widget.childNodes).stop().fadeTo(GLOBALS.animFast, 0);	
 			 }
 			 
 
@@ -70,7 +70,8 @@ XNATViewer.prototype.animateModal  = function (callback) {
 			    width: modalDims.ScanViewer.width,
 			    height: modalDims.ScanViewer.height,
 			    
-			  }, GLOBALS.animMed, function () {	});				
+			  }, GLOBALS.animMed, function () {	});		
+			  		
 		});
 		
 

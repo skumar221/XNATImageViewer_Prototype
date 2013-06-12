@@ -81,9 +81,40 @@ function ScanThumbnail(scanData, args) {
 	//--------------------------------
 	// FRAMES
 	//--------------------------------
-	this.sagittalFrames = this.getFrameList("sagittal"); 
-	this.coronalFrames = this.getFrameList("coronal");
-	this.transverseFrames = this.getFrameList("axial");
+	this.frames = {};
+	
+	function populateFramesObject(viewPlane) {
+		
+		var b = that.getFrameList(viewPlane);
+
+		that[viewPlane + "FrameCount"] = b.length;
+		that[viewPlane + "LoadCount"] = 0;
+
+		for (var i=0; i<b.length; i++) {
+			that.frames[that.pathMolder(b[i])] = {
+				'viewPlane': viewPlane, 
+				'src' : b[i]
+			}
+		} 
+
+	}
+	
+	this.getPreloadedFrames = function(viewPlane) {
+		var imgArr = [];
+		for (i in that.frames) {
+
+			if (that.frames[i]['viewPlane'] == viewPlane) {
+				if (that.frames[i]['img']) {
+					imgArr.push(that.frames[i]['img']);	
+				}
+			}
+		}
+		return imgArr;
+	}
+
+	populateFramesObject("sagittal");
+	populateFramesObject("coronal");
+	populateFramesObject("transverse");
 	
 	
 	
@@ -140,7 +171,11 @@ function ScanThumbnail(scanData, args) {
 }
 
 
-
+ScanThumbnail.prototype.pathMolder = function (path) {	
+	
+	splitStrs = path.split("testscans");
+	return splitStrs[1];
+}
 
 //****************************************
 // THUMB CANVASES
@@ -288,8 +323,8 @@ ScanThumbnail.prototype.activate = function (activeTarget) {
 // FRAMES
 //****************************************
 ScanThumbnail.prototype.getFrameList = function (type) {
-	
-	return (type == "sagittal") ? this.scanData.sagittalPaths : (type == "axial") ? this.scanData.axialPaths : this.scanData.coronalPaths;
+
+	return (type == "sagittal") ? this.scanData.sagittalPaths : (type == "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
 }
 
 

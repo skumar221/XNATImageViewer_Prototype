@@ -42,7 +42,6 @@ FrameViewer.prototype.updateCSS = function () {
 		this.context.drawImage(ddImg, this.canvas.width/2 - ddImg.width/2, 
 								    this.canvas.height/2 - ddImg.height/2, 
 								    ddImg.width, ddImg.height);
-		this.canvas.style.opacity = .6;
 
 	}
 	else{

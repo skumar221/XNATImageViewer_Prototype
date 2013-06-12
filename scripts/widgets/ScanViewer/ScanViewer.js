@@ -138,9 +138,10 @@ var ScanViewer = function (args) {
 		}		
 		else{
 			
-			//console.log("NO DRAW FRAME");
+			utils.dom.debug("NO DRAW FRAME");
 			
-		}	
+		}
+
 	});
 	
 

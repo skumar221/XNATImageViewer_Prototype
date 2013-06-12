@@ -5,6 +5,8 @@ var GLOBALS = {
 }
 
 
+GLOBALS.imagePreloader = new utils.ajax.imagePreloader();
+
 
 GLOBALS.ModalId = "XNATImageViewerModal";
 GLOBALS.ScanViewerPreId = "ScanViewer";

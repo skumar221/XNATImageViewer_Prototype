@@ -233,25 +233,26 @@ FrameViewer.prototype.imageAdjust = function (methodType, value) {
 
 	if (this.canvas.height > 0 && this.canvas.width > 0) {
 
-		
+	
 		//
 		// Get canvas's imageData
 		//
 		var imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);	
 
-	
+
 		//
 		// Apply image adjustment methods
 		//
 		for (var i in this.adjustMethods) {
+			console.log(i)
 			switch (i) {
 				case "brightness":
+					console.log("brightness")
 					imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
 					break;
 				case "contrast":
-					imageData.data = linearContrast(imageData.data, 
-												    this.adjustMethods[i], 
-												    this.args.contrastThreshold);
+					console.log('contrast')
+					imageData.data = linearContrast(imageData.data, this.adjustMethods[i], this.args.contrastThreshold);
 					break;
 			}
 		}

@@ -103,31 +103,79 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 		
 			})
 			
+			
+			
+			//-----------------------------------------
+			// MOUSE UP CLICK (will populate ScanViewer)
+			//-----------------------------------------
+			$(this.clone).dblclick(function(event) { 
+				
+				console.log("Nothing")
+					
+			});
 						
-			//
-			// Set clicking (will populate ScanViewer)
-			//
+			
+						
+			//-----------------------------------------
+			// MOUSE UP CLICK (will populate ScanViewer)
+			//-----------------------------------------
 			$(this.clone).bind('mouseup.drag', function(event) { 
 				
 				var clone = this;
 				var inserted = false;
 				
+				//
+				// Try setting target to empty scan viewers
+				//
 				XV.ScanViewers( function (ScanViewer, i, j) {
-					
 					if (!inserted && ScanViewer.FrameViewer.frames.length == 0) {
 						clone.targetId = ScanViewer.widget.id; 
 						inserted = true;
 					}
-					
 				});
 				
-				if (!inserted) { 
 				
-					XV.ScanViewers.
+				//
+				// Utility...
+				//
+				function setFirstViewer() {
+					GLOBALS.lastClickedTarget = XV.ScanViewers()[0][0].widget.id;
+					clone.targetId = GLOBALS.lastClickedTarget;	
 				}
 				
+				
+				//
+				// If all frames are occupied...
+				//
+				if (!inserted) { 
+					if (!GLOBALS.lastClickedTarget) { setFirstViewer(); }	
+					else { 
+					
+						var prevFound = undefined;
+						
+						//
+						// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
+						//
+						XV.ScanViewers( function (ScanViewer, i, j) { 
+							if (GLOBALS.lastClickedTarget == ScanViewer.widget.id) {
+								prevFound = true;
+								return;
+							}
+							if (prevFound) {
+								GLOBALS.lastClickedTarget = ScanViewer.widget.id;
+								clone.targetId = GLOBALS.lastClickedTarget;
+							}
+						})
+						
+						//
+						// If we've run out of viewers, go back to the first.
+						//
+						if (!prevFound) { setFirstViewer(); }
+					}
+				}
+				
+				// Invoke mouseEventEnd()
 				clone.mouseEventEnd();
-
 			})
 			
 			
@@ -144,7 +192,6 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 					modalOffset.top, 
 					modalOffset.left + $(modal).width() - pDims[0] -1, 
 					modalOffset.top + $(modal).height() - pDims[1] -1
-					
 				],
 				
 				start: function () {

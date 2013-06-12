@@ -29,6 +29,12 @@ XNATViewer.prototype.updateCSS = function (args) {
 	//----------------------------------		
 	XV.ScanViewers( function(ScanViewer, i, j) { 
 				
+		XV.ScanViewers( function(ScanViewer) { 	
+
+			$(ScanViewer.widget).stop().fadeTo(0, 1);
+			$(ScanViewer.widget.childNodes).stop().fadeTo(0, 1);
+		});
+		
 		ScanViewer.updateCSS({
 			
 			height: modalDims.ScanViewer.height,// - this.args.marginTop*2,
