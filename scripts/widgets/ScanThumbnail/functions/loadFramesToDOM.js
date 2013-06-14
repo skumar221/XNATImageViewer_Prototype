@@ -31,7 +31,7 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	// if already cached
 	if (primaryQ.length == 0) {
 		
-		XV.ScanViewers( function (ScanViewer, i, j) { 
+		XV.Viewers( function (ScanViewer, i, j) { 
 			if (ScanViewer.FrameViewer.currDroppable == that) {
 				utils.dom.debug("Using cached images for " + ScanViewer.FrameViewer.currViewPlane + " plane.");
 				ScanViewer.FrameViewer.loadCurrViewPlane();	

@@ -65,7 +65,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 		top: 0,
 		title: "Insert Column",
 		onclick: function () { 
-			XV.ScanViewers({"insert" : "column"}); 
+			XV.Viewers({"insert" : "column"}); 
 		}	
 	});
 
@@ -75,7 +75,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 		top: 22,
 		title: "Remove Column",
 		onclick: function () { 
-			XV.ScanViewers({"remove" : "column"});  
+			XV.Viewers({"remove" : "column"});  
 		}	
 	});
 }

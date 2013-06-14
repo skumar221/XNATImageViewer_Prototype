@@ -64,7 +64,7 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 		left: 0,
 		title: "Insert Row",
 		onclick: function () { 
-			XV.ScanViewers({"insert" : "row"}); 
+			XV.Viewers({"insert" : "row"}); 
 		}	
 	});
 
@@ -74,7 +74,7 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 		left: 23,
 		title: "Remove Row",
 		onclick: function () { 
-			XV.ScanViewers({"remove" : "row"});  
+			XV.Viewers({"remove" : "row"});  
 		}	
 	});
 

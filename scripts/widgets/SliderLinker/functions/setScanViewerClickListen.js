@@ -14,7 +14,7 @@ SliderLinker.prototype.setScanViewerClickListen = function (currViewer) {
 	//--------------------------
 	//  GET VIEWERS
 	//--------------------------
-	XV.ScanViewers( function (ScanViewer) {
+	XV.Viewers( function (ScanViewer) {
 		
 		
 		

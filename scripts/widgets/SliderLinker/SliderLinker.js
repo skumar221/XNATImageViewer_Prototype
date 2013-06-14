@@ -61,10 +61,10 @@ var SliderLinker = function (args) {
 		//
 		//  1. Add the ScanViewer to the last group
 		//
-		if (groups[groups.length - 1].ScanViewers.indexOf(ScanViewer) == -1) {
+		if (groups[groups.length - 1].Viewers.indexOf(ScanViewer) == -1) {
 		
 			//("HERE - last group: ", this.lastGroup().border)
-			groups[groups.length - 1].ScanViewers.push(ScanViewer);
+			groups[groups.length - 1].Viewers.push(ScanViewer);
 			
 			//
 			//  Set the border color
@@ -100,14 +100,14 @@ var SliderLinker = function (args) {
 		var tempInd;
 		for (var i=0; i<groups.length; i++) {
 			
-			tempInd = groups[i].ScanViewers.indexOf(ScanViewer);
+			tempInd = groups[i].Viewers.indexOf(ScanViewer);
 			
 			if (tempInd > -1) {
 				
 				//("removing ", ScanViewer.widget.id, " from group ", groups[i].groupID)
 				
-				var viewer = groups[i].ScanViewers[tempInd];
-				groups[i].ScanViewers.splice(tempInd, 1);		
+				var viewer = groups[i].Viewers[tempInd];
+				groups[i].Viewers.splice(tempInd, 1);		
 				
 				if (clearSelectorBox) {
 					this.clearSelectorBox(viewer);						
@@ -125,12 +125,12 @@ var SliderLinker = function (args) {
 		var tempInd;
 		for (var i=0; i<groups.length; i++) {
 			
-			tempInd = groups[i].ScanViewers.indexOf(ScanViewer);
+			tempInd = groups[i].Viewers.indexOf(ScanViewer);
 			
 			if (tempInd > -1) {
 				
-				for (var j=0; j<groups[i].ScanViewers.length; j++) {
-					var viewer = groups[i].ScanViewers[j];						
+				for (var j=0; j<groups[i].Viewers.length; j++) {
+					var viewer = groups[i].Viewers[j];						
 
 					this.clearSelectorBox(viewer);						
 				}
@@ -139,7 +139,7 @@ var SliderLinker = function (args) {
 					groups.splice(i, 1);
 				}
 				else{
-					groups[i].ScanViewers = [];
+					groups[i].Viewers = [];
 				}
 				return;
 			
@@ -165,7 +165,7 @@ var SliderLinker = function (args) {
 	this.clearAll = function () {
 			
 		
-		XV.ScanViewers( function(ScanViewer) {
+		XV.Viewers( function(ScanViewer) {
 				that.removeFromGroup(ScanViewer, true);
 		});
 
@@ -177,11 +177,11 @@ var SliderLinker = function (args) {
 	
 	this.getViewerSetFromID = function (ID) {
 		for (var i=0; i<groups.length; i++) {			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
-				if (groups[i].ScanViewers[j].widget.id == ID) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
+				if (groups[i].Viewers[j].widget.id == ID) {
 					return {
-						viewer: groups[i].ScanViewers[j],
-						viewerset: groups[i].ScanViewers
+						viewer: groups[i].Viewers[j],
+						viewerset: groups[i].Viewers
 					}
 				}
 			}
@@ -194,9 +194,9 @@ var SliderLinker = function (args) {
 		var delayVal = (delay) ? delay: 0;
 
 		for (var i=0; i<groups.length; i++) {			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
 				
-				var viewer = groups[i].ScanViewers[j];
+				var viewer = groups[i].Viewers[j];
 				
 				$(viewer.selectorBox).delay(delayVal).fadeTo(GLOBALS.animFast, 1)
 				
@@ -211,9 +211,9 @@ var SliderLinker = function (args) {
 		
 		if (!this.stayVisible) { 
 			for (var i=0; i<groups.length; i++) {			
-				for (var j=0; j<groups[i].ScanViewers.length; j++) {
+				for (var j=0; j<groups[i].Viewers.length; j++) {
 					
-					var viewer = groups[i].ScanViewers[j];
+					var viewer = groups[i].Viewers[j];
 					
 					$(viewer.selectorBox).delay(delayVal).fadeTo(GLOBALS.animFast, 0)
 					
@@ -229,9 +229,9 @@ var SliderLinker = function (args) {
 		var delayVal = (delay) ? delay: 500;
 		
 		for (var i=0; i<groups.length; i++) {			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
 				
-				var viewer = groups[i].ScanViewers[j];
+				var viewer = groups[i].Viewers[j];
 				
 				$(viewer.selectorBox).fadeTo(GLOBALS.animFast, 1).delay(delayVal).fadeTo(GLOBALS.animFast, 0)
 				
@@ -258,9 +258,9 @@ var SliderLinker = function (args) {
 	this.takeSnapshot = function () {
 		
 		for (var i=0; i<groups.length; i++) {			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
 				
-				var viewer = groups[i].ScanViewers[j];
+				var viewer = groups[i].Viewers[j];
 				groups[i].prevViewers.push(viewer);
 				
 			}
@@ -272,13 +272,13 @@ var SliderLinker = function (args) {
 		
 		for (var i=0; i<groups.length; i++) {		
 			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
 				
-				this.clearSelectorBox(groups[i].ScanViewers[j]);
+				this.clearSelectorBox(groups[i].Viewers[j]);
 				
 			}
 			
-			groups[i].ScanViewers = groups[i].prevViewers;
+			groups[i].Viewers = groups[i].prevViewers;
 			groups[i].prevViewers = [];		
 
 			this.hideExisting();
@@ -294,7 +294,7 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		XV.ScanViewers( function(ScanViewer) {
+		XV.Viewers( function(ScanViewer) {
 			
 			that.disableSelectorBox(ScanViewer.selectorBox);
 			that.hideExisting(500);
@@ -307,10 +307,10 @@ var SliderLinker = function (args) {
 		//  PRocess viewers that are in an existing groups
 		//
 		for (var i=0; i<groups.length; i++) {			
-			for (var j=0; j<groups[i].ScanViewers.length; j++) {
+			for (var j=0; j<groups[i].Viewers.length; j++) {
 
-				var ScanViewer = groups[i].ScanViewers[j];
-				var viewerSet = groups[i].ScanViewers;
+				var ScanViewer = groups[i].Viewers[j];
+				var viewerSet = groups[i].Viewers;
 
 				
 				$(ScanViewer.widget).bind('mouseenter.sliderlink', function () {

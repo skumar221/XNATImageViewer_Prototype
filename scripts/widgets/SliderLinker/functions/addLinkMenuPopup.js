@@ -11,7 +11,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	var messageVal = (typeof message === 'undefined') ?  "Select viewers to link. Click 'Done' when finished." : message;
 	
-	XV.ScanViewers( function(ScanViewer) { 
+	XV.Viewers( function(ScanViewer) { 
 		ScanViewer.updateCSS();
 	})	
 	
@@ -53,7 +53,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		
 		that.processGroups();
 		
-		XV.ScanViewers( function(ScanViewer) { 
+		XV.Viewers( function(ScanViewer) { 
 			$(ScanViewer.widget).draggable({ disabled: false });
 		})
 
@@ -68,7 +68,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		
 		that.cancel();
 		
-		XV.ScanViewers( function(ScanViewer) { 
+		XV.Viewers( function(ScanViewer) { 
 			$(ScanViewer.widget).draggable({ disabled: false });
 		})
 
@@ -78,7 +78,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	XV.updateCSS();
 	$(popup).fadeOut(0).fadeIn(GLOBALS.animFast);
 	
-	XV.ScanViewers( function(ScanViewer) { 
+	XV.Viewers( function(ScanViewer) { 
 		$(ScanViewer.widget).draggable({ disabled: true });
 	})
 	

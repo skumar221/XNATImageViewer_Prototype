@@ -122,13 +122,13 @@ var XNATViewer = function (args) {
 	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------	
-	this.addScanViewerManager();
-	this.ScanViewers({
+	this.addViewerManager();
+	this.Viewers({
 		"insert" : "column",
 		"animate" : "off"
 	});
-
-
+	GLOBALS.thumbClickTarget = XV.Viewers()[0][0].widget.id;
+	
 
 	this.updateCSS();
 }

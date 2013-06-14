@@ -26,7 +26,7 @@ XNATViewer.prototype.animateModal  = function (callback) {
 				
 				$.when(callback()).then(function() { 
 					
-					XV.ScanViewers( function(ScanViewer) { 	
+					XV.Viewers( function(ScanViewer) { 	
 
 						$(ScanViewer.widget).stop().fadeTo(0, 1);
 						$(ScanViewer.widget.childNodes).stop().fadeTo(0, 1);	
@@ -48,7 +48,7 @@ XNATViewer.prototype.animateModal  = function (callback) {
 		// SCAN VIEWERS
 		//-------------------------	
 		
-		XV.ScanViewers( function(ScanViewer, i, j) { 
+		XV.Viewers( function(ScanViewer, i, j) { 
 			//$(ScanViewer.widget).stop().fadeTo( GLOBALS.animMed, 0);
 			
 			//

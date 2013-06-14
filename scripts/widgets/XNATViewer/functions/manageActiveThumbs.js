@@ -11,7 +11,7 @@ XNATViewer.prototype.manageActiveThumbs = function (thumb, args) {
 	// is removed and replaced with thumb
 	if (args.activeTarget) {
 		
-		XV.ScanViewers( function(ScanViewer) { 
+		XV.Viewers( function(ScanViewer) { 
 
 			if (ScanViewer.FrameViewer.args.id == args.activeTarget) {
 				if (this.activeThumbManager[args.activeTarget]) {

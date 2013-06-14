@@ -30,9 +30,9 @@ XNATViewer.prototype.updateCSS = function (args) {
 	//	SCAN VIEWERS
 	//----------------------------------	
 	if (XV) {
-		XV.ScanViewers( function(ScanViewer, i, j) { 
+		XV.Viewers( function(ScanViewer, i, j) { 
 					
-			XV.ScanViewers( function(ScanViewer) { 	
+			XV.Viewers( function(ScanViewer) { 	
 	
 				$(ScanViewer.widget).stop().fadeTo(0, 1);
 				$(ScanViewer.widget.childNodes).stop().fadeTo(0, 1);

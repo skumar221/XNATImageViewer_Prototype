@@ -28,7 +28,7 @@ XNATViewer.prototype.modalDims = function (conversion) {
 	
 	
 	//	Get the number of scan viewers
-	var viewers = XV.ScanViewers();
+	var viewers = XV.Viewers();
 	var ScanViewerColumns = viewers[0].length;
 	var ScanViewerRows = viewers.length;
 	
@@ -91,7 +91,7 @@ XNATViewer.prototype.modalDims = function (conversion) {
 	var ScanViewerTops = [];
 	var viewerStart = $(this.ScrollGallery.widget).width() +  $(this.ScrollGallery.widget).position().left + GLOBALS.ScanViewerVerticalMargin;
 
-	XV.ScanViewers( function(ScanViewer, i, j) { 
+	XV.Viewers( function(ScanViewer, i, j) { 
 			
 		l = viewerStart + j * (ScanViewerWidth + GLOBALS.ScanViewerVerticalMargin);
 		

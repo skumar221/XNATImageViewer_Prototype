@@ -59,7 +59,7 @@ def main():
                 textArr.append(scr)
 
     cmdStr = "java -jar ./compiler.jar "
-    endStr = "--js_output_file ../XNATImageViewerTesting/XMIV-compiled.js"
+    endStr = "--js_output_file ../XNATImageViewerTesting/XMIV-min.js"
 
     for t in textArr:
         cmdStr += "--js=" + t.replace("./", "../XNATImageViewerTesting/") + " "

@@ -1,8 +1,8 @@
-XNATViewer.prototype.addScanViewerManager = function() {
+XNATViewer.prototype.addViewerManager = function() {
 	
 	var viewers = [[]];
 
-	this.ScanViewers = function(args1, args2, args3, args4, args5) {
+	this.Viewers = function(args1, args2, args3, args4, args5) {
 		
 		//console.log(typeof args1)
 		//var viewers = [[]];
@@ -21,7 +21,6 @@ XNATViewer.prototype.addScanViewerManager = function() {
 		var loop = function(callback) {
 			
 				var returnVals = [];
-				var ScanViewers = viewers;
 				
 				for (var i=0; i<viewers.length; i++) {
 					for (var j=0; j<viewers[i].length; j++) {
@@ -111,12 +110,13 @@ XNATViewer.prototype.addScanViewerManager = function() {
 		else if (isString) {
 			
 			var isWidget = (args1.toLowerCase().indexOf("widgets")  === 0 );
+			var isId = (args1.indexOf(GLOBALS.ScanViewerPreId)  == 0 );
+
+			
 			if (isWidget){
 				return widgets();
 			}		
 			
-			
-			var isId = (args1.indexOf(GLOBALS.ScanViewerPreId)  == 0 );
 			if (isId){
 				
 				var a = loop( function (ScanViewer) {
@@ -140,11 +140,15 @@ XNATViewer.prototype.addScanViewerManager = function() {
 		else if (isObject){
 			
 			var animOff = (args1['animate'] && args1['animate'] === 'off');	
-			
 			var isElement = args1["element"];
+		
+			var isLoop = args1["loop"];
+			var isSwap = args1["swap"];
+			var isInsert = args1['insert'];
+			var isRemove = args1['remove'];
+			var isViewerAfter = args1['viewerAfter'];
+			
 			if (isElement){
-				
-				
 				//
 				// return Widgets
 				//
@@ -158,7 +162,7 @@ XNATViewer.prototype.addScanViewerManager = function() {
 			//
 			// Loop
 			//
-			var isLoop = args1["loop"];
+			
 			if (isLoop){
 				return loop(args1["loop"]);			
 			}
@@ -166,18 +170,54 @@ XNATViewer.prototype.addScanViewerManager = function() {
 			
 			//
 			// Swap
-			//
-			var isSwap = args1["swap"];
+			//			
 			if (isSwap){
 				return swap(args1["swap"][0], args1["swap"][1]);			
 			}
 			
+
+			//
+			// Viewre AFter
+			//			
+			if (isViewerAfter){
+				//console.log("viewer after")
+				var currV = args1['viewerAfter'];
+				for (var i=0; i<viewers.length; i++) {
+					for (var j=0; j<viewers[i].length; j++) {
+						
+						if (viewers[i][j] == currV) {
+							
+							var maxRow = ((i+1) == viewers.length);
+							var maxCol = ((j+1) == viewers[i].length);
+							
+							if (maxRow && maxCol) {
+								//console.log("0,0")
+								return viewers[0][0];
+							}
+							else if (maxRow && !maxCol) {
+								//console.log("0,j+1")
+								return viewers[0][j+1];
+							}
+							else if (!maxRow && maxCol) {
+								//console.log("i+1,0")
+								return viewers[i+1][0];
+							}
+							else {
+								//console.log("i+1,j+1")
+								return viewers[i+1][j+1];
+							}
+							
+						}
+						
+					}
+				}		
+			}
 			
+						
 		
 			//
 			// insert Row/Column
 			//			
-			var isInsert = args1['insert'];
 			if (isInsert){
 				
 				var isRow = (args1['insert'] === 'row');
@@ -262,7 +302,7 @@ XNATViewer.prototype.addScanViewerManager = function() {
 			//
 			// remove Row/Column
 			//			
-			var isRemove = args1['remove'];
+			
 			if (isRemove){
 				
 				var isRow = (args1['remove'] === 'row');

@@ -1,7 +1,7 @@
-ScanThumbnail.prototype.addDraggableMethods = function () {
+ScanThumbnail.prototype.addUI = function () {
 	
 	var that = this;
-
+	
 
 	//
 	// Destroy clone
@@ -18,7 +18,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 	// Revert viewer borders back to original
 	//
 	function revertBorders () {
-		var viewers = XV.ScanViewers("widgets");
+		var viewers = XV.Viewers("widgets");
 		for (var i=0; i<viewers.length; i++){
 			if (viewers[i].prevBorder){
 
@@ -62,6 +62,9 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			// Define generic mouse event end 
 			//			
 			this.clone.mouseEventEnd = function () {
+				
+				this.dragging = false;
+				
 				var clone = this;
 
 				revertBorders();					
@@ -80,7 +83,7 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				else {
 					
 					// Load the thumbnail into the ScanViewer
-					var v = XV.ScanViewers(this.targetId);
+					var v = XV.Viewers(this.targetId);
 					if (v) {
 
 						v.FrameViewer.loadDroppable(that); 
@@ -106,11 +109,11 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			
 			
 			//-----------------------------------------
-			// MOUSE UP CLICK (will populate ScanViewer)
+			// DOUBLE CLICK (will populate ScanViewer)
 			//-----------------------------------------
 			$(this.clone).dblclick(function(event) { 
 				
-				console.log("Nothing")
+				utils.dom.debug("Nothing")
 					
 			});
 						
@@ -119,63 +122,54 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 			//-----------------------------------------
 			// MOUSE UP CLICK (will populate ScanViewer)
 			//-----------------------------------------
-			$(this.clone).bind('mouseup.drag', function(event) { 
+			$(this.clone).bind('mouseup.click', function(event) { 
 				
-				var clone = this;
-				var inserted = false;
-				
-				//
-				// Try setting target to empty scan viewers
-				//
-				XV.ScanViewers( function (ScanViewer, i, j) {
-					if (!inserted && ScanViewer.FrameViewer.frames.length == 0) {
-						clone.targetId = ScanViewer.widget.id; 
-						inserted = true;
-					}
-				});
-				
-				
-				//
-				// Utility...
-				//
-				function setFirstViewer() {
-					GLOBALS.lastClickedTarget = XV.ScanViewers()[0][0].widget.id;
-					clone.targetId = GLOBALS.lastClickedTarget;	
-				}
-				
-				
-				//
-				// If all frames are occupied...
-				//
-				if (!inserted) { 
-					if (!GLOBALS.lastClickedTarget) { setFirstViewer(); }	
-					else { 
+				if (!this.dragging) {
+					var clone = this;
+					var inserted = false;
 					
-						var prevFound = undefined;
-						
+					//
+					// Try setting target to empty scan viewers
+					//
+					XV.Viewers( function (ScanViewer, i, j) {
+						if (!ScanViewer.loaded && !inserted) {
+
+							clone.targetId = ScanViewer.widget.id; 
+							ScanViewer.loaded = true;
+							inserted = true;
+						}
+					});
+					
+					
+	
+					
+					
+					//
+					// If all ScanViewers have content...
+					//
+					if (!inserted) { 
+	
 						//
 						// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
 						//
-						XV.ScanViewers( function (ScanViewer, i, j) { 
-							if (GLOBALS.lastClickedTarget == ScanViewer.widget.id) {
-								prevFound = true;
-								return;
-							}
-							if (prevFound) {
-								GLOBALS.lastClickedTarget = ScanViewer.widget.id;
-								clone.targetId = GLOBALS.lastClickedTarget;
+						XV.Viewers( function (ScanViewer, i, j) { 
+							if ((GLOBALS.thumbClickTarget == ScanViewer.widget.id)  && !inserted) {
+
+								clone.targetId = ScanViewer.widget.id;
+								var newTargetViewer = XV.Viewers({
+									"viewerAfter" : ScanViewer
+								});
+								
+								GLOBALS.thumbClickTarget = newTargetViewer.widget.id;
+								inserted = true;
+								
 							}
 						})
-						
-						//
-						// If we've run out of viewers, go back to the first.
-						//
-						if (!prevFound) { setFirstViewer(); }
-					}
+	
+					}			
+					// Invoke mouseEventEnd()
+					clone.mouseEventEnd();		
 				}
-				
-				// Invoke mouseEventEnd()
-				clone.mouseEventEnd();
 			})
 			
 			
@@ -195,13 +189,13 @@ ScanThumbnail.prototype.addDraggableMethods = function () {
 				],
 				
 				start: function () {
-
+					
 				},
 				
 				drag: function () {
-					
+					this.dragging = true;
 					this.targetId = undefined;
-					var collidables = $(this).collision(XV.ScanViewers("widgets"));
+					var collidables = $(this).collision(XV.Viewers("widgets"));
 					
 					for (var i=0; i<collidables.length; i++) {
 						

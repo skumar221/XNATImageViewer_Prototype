@@ -13,7 +13,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 			this.prevBorder = this.style.border;
 			this.style.border = "solid 1px rgba(255,255,255,1)";
 			
-			XV.ScanViewers(function (ScanViewer) {
+			XV.Viewers(function (ScanViewer) {
 				ScanViewer.widget.origin  = $(ScanViewer.widget).position();									
 			});
 
@@ -23,7 +23,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 		
 		drag: function () {
 
-			var viewers = $(this).collision(XV.ScanViewers("widgets"));
+			var viewers = $(this).collision(XV.Viewers("widgets"));
 			
 			for (var i=0; i<viewers.length; i++) {
 				
@@ -49,7 +49,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 							draggable.origin = target.origin;
 							target.origin = tempOrigin;
 							
-							XV.ScanViewers({"swap" : [draggable, target]});	
+							XV.Viewers({"swap" : [draggable, target]});	
 							
 							$(target).stop().animate({
 								
@@ -76,7 +76,7 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					//
 					//  Cleanup custom attributes
 					//
-					XV.ScanViewers( function(ScanViewer) { 
+					XV.Viewers( function(ScanViewer) { 
 						if (ScanViewer.widget.prevBorder){
 							ScanViewer.widget.style.border = ScanViewer.widget.prevBorder;
 						}						

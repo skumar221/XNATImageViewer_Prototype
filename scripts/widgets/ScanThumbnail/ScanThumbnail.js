@@ -175,7 +175,7 @@ function ScanThumbnail(scanData, args) {
 
 	
 	this.addHoverMethods();
-	this.addDraggableMethods();
+	this.addUI();
 
 	
 		
