@@ -42,7 +42,7 @@ var SliderLinker = function (args) {
 		groups.push({
 			border: "solid 2px rgba(" + borderColorSet[groups.length].toString() + ")",
 			groupID: "linkGroup_" + groups.length,
-			ScanViewers: [],
+			Viewers: [],
 			prevViewers: []
 		})		
 
