@@ -45,6 +45,7 @@ var defaultArgs_ScanViewer = {
 
 
 
+
 //******************************************************
 //  Init
 //	
@@ -88,64 +89,17 @@ var ScanViewer = function (args) {
 	 //----------------------------------
 	 // FRAME SLIDER
 	 //----------------------------------	
-	this.FrameSlider = new utils.gui.horizontalSlider(utils.dom.mergeArgs(this.args.sliderCSS, {
-		id: "FrameSlider", 
-		parent: this.widget,
-		round: true
-	}));
+	/*
+	this.SliderHolder = utils.dom.makeElement('div', this.widget, "FrameSlider", {
+		'position' : 'absolute',
+		'height' : 10,
+		'width' : '96%',
+		'left' : '2%',
+		'backgroundColor' : 'rgba(255,120,20, .2)'
+	})
+	*/
 
-
-	// Tell frameslider how to behave...	
-	this.FrameSlider.addSlideCallback(function (_slider) { 
-		
-		var subtractor = (_slider.currArgs().max > 0) ? _slider.currArgs().min  : 0;
-		
-		var val = Math.round(_slider.value);
-		
-		// Update any displayable data
-		if (that.displayableData && that.displayableData.frameNumber) {
-			
-			that.displayableData.frameNumber.innerHTML = "Frame: "+(val + 1) + " / " + that.FrameViewer.frames.length;	
-			
-		}
-		
-		// Draw the frame
-	
-		that.FrameViewer.drawFrame(val - subtractor, true); 
-		
-	  });
-
-
-	// Bind mousewheel scrolling to slider	
-	this.FrameSlider.bindToMouseWheel(this.FrameViewer.widget);
-
-
-	// Add FrameViewer callback function to synchronize with slider
-	this.FrameViewer.addOnloadCallback(function () {
-		
-		if (that.FrameSlider) {
-			
-			that.FrameSlider.updateProperties({
-				
-				min : 0,
-				max : that.FrameViewer.frames.length-1,
-				value : Math.round(that.FrameViewer.frames.length/2)
-			
-			});
-
-			that.FrameViewer.drawFrame(Math.round(that.FrameSlider.value), true);
-			
-		}		
-		else{
-			
-			utils.dom.debug("NO DRAW FRAME");
-			
-		}
-
-	});
-	
-
-
+	this.addFrameSlider();
 
 	//----------------------------------
 	// CONTENT DIVIDER
@@ -196,9 +150,9 @@ var ScanViewer = function (args) {
 		
 	});
 	
-	this.ScanTabs.addCallback( 'setActiveTab', function() {
+	this.ScanTabs.addCallback( 'setActiveTab', function () {
 		
-		//if (that.ScanTabs.minClick){
+		//if (that.ScanTabs.minClick) {
 		var cPos = $(that.ContentDivider.widget).position();
 		var cHeight = $(that.widget.ContentDivider).height();
 		var minCTop = GLOBALS.minContentDividerTop($(that.widget).height());
@@ -299,16 +253,16 @@ ScanViewer.prototype.setJQueryEvents = function () {
 
 		$(that.ViewPlaneMenu).stop().show();
 		$(that.LinkMenu).stop().show();
-		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, 1);
+		//$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, 1);
 		$(that.widget).stop().animate({
 			//borderColor: "rgb(115,115,115)"
 		}, GLOBALS.animFast)
 	
-	}).bind('mouseleave.hover', function(){
+	}).bind('mouseleave.hover', function () {
 
 		$(that.ViewPlaneMenu).stop().hide();
 		$(that.LinkMenu).stop().hide();
-		$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, .7);
+		//$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, .7);
 		$(that.widget).stop().animate({
 			//borderColor: "rgb(85,85,85)"
 		}, GLOBALS.animFast)

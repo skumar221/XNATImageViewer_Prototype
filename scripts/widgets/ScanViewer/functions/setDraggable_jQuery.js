@@ -25,9 +25,8 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 
 			var viewers = $(this).collision(XV.Viewers("widgets"));
 			
-			for (var i=0; i<viewers.length; i++) {
-				
-				if (viewers[i] != this) {
+			for (var i = 0, len = viewers.length; i < len; i++) {				
+				if (viewers[i] !== this) {
 					
 					var target = viewers[i];
 					
@@ -76,8 +75,8 @@ ScanViewer.prototype.setDraggable_jQuery = function () {
 					//
 					//  Cleanup custom attributes
 					//
-					XV.Viewers( function(ScanViewer) { 
-						if (ScanViewer.widget.prevBorder){
+					XV.Viewers( function (ScanViewer) { 
+						if (ScanViewer.widget.prevBorder) {
 							ScanViewer.widget.style.border = ScanViewer.widget.prevBorder;
 						}						
 					});

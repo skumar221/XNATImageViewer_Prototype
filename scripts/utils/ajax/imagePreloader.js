@@ -1,4 +1,4 @@
-utils.ajax.imagePreloader = function(){
+utils.ajax.imagePreloader = function () {
 
 	var that = this;
 	var primaryQueue = [];
@@ -8,8 +8,8 @@ utils.ajax.imagePreloader = function(){
 	var bgLoadDone = false;
 	
 	function loadBG(args) {
-		var primaryDone = primaryQueue.length == 0;
-		var backgroundDone = backgroundQueue.length == 0;
+		var primaryDone = primaryQueue.length === 0;
+		var backgroundDone = backgroundQueue.length === 0;
 
 		if (primaryDone && backgroundDone) {
 			if (!bgLoadDone) { 
@@ -29,8 +29,8 @@ utils.ajax.imagePreloader = function(){
 	
 	this.loadNextImage = function (args) {
 		
-		var primaryDone = primaryQueue.length == 0;
-		var backgroundDone = backgroundQueue.length == 0;
+		var primaryDone = primaryQueue.length === 0;
+		var backgroundDone = backgroundQueue.length === 0;
 		
 		 
 		if (!primaryDone || !backgroundDone) {
@@ -51,13 +51,13 @@ utils.ajax.imagePreloader = function(){
 				}
 			}
 			
-			imgN.onload = function(){
+			imgN.onload = function () {
 				
 				var img = this;
 
 				if (args["onload"]) { 
 					
-					$.when( args["onload"](img) ).then ( function() {  loadBG(args); })
+					$.when( args["onload"](img) ).then ( function () {  loadBG(args); })
 					
 				} 
 				else {
@@ -72,7 +72,7 @@ utils.ajax.imagePreloader = function(){
 		var isArray = arg1 instanceof Array;
 		var isString = typeof arg1 === 'string';
 		
-		function addVal(val){
+		function addVal(val) {
 			// Check for duplicates
 			var ind = queue.indexOf(val); 
 			if (ind > -1) {
@@ -88,8 +88,7 @@ utils.ajax.imagePreloader = function(){
 		
 		if (isArray) {
 
-			for (var i=0; i<arg1.length; i++) {
-				addVal(arg1[i]);
+			for (var i = 0, len = arg1.length; i < len; i++) {				addVal(arg1[i]);
 			}
 
 		}

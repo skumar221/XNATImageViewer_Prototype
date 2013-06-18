@@ -1,10 +1,10 @@
-XNATViewer.prototype.addViewerManager = function() {
+XNATViewer.prototype.addViewerManager = function () {
 	
 	var viewers = [[]];
 
-	this.Viewers = function(args1, args2, args3, args4, args5) {
+	this.Viewers = function (args1, args2, args3, args4, args5) {
 		
-		//console.log(typeof args1)
+		//utils.dom.debug(typeof args1)
 		//var viewers = [[]];
 		
 		
@@ -18,23 +18,23 @@ XNATViewer.prototype.addViewerManager = function() {
 		}
 		
 			
-		var loop = function(callback) {
+		var loop = function (callback) {
 			
 				var returnVals = [];
 				
-				for (var i=0; i<viewers.length; i++) {
-					for (var j=0; j<viewers[i].length; j++) {
+				for (var i=0, len = viewers.length; i < len; i++) {
+					for (var j=0, len2 = viewers[i].length; j < len2; j++) {
 						
 						var r = callback(viewers[i][j], i, j);
-						if (r){
+						if (r) {
 							returnVals.push(r);
 						}
 						
 					}
 				}
 				
-				if (returnVals.length > 0){
-					if (returnVals.length === 1){
+				if (returnVals.length > 0) {
+					if (returnVals.length === 1) {
 						return returnVals[0]
 					}
 					else{
@@ -53,7 +53,7 @@ XNATViewer.prototype.addViewerManager = function() {
 		}		
 		
 		
-		function makeViewer(){
+		function makeViewer() {
 			//	
 			// Create ScanViewer
 			//	
@@ -67,7 +67,7 @@ XNATViewer.prototype.addViewerManager = function() {
 		
 
 
-		function swap(v1, v2){
+		function swap(v1, v2) {
 
 			var arrLoc = loop ( function (v, i, j) { 
 				
@@ -84,7 +84,7 @@ XNATViewer.prototype.addViewerManager = function() {
 				
 			})
 			
-			if (arrLoc.length == 2){
+			if (arrLoc.length === 2) {
 
 				var tempViewer = viewers[arrLoc[0].i][arrLoc[0].j];
 				viewers[arrLoc[0].i][arrLoc[0].j] = viewers[arrLoc[1].i][arrLoc[1].j];
@@ -110,18 +110,18 @@ XNATViewer.prototype.addViewerManager = function() {
 		else if (isString) {
 			
 			var isWidget = (args1.toLowerCase().indexOf("widgets")  === 0 );
-			var isId = (args1.indexOf(GLOBALS.ScanViewerPreId)  == 0 );
+			var isId = (args1.indexOf(GLOBALS.ScanViewerPreId)  === 0 );
 
 			
-			if (isWidget){
+			if (isWidget) {
 				return widgets();
 			}		
 			
-			if (isId){
+			if (isId) {
 				
 				var a = loop( function (ScanViewer) {
 					
-					if (ScanViewer.widget.id == args1){
+					if (ScanViewer.widget.id === args1) {
 
 						return ScanViewer;
 						
@@ -137,7 +137,7 @@ XNATViewer.prototype.addViewerManager = function() {
 		//---------------------
 		// OBJECT
 		//---------------------		
-		else if (isObject){
+		else if (isObject) {
 			
 			var animOff = (args1['animate'] && args1['animate'] === 'off');	
 			var isElement = args1["element"];
@@ -148,12 +148,12 @@ XNATViewer.prototype.addViewerManager = function() {
 			var isRemove = args1['remove'];
 			var isViewerAfter = args1['viewerAfter'];
 			
-			if (isElement){
+			if (isElement) {
 				//
 				// return Widgets
 				//
 				var isWidget = (args1["element"].toLowerCase().indexOf("widgets")  === 0 );
-				if (isWidget){
+				if (isWidget) {
 					return widgets();
 				}				
 			}
@@ -163,7 +163,7 @@ XNATViewer.prototype.addViewerManager = function() {
 			// Loop
 			//
 			
-			if (isLoop){
+			if (isLoop) {
 				return loop(args1["loop"]);			
 			}
 			
@@ -171,7 +171,7 @@ XNATViewer.prototype.addViewerManager = function() {
 			//
 			// Swap
 			//			
-			if (isSwap){
+			if (isSwap) {
 				return swap(args1["swap"][0], args1["swap"][1]);			
 			}
 			
@@ -179,31 +179,32 @@ XNATViewer.prototype.addViewerManager = function() {
 			//
 			// Viewre AFter
 			//			
-			if (isViewerAfter){
-				//console.log("viewer after")
+			if (isViewerAfter) {
+				//utils.dom.debug("viewer after")
 				var currV = args1['viewerAfter'];
-				for (var i=0; i<viewers.length; i++) {
-					for (var j=0; j<viewers[i].length; j++) {
+				
+				for (var i=0, len = viewers.length; i < len; i++) {
+					for (var j=0, len2 = viewers[i].length; j < len2; j++) {
 						
-						if (viewers[i][j] == currV) {
+						if (viewers[i][j] === currV) {
 							
-							var maxRow = ((i+1) == viewers.length);
-							var maxCol = ((j+1) == viewers[i].length);
+							var maxRow = ((i+1) === viewers.length);
+							var maxCol = ((j+1) === viewers[i].length);
 							
 							if (maxRow && maxCol) {
-								//console.log("0,0")
+								//utils.dom.debug("0,0")
 								return viewers[0][0];
 							}
 							else if (maxRow && !maxCol) {
-								//console.log("0,j+1")
+								//utils.dom.debug("0,j+1")
 								return viewers[0][j+1];
 							}
 							else if (!maxRow && maxCol) {
-								//console.log("i+1,0")
+								//utils.dom.debug("i+1,0")
 								return viewers[i+1][0];
 							}
 							else {
-								//console.log("i+1,j+1")
+								//utils.dom.debug("i+1,j+1")
 								return viewers[i+1][j+1];
 							}
 							
@@ -218,7 +219,7 @@ XNATViewer.prototype.addViewerManager = function() {
 			//
 			// insert Row/Column
 			//			
-			if (isInsert){
+			if (isInsert) {
 				
 				var isRow = (args1['insert'] === 'row');
 				var isColumn = (args1['insert'] === 'column');
@@ -228,7 +229,7 @@ XNATViewer.prototype.addViewerManager = function() {
 					var newRow = [];
 					var rowLen = (viewers[0] && viewers[0].length) ? viewers[0].length : 1;
 
-					for (var i=0; i<rowLen; i++){ 						
+					for (var i=0, len = rowLen; i < len; i++) { 						
 						var v = makeViewer();
 						newRow.push(v);
 						
@@ -239,11 +240,14 @@ XNATViewer.prototype.addViewerManager = function() {
 			
 									
 					if (!animOff) {
-						for (var i = 0; i<newRow.length; i++) {
+						
+						for (var i = 0, len = newRow.length; i < len; i++) {
+							
 							$(newRow[i].widget).fadeTo(0,0);
+						
 						}
 						this.animateModal(function () {
-							for (var i = 0; i<newRow.length; i++) {
+							for (var i = 0, len = newRow.length; i < len; i++) {
 								
 								$(newRow[i].widget).fadeTo(GLOBALS.animFast, 1);
 								newRow[i].updateCSS();
@@ -263,28 +267,27 @@ XNATViewer.prototype.addViewerManager = function() {
 					var newColumn = [];
 					var columnLen = (viewers.length) ? viewers.length : 1;
 
-					for (var i=0; i<columnLen; i++) { 						
-						var v = makeViewer();
+					for (var i = 0, len = columnLen; i < len; i++) {						var v = makeViewer();
 						newColumn.push(v);
 						
 					}
 					
-					if (viewers.length == 0){
+					if (viewers.length === 0) {
 						viewers.push([newColumn[0]])
 					}
 					else{
-						for (var i=0; i<viewers.length; i++) { 
+						for (var i = 0, len = viewers.length; i < len; i++) {
 							viewers[i].push(newColumn[i]);
 						} 						
 					}
 
 
 					if (!animOff) {
-						for (var i = 0; i<newColumn.length; i++) {
+						for (var i = 0, len = newColumn.length; i < len; i++) {
 							$(newColumn[i].widget).fadeTo(0,0);
 						}
 						this.animateModal(function () {
-							for (var i = 0; i<newColumn.length; i++) {
+							for (var i = 0, len = newColumn.length; i < len; i++) {
 								
 								$(newColumn[i].widget).fadeTo(GLOBALS.animFast, 1);
 								newColumn[i].updateCSS();
@@ -303,18 +306,20 @@ XNATViewer.prototype.addViewerManager = function() {
 			// remove Row/Column
 			//			
 			
-			if (isRemove){
+			if (isRemove) {
 				
-				var isRow = (args1['remove'] === 'row');
-				var isColumn = (args1['remove'] === 'column');
+				var isRow = (args1['remove'] === 'row'),
+					isColumn = (args1['remove'] === 'column');
 				
 				if (isRow) { 
 					
-					if (viewers.length > 1){
-						var delRow = viewers[viewers.length - 1];					
-						for (var i=0; i<delRow.length; i++){
+					if (viewers.length > 1) {
+						var delRow = viewers[viewers.length - 1];
+						
+						for (var i = 0, len = delRow.length; i < len; i++) {					
 							$(delRow[i].widget).fadeTo(GLOBALS.animFast, 0).remove();
 						}
+						
 						viewers.splice(viewers.length -1, 1);
 					}
 
@@ -328,9 +333,9 @@ XNATViewer.prototype.addViewerManager = function() {
 				}	
 				if (isColumn) { 
 					
-					if (viewers[0] && viewers[0].length > 1){
+					if (viewers[0] && viewers[0].length > 1) {
 						
-						for (var i=0; i<viewers.length; i++){
+						for (var i = 0, len = viewers.length; i < len; i++) {
 							var rowLen = viewers[i].length - 1;
 							$(viewers[i][rowLen].widget).fadeTo(GLOBALS.animFast, 0).remove();
 							viewers[i].splice(rowLen, 1);

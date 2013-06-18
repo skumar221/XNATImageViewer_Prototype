@@ -73,8 +73,7 @@ function linearContrast(data, value, threshold) {
  ***********************/
 function objArrContains(objArr, key, value) {
 	var match = -1;
-	for (var i = 0; i < objArr.length; i++) {
-	   if (objArr[i][key] == value) 
+	for (var i = 0, len = objArr.length; i < len; i++) {	   if (objArr[i][key] === value) 
 	        match = i;
 	}
 	return match;
@@ -87,8 +86,7 @@ function objArrContains(objArr, key, value) {
  ***********************/
 function histogram(data) {
 	var histArr = [];
-	for(var i = 0; i < data.length; i += 4) {	
-		var red = data[i];
+	for (var i = 0, len = data.length; i < len; i += 4) {		var red = data[i];
 		var green = data[i + 1];
 		var blue = data[i + 2];	
 		// Average all three colors
@@ -96,7 +94,7 @@ function histogram(data) {
 		if (histArr.length > 0) {
 			var inArr = objArrContains(histArr, "intensity", currIntensity);
 			// if found, up the value count
-			if (inArr != -1) {
+			if (inArr !== -1) {
 				histArr[inArr]["count"] +=1; 
 				continue;
 			}
@@ -106,13 +104,12 @@ function histogram(data) {
 	}	
 	// sort the array of objects by value in ascending order
 	histArr = histArr.sort(function (a, b) {
-	    return ((a.intensity < b.intensity) ? -1 : ((a.intensity == b.intensity) ? 0 : 1));
+	    return ((a.intensity < b.intensity) ? -1 : ((a.intensity === b.intensity) ? 0 : 1));
 	});
 	
 	var countArr = [];
 	var intensityArr = [];
-	for (var i=0; i<histArr.length;i++) {
-		countArr.push(histArr[i].count);
+	for (var i = 0, len = histArr.length; i < len; i++) {		countArr.push(histArr[i].count);
 		intensityArr.push(histArr[i].intensity);
 	}
 	return {objArr: histArr, 'countArr': countArr, 'intensityArr': intensityArr};
@@ -124,23 +121,21 @@ function histogram(data) {
  * Math manipulation
  ***********************/
 function sigmaMult(arr1, arr2) {
-	if ((arr1.length != arr2.length) || (arr1.length == 0) || (arr2.length ==0)) {
+	if ((arr1.length !== arr2.length) || (arr1.length === 0) || (arr2.length ==0)) {
 		throw "sigmaMult: Array lengths unequal or zero length!"
 	}
 	var sigma =0;
-	for (var i=0;i<arr1.length;i++) {
-		sigma += (arr1[i]* arr2[i])
+	for (var i = 0, len = arr1.length; i < len; i++) {		sigma += (arr1[i]* arr2[i])
 	}
 	return sigma;
 }
 
 function sigma(arr1) {
-	if (arr1.length == 0) {
+	if (arr1.length === 0) {
 		throw "sigmaMult: Array lengths unequal or zero length!"
 	}
 	var sigma = 0;
-	for (var i=0;i<arr1.length;i++) {
-		sigma += (arr1[i]);
+	for (var i = 0, len = arr1.length; i < len; i++) {		sigma += (arr1[i]);
 	}
 	return sigma;
 }
@@ -163,19 +158,18 @@ function thresholdAutoDetect(data) {
 	var hist = histogram(data);
 	var count = hist.countArr;
 	var intensity = hist.intensityArr;	
-//	console.log(hist)
+//	utils.dom.debug(hist)
 	if (count.length > 1 && intensity.length > 1) {
-		//console.log("count: " + count);
-		//console.log("intensity: " + intensity)		
+		//utils.dom.debug("count: " + count);
+		//utils.dom.debug("intensity: " + intensity)		
 		var numIters = 14;
 		var T = [numIters];
 		T[0] = Math.round(sigmaMult(count, intensity)/sigma(count));	
 		var delta = 1;
 		var i = 0;	
-		while ((delta != 0) && (i<numIters)) {		
+		while ((delta !== 0) && (i<numIters)) {		
 			var TInds = [];
-			for (var k=0;k<intensity.length;k++) {
-				if (intensity[k] > T[i]) {
+			for (var k = 0, len = intensity.length; k < len; k++) {				if (intensity[k] > T[i]) {
 					TInds.push(k);	
 				}
 			}

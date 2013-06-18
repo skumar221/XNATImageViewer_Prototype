@@ -29,7 +29,7 @@ utils.gui.verticalSlider = function (args) {
 		
 		this.value = this.currArgs().value;
 		
-		if (this.currArgs().value != 0) {
+		if (this.currArgs().value !== 0) {
 			this.moveHandle("byValue", {
 				handle: handle,
 				track: track,
@@ -110,16 +110,14 @@ utils.gui.verticalSlider = function (args) {
 		slideCallbacks.push(callback);
 	}
 	this.runSlideCallbacks = function () {
-		for (var i=0; i<slideCallbacks.length; i++) {
-			slideCallbacks[i](this);
+		for (var i = 0, len = slideCallbacks.length; i < len; i++) {			slideCallbacks[i](this);
 		};
 		
 		
 		// linked Callbacks
 		if (that.linkedSliders && that.linkedSliders.length > 0 
 			&& that.linkedCallbacks && that.linkedCallbacks.length > 0) {
-			for (var i=0;i<that.linkedCallbacks.length; i++) {
-				that.linkedCallbacks[i](that);
+			for (var i = 0, len = that.linkedCallbacks.length; i < len; i++) {				that.linkedCallbacks[i](that);
 			}
 		}
 	}
@@ -272,7 +270,7 @@ utils.gui.verticalSlider.prototype.setArgs = function (newArgs) {
 	wTrack = mergedArgs.trackCSS.width +  mergedArgs.trackCSS.borderWidth * 2; 
 
 	mergedArgs.widgetCSS.height  = (hHandle > hTrack) ? hHandle : hTrack; 
-	//console.log(mergedArgs.widgetCSS.height )
+	//utils.dom.debug(mergedArgs.widgetCSS.height )
 	mergedArgs.widgetCSS.width  = (wHandle > wTrack) ? wHandle : wTrack; 
 		
 	// set the top of the track to the "middle of the widget"
@@ -340,11 +338,11 @@ utils.gui.verticalSlider.prototype.moveHandle = function (moveType, args) {
 		//------------------------
 		// BY MOUSEWHEEL
 		//------------------------
-		if (moveType == "byMouseWheel" && args.wheelDelta) {
+		if (moveType === "byMouseWheel" && args.wheelDelta) {
 
 			
 			// get the current date and the delta from the last mousewheel move
-			var step = (this.currArgs().step == null) ? 1 : this.currArgs().step;
+			var step = (this.currArgs().step === null) ? 1 : this.currArgs().step;
 			var d = new Date();
 			var dTime = (d.getTime() - this.getLastMouseWheelEventTime());
 
@@ -373,7 +371,7 @@ utils.gui.verticalSlider.prototype.moveHandle = function (moveType, args) {
 		//------------------------
 		// BY MOUSE
 		//------------------------
-		else if (moveType == "byMouse") {
+		else if (moveType === "byMouse") {
 
 			var newPt = getMouseXY(args.event);	
 					   
@@ -389,7 +387,7 @@ utils.gui.verticalSlider.prototype.moveHandle = function (moveType, args) {
 		//------------------------
 		// BY VALUE
 		//------------------------
-		else if (moveType == "byValue") {
+		else if (moveType === "byValue") {
 			tempTop = domainOfHandle.start + (domainOfHandle.end - domainOfHandle.start) * (args.value / (that.currArgs().max - that.currArgs().min));
 		}
 
@@ -441,8 +439,7 @@ utils.gui.verticalSlider.prototype.linkSlider = function (b) {
 	var that = this;
 	
 	if (this.linkedSliders) {
-		for (var i=0;i<this.linkedSliders.length; i++) {
-			if(b == this.linkedSliders[i]) {
+		for (var i = 0, len = this.linkedSliders.length; i < len; i++) {			if(b === this.linkedSliders[i]) {
 				return;
 			}				
 		}
@@ -473,7 +470,7 @@ utils.gui.verticalSlider.prototype.linkSlider = function (b) {
 //  
 //******************************************************
 function getMouseXY(e) {
-    if (navigator.appName == 'Microsoft Internet Explorer') {
+    if (navigator.appName === 'Microsoft Internet Explorer') {
       tempX = event.clientX + document.body.scrollLeft;
       tempY = event.clientY + document.body.scrollTop;
     }

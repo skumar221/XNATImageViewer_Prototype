@@ -1,4 +1,8 @@
+goog.require('goog.ui.ProgressBar');
+
 utils.gui.progressBar = function (parent, args) {
+
+  
 	
 	var progBar = {};	
 	
@@ -36,7 +40,7 @@ utils.gui.progressBar = function (parent, args) {
 		top: 5,
 		'backgroundColor': 'rgb(0,0,0)',
 		'borderRadius': 0,
-		'border': 'solid 1px rgba(125,125,0)'
+		'border': 'solid 1px rgba(125,125,125)'
 	});	
 	// 
 	// Bar - style
@@ -44,9 +48,12 @@ utils.gui.progressBar = function (parent, args) {
 	$(progBar.bar).progressbar();
 	$(progBar.bar).removeClass('ui-corner-all');
 	$(progBar.bar).removeClass('ui-widget-content');
+	$(progBar.bar.chidren).removeClass('ui-widget-header');
 	var pVal =  $(progBar.bar).find( '.ui-progressbar-value' );
 	pVal.css({
-    	'background': 'rgb(180,180,180)'
+    	'background': 'rgb(180,180,180)',
+    	'borderRadius' : 0,
+    	'border' : 'solid 1px rgb(180,180,180)'
     });	
 
 
@@ -54,36 +61,36 @@ utils.gui.progressBar = function (parent, args) {
 	// 
 	// update
 	//
-	progBar.update = function(args) {
+	progBar.update = function (args) {
 	
 		var isClear = (args['clear']) ? args['clear'] : false;
 		var isMax = (args['max']) ? args['clear'] : false;
 		var isAdd = (args['add']) ? args['add'] : false;		
 		var isLabel = (args['label']) ? args['label'] : false;		
 				
-		if (isClear){
+		if (isClear) {
 			$(progBar.bar).progressbar('option', 'value', 0 );
 		}
 		
-		if (isMax){
+		if (isMax) {
 			$(progBar.bar).progressbar('option', 'max', args['max'] );
 		}
 		
-		if (isAdd){
+		if (isAdd) {
 			$(progBar.bar).progressbar('option', 'value', $(progBar.bar).progressbar( 'option', 'value' ) + 1);
 		}
 		
-		if (isLabel){
+		if (isLabel) {
 			progBar.label.innerHTML = args['label'];
 		}		
 		
 	}
 	
-	progBar.hide = function(){
+	progBar.hide = function () {
 		$(progBar.widget).fadeOut(0);
 	}
 	
-	progBar.show = function(){
+	progBar.show = function () {
 		$(progBar.widget).fadeIn(0);
 	}
 	

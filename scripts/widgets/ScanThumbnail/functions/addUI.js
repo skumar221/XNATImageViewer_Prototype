@@ -19,8 +19,8 @@ ScanThumbnail.prototype.addUI = function () {
 	//
 	function revertBorders () {
 		var viewers = XV.Viewers("widgets");
-		for (var i=0; i<viewers.length; i++){
-			if (viewers[i].prevBorder){
+		for (var i = 0, len = viewers.length; i < len; i++) {			
+			if (viewers[i].prevBorder) {
 
 				viewers[i].style.border = viewers[i].prevBorder;
 				viewers[i].prevBorder = undefined;
@@ -31,7 +31,7 @@ ScanThumbnail.prototype.addUI = function () {
 	
 
 	
-	$(this.widget).bind('mousedown.drag', function(event) {
+	$(this.widget).bind('mousedown.drag', function (event) {
 			//
 			// Get modal dims
 			//
@@ -75,7 +75,7 @@ ScanThumbnail.prototype.addUI = function () {
 					$(this).animate({
 						top: offset.top,
 						left: offset.left
-					}, GLOBALS.animFast, function() {
+					}, GLOBALS.animFast, function () {
 						destroy();
 					})		
 									
@@ -111,7 +111,7 @@ ScanThumbnail.prototype.addUI = function () {
 			//-----------------------------------------
 			// DOUBLE CLICK (will populate ScanViewer)
 			//-----------------------------------------
-			$(this.clone).dblclick(function(event) { 
+			$(this.clone).dblclick(function (event) { 
 				
 				utils.dom.debug("Nothing")
 					
@@ -122,7 +122,7 @@ ScanThumbnail.prototype.addUI = function () {
 			//-----------------------------------------
 			// MOUSE UP CLICK (will populate ScanViewer)
 			//-----------------------------------------
-			$(this.clone).bind('mouseup.click', function(event) { 
+			$(this.clone).bind('mouseup.click', function (event) { 
 				
 				if (!this.dragging) {
 					var clone = this;
@@ -153,7 +153,7 @@ ScanThumbnail.prototype.addUI = function () {
 						// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
 						//
 						XV.Viewers( function (ScanViewer, i, j) { 
-							if ((GLOBALS.thumbClickTarget == ScanViewer.widget.id)  && !inserted) {
+							if ((GLOBALS.thumbClickTarget === ScanViewer.widget.id)  && !inserted) {
 
 								clone.targetId = ScanViewer.widget.id;
 								var newTargetViewer = XV.Viewers({
@@ -197,15 +197,14 @@ ScanThumbnail.prototype.addUI = function () {
 					this.targetId = undefined;
 					var collidables = $(this).collision(XV.Viewers("widgets"));
 					
-					for (var i=0; i<collidables.length; i++) {
-						
+					for (var i = 0, len = collidables.length; i < len; i++) {						
 						revertBorders(); 
 						
 						var collideDiv = $(this).collision(collidables[i], {as : "<div />"});	
 						var collisionArea = $(collideDiv).width() * $(collideDiv).height()
 						var draggableArea = $(this).height() * $(this).width();
 												
-						if (collisionArea/draggableArea > .6){
+						if (collisionArea/draggableArea > .6) {
 				
 							$(collidables[i]).mouseenter();
 							

@@ -1,24 +1,35 @@
 //******************************************************
 //  Returns an element based on the given parameters.
 //******************************************************
+
+goog.require('goog.dom');
+goog.require('goog.style');
+
 utils.dom.makeElement = function (type, parent, id, css) {
 	if (!type) {
-		throw "Make Element: Need more parameters to make element! -- invalid type";
+		throw Error("Make Element: Need more parameters to make element! -- invalid type");
 	}
 	
 	if (!parent) {
-		throw "Make Element: Need more parameters to make element -- invalid parent.";
+		throw Error("Make Element: Need more parameters to make element -- invalid parent.");
+	}
+
+	var attrs = {};
+	if (id) {
+		attrs['id'] = id;
+	}
+  
+ 
+	var e = goog.dom.createDom(type, attrs);
+	
+	
+	
+	if (css) {
+		var newCSS = utils.css.processCSSObject(css);
+		goog.style.setStyle(e, newCSS);
 	}
 	
-  var e = document.createElement(type);
-  
-  if (id) 
-  	e.setAttribute("id", id);
-  if (parent)
-  	parent.appendChild(e);
-  
-  if (css) {
-  	  utils.css.setCSS(e, css);	
-  }
+	goog.dom.appendChild(parent, e);
+	
   return e;
 }

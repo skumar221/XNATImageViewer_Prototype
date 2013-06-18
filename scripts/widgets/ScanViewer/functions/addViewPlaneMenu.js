@@ -72,8 +72,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 	//------------------------------
 	this.ViewPlaneMenu.subMenu.icons = [];	
 	
-	for (var i=0; i<iconVals.length; i++) {
-			
+	for (var i = 0, len = iconVals.length; i < len; i++) {			
 		//
 		// Icons
 		//	
@@ -97,7 +96,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 		//
 		// SET onclick
 		//
-		if (icon.axis != "3D") {
+		if (icon.axis !== "3D") {
 			icon.onclick = function (event) {
 				utils.dom.stopPropagation(event); 
 				if (that.FrameViewer.frames.length > 0) {
@@ -141,8 +140,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.ViewPlaneMenu.subMenu.icons.length; i++) {
-			
+		for (var i = 0, len = that.ViewPlaneMenu.subMenu.icons.length; i < len; i++) {			
 			var icon = that.ViewPlaneMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);
 			subMenuIconBind(icon, true);
@@ -186,11 +184,10 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 	
 	this.ViewPlaneMenu.activateIcon = function (iconName) {
 
-		for (var i=0;i<that.ViewPlaneMenu.subMenu.icons.length; i++) {
-			
+		for (var i = 0, len = that.ViewPlaneMenu.subMenu.icons.length; i < len; i++) {			
 			var icon = that.ViewPlaneMenu.subMenu.icons[i];
 			
-			if (icon.title.toLowerCase() == iconName.toLowerCase()) {
+			if (icon.title.toLowerCase() === iconName.toLowerCase()) {
 			
 				subMenuIconBind(icon, true);				
 				$(icon).stop().fadeTo(GLOBALS.animFast, 1);

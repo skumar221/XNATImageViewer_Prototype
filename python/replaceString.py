@@ -27,15 +27,17 @@ def replaceInFile(src, findStr, replaceStr):
    lines = [line for line in open(src)]
    newLines = []
    for l in lines:
-       l = l.replace(findStr, replaceStr)
-       newLines.append(l)
+       a = l.replace(findStr, replaceStr)
+       if (a != l):
+           print "In %s, replaced '%s' with '%s', in line: %i\n    %s\n    %s"%(src, findStr, replaceStr, lines.index(l), l, a)
+       newLines.append(a)
 
    try:
        fl = open(src, 'w')
        for item in newLines:
            fl.write("%s" % item)
        fl.close()
-       print "Replaced '%s' with '%s' in %s."%(findStr, replaceStr, src)
+       #print "Replaced '%s' with '%s' in %s."%(findStr, replaceStr, src)
    except ValueError:
         print ValueError    
         
@@ -47,9 +49,11 @@ def main():
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = ".ScanViewers"
-    replaceStr = ".Viewers"
+    findStr = "){"
+    replaceStr = ") {"
     fileReplaceStr = "addDraggableMethods" #replaceStr.split(".")[2]
+    
+    skipDirs = ["jquery"];
 
     
     backupPath = os.path.join("./", backupDir) + "_" + datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(':','_').replace(" ", "__").strip()
@@ -64,17 +68,30 @@ def main():
     for root, dirs, files in os.walk(rootDir):
        for f in files:
            
-           filename = (f).replace('\\', "/")          
-           src = os.path.join(root, filename)
-
-           #
-           # RENAME FILE IF IT HAS THE STRING
-           # 
-           dst = src.replace(findStr, fileReplaceStr)
-           os.rename(src, dst)
-
-
-           replaceInFile(dst, findStr, replaceStr)
+           skip = False
+           
+           for d in skipDirs:
+               if (len(d) > 0) and (d in root):
+                   skip = True;
+                   break;
+           
+           if not skip:
+               filename = (f).replace('\\', "/")          
+               src = os.path.join(root, filename)
+    
+               dst = src;
+               if (findStr in src):
+                   #
+                   # RENAME FILE IF IT HAS THE STRING
+                   # 
+                   dst = dst.replace(findStr, fileReplaceStr)
+                   os.rename(src, dst)
+    
+    
+    
+               replaceInFile(dst, findStr, replaceStr)
+           else:
+                print ("\n [SKIPPING %s]" %(root))
 
 
 

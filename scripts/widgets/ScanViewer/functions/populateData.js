@@ -13,7 +13,7 @@ ScanViewer.prototype.populateData = function (data) {
 		/*
 		var counter = 0;
 		for (i in labelObj) {
-//			console.log(labelObj[i])
+//			utils.dom.debug(labelObj[i])
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
 			that.displayableData[noSpace] = utils.dom.makeElement("div", that.ScanTabs.getTab("View Type"), "_data_" + noSpace);
@@ -34,15 +34,14 @@ ScanViewer.prototype.populateData = function (data) {
 			}));	
 			
 			
-			for (var j=0;j<labelObj[i]["option"].length;j++) {
-				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelObj[i]["option"][j] + "</option>";
+			for (var j = 0, len = labelObj[i]["option"].length; j < len; j++) {				that.displayableData[noSpace + "_dropdown"].innerHTML += "<option>" + labelObj[i]["option"][j] + "</option>";
 			}
 			
 
 			//----------------------------------
 			// When dropdown is Change the axis of the frames
 			//----------------------------------			
-			if (labelObj[i].label.indexOf("View") != -1) {
+			if (labelObj[i].label.indexOf("View") !== -1) {
 				var dd = that.displayableData[noSpace + "_dropdown"];
 				dd.innerHTML = "<option>" + "sagittal" + "</option>";
 				dd.innerHTML += "<option>" + "axial" + "</option>";
@@ -50,7 +49,7 @@ ScanViewer.prototype.populateData = function (data) {
 				
 				dd.onchange = function () {
 					that.FrameViewer.loadFramesByViewPlane(dd.value)
-					//console.log(dd.value);
+					//utils.dom.debug(dd.value);
 				}				
 			}
 

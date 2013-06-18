@@ -19,7 +19,7 @@ utils.gui.horizontalSlider = function (args) {
 	var handle =  utils.dom.makeElement("div", widget, this.currArgs().id + "_handle", this.currArgs().handleCSS);
 	
 	
-	this.getWidget = function(){
+	this.getWidget = function () {
 		return widget;
 	}
 	
@@ -35,7 +35,7 @@ utils.gui.horizontalSlider = function (args) {
 		
 		this.value = this.currArgs().value;
 		
-		if (this.currArgs().value != 0) {
+		if (this.currArgs().value !== 0) {
 			this.moveHandle("byValue", {
 				handle: handle,
 				track: track,
@@ -144,8 +144,9 @@ utils.gui.horizontalSlider = function (args) {
 	this.addSlideCallback = function (callback) {
 		slideCallbacks.push(callback);
 	}
+	
 	this.runSlideCallbacks = function () {
-		for (var i=0; i<slideCallbacks.length; i++) {
+		for (var i = 0, len = slideCallbacks.length; i < len; i++) {			
 			slideCallbacks[i](this);
 		};
 		
@@ -155,8 +156,7 @@ utils.gui.horizontalSlider = function (args) {
 		if (that.linkedSliders && that.linkedSliders.length > 0 
 			&& that.linkedCallbacks && that.linkedCallbacks.length > 0) {
 
-			for (var i=0;i<that.linkedCallbacks.length; i++) {
-				that.linkedCallbacks[i](that);
+			for (var i = 0, len = that.linkedCallbacks.length; i < len; i++) {				that.linkedCallbacks[i](that);
 			}
 		}
 	}
@@ -404,11 +404,11 @@ utils.gui.horizontalSlider.prototype.moveHandle = function (moveType, args) {
 
 
 		// MOUSEWHEEL
-		if (moveType == "byMouseWheel" && args.wheelDelta) {
+		if (moveType === "byMouseWheel" && args.wheelDelta) {
 
 			
 			// get the current date and the delta from the last mousewheel move
-			var step = (this.currArgs().step == null) ? 1 : this.currArgs().step;
+			var step = (this.currArgs().step === null) ? 1 : this.currArgs().step;
 			var d = new Date();
 			var dTime = (d.getTime() - this.getLastMouseWheelEventTime());
 
@@ -426,7 +426,7 @@ utils.gui.horizontalSlider.prototype.moveHandle = function (moveType, args) {
 
 		
 		// MOUSE
-		else if (moveType == "byMouse") {
+		else if (moveType === "byMouse") {
 			var newPt = utils.dom.getMouseXY(args.event);	
 				   
 			var tempLeft = newPt.x - // mouseclick x
@@ -437,7 +437,7 @@ utils.gui.horizontalSlider.prototype.moveHandle = function (moveType, args) {
 		
 		
 		// ENTERED
-		else if (moveType == "byValue") {
+		else if (moveType === "byValue") {
 			tempLeft = domainOfHandle.start + (domainOfHandle.end - domainOfHandle.start) * (args.value / (that.currArgs().max - that.currArgs().min));
 		}
 
@@ -483,8 +483,7 @@ utils.gui.horizontalSlider.prototype.linkSlider = function (b) {
 	var that = this;
 	
 	if (this.linkedSliders) {
-		for (var i=0;i<this.linkedSliders.length; i++) {
-			if(b == this.linkedSliders[i]) {
+		for (var i = 0, len = this.linkedSliders.length; i < len; i++) {			if(b === this.linkedSliders[i]) {
 				return;
 			}				
 		}
@@ -519,8 +518,7 @@ utils.gui.horizontalSlider.prototype.unlinkSlider = function (b) {
 	var that = this;
 	
 	if (this.linkedSliders) {
-		for (var i=0;i<this.linkedSliders.length; i++) {
-			if(b == this.linkedSliders[i]) {
+		for (var i = 0, len = this.linkedSliders.length; i < len; i++) {			if(b === this.linkedSliders[i]) {
 				return;
 			}				
 		}
@@ -529,7 +527,7 @@ utils.gui.horizontalSlider.prototype.unlinkSlider = function (b) {
 	else{
 		this.linkedSliders = [];
 		this.linkedSliders.push(b);	
-		console.log("ADDINGLINKD: ", b)
+		utils.dom.debug("ADDINGLINKD: ", b)
 	}
 
 	this.addLinkedCallback(function (a) {  

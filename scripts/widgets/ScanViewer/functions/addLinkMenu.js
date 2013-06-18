@@ -102,8 +102,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 	this.LinkMenu.subMenu.icons = [];	
 	
 	for (var i in iconVals) {
-		for (var j=0; j<iconVals[i].images.length; j++) {
-
+		for (var j = 0, len = iconVals[i].images.length; j < len; j++) {
 			var icon = utils.dom.makeElement("img", this.LinkMenu.subMenu, "icon_" + iconVals[i].images[j],{
 				position: "absolute",
 				top: iconDimMed  * (i-1),
@@ -119,12 +118,12 @@ ScanViewer.prototype.addLinkMenu = function () {
 			
 			this.LinkMenu.subMenu.icons.push(icon);	
 			
-			if (icon.title == "Link slider to selected group") {
+			if (icon.title === "Link slider to selected group") {
 				
 			}	
 			
 			
-			else if (icon.title == "Link slider to current group") {
+			else if (icon.title === "Link slider to current group") {
 				icon.onclick = function (event) {	
 
 					utils.dom.stopPropagation(event);
@@ -136,7 +135,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 			}
 			
 			
-			else if (icon.title == "Link slider to new group") {
+			else if (icon.title === "Link slider to new group") {
 				icon.onclick = function (event) {	
 
 					
@@ -149,7 +148,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 			}
 			
 			
-			else if (icon.title == "Unlink from group") {
+			else if (icon.title === "Unlink from group") {
 				icon.onclick = function (event) {	
 					
 					GLOBALS.SliderLinker.flashExisting();
@@ -162,7 +161,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 				}				
 			}
 			
-			else if (icon.title == "Remove group") {
+			else if (icon.title === "Remove group") {
 				icon.onclick = function (event) {	
 					
 					GLOBALS.SliderLinker.flashExisting();
@@ -176,20 +175,20 @@ ScanViewer.prototype.addLinkMenu = function () {
 			}
 			
 			
-			else if (icon.title == "Clear all groups") {
+			else if (icon.title === "Clear all groups") {
 				icon.onclick = function (event) {	
 
 					GLOBALS.SliderLinker.showExisting();
 					GLOBALS.SliderLinker.addClearAllPopup(that);
 					
-					XV.Viewers( function(ScanViewer) {
+					XV.Viewers( function (ScanViewer) {
 							ScanViewer.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					});
 
 				}				
 			}
 			
-			else if (icon.title == 'View all groups') {
+			else if (icon.title === 'View all groups') {
 				icon.onclick = function (event) {	
 					
 					// Create the viewAll parameter
@@ -220,8 +219,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 							// CAll onclick on all ScanViewer eye buttons
 							// this will send you below
 							var icons = ScanViewer.LinkMenu.subMenu.icons;
-							for (var i=0; i < icons.length; i++) {
-								if (icons[i].title == 'View all groups') {
+							for (var i = 0, len = icons.length; i < len; i++) {								if (icons[i].title === 'View all groups') {
 									icons[i].onclick();
 								}
 							}
@@ -356,8 +354,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 		//
 		// SUB MENU ICONS - mouseenter, mouseleave
 		//
-		for (var i=0;i<that.LinkMenu.subMenu.icons.length; i++) {
-			
+		for (var i = 0, len = that.LinkMenu.subMenu.icons.length; i < len; i++) {			
 			var icon = that.LinkMenu.subMenu.icons[i];
 			$(icon).fadeTo(0,.5);
 			subMenuIconBind(icon, true);

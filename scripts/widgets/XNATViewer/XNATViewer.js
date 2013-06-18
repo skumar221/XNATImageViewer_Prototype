@@ -46,6 +46,8 @@ defaultArgsXNATViewer= {
 //  Init
 //
 //******************************************************
+goog.provide('XNATViewer');
+
 var XNATViewer = function (args) {
 
 	var that = this;

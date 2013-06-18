@@ -7,7 +7,6 @@ ScanViewer.prototype.updateCSS = function (args) {
 
 	var that = this;
 	
-	
 	var widgetHeight = (args && args.height) ? args.height : $(this.widget).height();
 	var widgetWidth = (args && args.width) ? args.width : $(this.widget).width();
 	var widgetTop = (args && args.top) ? args.top : $(this.widget).position().top;
@@ -26,10 +25,10 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//  Onload case: this only happens once
 
 
-	if (!this.ContentDivider.widget.dragging){
+	if (!this.ContentDivider.widget.dragging) {
 
 		var dimChange = !(utils.convert.toInt(this.ContentDivider.containmentDiv.style.width) === widgetWidth);
-		if (dimChange){
+		if (dimChange) {
 
 			$(this.ContentDivider.widget).css( {
 				top: GLOBALS.minContentDividerTop(widgetHeight)
@@ -60,7 +59,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	
 	var scanTabTop = contentDividerPos.top + contentDividerHeight;
 	var scanTabHeight = widgetHeight - scanTabTop;
-	var sliderTop = contentDividerPos.top - this.FrameSlider.currArgs().handleCSS.height - 5;
+	var sliderTop = contentDividerPos.top - goog.style.getSize(this.FrameSlider.divHolder).height - 5;
 	
 	var viewerWidth = widgetWidth;
 	var viewerHeight = viewerWidth;
@@ -108,6 +107,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------
+	/*
     this.FrameSlider.updateCSS({
     	widgetCSS:{
  			top : sliderTop,
@@ -117,7 +117,7 @@ ScanViewer.prototype.updateCSS = function (args) {
     		width: Math.round(widgetWidth) - 10// + marginLeft * 2
     	}
     })
-
+	*/
 	
 	 
 	 //----------------------------------

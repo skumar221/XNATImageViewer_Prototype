@@ -15,7 +15,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 	
 	
 	
-	function makeButton(args){
+	function makeButton(args) {
 
 		//-------------------------
 		// The button CSS
@@ -24,9 +24,9 @@ XNATViewer.prototype.addColumnMenu = function () {
 			position: "absolute",
 			"cursor": "pointer",
 			zIndex: 100,
-			width: GLOBALS.expandButtonWidth * .5,
-			left: GLOBALS.expandButtonWidth * .25,
-			top: args.top,
+			width: utils.convert.px(GLOBALS.expandButtonWidth * .5),
+			left: utils.convert.px(GLOBALS.expandButtonWidth * .25),
+			top: utils.convert.px(args.top),
 			"vertical-align": "bottom"
 		})	
 	
@@ -51,7 +51,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 		button.src = args.src		
 		button.title = args.title	
 		
-		$(button).click(function(){
+		$(button).click(function () {
 			$(this).stop().fadeTo(GLOBALS.animFast, .5);
 			args.onclick();
 		})	
@@ -60,7 +60,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 	}
 
 	makeButton({
-		id : "InsertRowButton", 
+		id : "InsertColumnButton", 
 		src:  "./icons/Arrows/insertColumnArrow.png", 
 		top: 0,
 		title: "Insert Column",
@@ -70,7 +70,7 @@ XNATViewer.prototype.addColumnMenu = function () {
 	});
 
 	makeButton({
-		id : "RemoveRowButton", 
+		id : "RemoveColumnButton", 
 		src:  "./icons/Arrows/removeColumnArrow.png",
 		top: 22,
 		title: "Remove Column",

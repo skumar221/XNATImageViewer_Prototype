@@ -21,7 +21,6 @@ FrameViewer.prototype.loadFrames = function (frames) {
 
 	
 	// Run any callbacks once everything is loaded
-	for (var k=0; k<this.onloadCallbacks.length; k++) {
-		this.onloadCallbacks[k]();
+	for (var k = 0, len = this.onloadCallbacks.length; k < len; k++) {		this.onloadCallbacks[k]();
 	}		    		
 }

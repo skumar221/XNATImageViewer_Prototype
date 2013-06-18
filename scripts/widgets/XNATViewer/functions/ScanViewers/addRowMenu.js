@@ -14,20 +14,23 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 	
 	
 	
-	function makeButton(args){
+	function makeButton(args) {
 
 		//-------------------------
 		// The button CSS
 		//-------------------------
+
 		var button = utils.dom.makeElement("img", that.RowMenu, args.id, {
-			position: "absolute",
-			"cursor": "pointer",
-			zIndex: 100,
-			height: GLOBALS.expandButtonWidth * .5,
-			top: GLOBALS.expandButtonWidth * .25,
-			textAlign: "right",
-			left: args.left
+			'position': "absolute",
+			'cursor': 'pointer',
+			'zIndex': 100,
+			'height': utils.convert.px(GLOBALS.expandButtonWidth * .5),
+			'backgroundColor' : 'rgba(200,124,0, 1)',
+			'top': utils.convert.px(GLOBALS.expandButtonWidth * .25),
+			'textAlign': "right",
+			'left': utils.convert.px(args.left)
 		})	
+
 	
 		//-------------------------
 		// Its natural state -- slightly faded
@@ -47,10 +50,11 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 			
 	    });
 			
-		button.src = args.src		
-		button.title = args.title	
+		button.src = args.src;	
+		button.title = args.title;
+	
 		
-		$(button).click(function(){
+		$(button).click(function () {
 			$(this).stop().fadeTo(GLOBALS.animFast, .5);
 			args.onclick();
 		})	

@@ -90,8 +90,7 @@ function ScanThumbnail(scanData, args) {
 		that[viewPlane + "FrameCount"] = b.length;
 		that[viewPlane + "LoadCount"] = 0;
 
-		for (var i=0; i<b.length; i++) {
-			that.frames[that.pathMolder(b[i])] = {
+		for (var i = 0, len = b.length; i < len; i++) {			that.frames[that.pathMolder(b[i])] = {
 				'viewPlane': viewPlane, 
 				'src' : b[i]
 			}
@@ -99,7 +98,7 @@ function ScanThumbnail(scanData, args) {
 
 	}
 
-	this.getFrames = function(args1) {
+	this.getFrames = function (args1) {
 
 		var isObject = (typeof args1 === 'object');
 		var isString = (typeof args1 === 'string');
@@ -109,7 +108,7 @@ function ScanThumbnail(scanData, args) {
 			var returnArr = [];	
 
 			for (var i in that.frames) {
-				if (that.frames[i]['viewPlane'] == viewPlane) {
+				if (that.frames[i]['viewPlane'] === viewPlane) {
 					returnArr.push(that.frames[i])					
 				}
 			}	
@@ -125,7 +124,7 @@ function ScanThumbnail(scanData, args) {
 	
 			
 			for (var i in that.frames) {
-				if (that.frames[i]['viewPlane'] == viewPlane) {
+				if (that.frames[i]['viewPlane'] === viewPlane) {
 					
 					
 					if (isFilter && that.frames[i][args1['filter']]) {
@@ -195,7 +194,7 @@ function ScanThumbnail(scanData, args) {
 			);
 		
 		else
-			console.log("No thumb canvas")
+			utils.dom.debug("No thumb canvas")
 	});
 
 }
@@ -261,7 +260,7 @@ ScanThumbnail.prototype.addHoverMethods = function () {
 			
 		}, 0);
 	
-	}).bind('mouseleave.browse', function(){
+	}).bind('mouseleave.browse', function () {
 		
 		$(that.widget).stop().animate({
 			
@@ -289,7 +288,7 @@ ScanThumbnail.prototype.addHoverMethods = function () {
 // DEACTIVATE
 //****************************************
 ScanThumbnail.prototype.deactivate = function () { 
-	//console.log("DEACTIVATING: " + this.args.id)
+	//utils.dom.debug("DEACTIVATING: " + this.args.id)
 	
 	var that = this;
 	this.args.activated = false;
@@ -338,8 +337,7 @@ ScanThumbnail.prototype.activate = function (activeTarget) {
 		
 	// Callbacks	
 	if (this.activatedCallbacks && this.activatedCallbacks.length > 0) {
-		for (var i=0;i<this.activatedCallbacks.length;i++) {
-			this.activatedCallbacks[i](that, {
+		for (var i = 0, len = this.activatedCallbacks.length; i < len; i++) {			this.activatedCallbacks[i](that, {
 				"activeTarget": activeTarget
 			});
 		}
@@ -354,7 +352,7 @@ ScanThumbnail.prototype.activate = function (activeTarget) {
 //****************************************
 ScanThumbnail.prototype.getFrameList = function (type) {
 
-	return (type == "sagittal") ? this.scanData.sagittalPaths : (type == "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
+	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
 }
 
 
