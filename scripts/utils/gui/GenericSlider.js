@@ -11,15 +11,15 @@ goog.provide('utils.gui.GenericSlider');
  * @constructor
  * @extends {goog.ui.Slider}
  */
-utils.gui.GenericSlider = function () {	 
+utils.gui.GenericSlider = function (arguments) {	 
 	
 	goog.base(this);
 	 
 	var args = {};
 	var that = this;
 	 
-	if (typeof arguments[0] === 'object') {
-		args = arguments[0];
+	if (typeof arguments === 'object') {
+		args = arguments;
 	}
 	
 	this.id = (args['id']) ? args['id'] : "GenericSlider";
@@ -51,6 +51,15 @@ utils.gui.GenericSlider = function () {
 			'backgroundColor': "rgb(225, 225, 225)",				
 		}, args['thumbCSS']);
 		
+		args['trackCSS'] = utils.dom.mergeArgs({
+			'position': 'absolute',
+			'width' : '40%',
+			'height' : '100%',
+			'left': '30%',
+			'borderRadius' : 3,
+			'backgroundColor' : 'rgba(100,100,100,0)',				
+		}, args['trackCSS']);
+		
 	}
 	//----------------------------
 	// Set CSS - HORIZONTAL ORIENTATION
@@ -75,6 +84,14 @@ utils.gui.GenericSlider = function () {
 			'borderRadius': 0	
 		}, args['thumbCSS']);
 			
+		args['trackCSS'] = utils.dom.mergeArgs({
+			'position': 'absolute',
+			'width' : '100%',
+			'height' : '40%',
+			'top': '30%',
+			'borderRadius' : 3,
+			'backgroundColor' : 'rgba(100,100,100,0)',			
+		}, args['trackCSS']);
 	}
 	
 	
@@ -86,21 +103,16 @@ utils.gui.GenericSlider = function () {
 	this.getHolder = function () {
 		return holder;
 	}
-	that.decorate(holder);		
-	
-
 
 	//----------------------------
 	// TRACK
 	//----------------------------		
-	if (args['trackCSS']) {
-
-		var track = utils.dom.makeElement("div", holder, "SliderTrack", args['trackCSS']);
-		this.getTrack = function () {
-			return track;
-		}		
-	}
-
+	var track = utils.dom.makeElement("div", holder, "SliderTrack", args['trackCSS']);
+	this.getTrack = function () {
+		return track;
+	}		
+	
+	that.decorate(holder);		
 
 
 	

@@ -2,8 +2,9 @@
 //  Init
 //
 //******************************************************
-goog.require('goog.ui.Slider'); 
+
 goog.require('goog.ui.Zippy'); 
+goog.require('goog.ui.AnimatedZippy'); 
 goog.provide('ScrollGallery');
 
 var ScrollGallery = function (args) {
@@ -12,26 +13,12 @@ var ScrollGallery = function (args) {
 	this.args = (args) ? utils.dom.mergeArgs(this.defaultArgs(), args) : this.defaultArgs();
 	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.widgetCSS);
 
+	
 
 	//-------------------------------
 	// WIDGET
 	//-------------------------------	 
 	 utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.args.widgetCSS, args.widgetCSS));
-
-
-	//-------------------------------
-	// SCROLL CONTENT
-	//-------------------------------
-	var sliderWidth = this.args.sliderCSS.trackCSS.width;
-	this.ScrollContent = utils.dom.makeElement("div", this.widget, "ScrollContent", {
-		position: "relative",
-		//backgroundColor: "rgba(0,0,255,.5)",
-		top: 0,
-		left: sliderWidth,
-		width: $(this.widget).width() - sliderWidth
-	})
-
-
 
 
 	//-------------------------------
@@ -42,7 +29,7 @@ var ScrollGallery = function (args) {
 		id: "ContentSlider",
 		'orientation' : 'vertical',
 		holderCSS : {
-			width: 7,
+			width: 7,//this.args.sliderCSS.holderCSS.width,
 			backgroundColor: 'rgb(0,0,0)',
 			border: 'none'
 		},
@@ -54,8 +41,48 @@ var ScrollGallery = function (args) {
 	});
   
   
-  
-  
+
+
+  	//-------------------------------
+	// SCROLL CONTENT
+	//-------------------------------
+	this.ContentHeaders = [];
+	var contentWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.holderCSS.width - 7;
+	this.ContentHeaders.push(utils.dom.makeElement("div", this.widget, "ScrollContent", {
+		position: "relative",
+		backgroundColor: "rgba(120,120,120,1)",
+		top: 0,
+		left: this.args.sliderCSS.holderCSS.width + 5,
+		width: contentWidth,
+		height: GLOBALS.fontSizeMed * 2,
+		color: 'rgb(255,255,255)',
+		fontSize: GLOBALS.fontSizeLarge,
+		fontFamily: GLOBALS.fontFamily,
+		'verticalAlign' : 'center',
+		marginRight: 20,
+		cursor: 'pointer',
+		borderRadius: "4px",
+		border: "solid 1px rgb(200,200,200)"
+	}))
+	
+	this.ContentHeaders[0].innerHTML = 'Scans';
+	
+  	//-------------------------------
+	// SCROLL CONTENT
+	//-------------------------------
+	this.ScrollContent = utils.dom.makeElement("div", this.widget, "ScrollContent", {
+		position: "relative",
+		//backgroundColor: "rgba(0,0,255,.5)",
+		//top: 0,
+		//left: this.args.sliderCSS.holderCSS.width,
+		width: contentWidth,
+		backgroundColor: "rgba(0,0,0,1)",
+
+	})
+	var z1 = new goog.ui.AnimatedZippy(this.ContentHeaders[0], this.ScrollContent, true);
+    
+    
+     
 	//-------------------------------
 	// THE CONTENTS - BLANK FOR NOW
 	//-------------------------------
@@ -101,19 +128,14 @@ ScrollGallery.prototype.defaultArgs = function () {
 		{
 			id: "FrameSlider", 
 			parent: document.body,
-			round: true,
-			handleOffsetLeft: 0,
-		  	handleOffsetTop: 0,
-			widgetCSS:{
-			},
-			handleCSS:{
+			thumbCSS:{
 				height: GLOBALS.ThumbnailWidgetHeight,
 				width: 7,
 				borderWidth: 0,
 				borderColor: GLOBALS.semiactiveLineColor,
 				backgroundColor: "rgba(105,105,105,1)"
 			},
-			trackCSS:{
+			holderCSS:{
 				borderWidth: 0,
 				width: 7,
 				borderColor: GLOBALS.semiactiveLineColor,

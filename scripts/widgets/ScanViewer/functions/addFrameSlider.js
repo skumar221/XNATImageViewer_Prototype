@@ -6,7 +6,7 @@ ScanViewer.prototype.addFrameSlider = function () {
 
 	var that = this;
 
-	console.log(this.widget)
+
 	this.FrameSlider = new FrameSlider({
 		parent: this.widget,
 		id : 'FrameSlider',
@@ -16,13 +16,9 @@ ScanViewer.prototype.addFrameSlider = function () {
 			'left' : '2%'
 		},
 		trackCSS : {
-			'backgroundColor': "rgb(225, 225, 225)",
-			'borderRadius': '2px'
+			'backgroundColor' : 'rgba(100,100,100,1)',
 		}
 	});
-	
-	
-	
 	
 
 	this.FrameSlider.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
