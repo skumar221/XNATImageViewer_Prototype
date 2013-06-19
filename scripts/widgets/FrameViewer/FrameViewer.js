@@ -3,7 +3,7 @@ var defaultArgs_FrameViewer = {
 	parent: document.body,
 	onloadFrame: 0,
 	blankMsg : "drag and drop Thumbnail here",
-	contrastThreshold: .1,
+	contrastThreshold: .01,
 	CSS: {
 			position: 'absolute',
 			top: 15,
@@ -114,7 +114,7 @@ FrameViewer.prototype.addOnloadCallback = function (callback) {
 FrameViewer.prototype.drawFrame = function (frameNumber, adjustments) {	
 
 	if (this.frames) {		
-		
+
 		//
 		//  Adjust frameNumber to start at 1 instead of 0
 		//
@@ -207,6 +207,15 @@ FrameViewer.prototype.drawImage_MaintainProportions = function (img, canvas, con
 
 
 
+//******************************************************
+//  
+//******************************************************
+FrameViewer.prototype.applyImageAdjustments = function () {
+	
+	for (var i in this.adjustMethods) {
+		this.imageAdjust(i, this.adjustMethods[i]);	
+	}
+}
 
 
 //******************************************************
@@ -219,19 +228,24 @@ FrameViewer.prototype.imageAdjust = function (methodType, value) {
 	//
 	// Arguments are needed only when initializing the adjustMethods
 	//
-	if (methodType && value) {
+	if (methodType !== 'undefined' && value  && this.canvas.height > 0 && this.canvas.width > 0) {
+		
+		
+		
+		/*
+		 * ! This particular variable is to account for image adjustments
+		 * where both sliders are applied.
+		 * Without it, only one slider's methods get applied as opposed
+		 * to all of them.
+		 */
 		this.adjustMethods[methodType] = value;
-	}
-	
-
-
-	//
-	// Draw original frame
-	//
-	this.drawFrame(this.currFrame); 
-	
-
-	if (this.canvas.height > 0 && this.canvas.width > 0) {
+		
+		
+		
+		//
+		// Draw original frame
+		//
+		this.drawFrame(this.currFrame); 
 
 	
 		//
@@ -244,14 +258,11 @@ FrameViewer.prototype.imageAdjust = function (methodType, value) {
 		// Apply image adjustment methods
 		//
 		for (var i in this.adjustMethods) {
-			utils.dom.debug(i)
 			switch (i) {
 				case "brightness":
-					utils.dom.debug("brightness")
 					imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
 					break;
 				case "contrast":
-					utils.dom.debug('contrast')
 					imageData.data = linearContrast(imageData.data, this.adjustMethods[i], this.args.contrastThreshold);
 					break;
 			}

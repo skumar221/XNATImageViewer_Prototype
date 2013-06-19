@@ -99,7 +99,7 @@ ScanThumbnail.prototype.addUI = function () {
 			//
 			// Set style
 			//
-			$(this.clone).css({
+			utils.css.setCSS( this.clone, {
 				
 				top: offset.top,
 				left: offset.left

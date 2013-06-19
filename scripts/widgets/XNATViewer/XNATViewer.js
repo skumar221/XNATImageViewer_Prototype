@@ -69,7 +69,7 @@ var XNATViewer = function (args) {
 	//	MODAL
 	//----------------------------------
 	this.modal = utils.dom.makeElement("div", this.widget, GLOBALS.ModalId, this.args.modalCSS);	
-	$(this.modal).css({
+	utils.css.setCSS( this.modal, {
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
 	})
@@ -81,7 +81,7 @@ var XNATViewer = function (args) {
 	
 	}
 
-	$(this.modal).css( {
+	utils.css.setCSS( this.modal,  {
 		height: "50%",
 		width: "50%"
 	});

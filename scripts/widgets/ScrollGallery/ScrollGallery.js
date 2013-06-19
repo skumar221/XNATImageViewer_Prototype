@@ -2,17 +2,15 @@
 //  Init
 //
 //******************************************************
+goog.require('goog.ui.Slider'); 
+goog.require('goog.ui.Zippy'); 
+goog.provide('ScrollGallery');
+
 var ScrollGallery = function (args) {
   	
   	var that = this;
 	this.args = (args) ? utils.dom.mergeArgs(this.defaultArgs(), args) : this.defaultArgs();
 	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.widgetCSS);
-	
-	
-	//-------------------------------
-	// resize
-	//-------------------------------	
-	$(window).resize(function () { that.updateCSS();});
 
 
 	//-------------------------------
@@ -39,11 +37,21 @@ var ScrollGallery = function (args) {
 	//-------------------------------
 	// THE SLIDER
 	//-------------------------------	
-	this.contentSlider = new utils.gui.verticalSlider(utils.dom.mergeArgs(this.args.sliderCSS,{
+	this.ContentSlider = new utils.gui.GenericSlider({
 		parent: this.widget,
-		id: "VerticalSlider",
-		round: true
-	}));
+		id: "ContentSlider",
+		'orientation' : 'vertical',
+		holderCSS : {
+			width: 7,
+			backgroundColor: 'rgb(0,0,0)',
+			border: 'none'
+		},
+		thumbCSS : {
+			height: 60,
+			backgroundColor: 'rgb(120,120,120)',
+			border: 'none'
+		}
+	});
   
   
   
@@ -126,15 +134,19 @@ ScrollGallery.prototype.defaultArgs = function () {
 //******************************************************
 ScrollGallery.prototype.mapSliderToContents = function () {
 	var that = this;
-	return function (_slider) {		
+	return function (Slider) {		
+
 		
-		if (that.args.orientation === "vertical") {
-	  		var t = -1 * utils.convert.remap1D(_slider.value, [_slider.currArgs().min, _slider.currArgs().max], 
-	   							    [0, $(that.ScrollContent).outerHeight() - $(that.widget).height() - that.args.scrollMarginY]).newVal;	
-	   		$(that.ScrollContent).css({
-	  			top: t
-	  		});
-		}
+		var beforeRange = [Slider.getMinimum(), Slider.getMaximum()];
+		var afterRange = [0, utils.css.dims(that.ScrollContent, 'outerHeight') - utils.css.dims(that.widget, 'height')  - that.args.scrollMarginY ]
+		var sendVal = Math.abs(Slider.getValue() - 100);
+		var remap = utils.convert.remap1D(sendVal, beforeRange, afterRange);
+  		var t = remap.newVal;// - utils.css.dims(that.widget, 'height');	
+
+   		utils.css.setCSS( that.ScrollContent, {
+  			top: -t
+  		});
+		
    }
 }
 
@@ -174,11 +186,10 @@ ScrollGallery.prototype.setContents = function (thing) {
 		}
 	}
 
-	that.contentSlider.addSlideCallback(that.mapSliderToContents());  
-	that.contentSlider.bindToMouseWheel(that.widget);		
+	this.ContentSlider.addSlideCallback(that.mapSliderToContents());  
+	this.ContentSlider.bindToMouseWheel(that.widget);		
 	this.updateCSS();
 }
-
 
 
 
@@ -193,7 +204,8 @@ ScrollGallery.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------
-    this.contentSlider.updateCSS({
+	/*
+    this.ContentSlider.updateCSS({
     	widgetCSS:{
  			top : 0,
 			left : 0 		
@@ -202,4 +214,6 @@ ScrollGallery.prototype.updateCSS = function (args) {
     		height: $(this.widget).height()
     	}
     })
+    */
+   
 }

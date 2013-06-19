@@ -6,30 +6,26 @@ goog.require('goog.dom');
 goog.require('goog.style');
 
 utils.dom.makeElement = function (type, parent, id, css) {
+	
 	if (!type) {
-		throw Error("Make Element: Need more parameters to make element! -- invalid type");
+		throw Error("utils.dom.makeElement: Cannot make element without a valid type.");
 	}
 	
 	if (!parent) {
-		throw Error("Make Element: Need more parameters to make element -- invalid parent.");
+		throw Error("utils.dom.makeElement: Cannot make element without a valid parent. It currently is: ", parent);
 	}
 
-	var attrs = {};
+	var e = document.createElement(type);
+
 	if (id) {
-		attrs['id'] = id;
-	}
-  
- 
-	var e = goog.dom.createDom(type, attrs);
-	
-	
+		e.id = id;
+	}		
 	
 	if (css) {
-		var newCSS = utils.css.processCSSObject(css);
-		goog.style.setStyle(e, newCSS);
+		utils.css.setCSS(e, css);		
 	}
 	
-	goog.dom.appendChild(parent, e);
+	parent.appendChild(e);
 	
   return e;
 }

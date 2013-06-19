@@ -236,14 +236,14 @@ var SliderLinker = function (args) {
 	
 	
 	this.disableSelectorBox = function (selectorBox) {
-		$(selectorBox).css({'pointer-events': 'none'});		
+		utils.css.setCSS( selectorBox, {'pointer-events': 'none'});		
 	}
 	
 	
 
 	this.enableSelectorBox = function (selectorBox) {
 		
-		$(selectorBox).css({'pointer-events': 'auto'});		
+		utils.css.setCSS( selectorBox, {'pointer-events': 'auto'});		
 	
 	}
 	

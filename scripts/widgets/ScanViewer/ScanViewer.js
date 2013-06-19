@@ -74,8 +74,10 @@ var ScanViewer = function (args) {
 	this.FrameViewer.ScanViewer = this;
 
  	
-	// Modify the FrameViewer such that it lets "this"
-	// know of the currentScan when it's dropped in.
+	/*
+	 *	Modify the FrameViewer such that it lets "this"
+	 *  know of the currentScan when it's dropped in.
+	 */
 	this.FrameViewer.addOnloadCallback(function () {
 		if(that.FrameViewer.currDroppable.scanData) {
 			that.populateData(that.FrameViewer.currDroppable.scanData)
@@ -83,31 +85,33 @@ var ScanViewer = function (args) {
 	})
 
 
+
+
+	//----------------------------------
+	// MENUS
+	//----------------------------------	
  	this.addViewPlaneMenu();
- 	
+	this.addLinkMenu(); 	
+
+
+
 
 	 //----------------------------------
-	 // FRAME SLIDER
+	 // SLIDER
 	 //----------------------------------	
-	/*
-	this.SliderHolder = utils.dom.makeElement('div', this.widget, "FrameSlider", {
-		'position' : 'absolute',
-		'height' : 10,
-		'width' : '96%',
-		'left' : '2%',
-		'backgroundColor' : 'rgba(255,120,20, .2)'
-	})
-	*/
-
 	this.addFrameSlider();
+
+
+
 
 	//----------------------------------
 	// CONTENT DIVIDER
 	//----------------------------------	
-
 	this.ContentDivider = new ContentDivider( {	
 		parent: this.widget
 	});
+	
+	
 	
 	 //----------------------------------
 	 // Content Divider CAllback
@@ -115,21 +119,15 @@ var ScanViewer = function (args) {
 	 $(this.ContentDivider.widget).draggable( {
 		
 		start: function () {
-			
 		   this.dragging = true;		
-		
 		},
 		
 	 	drag: function () {
-
 		   that.updateCSS();
-			
 		},
 		
 		stop: function () {
-			
 			this.dragging = false;
-		
 		}
 		
 	});
@@ -159,13 +157,13 @@ var ScanViewer = function (args) {
 		var minDiff = Math.abs(cPos.top - minCTop);
 		
 		if (minDiff < 10 ) {
-			$(that.ContentDivider.widget).css( {
+			utils.css.setCSS( that.ContentDivider.widget,  {
 				top: $(that.widget).height() - GLOBALS.tabClickHeight - cHeight
 			});			
 		}
 		else{
 			if (that.ScanTabs.minClick) {
-				$(that.ContentDivider.widget).css( {
+				utils.css.setCSS( that.ContentDivider.widget,  {
 					top: minCTop
 				});	
 			}			
@@ -180,10 +178,7 @@ var ScanViewer = function (args) {
 
 
 
-	//----------------------------------
-	// Link Menu
-	//----------------------------------	
-	this.addLinkMenu();
+
 
 
 	//----------------------------------
@@ -216,7 +211,7 @@ var ScanViewer = function (args) {
 
 	// DATA: Frame Number
 	this.displayableData.frameNumber = utils.dom.makeElement("div", this.widget, "_frameDisplay");
-	$(this.displayableData.frameNumber).css(this.textCSS_small);		
+	utils.css.setCSS( this.displayableData.frameNumber, this.textCSS_small);		
 		
 		
 		

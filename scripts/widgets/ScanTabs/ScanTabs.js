@@ -97,7 +97,7 @@ var ScanTabs = function (args) {
 	this.activeTab = 0;
 	
 	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.CSS);	
-	$(this.widget).css({
+	utils.css.setCSS( this.widget, {
 		top: $(this.widget.parentNode).height() - GLOBALS.minScanTabHeight,
 		height: GLOBALS.minScanTabHeight
 	})
@@ -224,7 +224,7 @@ ScanTabs.prototype.updateCSS = function () {
 	//------------------------------
 	// WIDGET
 	//------------------------------
-	$(this.widget).css({
+	utils.css.setCSS( this.widget, {
 		"font-size": this.args.contentFontSize,
 		"padding": 0,
 		"borderRadius": 0,
@@ -245,7 +245,7 @@ ScanTabs.prototype.updateCSS = function () {
 	
 	for (var i = 0, len = this.tabs.length; i < len; i++) {
 	
-		$(this.tabs[i]).css({
+		utils.css.setCSS( this.tabs[i], {
 			"font-size": this.args.contentFontSize,
 			"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 			width: $(this.widget).width() - 20,
@@ -269,7 +269,7 @@ ScanTabs.prototype.updateCSS = function () {
 	//------------------------------
 	// PARENT TITLE ELEMENT
 	//------------------------------
-	$(this.tabTitleObj.titleElt).css({
+	utils.css.setCSS( this.tabTitleObj.titleElt, {
 		"font-size": this.args.contentFontSize,
 		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 		borderRadius: 0,
@@ -303,7 +303,7 @@ ScanTabs.prototype.updateCSS = function () {
 		//------------------------------
 		// The Text
 		//------------------------------
-		$(this.tabTitleObj.titlesA[i]).css({
+		utils.css.setCSS( this.tabTitleObj.titlesA[i], {
 			"font-size": this.args.contentFontSize,
 			"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
 			borderRadius: 0,
@@ -315,7 +315,7 @@ ScanTabs.prototype.updateCSS = function () {
 		//------------------------------
 		// The Frame
 		//------------------------------
-		$(this.tabTitleObj.titlesLi[i]).css({
+		utils.css.setCSS( this.tabTitleObj.titlesLi[i], {
 			background: "none",
 			backgroundColor:"rgb(0,0,0)",
 			borderColor: bColor,

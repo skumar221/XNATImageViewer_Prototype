@@ -17,14 +17,14 @@ ScanViewer.prototype.populateData = function (data) {
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');
 			var currTop = (that.textCSS_small.fontSize * (2.5*counter+1) + 30);
 			that.displayableData[noSpace] = utils.dom.makeElement("div", that.ScanTabs.getTab("View Type"), "_data_" + noSpace);
-			$(that.displayableData[noSpace]).css(utils.dom.mergeArgs(that.textCSS_small,{
+			utils.css.setCSS( that.displayableData[noSpace], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label;		
 
 			that.displayableData[noSpace + "_dropdown"] = utils.dom.makeElement("select", that.ScanTabs.tabs[0], "_data_" + noSpace);
-			$(that.displayableData[noSpace + "_dropdown"]).css(utils.dom.mergeArgs(that.textCSS_small,{
+			utils.css.setCSS( that.displayableData[noSpace + "_dropdown"], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 110,
 				width: "10em",
@@ -91,14 +91,14 @@ ScanViewer.prototype.populateData = function (data) {
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
 			
 			that.displayableData[noSpace] = utils.dom.makeElement("div", contents, "Data_" + noSpace);
-			$(that.displayableData[noSpace]).css(utils.dom.mergeArgs(that.textCSS_small,{
+			utils.css.setCSS( that.displayableData[noSpace], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 15
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
 			that.displayableData[noSpace + "_value"] = utils.dom.makeElement("div", contents, "Value_" + noSpace);
-			$(that.displayableData[noSpace + "_value"]).css(utils.dom.mergeArgs(that.textCSS_small,{
+			utils.css.setCSS( that.displayableData[noSpace + "_value"], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 160
 			}));	

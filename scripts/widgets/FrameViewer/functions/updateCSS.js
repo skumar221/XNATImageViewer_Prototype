@@ -9,12 +9,10 @@ FrameViewer.prototype.updateCSS = function () {
 	//----------------------------------
 	//	CANVAS
 	//----------------------------------
-	this.canvas.height = $(this.widget).height();
-	this.canvas.width = $(this.widget).width();
-	$(this.canvas).css({
-		height: $(this.widget).height(),
-		width: $(this.widget).width()
-	})
+	var widgetDims = utils.css.dims(this.widget, 'height', 'width');
+	this.canvas.height = widgetDims['height'];
+	this.canvas.width = widgetDims['width'];
+	utils.css.setCSS(this.canvas, widgetDims);
 
 
 		
@@ -40,13 +38,11 @@ FrameViewer.prototype.updateCSS = function () {
 		ddImg.width = 249/2.5;
 		ddImg.height = 156/2.5; 
 		this.context.drawImage(ddImg, this.canvas.width/2 - ddImg.width/2, 
-								    this.canvas.height/2 - ddImg.height/2, 
-								    ddImg.width, ddImg.height);
+								      this.canvas.height/2 - ddImg.height/2, 
+								       ddImg.width, ddImg.height);
 
 	}
-	else{
-		this.canvas.style.opacity = 1;
-	}
+
 
 
 	//

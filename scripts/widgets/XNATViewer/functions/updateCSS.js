@@ -12,8 +12,8 @@ XNATViewer.prototype.updateCSS = function (args) {
 	//	RESIZE THE MODAL
 	//----------------------------------
 	modalDims = this.modalDims();
-	$(this.modal).css(modalDims);	
-	if(args) {$(this.modal).css(args);}	
+	utils.css.setCSS( this.modal, modalDims);	
+	if(args) {utils.css.setCSS( this.modal, args);}	
 	
 	
 	
@@ -80,7 +80,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	if (this.ColumnMenu && this.RowMenu) {
 		
-		$(this.ColumnMenu).css({
+		utils.css.setCSS( this.ColumnMenu, {
 			
 			top: modalDims["ColumnMenu"].top,
 			left: modalDims["ColumnMenu"].left,
@@ -93,7 +93,7 @@ XNATViewer.prototype.updateCSS = function (args) {
 		//----------------------------------
 		//	VERTICAL EXPAND BUTTONS
 		//----------------------------------
-		$(this.RowMenu).css({
+		utils.css.setCSS( this.RowMenu, {
 			
 			top: modalDims["RowMenu"].top,
 			left: modalDims["RowMenu"].left,

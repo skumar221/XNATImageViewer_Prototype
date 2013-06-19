@@ -3,42 +3,36 @@
 
 goog.provide('FrameSlider');
 
+goog.require('utils.gui.GenericSlider'); 
+
+
 /**
  * @constructor
- * @extends {goog.ui.Slider}
+ * @extends {utils.gui.GenericSlider}
  */
 FrameSlider = function () {	
-	
-	//goog.base(this);	
-	goog.ui.Slider.call(this);
+
+
+	goog.base(this);	
+
+		
+	//utils.gui.GenericSlider.call(this);
 	
 	var that = this;
 
-	 //----------------------------------
-	 // FRAME SLIDER
-	 //----------------------------------	
-	this.divHolder = utils.dom.makeElement('div', arguments[0]['parent'], "divHolder", {
-		'position' : 'absolute',
-		'height' : 10,
-		'width' : '96%',
-		'left' : '2%',
-		'backgroundColor' : 'rgba(255,120,20, .2)'
+	
+
+	/*
+	var track = utils.dom.makeElement("div", this.getHolder(), "SliderTrack", {
+		'position': 'absolute',
+		'width' : '100%',
+		'height' : '40%',
+		'top': '30%',
+		//'border' : 'solid 1px rgba(200,200,200,1)',
+		'borderRadius' : 3,
+		'backgroundColor' : 'rgba(100,100,100,1)',
 	})
-
-	that.decorate(this.divHolder);
-	
-	
-	var sliderThumb = goog.dom.getElementsByClass( 'goog-slider-thumb');
-	$(sliderThumb).css({
-		position: 'absolute',
-		height: that.divHolder.style.height,
-		width: that.divHolder.style.height,
-		backgroundColor: "rgb(225, 225, 225)",
-		borderRadius: '3px'
-	})
-	
-
-
+	*/	
 	
 	//******************************************************
 	//  Links the inputted slider (b)
@@ -60,13 +54,12 @@ FrameSlider = function () {
 		}
 	
 		that.addLinkedCallback( function (a) {  
-				
-			var aDiff = a.getMaximum() - a.getMinimum();
 			
+			var aDiff = a.getMaximum() - a.getMinimum();
 			var bDiff = b.getMaximum() - b.getMinimum();
 			
 			// percentage-based linking
-			var bVal = Math.round(bDiff * (a.value / aDiff));
+			var bVal = Math.round(bDiff * (a.getValue() / aDiff));
 			
 			b.setValue(bVal);
 			
@@ -92,6 +85,25 @@ FrameSlider = function () {
   		that.linkedCallbacks.push(func);
   	}
   	
+  	
+ 	//----------------------------------
+	// linkedCallbacks - Caller
+	//---------------------------------- 	
+	this.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
+
+		if (that.linkedCallbacks && that.linkedCallbacks.length > 0) {
+			for (var i=0, len = that.linkedCallbacks.length; i < len; i++) {
+				that.linkedCallbacks[i](that);
+			}
+		}	
+	});
+  	
+
 }
 
-goog.inherits(FrameSlider, goog.ui.Slider);
+
+
+
+goog.inherits(FrameSlider, utils.gui.GenericSlider);
+
+

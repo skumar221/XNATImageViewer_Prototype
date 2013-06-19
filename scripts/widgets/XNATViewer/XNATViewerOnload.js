@@ -7,7 +7,7 @@ XNATViewerOnload = function () {
 	// Prevents Webkit-based browsers
 	// from responding to page scrolling, two finger gestures
 	// on Mac trackpads
-	$("body").css({
+	utils.css.setCSS( "body", {
 		'overflow' : 'hidden'
 	})
 	
