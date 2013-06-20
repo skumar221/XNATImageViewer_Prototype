@@ -15,46 +15,26 @@ XNATViewer.prototype.addScrollGallery = function (rowPos) {
 		}
 	});	
 	
-	
-	// set the contents
-	this.ScrollGallery.setContents(function () {
-		
-		that.ScrollGallery.thumbs = [];
-		
-		var totalHeight = 0;		
-		  	  
-		for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
 
-			var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
-
-			var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
-				
-			  	id: "ScanThumbnail_" + i.toString(),			  	
-			  	parent: that.ScrollGallery.ScrollContent,
-			  	
-			  	widgetCSS: {
-			  		top: h, 
-			  		left: 0,
-			  		width: $(that.ScrollGallery.ScrollContent).width() -2
-			  	}
-			  	
-			});
+	this.ScrollGallery.addZippy('Scans');
 	
-				
-			// We want to manage the active Thumbnails...
-			// we need to "deactivate" them when another has replaced
-			// their slot.  
-			
-			/*
-			scanThumb.addActivatedCallback(function (thumb, args) {
-				that.manageActiveThumbs(thumb, args);
-			})
-			*/
-			
-			that.ScrollGallery.thumbs.push(scanThumb);
-		}
-		  
-		that.ScrollGallery.ScrollContent.style.height = utils.convert.px(h + that.ScrollGallery.args.scrollMarginY*1 + 100);
-		that.ScrollGallery.ScrollContent.style.borderColor= "rgba(10, 200, 2, 1)";  
-	})
+	var thumbContents = this.ScrollGallery.getScrollables('Scans' , 'content');
+	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
+	
+	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
+		//var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
+		var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
+		  	id: "ScanThumbnail_" + i.toString(),			  	
+		  	parent: thumbContents,  	
+		  	widgetCSS: {
+		  		position: "relative",
+		  		//top: h, 
+		  		left: 0,
+		  		width: thumbContentsWidth
+		  	}			  	
+		});
+	}	
+
+	this.ScrollGallery.moveContents(this.ScrollGallery.ContentSlider, this.ScrollGallery);
+	//this.ScrollGallery.ContentSlider.setValue(this.ScrollGallery.ContentSlider.getValue() - 1);
 }

@@ -3,16 +3,48 @@
 //
 //******************************************************
 
-goog.require('goog.ui.Zippy'); 
 goog.require('goog.ui.AnimatedZippy'); 
+goog.require('goog.events'); 
 goog.provide('ScrollGallery');
 
-var ScrollGallery = function (args) {
+
+/**
+ * @constructor
+ */
+ScrollGallery = function (args) {
+  	
   	
   	var that = this;
 	this.args = (args) ? utils.dom.mergeArgs(this.defaultArgs(), args) : this.defaultArgs();
-	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.widgetCSS);
 
+	/**
+	 * @private
+	 */	
+	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.widgetCSS);
+	this.getWidget = function() {
+		return this.widget;
+	}
+	
+	
+	/**
+	 * @protected
+	 */	
+	this.Scrollables = {};
+
+
+	var ScrollAreaWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.widgetCSS.width - 7;
+	/**
+	 * @protected
+	 */	
+	this.ScrollArea = utils.dom.makeElement("div", this.widget, "ScrollArea", {
+		position: "relative",
+		//top: -4,
+		width: ScrollAreaWidth,
+		left: utils.css.dims(this.widget, 'width') - ScrollAreaWidth
+	});
+	this.getScrollArea = function () {
+		return this.ScrollArea;
+	}
 	
 
 	//-------------------------------
@@ -28,8 +60,8 @@ var ScrollGallery = function (args) {
 		parent: this.widget,
 		id: "ContentSlider",
 		'orientation' : 'vertical',
-		holderCSS : {
-			width: 7,//this.args.sliderCSS.holderCSS.width,
+		widgetCSS : {
+			width: 7,//this.args.sliderCSS.widgetCSS.width,
 			backgroundColor: 'rgb(0,0,0)',
 			border: 'none'
 		},
@@ -39,61 +71,9 @@ var ScrollGallery = function (args) {
 			border: 'none'
 		}
 	});
-  
-  
-
-
-  	//-------------------------------
-	// SCROLL CONTENT
-	//-------------------------------
-	this.ContentHeaders = [];
-	var contentWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.holderCSS.width - 7;
-	this.ContentHeaders.push(utils.dom.makeElement("div", this.widget, "ScrollContent", {
-		position: "relative",
-		backgroundColor: "rgba(120,120,120,1)",
-		top: 0,
-		left: this.args.sliderCSS.holderCSS.width + 5,
-		width: contentWidth,
-		height: GLOBALS.fontSizeMed * 2,
-		color: 'rgb(255,255,255)',
-		fontSize: GLOBALS.fontSizeLarge,
-		fontFamily: GLOBALS.fontFamily,
-		'verticalAlign' : 'center',
-		marginRight: 20,
-		cursor: 'pointer',
-		borderRadius: "4px",
-		border: "solid 1px rgb(200,200,200)"
-	}))
 	
-	this.ContentHeaders[0].innerHTML = 'Scans';
-	
-  	//-------------------------------
-	// SCROLL CONTENT
-	//-------------------------------
-	this.ScrollContent = utils.dom.makeElement("div", this.widget, "ScrollContent", {
-		position: "relative",
-		//backgroundColor: "rgba(0,0,255,.5)",
-		//top: 0,
-		//left: this.args.sliderCSS.holderCSS.width,
-		width: contentWidth,
-		backgroundColor: "rgba(0,0,0,1)",
-
-	})
-	var z1 = new goog.ui.AnimatedZippy(this.ContentHeaders[0], this.ScrollContent, true);
-    
-    
-     
-	//-------------------------------
-	// THE CONTENTS - BLANK FOR NOW
-	//-------------------------------
-	var blankContents = utils.dom.makeElement("div", document.body, "blankElement", {
-		height: 800, 
-		width: 100, 
-		backgroundColor: "rgba(200,100,51,.5)"
-	});
-	blankContents.innerHTML = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."	    
-	this.setContents(blankContents)
-  
+	this.ContentSlider.addSlideCallback(that.moveContents, that);  
+	this.ContentSlider.bindToMouseWheel(that.widget);
 	
 	this.updateCSS();
 }
@@ -101,6 +81,9 @@ var ScrollGallery = function (args) {
 
 
 
+/**
+ * @private
+ */
 ScrollGallery.prototype.defaultArgs = function () {
 	
 	return {
@@ -135,7 +118,7 @@ ScrollGallery.prototype.defaultArgs = function () {
 				borderColor: GLOBALS.semiactiveLineColor,
 				backgroundColor: "rgba(105,105,105,1)"
 			},
-			holderCSS:{
+			widgetCSS:{
 				borderWidth: 0,
 				width: 7,
 				borderColor: GLOBALS.semiactiveLineColor,
@@ -154,22 +137,47 @@ ScrollGallery.prototype.defaultArgs = function () {
 //  in a proportional manner. This varies depending on 
 //  the orientation of the gallery: vertical or horizontal.
 //******************************************************
-ScrollGallery.prototype.mapSliderToContents = function () {
-	var that = this;
-	return function (Slider) {		
 
-		
-		var beforeRange = [Slider.getMinimum(), Slider.getMaximum()];
-		var afterRange = [0, utils.css.dims(that.ScrollContent, 'outerHeight') - utils.css.dims(that.widget, 'height')  - that.args.scrollMarginY ]
+/**
+ * @private
+ */
+ScrollGallery.prototype.moveContents = function (Slider, that) {
+	
+	console.log("move")
+	var widgetHeight = utils.css.dims(that.widget, 'height');
+	var beforeRange = [Slider.getMinimum(), Slider.getMaximum()];
+	var scrollAreaHeight = 0;
+	var afterRange = [0, utils.css.dims(that.ScrollArea, 'height') - widgetHeight];
+	var thumb = Slider.getThumb();
+	
+	if (afterRange[1] > beforeRange[1]) {
+
+		utils.css.setCSS(thumb, {
+			opacity: 1,
+			height: widgetHeight * (beforeRange[1] / afterRange[1])
+		});
+				
+		Slider.setEnabled(true);
+			
 		var sendVal = Math.abs(Slider.getValue() - 100);
 		var remap = utils.convert.remap1D(sendVal, beforeRange, afterRange);
-  		var t = remap.newVal;// - utils.css.dims(that.widget, 'height');	
-
-   		utils.css.setCSS( that.ScrollContent, {
-  			top: -t
-  		});
+		var t = remap.newVal;
+	
+	
+		utils.css.setCSS( that.ScrollArea, {
+			//position: "absolute",
+			top: -t
+		});	
+			
+	}
+	else {
 		
-   }
+		utils.css.setCSS(thumb, {
+			opacity: 0
+		});
+		Slider.setEnabled(false);
+		Slider.setValue(100);
+	}	
 }
 
 
@@ -178,38 +186,21 @@ ScrollGallery.prototype.mapSliderToContents = function () {
 //******************************************************
 //  Sets contents.
 //******************************************************
-ScrollGallery.prototype.setContents = function (thing) {
+ScrollGallery.prototype.addContentToZippy = function (header, contents) {
   
 	var that = this;
 
-  
-	//-------------------------------
-	// REMOVE PREXISTING CHILD ELEMENTS
-	//-------------------------------  
-	while (this.ScrollContent.hasChildNodes()) {
-	    this.ScrollContent.removeChild(this.ScrollContent.lastChild);
-	}
+	that.ContentHeaders[header]['contents'].appendChild(contents);
+
+			
+	utils.dims.setCSS(that.ScrollContent,  {
+		height: utils.css.dims(contents, 'height')
+	})
+		
+	
 	
 
-	//-------------------------------
-	// IF thing IS A FUNCTION
-	//-------------------------------  
-	if (typeof thing === "function") {
-		thing();
-	}
-	//-------------------------------
-	// IF thing IS AN OBJECT - (used now for blank contents)
-	//-------------------------------  
-	else if (typeof thing === "object") {
-		// if obj is a DOM Element
-		if(thing.tagName) {
-			that.ScrollContent.appendChild(thing);
-			that.ScrollContent.style.height = utils.convert.px($(thing).height());
-		}
-	}
-
-	this.ContentSlider.addSlideCallback(that.mapSliderToContents());  
-	this.ContentSlider.bindToMouseWheel(that.widget);		
+		
 	this.updateCSS();
 }
 
@@ -221,21 +212,93 @@ ScrollGallery.prototype.setContents = function (thing) {
 ScrollGallery.prototype.updateCSS = function (args) {
 
 
-    if (args) { utils.css.setCSS(this.widget, args.widgetCSS) };
+    if (args) { 
+    	utils.css.setCSS(this.widget, args.widgetCSS) 
+    };
     
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------
-	/*
-    this.ContentSlider.updateCSS({
-    	widgetCSS:{
- 			top : 0,
-			left : 0 		
-    	},
-    	trackCSS:{
-    		height: $(this.widget).height()
-    	}
-    })
-    */
-   
+
+    utils.css.setCSS(this.ContentSlider.getWidget(), {
+    	height: utils.css.dims(this.widget, 'height')
+    });
+
+}
+
+
+
+
+ScrollGallery.prototype.getScrollables = function(h1, h2) {
+	return this.Scrollables[h1][h2];	
+}
+
+
+
+
+ScrollGallery.prototype.addZippy = function(zKey) {
+
+	var that = this;
+	var headerHeight = GLOBALS.fontSizeMed * 2;
+	var headerLeft = this.args.sliderCSS.widgetCSS.width + 5;
+	
+	this.Scrollables[zKey] = {};
+	
+	
+	
+	this.Scrollables[zKey]['header'] = utils.dom.makeElement("div", this.ScrollArea, "Header_" + zKey, {
+		position: "relative",
+		backgroundColor: "rgb(70,70,70)",
+		//top: -5,
+		//left: headerLeft,
+		width: utils.css.dims(this.ScrollArea, 'width'),
+		height: '1.5em',
+		color: 'rgb(0, 0, 0)',
+		fontSize: GLOBALS.fontSizeLarge,
+		fontFamily: GLOBALS.fontFamily,
+		cursor: 'pointer'
+	})
+	this.Scrollables[zKey]['header'].key = zKey;
+	
+	
+	this.Scrollables[zKey]['headerLabel'] = utils.dom.makeElement("div", this.Scrollables[zKey]['header'], "HeaderLabel_" + zKey, {
+		position: "absolute",
+		marginTop: '.25em',
+		marginLeft: '1em'
+	})
+	this.Scrollables[zKey]['headerLabel'].innerHTML = zKey;
+	
+	
+	
+	this.Scrollables[zKey]['expandIcon'] = utils.dom.makeElement("div", this.Scrollables[zKey]['header'], "ExpandIcon_" + zKey, {
+		position: "absolute",
+		left: utils.css.dims(this.ScrollArea, 'width'), 
+		marginLeft: '-1em',
+		color: "rgb(120,120,120)",
+		fontSize: 20,
+	})
+	this.Scrollables[zKey]['expandIcon'].innerHTML = "-";
+	
+	
+	
+	this.Scrollables[zKey]['content'] = utils.dom.makeElement("div", this.ScrollArea, "Content_" + zKey, {
+		//position: "absolute",
+		width: utils.css.dims(this.ScrollArea, 'width') - 3,
+		top: headerHeight,
+		left: headerLeft,
+		backgroundColor: "rgba(0,0,0,1)",
+	})	
+	
+	
+	var EVENTS = goog.object.getValues(goog.ui.Zippy.Events);
+	this.Scrollables[zKey]['zippy'] = new goog.ui.AnimatedZippy(this.Scrollables[zKey]['header'], this.Scrollables[zKey]['content'], true);
+	
+	goog.events.listen(this.Scrollables[zKey]['zippy'], EVENTS, function(e) { 
+		
+		that.moveContents(that.ContentSlider, that);
+
+		var elt = document.getElementById("ExpandIcon_" + e.target.elHeader_.key);
+		elt.innerHTML = (e.target.isExpanded()) ? "-" : "+";
+
+	});
 }

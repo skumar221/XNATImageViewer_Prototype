@@ -1,6 +1,8 @@
 //******************************************************
 //  
 //******************************************************
+goog.require('goog.style');
+
 utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
 	
 	var dimArgs = [];
@@ -16,13 +18,14 @@ utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
 		dimArgs = ['height', 'width', 'position'];
 	}
 
-
+	var size = goog.style.getSize(elt);
 	if (dimArgs.indexOf('height') > -1) {
-		retObj['height'] = $(elt).height();
+		retObj['height'] = size.height;//$(elt).height();
+
 	}
 	
 	if (dimArgs.indexOf('width') > -1) {
-		retObj['width'] = $(elt).width();
+		retObj['width'] = size.width;//$(elt).width();
 	}
 	
 	
@@ -49,6 +52,8 @@ utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
 	if (dimArgs.indexOf('outerWidth') > -1) {
 		retObj['outerWidth'] = $(elt).outerWidth();
 	}
+
+
 	
 	//
 	// If only one argument after element,

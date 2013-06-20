@@ -70,7 +70,11 @@ ScanViewer.prototype.populateData = function (data) {
 		//	SCROLL GALLERY
 		//----------------------------------
 
-		that.sessionInfoScrollGallery = new ScrollGallery({
+
+		var counter = 0;
+		
+		
+		that.sessionInfo = new ScrollGallery({
 			parent: that.ScanTabs.getTab("Info"),
 			id: "SessionData-ScrollGallery",
 			orientation: "vertical",
@@ -81,15 +85,17 @@ ScanViewer.prototype.populateData = function (data) {
 				top: GLOBALS.scanTabLabelHeight + 10
 			}
 		});	
-
-		var contents = utils.dom.makeElement("div", that.sessionInfoScrollGallery.ScrollContent, "Contents", {});
+		var contents = utils.dom.makeElement("div", that.sessionInfo.getScrollArea(), "MetadataContents", {});
 		
-		var counter = 0;
+
+		
 		for (i in labelObj) {
 			
 			var noSpace = labelObj[i]["label"].replace(/\s+/g, ' ');			
 			var currTop = (that.textCSS_small.fontSize * (2*counter));
-			
+
+
+
 			that.displayableData[noSpace] = utils.dom.makeElement("div", contents, "Data_" + noSpace);
 			utils.css.setCSS( that.displayableData[noSpace], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
@@ -97,17 +103,21 @@ ScanViewer.prototype.populateData = function (data) {
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
+
+
 			that.displayableData[noSpace + "_value"] = utils.dom.makeElement("div", contents, "Value_" + noSpace);
 			utils.css.setCSS( that.displayableData[noSpace + "_value"], utils.dom.mergeArgs(that.textCSS_small,{
 				top: currTop,
 				left: 160
 			}));	
-			that.displayableData[noSpace + "_value"].innerHTML = labelObj[i]["value"][0]
+			that.displayableData[noSpace + "_value"].innerHTML = labelObj[i]["value"][0];
+			
+			
+			
 			counter++;
 		}
 		
 		contents.style.height = utils.convert.px(currTop);
-		that.sessionInfoScrollGallery.setContents(contents);
 	}
 	// NOTE:  Ajax query would be here
 	makeSessionInfoData(data.sessionInfo);

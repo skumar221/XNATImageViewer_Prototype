@@ -1,119 +1,319 @@
 var XV;
 
-var GLOBALS = {
+
+/*
+	 * @const
+	 * @type {string}
+	 */
+
+goog.provide('GLOBALS');
+
+/**
+ * @constructor
+ */
+GLOBALS = function (){
+
+
+	/*
+	 * @const
+	 * @type {string}
+	 */
+ 	this.ModalId = "XNATImageViewerModal";
+	/*
+	 * @const
+	 * @type {string}
+	 */
+ 	this.ScanViewerPreId = "ScanViewer";
+	
+	
+	
+	
+	
+	//---------------------------
+	//  FONTS AND COLORS
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.inactiveFontColor = "rgba(55,55,55,1)";
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.inactiveLineColor = "rgba(55,55,55,1)"; 	
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.activeFontColor = "rgba(255,255,255,1)"; 
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.activeLineColor = "rgba(205,205,205,1)"; 		
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.semiactiveFontColor = "rgba(85,85,85,1)"; 
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.semiactiveLineColor = "rgba(85,85,85,1)"; 	
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.fontSizeSmall = 10;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.fontSizeMed = 12;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.fontSizeLarge = 14;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.fontFamily = 'Helvetica, Helvetica neue, Arial, sans-serif';
+	
+	
+	
+	
+	//---------------------------
+	//  ANIMATION LENGTHS
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.animVeryFast = 100;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.animFast = 200;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.animMed = 500;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.animSlow = 1000;
+	
+	
+	
+	
+	
+	//---------------------------
+	//  FRAME VIEWER
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.minFrameViewerHeight = 150;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.minFrameViewerWidth = 150;
+	
+	
+	
+	
+	//---------------------------
+	//  SCAN VIEWER
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ScanViewerDimRatio = .85
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.minScanViewerHeight = 320;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.minScanViewerWidth = this.minScanViewerHeight * this.ScanViewerDimRatio;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ScanViewerVerticalMargin = 20;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ScanViewerHorizontalMargin = 20;
+	
+	
+	
+	
+	//---------------------------
+	//  THUMBNAILS
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ThumbnailImageHeight = 72;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ThumbnailImageWidth = 72;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ThumbnailImageMarginX = 8;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ThumbnailImageMarginY = 8;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	 this.ThumbnailWidgetHeight = this.ThumbnailImageHeight + this.ThumbnailImageMarginX*2;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ThumbnailWidgetWidth = 200;
+	
+	
+	
+	
+	//---------------------------
+	//  EXPAND BUTTON
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.expandButtonWidth = 30;
+	
+	
+	
+	
+	
+	//---------------------------
+	//  SCROLL GALLERY
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.ScrollGalleryWidth = 180;
+	
+	
+	
+	
+	
+	
+	//---------------------------
+	//  SCAN TABS
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.scanTabLabelHeight = 20;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.scanTabLabelWidth = 40;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.minScanTabHeight = this.scanTabLabelHeight;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.defaultScanTabHeight = this.minScanTabHeight;	
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.maxModalWidthPct = .90;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+	this.maxModalHeightPct = .95;
+	/*
+	 * @const
+	 * @type {string}
+	 */
+ 	this.tabClickHeight = 300;
+	
+	
+	
+	
+	//---------------------------
+	//  SCROLL LINK GROUPS
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+ 	this.maxScrollLinkGroups = 10;
+	/** @protected */ this.SliderLinker = new SliderLinker();
+	
+	
+	
+	
+	//---------------------------
+	//  CONTENT DIVIDER HEIGHT
+	//---------------------------
+	/*
+	 * @const
+	 * @type {string}
+	 */
+ 	this.ContentDividerHeight = 6;
+	/*
+	 * @const 
+	 * */ 
+	this.minContentDividerTop = function (widgetHeight) {
+		return widgetHeight - this.ContentDividerHeight - this.minScanTabHeight;
+	} 
+	
+	
+	
+	
+	//---------------------------
+	//  DRAG AND DROP IMAGE
+	//---------------------------
+	/*
+	 * @type {Image}
+	 */
+	this.dragAndDropImage = new Image();
+	this.dragAndDropImage.src = "./icons/DragAndDrop-3pt.png";
 
 }
 
-
-GLOBALS.imagePreloader = new utils.ajax.imagePreloader();
-
-
-GLOBALS.ModalId = "XNATImageViewerModal";
-GLOBALS.ScanViewerPreId = "ScanViewer";
-
-
-//---------------------------
-//  FONTS AND COLORS
-//---------------------------
-GLOBALS.inactiveFontColor = "rgba(55,55,55,1)";
-GLOBALS.inactiveLineColor = "rgba(55,55,55,1)"; 
-
-GLOBALS.activeFontColor = "rgba(255,255,255,1)"; 
-GLOBALS.activeLineColor = "rgba(205,205,205,1)"; 
-
-GLOBALS.semiactiveFontColor = "rgba(85,85,85,1)"; 
-GLOBALS.semiactiveLineColor = "rgba(85,85,85,1)"; 
-
-GLOBALS.fontSizeSmall = 10;
-GLOBALS.fontSizeMed = 12;
-GLOBALS.fontSizeLarge = 14;
-GLOBALS.fontFamily = 'Helvetica, Helvetica neue, Arial, sans-serif';
-
-
-//---------------------------
-//  ANIMATION LENGTHS
-//---------------------------
-GLOBALS.animVeryFast = 100;
-GLOBALS.animFast = 200;
-GLOBALS.animMed = 500;
-GLOBALS.animSlow = 1000;
+GLOBALS = new GLOBALS();
 
 
 
-//---------------------------
-//  FRAME VIEWER
-//---------------------------
-GLOBALS.minFrameViewerHeight = 150;
-GLOBALS.minFrameViewerWidth = 150;
-
-
-//---------------------------
-//  SCAN VIEWER
-//---------------------------
-GLOBALS.ScanViewerDimRatio = .85
-GLOBALS.minScanViewerHeight = 320;
-GLOBALS.minScanViewerWidth = GLOBALS.minScanViewerHeight * GLOBALS.ScanViewerDimRatio;
-GLOBALS.ScanViewerVerticalMargin = 20;
-GLOBALS.ScanViewerHorizontalMargin = 20;
-
-//---------------------------
-//  THUMBNAILS
-//---------------------------
-GLOBALS.ThumbnailImageHeight = 72;
-GLOBALS.ThumbnailImageWidth = 72;
-GLOBALS.ThumbnailImageMarginX = 8;
-GLOBALS.ThumbnailImageMarginY = 8;
-
-
-
-GLOBALS.ThumbnailWidgetHeight = GLOBALS.ThumbnailImageHeight + GLOBALS.ThumbnailImageMarginX*2;
-GLOBALS.ThumbnailWidgetWidth = 200;
-
-//---------------------------
-//  EXPAND BUTTON
-//---------------------------
-GLOBALS.expandButtonWidth = 30;
-
-//---------------------------
-//  SCROLL GALLERY
-//---------------------------
-GLOBALS.ScrollGalleryWidth = 180;
-
-//---------------------------
-//  SCAN TABS
-//---------------------------
-GLOBALS.scanTabLabelHeight = 20;
-GLOBALS.scanTabLabelWidth = 40;
-GLOBALS.minScanTabHeight = GLOBALS.scanTabLabelHeight;
-GLOBALS.defaultScanTabHeight = GLOBALS.minScanTabHeight;
-
-GLOBALS.maxModalWidthPct = .90;
-GLOBALS.maxModalHeightPct = .95;
-
-
-GLOBALS.tabClickHeight = 300;
-
-//---------------------------
-//  SCROLL LINK GROUPS
-//---------------------------
-GLOBALS.maxScrollLinkGroups = 10;
-GLOBALS.SliderLinker = new SliderLinker();
-
-
-//---------------------------
-//  CONTENT DIVIDER HEIGHT
-//---------------------------
-GLOBALS.ContentDividerHeight = 6;
-GLOBALS.minContentDividerTop = function (widgetHeight) {
-	return widgetHeight - GLOBALS.ContentDividerHeight - GLOBALS.minScanTabHeight;
-} 
-
-
-//---------------------------
-//  DRAG AND DROP IMAGE
-//---------------------------
-GLOBALS.dragAndDropImage = new Image();
-GLOBALS.dragAndDropImage.src = "./icons/DragAndDrop-3pt.png";
-$(GLOBALS.dragAndDropImage).hide();	
 
 

@@ -10,7 +10,7 @@ ScanViewer.prototype.addFrameSlider = function () {
 	this.FrameSlider = new FrameSlider({
 		parent: this.widget,
 		id : 'FrameSlider',
-		holderCSS : {
+		widgetCSS : {
 			'height' : 8,
 			'width' : '96%',
 			'left' : '2%'
@@ -43,7 +43,7 @@ ScanViewer.prototype.addFrameSlider = function () {
 	// Add FrameViewer callback function to synchronize with slider
 	//
 	this.FrameViewer.addOnloadCallback(function () {
-		
+
 		if (that.FrameSlider) {
 			
 			that.FrameSlider.setMinimum(0);

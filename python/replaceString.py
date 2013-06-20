@@ -45,12 +45,12 @@ def replaceInFile(src, findStr, replaceStr):
         
 def main():
     
-    rootDir = "../scripts"
+    rootDir = "../scripts/widgets"
     htmlFile = "../index.html"
     backupDir = "scriptsBackup"
       
-    findStr = "){"
-    replaceStr = ") {"
+    findStr = "getHolder"
+    replaceStr = "getWidget"
     fileReplaceStr = "addDraggableMethods" #replaceStr.split(".")[2]
     
     skipDirs = ["jquery"];

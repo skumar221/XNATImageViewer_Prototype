@@ -1,7 +1,10 @@
+goog.require( 'goog.events' );
+goog.require( 'goog.net.ImageLoader' );
+
 ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 
 	var that = this;
-	var primaryQ = [];
+	var loadQueue = [];
 	var setLen = this.getFrames(args['viewPlane']).length;
 
 				
@@ -16,7 +19,7 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 		// only add to queue if if it's not cached
 		if (!this.frames[i]['img']) {
 			if (args['viewPlane'] && viewPlane === args['viewPlane']) {
-				primaryQ.push(this.frames[i]['src']);
+				loadQueue.push(this.frames[i]['src']);
 			}		
 		}
 		else {
@@ -29,7 +32,7 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 		
 		
 	// if already cached
-	if (primaryQ.length === 0) {
+	if (loadQueue.length === 0) {
 		
 		XV.Viewers( function (ScanViewer, i, j) { 
 			if (ScanViewer.FrameViewer.currDroppable === that) {
@@ -41,10 +44,23 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	}
 	// otherwise send to loader
 	else {
-		// Add to queue
-		GLOBALS.imagePreloader.addToPrimaryQueue(primaryQ);	
-		// Begin chain
-		GLOBALS.imagePreloader.loadNextImage({ "onload"  : args["onload"] });		
+		
+		var imageLoader = new goog.net.ImageLoader();
+		
+		goog.events.listen(imageLoader , goog.events.EventType.LOAD, function(e) { 
+			args["load"](e.target);
+		} );
+		
+		goog.events.listen(imageLoader, goog.net.EventType.COMPLETE, function(e) { 
+			args["complete"](e);
+		} );
+
+		for (var i=0, len = loadQueue.length; i < len; i++) {
+			var id = utils.convert.replaceIllegalChars(loadQueue[i])
+			imageLoader.addImage(id, loadQueue[i]);	
+		}
+		
+		imageLoader.start();
 	}
 }
 

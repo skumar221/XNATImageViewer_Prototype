@@ -60,7 +60,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	
 	var scanTabTop = contentDividerPos.top + contentDividerHeight;
 	var scanTabHeight = widgetHeight - scanTabTop;
-	var sliderTop = contentDividerPos.top - utils.css.dims(this.FrameSlider.getHolder(), 'height') - 5;
+	var sliderTop = contentDividerPos.top - utils.css.dims(this.FrameSlider.getWidget(), 'height') - 5;
 	
 	var tempWidth = sliderTop - 10;
 	if (tempWidth > widgetWidth) {
@@ -101,7 +101,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	//----------------------------------
 	// CSS: FRAME SLIDER
 	//----------------------------------	
-    utils.css.setCSS(this.FrameSlider.getHolder(), { 
+    utils.css.setCSS(this.FrameSlider.getWidget(), { 
  		top : sliderTop,
     })
 	

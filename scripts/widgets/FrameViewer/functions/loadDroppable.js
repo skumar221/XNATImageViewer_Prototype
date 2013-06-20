@@ -17,7 +17,7 @@ FrameViewer.prototype.loadCurrViewPlane = function () {
 		$(that.canvas).fadeIn(GLOBALS.animFast);
 		
 		// Load Frames By ViewPlane
-		that.loadFramesByViewPlane(that.currViewPlane);					
+		that.loadFramesByViewPlane(that.currViewPlane);				
 	}		
 }
 
@@ -60,7 +60,7 @@ FrameViewer.prototype.loadDroppable = function (droppable, viewPlane) {
 							
 			},
 			
-			"onload" : function (img) {
+			"load" : function (img) {
 			
 				var mPath = that.currDroppable.pathMolder(img.src);
 				//utils.dom.debug("preload")
@@ -89,12 +89,12 @@ FrameViewer.prototype.loadDroppable = function (droppable, viewPlane) {
 					that.currDroppable.frames[mPath]['img'] = img;			
 					that.progBar.update({"add": 1});
 
-											
-					// load if at the appropriate pint
-					
-					that.loadCurrViewPlane();
 				}
 
+			},
+			
+			"complete" : function () {
+				that.loadCurrViewPlane();
 			}
 		})
 	}
