@@ -1,58 +1,27 @@
-
-var defaultArgs_ScanViewer = {
-	id: GLOBALS.ScanViewerPreId,
-	parent: document.body,
-	CSS: {
-		top: 0,
-		left: 80,
-		width: 500,
-		height: 500,
-		border: "solid rgba(90,90,90,1) 1px",
-		//backgroundColor: "rgba(208,123, 92, .3)",
-		position: "absolute",
-	 	overflow: "hidden",
-	 	"overflow-x": "visible",
-	 	"overflow-y": "visible"
-	},
-	sliderCSS:	
-	{
-		id: "_FrameSlider", 
-		parent: document.body,
-		round: true,
-		handleOffsetLeft: 0,
-	  	handleOffsetTop: 0,
-		widgetCSS:{
-		},
-		handleCSS:{
-			height: 8,
-			width: 8,
-			borderRadius: 2,
-			borderColor: GLOBALS.semiactiveLineColor,
-			backgroundColor: "rgba(255,255,255,1)"
-		},
-		trackCSS:{
-			height: 3,
-			borderWidth: 1,
-			borderColor: GLOBALS.semiactiveLineColor,
-			backgroundColor: "rgba(70, 70, 70, 1)",
-			borderRadius: "3px"
-		}
-	}
-}
-
-
-
-
-
-
-
 //******************************************************
 //  Init
 //	
 //******************************************************
-var ScanViewer = function (args) {
+goog.require('goog.fx.DragDrop');
+goog.require('goog.fx.DragDropGroup');
+goog.require('goog.array');
+
+goog.provide('XVViewer');
+
+/*
+ * @constructor
+ */
+ScanViewer = function (args) {
   	
-	utils.oo.init(this, defaultArgs_ScanViewer, args);
+	utils.oo.init(this, this.defaultArgs, args);	
+	
+	goog.fx.DragDrop.call(this, this.widget, undefined);
+	
+	this.setSourceClass('source');
+	this.setTargetClass('target'); 			
+	this.init();
+	
+	
 	var that = this;
 	this.widget.defaultMouseEvents = [];
 	
@@ -237,6 +206,59 @@ var ScanViewer = function (args) {
 
 
 }
+goog.inherits(ScanViewer, goog.fx.DragDrop);
+
+
+
+
+
+/*
+ * @type {object}
+ * @protected
+ */
+ScanViewer.prototype.defaultArgs = {
+	id: GLOBALS.ScanViewerPreId,
+	parent: document.body,
+	CSS: {
+		top: 0,
+		left: 80,
+		width: 500,
+		height: 500,
+		border: "solid rgba(90,90,90,1) 1px",
+		//backgroundColor: "rgba(208,123, 92, .3)",
+		position: "absolute",
+	 	overflow: "hidden",
+	 	"overflow-x": "visible",
+	 	"overflow-y": "visible"
+	},
+	sliderCSS:	
+	{
+		id: "_FrameSlider", 
+		parent: document.body,
+		round: true,
+		handleOffsetLeft: 0,
+	  	handleOffsetTop: 0,
+		widgetCSS:{
+		},
+		handleCSS:{
+			height: 8,
+			width: 8,
+			borderRadius: 2,
+			borderColor: GLOBALS.semiactiveLineColor,
+			backgroundColor: "rgba(255,255,255,1)"
+		},
+		trackCSS:{
+			height: 3,
+			borderWidth: 1,
+			borderColor: GLOBALS.semiactiveLineColor,
+			backgroundColor: "rgba(70, 70, 70, 1)",
+			borderRadius: "3px"
+		}
+	}
+}
+
+
+
 
 ScanViewer.prototype.setJQueryEvents = function () {
 	

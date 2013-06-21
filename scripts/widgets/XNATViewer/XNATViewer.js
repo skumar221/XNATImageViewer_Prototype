@@ -108,7 +108,7 @@ var XNATViewer = function (args) {
 	
 
 
-	this.initThumbnailDragDropMethods();
+	this.initThumbnailDragDrop();
 	
 	
 	
@@ -118,7 +118,7 @@ var XNATViewer = function (args) {
 	this.addViewerManager();
 	this.Viewers({
 		'addInsertRemoveCallback' : function() {
-			that.manageDragAndDrop();
+			that.setThumbnailDragAndDrop();
 		}
 	})
 	

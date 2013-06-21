@@ -20,10 +20,13 @@ ScanThumbnail = function (scanData, args) {
 	
 	
 	utils.oo.init(this, this.defaultArgs, args);
-	
-
 	utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.defaultArgs.widgetCSS, args.widgetCSS));
+	
+	
 	goog.fx.DragDrop.call(this, this.widget, undefined);
+
+	
+	
 	
 	this.widget.className = "XVThumbnail";
 
@@ -201,6 +204,30 @@ goog.inherits(ScanThumbnail, goog.fx.DragDrop);
 
 
 /*
+* @type {function(boolean)}
+*/
+ScanThumbnail.prototype.setActive = function(active) {
+
+
+	if (active) {
+		utils.css.setCSS(this.widget, {
+			opacity: 1
+		})
+	}
+	else {
+		utils.css.setCSS(this.widget, {
+			opacity: .5
+		})
+	}
+
+	this.isActive = function () {
+		return enabled;
+	}	
+
+}
+
+
+/*
 * @type {function(element)}
 * @protected
 */
@@ -269,7 +296,7 @@ ScanThumbnail.prototype.addHoverMethods = function () {
 	// SET HOVER METHOD
 	//			
 	var bgDefault = "rgb(0,0,0)";
-	var bgHighlight = "rgb(30,30,30)";
+	var bgHighlight = "rgb(80, 80, 80)";
 	
 	
 	// set defaults
@@ -293,13 +320,13 @@ ScanThumbnail.prototype.addHoverMethods = function () {
 	// mouseover
 	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, goog.partial(applyHover, {
    		backgroundColor: bgHighlight,
-   		opacity: 1
+   		//opacity: 1
    }));
 	                   
 	// mouseout
 	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, goog.partial(applyHover, {
    		backgroundColor: bgDefault,
-   		opacity: .5
+   		//opacity: .5
    }));	
 	
 }
