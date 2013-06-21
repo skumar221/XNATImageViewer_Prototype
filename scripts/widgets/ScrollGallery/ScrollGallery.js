@@ -5,6 +5,9 @@
 
 goog.require('goog.ui.AnimatedZippy'); 
 goog.require('goog.events'); 
+goog.require('goog.dom'); 
+
+
 goog.provide('ScrollGallery');
 
 
@@ -27,13 +30,18 @@ ScrollGallery = function (args) {
 	
 	
 	/**
+	 * @type {Object}
 	 * @protected
 	 */	
 	this.Scrollables = {};
 
 
-	var ScrollAreaWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.widgetCSS.width - 7;
+
+
+	var ScrollAreaWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.widgetCSS.width - 7;	
+	
 	/**
+	 * @type {Element}
 	 * @protected
 	 */	
 	this.ScrollArea = utils.dom.makeElement("div", this.widget, "ScrollArea", {
@@ -142,8 +150,7 @@ ScrollGallery.prototype.defaultArgs = function () {
  * @private
  */
 ScrollGallery.prototype.moveContents = function (Slider, that) {
-	
-	console.log("move")
+
 	var widgetHeight = utils.css.dims(that.widget, 'height');
 	var beforeRange = [Slider.getMinimum(), Slider.getMaximum()];
 	var scrollAreaHeight = 0;
@@ -196,11 +203,7 @@ ScrollGallery.prototype.addContentToZippy = function (header, contents) {
 	utils.dims.setCSS(that.ScrollContent,  {
 		height: utils.css.dims(contents, 'height')
 	})
-		
-	
-	
 
-		
 	this.updateCSS();
 }
 
@@ -238,67 +241,179 @@ ScrollGallery.prototype.getScrollables = function(h1, h2) {
 
 ScrollGallery.prototype.addZippy = function(zKey) {
 
+
 	var that = this;
 	var headerHeight = GLOBALS.fontSizeMed * 2;
-	var headerLeft = this.args.sliderCSS.widgetCSS.width + 5;
-	
+	var headerLeft = this.args.sliderCSS.widgetCSS.width + 5;	
 	this.Scrollables[zKey] = {};
 	
+	var header,
+		headerLabel,
+		expandIcon,
+		content,
+		zippy;
 	
 	
-	this.Scrollables[zKey]['header'] = utils.dom.makeElement("div", this.ScrollArea, "Header_" + zKey, {
+	
+	
+	//-----------------------------------
+	// ZIPPY HEADER
+	//-----------------------------------
+	var counter = 0;
+	for (key in this.Scrollables) {
+		counter ++;
+	}
+	
+	header = utils.dom.makeElement("div", this.ScrollArea, "Header_" + zKey, {
 		position: "relative",
+		marginTop: (counter > 1) ? 5 : 0,
 		backgroundColor: "rgb(70,70,70)",
 		//top: -5,
 		//left: headerLeft,
 		width: utils.css.dims(this.ScrollArea, 'width'),
 		height: '1.5em',
 		color: 'rgb(0, 0, 0)',
-		fontSize: GLOBALS.fontSizeLarge,
+		fontSize: GLOBALS.fontSizeMed,
 		fontFamily: GLOBALS.fontFamily,
 		cursor: 'pointer'
 	})
-	this.Scrollables[zKey]['header'].key = zKey;
+	header.className = 'ZippyHeader';
+	header.key = zKey;
+	this.Scrollables[zKey]['header'] = header;
 	
 	
-	this.Scrollables[zKey]['headerLabel'] = utils.dom.makeElement("div", this.Scrollables[zKey]['header'], "HeaderLabel_" + zKey, {
+
+
+	//-----------------------------------
+	// HEADER LABEL
+	//-----------------------------------
+	headerLabel = utils.dom.makeElement("div", header, "HeaderLabel_" + zKey, {
 		position: "absolute",
 		marginTop: '.25em',
-		marginLeft: '1em'
+		marginLeft: '1em',
+		backgroundColor: "none"
 	})
-	this.Scrollables[zKey]['headerLabel'].innerHTML = zKey;
+	headerLabel.innerHTML = zKey;
+	this.Scrollables[zKey]['headerLabel'] = headerLabel;
 	
-	
-	
-	this.Scrollables[zKey]['expandIcon'] = utils.dom.makeElement("div", this.Scrollables[zKey]['header'], "ExpandIcon_" + zKey, {
+
+
+
+	//-----------------------------------
+	// HEADER EXPAND ICON
+	//-----------------------------------	
+	expandIcon = utils.dom.makeElement("div", header, "ExpandIcon_" + zKey, {
 		position: "absolute",
 		left: utils.css.dims(this.ScrollArea, 'width'), 
-		marginLeft: '-1em',
-		color: "rgb(120,120,120)",
-		fontSize: 20,
+		marginTop: '.25em',
+		marginLeft: '-1em'
 	})
-	this.Scrollables[zKey]['expandIcon'].innerHTML = "-";
+	expandIcon.innerHTML = "-";
+	this.Scrollables[zKey]['expandIcon'] = expandIcon;
 	
 	
-	
-	this.Scrollables[zKey]['content'] = utils.dom.makeElement("div", this.ScrollArea, "Content_" + zKey, {
-		//position: "absolute",
-		width: utils.css.dims(this.ScrollArea, 'width') - 3,
+
+
+	//-----------------------------------
+	// ZIPPY CONTENT
+	//-----------------------------------	
+
+	content = utils.dom.makeElement("div", this.ScrollArea, "Content_" + zKey, {
+		width: utils.css.dims(this.ScrollArea, 'width'),
 		top: headerHeight,
 		left: headerLeft,
-		backgroundColor: "rgba(0,0,0,1)",
-	})	
+		//backgroundColor: "rgba(0,0,0,1)",
+	})		
+	this.Scrollables[zKey]['content'] = content;
+
+
 	
 	
+	//
+	// CREATE ZIPPY
+	//	
+	zippy = new goog.ui.AnimatedZippy(header, content, false);
+	this.Scrollables[zKey]['zippy'] = zippy;
+
+
+
+
+	//
+	// SET EXPAND METHOD
+	//	
 	var EVENTS = goog.object.getValues(goog.ui.Zippy.Events);
-	this.Scrollables[zKey]['zippy'] = new goog.ui.AnimatedZippy(this.Scrollables[zKey]['header'], this.Scrollables[zKey]['content'], true);
-	
-	goog.events.listen(this.Scrollables[zKey]['zippy'], EVENTS, function(e) { 
-		
-		that.moveContents(that.ContentSlider, that);
-
-		var elt = document.getElementById("ExpandIcon_" + e.target.elHeader_.key);
-		elt.innerHTML = (e.target.isExpanded()) ? "-" : "+";
-
+	goog.events.listen(zippy, EVENTS, function(e) { 		
+		 //
+		 //  Moves contents
+		 //
+		that.moveContents(that.ContentSlider, that);		
+		//
+		// Change expand icon to '+' or '-'
+		//
+		if (e.target.isExpanded()) {
+			expandIcon.innerHTML =  "-";
+			utils.css.setCSS(expandIcon, {
+				marginLeft: '-1em'
+			})
+		}
+		else {
+			expandIcon.innerHTML =  "+";
+			utils.css.setCSS(expandIcon, {
+				marginLeft: '-1.1em'
+			})				
+		}
 	});
+	
+
+
+
+	//
+	// SET HOVER METHOD
+	//			
+	var bgDefault = "rgb(70,70,70)";
+	var bgHighlight = "rgb(110,110,110)";
+	var iconDefault = "rgb(100,100,100)";
+	var iconHighlight = "rgb(200,200,200)";
+	
+	
+	// set defaults
+	utils.css.setCSS(header, {
+		backgroundColor: bgDefault,
+	})
+	utils.css.setCSS(expandIcon, {
+		color: iconDefault,
+	})
+	
+	
+	// hover function
+	function applyHover(cssObj, e) {
+		if (e.target == e.currentTarget) {
+			utils.css.setCSS(e.target, cssObj)				
+		}	
+		else {
+			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, 'ZippyHeader'), cssObj)			
+		}
+		utils.css.setCSS(expandIcon, cssObj['iconColor'])		   
+	}
+
+
+
+	// mouseover
+	goog.events.listen(header, goog.events.EventType.MOUSEOVER, goog.partial(applyHover, {
+   		backgroundColor: bgHighlight,
+   		'iconColor' : {
+   			color: iconHighlight,
+   		}
+   }));
+	                   
+	// mouseout
+	goog.events.listen(header, goog.events.EventType.MOUSEOUT, goog.partial(applyHover, {
+   		backgroundColor: bgDefault,
+   		'iconColor' : {
+   			color: iconDefault,
+   		}
+   }));	
+
+
+
 }

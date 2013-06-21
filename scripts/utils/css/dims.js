@@ -19,13 +19,14 @@ utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
 	}
 
 	var size = goog.style.getSize(elt);
+	
 	if (dimArgs.indexOf('height') > -1) {
-		retObj['height'] = size.height;//$(elt).height();
+		retObj['height'] = $(elt).height();
 
 	}
 	
 	if (dimArgs.indexOf('width') > -1) {
-		retObj['width'] = size.width;//$(elt).width();
+		retObj['width'] = $(elt).width();
 	}
 	
 	

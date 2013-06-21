@@ -1,6 +1,7 @@
 XNATViewer.prototype.addScrollGallery = function (rowPos) {	
 	
 	var that = this;
+
 	
 	//----------------------------------
 	//	SCROLL GALLERY
@@ -15,10 +16,46 @@ XNATViewer.prototype.addScrollGallery = function (rowPos) {
 		}
 	});	
 	
-
-	this.ScrollGallery.addZippy('Scans');
 	
-	var thumbContents = this.ScrollGallery.getScrollables('Scans' , 'content');
+	// AJAX HERE
+	var scanKey = 'Scans';
+	
+	this.ScrollGallery.addZippy(scanKey);
+	
+	var thumbContents = this.ScrollGallery.getScrollables(scanKey , 'content');
+	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
+
+	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
+		//var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
+		var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
+		  	id: "ScanThumbnail_" + i.toString(),			  	
+		  	parent: thumbContents,  	
+		  	widgetCSS: {
+		  		position: "relative",
+		  		//top: h, 
+		  		left: 0,
+		  		width: thumbContentsWidth
+		  	},
+		  	'onloadCallbacks' : [function() { 
+				/*
+				 * This is to make sure the Slicer thumb resizes
+				 * in proportion to the content loaded.  Every call to 'moveContents'
+				 * resizes the slider thumb accordingly.s
+				 */
+		  		that.ScrollGallery.moveContents(that.ScrollGallery.ContentSlider, that.ScrollGallery);
+		  	}]			  	
+		});
+		
+		this.dragDropThumbnails.push(scanThumb);
+	}	
+
+
+	// AJAX HERE
+	var slicerKey = 'Slicer'
+	
+	this.ScrollGallery.addZippy(slicerKey);
+	
+	var thumbContents = this.ScrollGallery.getScrollables(slicerKey , 'content');
 	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
 	
 	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
@@ -31,10 +68,19 @@ XNATViewer.prototype.addScrollGallery = function (rowPos) {
 		  		//top: h, 
 		  		left: 0,
 		  		width: thumbContentsWidth
-		  	}			  	
+		  	},
+		  	'onloadCallbacks' : [function() { 
+				/*
+				 * This is to make sure the Slicer thumb resizes
+				 * in proportion to the content loaded.  Every call to 'moveContents'
+				 * resizes the slider thumb accordingly.s
+				 */
+		  		that.ScrollGallery.moveContents(that.ScrollGallery.ContentSlider, that.ScrollGallery);
+		  	}]			  	
 		});
-	}	
+		
+		this.dragDropThumbnails.push(scanThumb);
+	}
+	
 
-	this.ScrollGallery.moveContents(this.ScrollGallery.ContentSlider, this.ScrollGallery);
-	//this.ScrollGallery.ContentSlider.setValue(this.ScrollGallery.ContentSlider.getValue() - 1);
 }

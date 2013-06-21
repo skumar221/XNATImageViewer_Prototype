@@ -1,7 +1,10 @@
+goog.require('goog.array'); 
+
 XNATViewer.prototype.addViewerManager = function () {
 	
 	var viewers = [[]];
-
+	var insertRemoveCallbacks = [];
+	
 	this.Viewers = function (args1, args2, args3, args4, args5) {
 		
 		//utils.dom.debug(typeof args1)
@@ -12,6 +15,8 @@ XNATViewer.prototype.addViewerManager = function () {
 		var isString = (typeof args1 === 'string');
 		var isObject = (typeof args1 === 'object');	
 		var isFunction = (typeof args1 === 'function');	
+		
+		
 	
 		function widget(args1, args2) {
 			return viewers[args1][args2]
@@ -49,6 +54,7 @@ XNATViewer.prototype.addViewerManager = function () {
 			var ws = loop (function (ScanViewer) { 
 				return ScanViewer.widget;	
 			})
+
 			return ws;				
 		}		
 		
@@ -147,6 +153,26 @@ XNATViewer.prototype.addViewerManager = function () {
 			var isInsert = args1['insert'];
 			var isRemove = args1['remove'];
 			var isViewerAfter = args1['viewerAfter'];
+			var isAddInsertRemoveCallback = args1['addInsertRemoveCallback'];
+
+			var isDOMElement = args1.tagName;
+			
+			if (isDOMElement) {
+				var e = loop (function (ScanViewer) { 
+					if (ScanViewer.widget == args1) {
+						return ScanViewer;
+					};	
+				})
+				return e;		
+			}
+
+
+			if (isAddInsertRemoveCallback) {
+				insertRemoveCallbacks.push(args1['addInsertRemoveCallback']);
+			}
+			
+			
+			
 			
 			if (isElement) {
 				//
@@ -260,7 +286,7 @@ XNATViewer.prototype.addViewerManager = function () {
 						this.updateCSS();
 					}
 
-					
+
 				}	
 				if (isColumn) { 
 					
@@ -353,7 +379,15 @@ XNATViewer.prototype.addViewerManager = function () {
 			
 		}
 		
-		
+		if (isInsert || isRemove) {
+			if (insertRemoveCallbacks.length > 0) {
+				goog.array.forEach(insertRemoveCallbacks, function(item) {
+					item();					
+				});
+			}			
+		}
+
+					
 		//---------------------
 		// FUNCION
 		//---------------------	

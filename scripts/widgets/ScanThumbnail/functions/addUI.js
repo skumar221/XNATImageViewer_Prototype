@@ -1,3 +1,10 @@
+goog.require('goog.fx.DragDrop');
+goog.require('goog.fx.DragDropGroup');
+goog.require('goog.dom');
+
+
+
+
 ScanThumbnail.prototype.addUI = function () {
 	
 	var that = this;

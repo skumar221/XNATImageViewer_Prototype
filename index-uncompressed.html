@@ -1,0 +1,131 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>XNAT Image Viewer (Prototype)</title>
+  
+  <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css" />
+  <script type="text/javascript" src="./scripts/utils/lib/jquery/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="./scripts/utils/lib/jquery/ui/jquery-ui-1.10.3.custom.min.js"></script>
+  <script type="text/javascript" src="./scripts/utils/lib/jquery/collision/jquery-collision.min.js"></script>
+  <script type="text/javascript" src="./scripts/utils/lib/closure-library/closure/goog/base.js"></script>
+<script> 
+
+goog.require('goog.ui.Slider'); 
+goog.require('goog.events.MouseWheelHandler');
+goog.require('goog.fx.DragDrop');
+	
+	
+	</script>
+	<script src="./scripts/utils/utils.js"></script>	
+	
+	<script src="./scripts/utils/globals/globals.js"></script>
+
+	<script src="./scripts/utils/convert/remap1D.js"></script>
+	<script src="./scripts/utils/convert/toInt.js"></script>
+	<script src="./scripts/utils/convert/pct.js"></script>
+	<script src="./scripts/utils/convert/px.js"></script>
+	<script src="./scripts/utils/convert/replaceIllegalChars.js"></script>
+	
+	<script src="./scripts/utils/css/dims.js"></script>
+	<script src="./scripts/utils/css/absolutePosition.js"></script>
+	<script src="./scripts/utils/css/setCSS_jquery.js"></script>
+	<script src="./scripts/utils/css/totalHeight.js"></script>
+	<script src="./scripts/utils/css/totalWidth.js"></script>
+	<script src="./scripts/utils/css/processCSSObject.js"></script>
+	
+	<script src="./scripts/utils/gui/draggable_jquery.js"></script>
+	<script src="./scripts/utils/gui/GenericSlider.js"></script>
+	<script src="./scripts/utils/gui/progressBar_jquery.js"></script>
+	<script src="./scripts/utils/gui/horizontalSlider.js"></script>
+	<script src="./scripts/utils/gui/verticalSlider.js"></script>
+	<script src="./scripts/utils/gui/dialogBox.js"></script>
+	
+	<script src="./scripts/utils/dom/debug.js"></script>
+	<script src="./scripts/utils/dom/getMouseXY.js"></script>
+	<script src="./scripts/utils/dom/makeElement.js"></script>
+	<script src="./scripts/utils/dom/mergeArgs.js"></script>
+	<script src="./scripts/utils/dom/uniqueId.js"></script>
+	<script src="./scripts/utils/dom/validateArgs.js"></script>
+	<script src="./scripts/utils/dom/addCallbackManager.js"></script>
+	<script src="./scripts/utils/dom/stopPropagation.js"></script>
+	
+	<script src="./scripts/utils/oo/init.js"></script>
+	
+	<script src="./scripts/widgets/FrameSlider/FrameSlider.js"></script>
+	<script src="./scripts/widgets/SliderLinker/SliderLinker.js"></script>
+	<script src="./scripts/widgets/SliderLinker/functions/addClearAllPopup.js"></script>
+	<script src="./scripts/widgets/SliderLinker/functions/addLinkMenuPopup.js"></script>
+	<script src="./scripts/widgets/SliderLinker/functions/setScanViewerClickListen.js"></script>
+	
+	
+	<script src="./scripts/globals/GLOBALS.js"></script>
+	<script src="./scripts/imaging/imageProcessingFunctions.js"></script>
+	
+	
+
+	<script src="./scripts/widgets/ContentDivider/ContentDivider.js"></script>
+	<script src="./scripts/widgets/FrameViewer/FrameViewer.js"></script>
+	<script src="./scripts/widgets/FrameViewer/functions/loadFrames.js"></script>
+	<script src="./scripts/widgets/FrameViewer/functions/updateCSS.js"></script>
+	<script src="./scripts/widgets/FrameViewer/functions/loadDroppable.js"></script>
+	<script src="./scripts/widgets/FrameViewer/functions/loadFramesByViewPlane.js"></script>
+	
+	<script src="./scripts/widgets/ScanTabs/ScanTabs.js"></script>
+	
+	<script src="./scripts/widgets/ScanThumbnail/ScanThumbnail.js"></script>
+	<script src="./scripts/widgets/ScanThumbnail/functions/addUI.js"></script>
+	<script src="./scripts/widgets/ScanThumbnail/functions/loadFramesToDOM.js"></script>
+	
+	
+	<script src="./scripts/widgets/ScanViewer/ScanViewer.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/addLinkMenu.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/addViewPlaneMenu.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/populateData.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/setDraggable_jQuery.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/addAdjustSliders.js"></script>
+	<script src="./scripts/widgets/ScanViewer/functions/addFrameSlider.js"></script>
+
+	<script src="./scripts/widgets/ScanViewer/functions/updateCSS.js"></script>
+	<script src="./scripts/widgets/ScrollGallery/ScrollGallery.js"></script>
+	
+	
+	<script src="./testscans/SCAN_07_Defaced.js"></script>
+	<script src="./testscans/SCAN_08_Defaced.js"></script>
+	<script src="./testscans/SCAN_09_Defaced.js"></script>
+	<script src="./testscans/SCAN_10_Defaced.js"></script>
+	<script src="./testscans/SCAN_17_Defaced.js"></script>
+	<script src="./testscans/SCAN_18_Defaced.js"></script>
+	<script src="./testscans/SCAN_19_Defaced.js"></script>
+	<script src="./testscans/SCAN_20_Defaced.js"></script>
+	<script src="./testscans/SCAN_21_Defaced.js"></script>
+	<script src="./testscans/SCAN_24_Defaced.js"></script>
+	
+	<script src="./testscans/TestScanData.js"></script>
+	
+	<script src="./scripts/widgets/XNATViewer/XNATViewer.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/animateModal.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/destroy.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/ScanViewers/addColumnMenu.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/ScanViewers/addRowMenu.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/ScanViewers/addViewerManager.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/manageActiveThumbs.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/modalDims.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/updateCSS.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/addScrollGallery.js"></script>
+	<script src="./scripts/widgets/XNATViewer/functions/manageDragAndDropThumbnails.js"></script>
+	<script src="./scripts/widgets/XNATViewer/XNATViewerOnload.js"></script>
+
+
+</head>
+<body onload = "XNATViewerOnload()"> 
+	</body>
+
+
+
+
+
+
+
+</html>

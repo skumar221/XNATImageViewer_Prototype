@@ -1,57 +1,32 @@
-defaultArgs_ScanThumbnail = {
-	id: "ScanThumbnail",
-	parent: document.body,
-	draggableParent: document.body,
-	returnAnimMax: 300,
-	activated: false,
-	widgetCSS: {
-		position: "absolute",
-		width: GLOBALS.ThumbnailWidgetWidth,
-		height: GLOBALS.ThumbnailWidgetHeight,
-		top: 0,
-		left: 0,			
-	    "border" : "solid",
-		"border-color": "rgba(50,50,50,1)",
-		"color": "rgba(0,0,0,1)",
-	  	//"background-color" : "rgba(120,31,60,1)",
-	  	"border-width" : 1,
-	  	"border-radius": 0,	 
-	  	"cursor": "pointer"
-	},
-	ThumbnailImageCSS: {
-		position: "absolute",
-		width: GLOBALS.ThumbnailImageWidth - 2,
-		height: GLOBALS.ThumbnailImageHeight - 2,
-		top: 0,
-		left: 0,	
-		"overflow-y": "hidden",
-		"overflow-x": "hidden",
-	    "border" : "solid",
-		"border-color": "rgba(255,255,255,1)",
-		"color": "rgba(0,0,0,1)",
-	  	//"background-color" : "rgba(120,31,60,1)",
-	  	"border-width" : 1,
-	  	"border-radius": 0,	 
-	  	"cursor": "pointer"
-	}	
-}
-
-
-
 
 //******************************************************
 //  Init
 //
 //******************************************************
-function ScanThumbnail(scanData, args) {
+
+
+goog.require('goog.fx.DragDrop');
+goog.require('goog.fx.DragDropGroup');
+goog.require('goog.array');
+
+goog.provide('XVThumbnail');
+
+/*
+ * @constructor
+ */
+ScanThumbnail = function (scanData, args) {
 	var that = this;
-	utils.oo.init(this, defaultArgs_ScanThumbnail, args, function () {});
-
-
-	this.mouseDown = false;
-
-	utils.css.setCSS(this.widget, utils.dom.mergeArgs(defaultArgs_ScanThumbnail.widgetCSS, args.widgetCSS))
 	
+	
+	
+	utils.oo.init(this, this.defaultArgs, args);
+	
+
+	utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.defaultArgs.widgetCSS, args.widgetCSS));
+	goog.fx.DragDrop.call(this, this.widget, undefined);
+	
+	this.widget.className = "XVThumbnail";
+
 	
 	
 	//--------------------------------
@@ -65,6 +40,10 @@ function ScanThumbnail(scanData, args) {
 	//--------------------------------
 	// THUMBNAIL IMAGE (goes Into Canvas)
 	//--------------------------------	
+	/*
+	* @type {Image}
+	* @protected
+	*/	
 	this.ThumbnailImage = new Image();
 	this.ThumbnailImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
 
@@ -73,8 +52,12 @@ function ScanThumbnail(scanData, args) {
 	//--------------------------------
 	// THUMBNAIL CANVAS
 	//--------------------------------
+	/*
+	* @type {Canvas}
+	* @protected
+	*/	
 	this.ThumbnailCanvas = this.makeThumbnailCanvas("ThumbCanvas");
-	this.cloneable = this.ThumbnailCanvas; // for __Droppable__.js
+
 	
 	
 	
@@ -82,7 +65,10 @@ function ScanThumbnail(scanData, args) {
 	// FRAMES
 	//--------------------------------
 	this.frames = {};
-	
+
+	/*
+	* @type {function(string)}
+	*/		
 	function populateFramesObject(viewPlane) {
 		
 		var b = that.getFrameList(viewPlane);
@@ -146,35 +132,41 @@ function ScanThumbnail(scanData, args) {
 	populateFramesObject("transverse");
 	
 	
-	
+	var thumbPos = utils.css.dims(this.ThumbnailCanvas)
 	//--------------------------------
 	// TEXT ELEMENT
 	//--------------------------------
-	var thumbPos = $(this.ThumbnailCanvas).position()
-	var textTop = thumbPos.top;
-	var textLeft = thumbPos.left + $(this.ThumbnailCanvas).width() + GLOBALS.ThumbnailImageMarginX;
-	
-	
+	/*
+	* @type {Element}
+	*/	
 	this.TextElement = utils.dom.makeElement("div", this.widget, "TextElement", {
-		position: "absolute",
+		position: "relative",
 		height: this.args.ThumbnailImageCSS.height,
 		width: this.args.ThumbnailImageCSS.width,
-		top: textTop,
-		left: textLeft,
+		top: GLOBALS.ThumbnailImageMarginX*1,
+		left: thumbPos.width + GLOBALS.ThumbnailImageMarginX*2,
 		color: "rgba(255,255,255,1)",
 		fontSize: 11,		
 	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
 
-	this.TextElement.innerHTML += "<b><font size = '3'>" + utils.convert.toInt(this.scanData.sessionInfo["Scan"].value) + "</font></b><br>";
-	this.TextElement.innerHTML += this.scanData.sessionInfo["type"].value.toString().toLowerCase() + "<br>";
-	this.TextElement.innerHTML += (this.scanData["sagittalPaths"].length.toString().toLowerCase() + " frames<br>");
 
+	this.ThumbnailCanvas.metaText = [];
+	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData.sessionInfo["Scan"].value);
+	this.ThumbnailCanvas.metaText[1] = this.scanData.sessionInfo["type"].value.toString().toLowerCase();
+	this.ThumbnailCanvas.metaText[2] = this.scanData["sagittalPaths"].length.toString().toLowerCase();
+	
+	
+	this.TextElement.innerHTML += "<b><font size = '3'>" + this.ThumbnailCanvas.metaText[0]  + "</font></b><br>";
+	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[1]  + "<br>";
+	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[2]  + " frames<br>";
 	
 
 	
-	this.addHoverMethods();
-	this.addUI();
+	
+
+	
+	this.addHoverMethods();
 
 	
 		
@@ -184,7 +176,7 @@ function ScanThumbnail(scanData, args) {
 	// Once the image lods, we want to make sure it is also the draggable image
 	// and that it's draw on the Thumbnail canvas.
 
-	$(this.ThumbnailImage).load(function () {		
+	this.ThumbnailImage.onload = function () {		
 		if (that.ThumbnailCanvas)
 		
 			that.ThumbnailCanvas.getContext("2d").drawImage(
@@ -193,22 +185,60 @@ function ScanThumbnail(scanData, args) {
 				 that.args.ThumbnailImageCSS.height
 			);
 		
-		else
+		else {
 			utils.dom.debug("No thumb canvas")
-	});
+		}
+		
+		if (args['onloadCallbacks']) {
+			for (var i=0, len = args['onloadCallbacks'].length; i < len; i++) {
+				args['onloadCallbacks'][i]();	
+			}
+		}
+	}
 
 }
+goog.inherits(ScanThumbnail, goog.fx.DragDrop);
 
 
+/*
+* @type {function(element)}
+* @protected
+*/
+ScanThumbnail.prototype.createDragElement = function(sourceEl) {
+
+	var e = sourceEl.cloneNode(false);
+	if (e.tagName === 'CANVAS') { 
+		var context = e.getContext("2d");
+		context.drawImage(sourceEl, 0, 0);		  
+	    context.fillStyle = "white";
+	    context.font = "bold 18px " + GLOBALS.fontFamily;
+	    context.fillText(sourceEl.metaText[0], e.width - 20, 20);
+	  	e.style.opacity = .5;
+	} 	
+	return e;
+};
+
+
+
+/*
+* @type {function(string)}
+* @protected
+*/
 ScanThumbnail.prototype.pathMolder = function (path) {	
 	
 	splitStrs = path.split("testscans");
 	return splitStrs[1];
 }
 
+
+
 //****************************************
 // THUMB CANVASES
 //****************************************
+/*
+* @type {function()}
+* @protected
+*/
 ScanThumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	
 	var that = this;
@@ -227,129 +257,97 @@ ScanThumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 }
 
 
-
-
-
-
-
-
-
+/*
+* @type {function()}
+* @protected
+*/
 ScanThumbnail.prototype.addHoverMethods = function () {
 	
 	var that = this;
-	var inactiveFade = .6;
-	
-	
-	//--------------------------
-	// Setup procedure, defines the mouseenters
-	//--------------------------		
-	
-	
-	$(this.widget).bind('mouseenter.browse', function () {
 
-		$(that.widget).stop().animate({
-			
-			opacity: 1,
-			borderColor: "rgb(255,255,255)"
-			
-		}, 0);
-		
-		$(that.ThumbnailCanvas).stop().animate({
-
-			borderColor: "rgb(155,155,155)"
-			
-		}, 0);
-	
-	}).bind('mouseleave.browse', function () {
-		
-		$(that.widget).stop().animate({
-			
-			opacity: inactiveFade,
-			borderColor: "rgb(0,0,0)"
-			
-		}, 0);
-
-		$(that.ThumbnailCanvas).stop().animate({
-
-			borderColor: "rgb(85,85,85)"
-			
-		}, 0);
-		
-	});
-	
-	$(this.widget).mouseleave();
-	
-}
-
-
-
-
-//****************************************
-// DEACTIVATE
-//****************************************
-ScanThumbnail.prototype.deactivate = function () { 
-	//utils.dom.debug("DEACTIVATING: " + this.args.id)
-	
-	var that = this;
-	this.args.activated = false;
+	//
+	// SET HOVER METHOD
+	//			
+	var bgDefault = "rgb(0,0,0)";
+	var bgHighlight = "rgb(30,30,30)";
 	
 	
-	//--------------------------
-	// GENERIC BORDER HIGHLIGHT
-	//--------------------------	
-	borderHighlightOnHover(this.widget);
+	// set defaults
+	
+	utils.css.setCSS(this.widget, {
+		backgroundColor: bgDefault,
+		opacity: .5,
+	})
 	
 	
-	//--------------------------
-	// SHOW HOVERING METADATA
-	//--------------------------
-	$(this.widget).mouseenter(function () {
-		that.hoverOn(that.args.animtime);
-	}).mouseleave(function () {
-		that.hoverOff(that.args.animtime);
-	});	
-	
-	
-	this.hoverOff(100);
-}
-
-
-
-
-//****************************************
-// ACTIVATE
-//****************************************
-ScanThumbnail.prototype.activate = function (activeTarget) { 
-	var that = this;
-	this.args.activated = true;
-	
-	// Do the hover On
-	this.hoverOn(0);
-	
-	
-	// Unbind all hover existing methods
-	$(this.widget).unbind('mouseenter').unbind('mouseleave');
-	
-
-	// Since we're unbinding everything we have to rebind
-	// the generic hover (border highlighting)	
-	borderHighlightOnHover(this.widget);
-		
-	// Callbacks	
-	if (this.activatedCallbacks && this.activatedCallbacks.length > 0) {
-		for (var i = 0, len = this.activatedCallbacks.length; i < len; i++) {			this.activatedCallbacks[i](that, {
-				"activeTarget": activeTarget
-			});
-		}
+	// hover function
+	function applyHover(cssObj, e) {
+		if (e.target == e.currentTarget) {
+			utils.css.setCSS(e.target, cssObj)				
+		}	
+		else {
+			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, 'XVThumbnail'), cssObj)			
+		}	   
 	}
+
+	// mouseover
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, goog.partial(applyHover, {
+   		backgroundColor: bgHighlight,
+   		opacity: 1
+   }));
+	                   
+	// mouseout
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, goog.partial(applyHover, {
+   		backgroundColor: bgDefault,
+   		opacity: .5
+   }));	
+	
 }
 
 
 
 
-//****************************************
-// FRAMES
-//****************************************
+/*
+* @type {Object}
+* @protected
+*/
+ScanThumbnail.prototype.defaultArgs = {
+	id: "ScanThumbnail",
+	parent: document.body,
+	draggableParent: document.body,
+	returnAnimMax: 300,
+	activated: false,
+	widgetCSS: {
+		position: "absolute",
+		width: GLOBALS.ThumbnailWidgetWidth,
+		height: GLOBALS.ThumbnailWidgetHeight,
+		top: 0,
+		left: 0,			 
+	  	"cursor": "pointer",
+	  	backgroundColor: "rgb(244,0,0)"
+	},
+	ThumbnailImageCSS: {
+		position: "absolute",
+		width: GLOBALS.ThumbnailImageWidth - 2,
+		height: GLOBALS.ThumbnailImageHeight - 2,
+		top: 0,
+		left: 0,	
+		"overflow-y": "hidden",
+		"overflow-x": "hidden",
+	    "border" : "solid",
+		"border-color": "rgba(255,255,255,1)",
+		//"color": "rgba(0,0,0,1)",
+	  	"background-color" : "rgba(120,31,60,1)",
+	  	"border-width" : 1,
+	  	"border-radius": 0,	 
+	  	"cursor": "pointer"
+	}	
+}
+
+
+/*
+* @type {function(string)}
+*/
 ScanThumbnail.prototype.getFrameList = function (type) {
 
 	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
@@ -370,6 +368,9 @@ ScanThumbnail.prototype.updateCSS = function () {
 //****************************************
 // activated callaback
 //****************************************
+/*
+* @type {function(function)}
+*/
 ScanThumbnail.prototype.addActivatedCallback = function (callback) {
 	if(!this.activatedCallbacks)
 		this.activatedCallbacks = [];
