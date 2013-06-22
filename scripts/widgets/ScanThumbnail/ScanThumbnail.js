@@ -9,7 +9,7 @@ goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
 
-goog.provide('XVThumbnail');
+goog.provide(GLOBALS.classNames.XVThumbnail);
 
 /*
  * @constructor
@@ -28,7 +28,7 @@ ScanThumbnail = function (scanData, args) {
 	
 	
 	
-	this.widget.className = "XVThumbnail";
+	this.widget.className = GLOBALS.classNames.XVThumbnail;
 
 	
 	
@@ -141,6 +141,7 @@ ScanThumbnail = function (scanData, args) {
 	//--------------------------------
 	/*
 	* @type {Element}
+	* @protected
 	*/	
 	this.TextElement = utils.dom.makeElement("div", this.widget, "TextElement", {
 		position: "relative",
@@ -148,11 +149,10 @@ ScanThumbnail = function (scanData, args) {
 		width: this.args.ThumbnailImageCSS.width,
 		top: GLOBALS.ThumbnailImageMarginX*1,
 		left: thumbPos.width + GLOBALS.ThumbnailImageMarginX*2,
-		color: "rgba(255,255,255,1)",
 		fontSize: 11,		
 	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
-
+	utils.dom.addClass(this.ThumbnailCanvas, GLOBALS.classNames.XVThumbnailCanvas);
 
 	this.ThumbnailCanvas.metaText = [];
 	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData.sessionInfo["Scan"].value);
@@ -163,12 +163,7 @@ ScanThumbnail = function (scanData, args) {
 	this.TextElement.innerHTML += "<b><font size = '3'>" + this.ThumbnailCanvas.metaText[0]  + "</font></b><br>";
 	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[1]  + "<br>";
 	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[2]  + " frames<br>";
-	
 
-	
-	
-
-	
 	this.addHoverMethods();
 
 	
@@ -207,23 +202,31 @@ goog.inherits(ScanThumbnail, goog.fx.DragDrop);
 * @type {function(boolean)}
 */
 ScanThumbnail.prototype.setActive = function(active) {
-
-
+	var that = this;
+	//goog.events.dispatchEvent(that.widget, goog.events.EventType.MOUSEOUT);	
+	//goog.events.EventTarget.call(this.widget);
+		 
+	
 	if (active) {
-		utils.css.setCSS(this.widget, {
-			opacity: 1
+		
+		that.widget.isActive = true;
+		utils.css.setCSS(that.widget, {
+			backgroundColor: that.args.bgHighlight,
 		})
+		
 	}
 	else {
-		utils.css.setCSS(this.widget, {
-			opacity: .5
+		console.log("here")
+		that.widget.isActive = false;
+		utils.css.setCSS(that.widget, {
+			backgroundColor: that.args.bgDefault,
 		})
+		
 	}
 
 	this.isActive = function () {
-		return enabled;
-	}	
-
+		return active;
+	}		
 }
 
 
@@ -231,19 +234,47 @@ ScanThumbnail.prototype.setActive = function(active) {
 * @type {function(element)}
 * @protected
 */
-ScanThumbnail.prototype.createDragElement = function(sourceEl) {
+ScanThumbnail.prototype.createDragElement = function(srcElt) {
 
-	var e = sourceEl.cloneNode(false);
-	if (e.tagName === 'CANVAS') { 
-		var context = e.getContext("2d");
-		context.drawImage(sourceEl, 0, 0);		  
-	    context.fillStyle = "white";
-	    context.font = "bold 18px " + GLOBALS.fontFamily;
-	    context.fillText(sourceEl.metaText[0], e.width - 20, 20);
-	  	e.style.opacity = .5;
-	} 	
-	return e;
-};
+	var parent, clonedElt, srcCanv, clonedCanv, context;
+
+
+	
+	// if you click on the parent
+	if (srcElt.className.indexOf(GLOBALS.classNames.XVThumbnail) > -1) {
+		parent = srcElt;
+	}
+	// if you click on the child
+	else {
+		parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.XVThumbnail)		
+	}
+
+
+	
+	//
+	// Create draggable ghost by cloning the parent
+	//	
+	clonedElt = parent.cloneNode(true);	
+
+
+	
+	//
+	// Get canvases for reference
+	//
+	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.XVThumbnailCanvas, parent);
+	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.XVThumbnailCanvas, clonedElt);
+
+
+	
+	//
+	// Draw text on draggable ghost
+	//
+	context = clonedCanv.getContext("2d");
+	context.drawImage(srcCanv, 0, 0);		  
+  	clonedElt.style.opacity = .5;	
+
+	return clonedElt;
+}
 
 
 
@@ -273,7 +304,7 @@ ScanThumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	var elt = utils.dom.makeElement("canvas", this.widget, idAppend, utils.dom.mergeArgs(this.args.ThumbnailImageCSS,{
 		top: GLOBALS.ThumbnailImageMarginY,
 		left: GLOBALS.ThumbnailImageMarginX,
-		 color: "rgb(255,255,255)"
+		 //color: "rgb(255,255,255)"
 	}));
 
 	elt.width = this.args.ThumbnailImageCSS.width;
@@ -295,39 +326,59 @@ ScanThumbnail.prototype.addHoverMethods = function () {
 	//
 	// SET HOVER METHOD
 	//			
-	var bgDefault = "rgb(0,0,0)";
-	var bgHighlight = "rgb(80, 80, 80)";
+
 	
 	
 	// set defaults
+	function setDefault() {
+		
+		if (!that.widget.isActive) {
+			utils.css.setCSS(that.widget, {
+				backgroundColor: that.args.bgDefault,
+			})
+		}
+		
+		utils.css.setCSS(that.TextElement, {
+			color: that.args.textDefault,
+		})	
+		
+		utils.css.setCSS(that.ThumbnailCanvas, {
+			borderColor: that.args.textDefault,
+		})			
+	}
+	setDefault();
 	
-	utils.css.setCSS(this.widget, {
-		backgroundColor: bgDefault,
-		opacity: .5,
-	})
-	
+	function highlight() {
+
+		utils.css.setCSS(that.widget, {
+			backgroundColor: that.args.bgHighlight,
+		})			
+
+
+		utils.css.setCSS(that.TextElement, {
+			color: that.args.textHighlight,
+		})	
+		
+		utils.css.setCSS(that.ThumbnailCanvas, {
+			borderColor: that.args.textHighlight,
+		})			
+	}
 	
 	// hover function
-	function applyHover(cssObj, e) {
-		if (e.target == e.currentTarget) {
-			utils.css.setCSS(e.target, cssObj)				
-		}	
+	function applyHover(hover) {
+		if (hover) {
+			highlight();
+		}   
 		else {
-			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, 'XVThumbnail'), cssObj)			
-		}	   
+			setDefault();
+		}
 	}
 
 	// mouseover
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, goog.partial(applyHover, {
-   		backgroundColor: bgHighlight,
-   		//opacity: 1
-   }));
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() {applyHover(true) });
 	                   
 	// mouseout
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, goog.partial(applyHover, {
-   		backgroundColor: bgDefault,
-   		//opacity: .5
-   }));	
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() {applyHover(false) });	
 	
 }
 
@@ -344,6 +395,10 @@ ScanThumbnail.prototype.defaultArgs = {
 	draggableParent: document.body,
 	returnAnimMax: 300,
 	activated: false,
+	bgDefault : "rgb(0,0,0)",
+	bgHighlight: "rgb(50, 50, 50)",
+	textDefault : "rgb(120,120,120)",
+	textHighlight: "rgb(230, 230, 230)",
 	widgetCSS: {
 		position: "absolute",
 		width: GLOBALS.ThumbnailWidgetWidth,
@@ -362,9 +417,9 @@ ScanThumbnail.prototype.defaultArgs = {
 		"overflow-y": "hidden",
 		"overflow-x": "hidden",
 	    "border" : "solid",
-		"border-color": "rgba(255,255,255,1)",
+		"border-color": "rgb(120,120,120)",
 		//"color": "rgba(0,0,0,1)",
-	  	"background-color" : "rgba(120,31,60,1)",
+	  	//"background-color" : "rgba(120,31,60,1)",
 	  	"border-width" : 1,
 	  	"border-radius": 0,	 
 	  	"cursor": "pointer"

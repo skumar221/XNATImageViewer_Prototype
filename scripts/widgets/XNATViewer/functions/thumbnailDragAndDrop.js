@@ -30,21 +30,27 @@ XNATViewer.prototype.initThumbnailDragDrop = function() {
 	
 	
 	this.thumbnailDragDrop['drop'] = function(event) {
+		var dragElt, found;
+		var dropViewer = XV.Viewers(event.dropTargetItem.element);
 		
-		var dragElt;
-	
+		//
+		// Find the XVThumbnail that owns 'event.dragSourceItem.element'
+		//
 		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
-			if (thumbObj.widget == event.dragSourceItem.element) {
-				dragElt = thumbObj
+			if (!found && thumbObj.widget == event.dragSourceItem.element) {
+				
+				dragElt = thumbObj;
+				that.manageActiveThumbs(dropViewer, thumbObj);
+				
+				found = true;
 			}
 		})
-		dragElt.setActive(true);
 	
-		var dropViewer = XV.Viewers(event.dropTargetItem.element);
+		
 		if (dropViewer) {		
 			dropViewer.FrameViewer.loadDroppable(dragElt); 					
 		}
-	  event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
+	    event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
 	}
 	
 	
@@ -60,7 +66,7 @@ XNATViewer.prototype.initThumbnailDragDrop = function() {
 				dragElt = thumbObj
 			}
 		})
-		dragElt.setActive(true);
+
 	}	
 }
 

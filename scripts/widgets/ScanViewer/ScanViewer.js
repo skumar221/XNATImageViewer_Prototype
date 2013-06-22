@@ -203,6 +203,23 @@ ScanViewer = function (args) {
 	this.setJQueryEvents();
 	
 	this.updateCSS();
+	
+	/*
+	 * @private
+	 */
+	this.currDroppableId = undefined;
+	/*
+	 * @type {function(string)}
+	 */	
+	this.setDroppable = function(dId) {
+		this.currDroppableId = dId;
+	}
+	/*
+	 * @type {function(): string}
+	 */	
+	this.getDroppable = function() {
+		return this.currDroppableId;
+	}
 
 
 }

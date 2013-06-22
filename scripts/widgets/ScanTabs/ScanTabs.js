@@ -97,10 +97,14 @@ var ScanTabs = function (args) {
 	this.activeTab = 0;
 	
 	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.CSS);	
+	
 	utils.css.setCSS( this.widget, {
 		top: $(this.widget.parentNode).height() - GLOBALS.minScanTabHeight,
 		height: GLOBALS.minScanTabHeight
 	})
+	this.widget.className = GLOBALS.classNames.ViewerTabs;
+	
+	
 
 	
 	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);

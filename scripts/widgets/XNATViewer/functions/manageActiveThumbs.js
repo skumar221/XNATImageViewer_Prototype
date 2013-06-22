@@ -1,30 +1,26 @@
 //******************************************************
 //  Manage Active Thumbs
 //******************************************************
-XNATViewer.prototype.manageActiveThumbs = function (thumb, args) {
-	if (!this.activeThumbManager)
-		this.activeThumbManager = {};
+/*
+ * @type {function(XVViewer, XVThumbnail)}
+ * @ protected
+ */
+XNATViewer.prototype.manageActiveThumbs = function (viewer, thumb) {
+	var that = this;
+	var found;
 	
-
-	// We basically want to cycle through the manager
-	// so that any Thumbnail associated with args.activeTarget
-	// is removed and replaced with thumb
-	if (args.activeTarget) {
-		
-		XV.Viewers( function (ScanViewer) { 
-
-			if (ScanViewer.FrameViewer.args.id === args.activeTarget) {
-				if (this.activeThumbManager[args.activeTarget]) {
-					//utils.dom.debug("deactivating existing: " + this.activeThumbManager[args.activeTarget].args.id + " in " + args.activeTarget)
-					this.activeThumbManager[args.activeTarget].deactivate();
-				}
-
-				this.activeThumbManager[args.activeTarget] = thumb;
-				//utils.dom.debug("inserting: " + thumb.args.id + " in " + args.activeTarget);
-			}	
+	var t = viewer.getDroppable();
+	console.log("t: ", t)
+	if (t) {
+		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
 			
-		});
-		
+			if (!found && thumbObj.widget.id == t) {
+				console.log(t)
+				thumbObj.setActive(false);
+				found = true;
+			}
+		})
 	}
-	
+	thumb.setActive(true);
+	viewer.setDroppable(thumb.widget.id);
 }

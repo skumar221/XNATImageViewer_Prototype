@@ -277,7 +277,7 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 		fontFamily: GLOBALS.fontFamily,
 		cursor: 'pointer'
 	})
-	header.className = 'ZippyHeader';
+	header.className = GLOBALS.classNames.ScrollGalleryZippyHeader;
 	header.key = zKey;
 	this.Scrollables[zKey]['header'] = header;
 	
@@ -391,7 +391,7 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 			utils.css.setCSS(e.target, cssObj)				
 		}	
 		else {
-			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, 'ZippyHeader'), cssObj)			
+			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, GLOBALS.classNames.ScrollGalleryZippyHeader), cssObj)			
 		}
 		utils.css.setCSS(expandIcon, cssObj['iconColor'])		   
 	}
