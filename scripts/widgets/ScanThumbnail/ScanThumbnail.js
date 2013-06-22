@@ -28,7 +28,8 @@ ScanThumbnail = function (scanData, args) {
 	
 	
 	
-	this.widget.className = GLOBALS.classNames.XVThumbnail;
+	utils.dom.addClass(this.widget,  GLOBALS.classNames.XVThumbnail);
+	utils.dom.addClass(this.widget,  this.widget.id);
 
 	
 	
@@ -202,27 +203,19 @@ goog.inherits(ScanThumbnail, goog.fx.DragDrop);
 * @type {function(boolean)}
 */
 ScanThumbnail.prototype.setActive = function(active) {
-	var that = this;
-	//goog.events.dispatchEvent(that.widget, goog.events.EventType.MOUSEOUT);	
-	//goog.events.EventTarget.call(this.widget);
-		 
 	
-	if (active) {
-		
-		that.widget.isActive = true;
-		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgHighlight,
-		})
-		
-	}
-	else {
-		console.log("here")
-		that.widget.isActive = false;
-		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgDefault,
-		})
-		
-	}
+	var that = this;
+	var bgColor = (active) ? that.args.bgHighlight : that.args.bgDefault;	
+	var nodes = goog.dom.getElementsByClass(that.widget.id);
+	
+	
+	goog.array.forEach(nodes, function(node) { 
+		node.isActive = active;
+		utils.css.setCSS(node, {
+			backgroundColor: bgColor,
+		})		
+	})
+
 
 	this.isActive = function () {
 		return active;
@@ -273,6 +266,9 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 	context.drawImage(srcCanv, 0, 0);		  
   	clonedElt.style.opacity = .5;	
 
+	clonedElt.className = "CLONE";
+	clonedElt.id = "CLONE";
+	
 	return clonedElt;
 }
 

@@ -50,7 +50,10 @@ XNATViewer.prototype.initThumbnailDragDrop = function() {
 		if (dropViewer) {		
 			dropViewer.FrameViewer.loadDroppable(dragElt); 					
 		}
-	    event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
+		
+		if (event.dropTargetItem.element.prevBorder) {
+			event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;	
+		}
 	}
 	
 	
@@ -108,4 +111,87 @@ XNATViewer.prototype.setThumbnailDragAndDrop = function () {
  		goog.events.listen(srcObj, 'dragstart', that.thumbnailDragDrop['dragStart']);	
 	});
  
+ 
+ 
+ 	
+ 
+ 	//
+ 	// Set Click
+ 	//
+ 	
+ 	function invokeDrop(ScanViewer, srcObj) {
+		that.thumbnailDragDrop['drop']({
+			dropTargetItem : {
+				element : ScanViewer.widget
+			},
+			dragSourceItem : {
+				element : srcObj.widget
+			}
+		}) 		
+ 	}
+ 	
+ 	
+ 	goog.array.forEach(that.dragDropThumbnails, function(srcObj) {
+		goog.events.listen(srcObj.widget, goog.events.EventType.CLICK, function(){
+
+					var d = new Date();
+					var n = d.getTime();
+					var p = (srcObj.clickTime) ? srcObj.clickTime : undefined;
+					var clone = this;
+					var inserted = false;
+					srcObj.clickTime = n;
+					
+
+					if (p  && (n-p) < 1000) {
+						return;
+					}
+
+					
+					
+					//
+					// Try setting target to empty scan viewers
+					//
+					XV.Viewers( function (ScanViewer) {
+						if (!inserted  && !ScanViewer.getDroppable()) {
+							inserted = true;	
+							invokeDrop(ScanViewer, srcObj);												
+						}
+					});
+					
+									
+					
+					//
+					// If all ScanViewers have content...
+					//
+					if (!inserted) { 
+						//
+						// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
+						//
+	
+						XV.Viewers( function (ScanViewer) { 
+							if (!inserted) {
+								
+								var newTargetViewer;
+								
+								if (!GLOBALS.thumbClickTarget) {
+									newTargetViewer = XV.Viewers()[0][0];	
+								}
+								else if (GLOBALS.thumbClickTarget === ScanViewer.widget.id) {
+									newTargetViewer = XV.Viewers({
+										"viewerAfter" : ScanViewer
+									});
+								}
+								else {
+									return;
+								}	
+								
+								GLOBALS.thumbClickTarget = newTargetViewer.widget.id;
+								invokeDrop(newTargetViewer, srcObj);
+								inserted = true;
+							}
+						})
+	
+					}										
+		});
+	});
 }

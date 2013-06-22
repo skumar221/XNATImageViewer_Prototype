@@ -27,8 +27,6 @@ GLOBALS = function (){
 	
 	
 	
-	
-	
 	//---------------------------
 	//  FONTS AND COLORS
 	//---------------------------
@@ -308,6 +306,41 @@ GLOBALS = function (){
 	 */
 	this.dragAndDropImage = new Image();
 	this.dragAndDropImage.src = "./icons/DragAndDrop-3pt.png";
+	
+	
+	
+	
+	/*
+	 * @struct
+	 */	
+	this.classNames = {
+		
+		XVThumbnail : 'XVThumbnail',
+		ScanThumbnail : 'ScanThumbnail',
+		SlicerThumbnail : 'SlicerThumbnail',	
+		XVThumbnailCanvas: 'ThumbnailCanvas',		
+		
+		XVViewer : 'XVViewer',
+		ScanViewer : 'ScanViewer',
+		SlicerViewer : 'SlicerViewer',		
+		
+		FrameSlider: 'FrameSlider',	
+		
+		ScrollGallery: 'ScrollGallery',
+		ScrollGalleryZippyHeader: 'ZippyHeader',		
+		
+		ViewerTabs: 'ViewerTabs',
+		ScanTabs: 'ScanTabs',	
+		
+		ViewerDivider: 'ViewerDivider',
+		
+		
+		//
+		// UI
+		//
+		ThumbnailDragDropTarget : 'ThumbnailDragDropTarget',	
+		ViewerDragDropTarget : 'ViewerDragDropTarget'
+	}
 
 }
 

@@ -126,7 +126,7 @@ var XNATViewer = function (args) {
 		"insert" : "column",
 		"animate" : "off"
 	});
-	GLOBALS.thumbClickTarget = XV.Viewers()[0][0].widget.id;
+	
 	
 
 	

@@ -61,7 +61,7 @@ XNATViewer.prototype.addScrollGallery = function (rowPos) {
 	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
 		//var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
 		var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {
-		  	id: "ScanThumbnail_" + i.toString(),			  	
+		  	id: "SlicerThumbnail_" + i.toString(),			  	
 		  	parent: thumbContents,  	
 		  	widgetCSS: {
 		  		position: "relative",

@@ -214,6 +214,7 @@ XNATViewer.prototype.addViewerManager = function () {
 						
 						if (viewers[i][j] === currV) {
 							
+							
 							var maxRow = ((i+1) === viewers.length);
 							var maxCol = ((j+1) === viewers[i].length);
 							
