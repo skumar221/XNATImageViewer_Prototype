@@ -6,7 +6,7 @@ goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
 
-goog.provide('XVViewer');
+goog.provide(GLOBALS.classNames.ViewerBox);
 
 /*
  * @constructor
@@ -20,6 +20,12 @@ ScanViewer = function (args) {
 	this.setSourceClass('source');
 	this.setTargetClass('target'); 			
 	this.init();
+	
+	function dragViewer() {
+		console.log("Dragging Viewer")
+	}
+	
+	goog.events.listen(this.widget, 'dragstart', dragViewer);	
 	
 	
 	var that = this;
@@ -200,7 +206,7 @@ ScanViewer = function (args) {
 	// Setup procedure, defines the mouseenters
 	//--------------------------		
 	
-	this.setJQueryEvents();
+	//this.setJQueryEvents();
 	
 	this.updateCSS();
 	

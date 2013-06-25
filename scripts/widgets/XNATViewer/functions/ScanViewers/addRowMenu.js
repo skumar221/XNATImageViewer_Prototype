@@ -25,7 +25,7 @@ XNATViewer.prototype.addRowMenu = function (rowPos, colPos) {
 			'cursor': 'pointer',
 			'zIndex': 100,
 			'height': utils.convert.px(GLOBALS.expandButtonWidth * .5),
-			'backgroundColor' : 'rgba(200,124,0, 1)',
+			//'backgroundColor' : 'rgba(200,124,0, 1)',
 			'top': utils.convert.px(GLOBALS.expandButtonWidth * .25),
 			'textAlign': "right",
 			'left': utils.convert.px(args.left)

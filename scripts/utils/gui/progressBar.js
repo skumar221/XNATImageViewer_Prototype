@@ -1,4 +1,5 @@
 goog.require('goog.ui.ProgressBar');
+goog.require('goog.style');
 
 utils.gui.progressBar = function (parent, args) {
 
@@ -33,29 +34,38 @@ utils.gui.progressBar = function (parent, args) {
 	// 
 	// Bar
 	//
+
+  	
 	progBar.bar = utils.dom.makeElement('div', progBar.widget, 'ProgressBar', {
 		height: 10,
 		borderRadius: 'none',
 		position: 'relative',
 		top: 5,
-		'backgroundColor': 'rgb(0,0,0)',
+		//'backgroundColor': 'rgb(0,0,0)',
 		'borderRadius': 0,
-		'border': 'solid 1px rgba(125,125,125)'
+		'border': 'solid 1px rgba(125,125,125)',
+		overflow: 'hidden'
 	});	
 	// 
 	// Bar - style
 	//
-	$(progBar.bar).progressbar();
-	$(progBar.bar).removeClass('ui-corner-all');
-	$(progBar.bar).removeClass('ui-widget-content');
-	$(progBar.bar.chidren).removeClass('ui-widget-header');
-	var pVal =  $(progBar.bar).find( '.ui-progressbar-value' );
-	pVal.css({
-    	'background': 'rgb(180,180,180)',
-    	'borderRadius' : 0,
-    	'border' : 'solid 1px rgb(180,180,180)'
-    });	
 
+	var pbgoog = new goog.ui.ProgressBar;
+  	pbgoog.decorate(progBar.bar);
+
+
+
+	//
+	//  Color indicator
+	//
+  	var progChild = goog.dom.getElementByClass("progress-bar-thumb", progBar.widget);
+	utils.css.setCSS(progChild, {
+    	'background': '#d4e4ff',
+    	'borderRadius' : 0,
+    	'border' : 'solid 1px rgb(180,180,180)',
+    	'height' : '100%'
+    });	
+	
 
 	
 	// 
@@ -69,15 +79,15 @@ utils.gui.progressBar = function (parent, args) {
 		var isLabel = (args['label']) ? args['label'] : false;		
 				
 		if (isClear) {
-			$(progBar.bar).progressbar('option', 'value', 0 );
+			pbgoog.setValue(0);
 		}
 		
 		if (isMax) {
-			$(progBar.bar).progressbar('option', 'max', args['max'] );
+			pbgoog.setMaximum(args['max']);
 		}
 		
 		if (isAdd) {
-			$(progBar.bar).progressbar('option', 'value', $(progBar.bar).progressbar( 'option', 'value' ) + 1);
+			pbgoog.setValue(pbgoog.getValue() + args['add']);
 		}
 		
 		if (isLabel) {
@@ -87,11 +97,11 @@ utils.gui.progressBar = function (parent, args) {
 	}
 	
 	progBar.hide = function () {
-		$(progBar.widget).fadeOut(0);
+		goog.style.showElement(progBar.widget, false);
 	}
 	
 	progBar.show = function () {
-		$(progBar.widget).fadeIn(0);
+		goog.style.showElement(progBar.widget, true);
 	}
 	
 	

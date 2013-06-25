@@ -315,18 +315,22 @@ GLOBALS = function (){
 	 */	
 	this.classNames = {
 		
-		XVThumbnail : 'XVThumbnail',
-		ScanThumbnail : 'ScanThumbnail',
-		SlicerThumbnail : 'SlicerThumbnail',	
-		XVThumbnailCanvas: 'ThumbnailCanvas',		
+		XVWidget: 'XVWidget',
 		
-		XVViewer : 'XVViewer',
-		ScanViewer : 'ScanViewer',
-		SlicerViewer : 'SlicerViewer',		
+		Thumbnail : 'XVWidget.Thumbnail',
+		ScanThumbnail : 'XVWidget.Thumbnail.ScanThumbnail',
+		SlicerThumbnail : 'XVWidget.Thumbnail.SlicerThumbnail',		
 		
+		ViewerBox : 'XVWidget.ViewerBox',
+		ScanViewerBox : 'XVWidget.ViewerBox.ScanViewerBox',
+		SlicerViewerBox : 'XVWidget.ViewerBox.SlicerViewerBox',		
+			
+		ScrollGallery: 'XVWidget.ScrollGallery',
+
+
+		ThumbnailCanvas: 'ThumbnailCanvas',		
 		FrameSlider: 'FrameSlider',	
-		
-		ScrollGallery: 'ScrollGallery',
+			
 		ScrollGalleryZippyHeader: 'ZippyHeader',		
 		
 		ViewerTabs: 'ViewerTabs',

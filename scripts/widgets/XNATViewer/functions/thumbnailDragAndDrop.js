@@ -131,6 +131,10 @@ XNATViewer.prototype.setThumbnailDragAndDrop = function () {
  	}
  	
  	
+ 	
+ 	//
+ 	// SET CLICK EVENT
+ 	//
  	goog.array.forEach(that.dragDropThumbnails, function(srcObj) {
 		goog.events.listen(srcObj.widget, goog.events.EventType.CLICK, function(){
 
@@ -141,12 +145,15 @@ XNATViewer.prototype.setThumbnailDragAndDrop = function () {
 					var inserted = false;
 					srcObj.clickTime = n;
 					
-
+					
+					
+					//
+					//  Wierd double click events sent out...
+					//
 					if (p  && (n-p) < 1000) {
 						return;
 					}
 
-					
 					
 					//
 					// Try setting target to empty scan viewers

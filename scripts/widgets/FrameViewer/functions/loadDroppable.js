@@ -13,7 +13,7 @@ FrameViewer.prototype.loadCurrViewPlane = function () {
 
 		that.loaded = true;
 		// Show canvas
-		that.progBar.hide(GLOBALS.animFast, function () {});	
+		that.progBar.hide();	
 		$(that.canvas).fadeIn(GLOBALS.animFast);
 		
 		// Load Frames By ViewPlane

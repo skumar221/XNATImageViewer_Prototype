@@ -9,26 +9,22 @@ goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
 
-goog.provide(GLOBALS.classNames.XVThumbnail);
+goog.provide(GLOBALS.classNames.Thumbnail);
 
 /*
  * @constructor
  */
 ScanThumbnail = function (scanData, args) {
+	
 	var that = this;
-	
-	
-	
 	utils.oo.init(this, this.defaultArgs, args);
-	utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.defaultArgs.widgetCSS, args.widgetCSS));
+	
 	
 	
 	goog.fx.DragDrop.call(this, this.widget, undefined);
-
 	
 	
-	
-	utils.dom.addClass(this.widget,  GLOBALS.classNames.XVThumbnail);
+	utils.dom.addClass(this.widget,  GLOBALS.classNames.Thumbnail);
 	utils.dom.addClass(this.widget,  this.widget.id);
 
 	
@@ -153,7 +149,7 @@ ScanThumbnail = function (scanData, args) {
 		fontSize: 11,		
 	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
-	utils.dom.addClass(this.ThumbnailCanvas, GLOBALS.classNames.XVThumbnailCanvas);
+	utils.dom.addClass(this.ThumbnailCanvas, GLOBALS.classNames.ThumbnailCanvas);
 
 	this.ThumbnailCanvas.metaText = [];
 	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData.sessionInfo["Scan"].value);
@@ -234,16 +230,15 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 
 	
 	// if you click on the parent
-	if (srcElt.className.indexOf(GLOBALS.classNames.XVThumbnail) > -1) {
+	if (srcElt.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
 		parent = srcElt;
 	}
 	// if you click on the child
 	else {
-		parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.XVThumbnail)		
+		parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.Thumbnail)		
 	}
 
 
-	
 	//
 	// Create draggable ghost by cloning the parent
 	//	
@@ -254,8 +249,8 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 	//
 	// Get canvases for reference
 	//
-	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.XVThumbnailCanvas, parent);
-	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.XVThumbnailCanvas, clonedElt);
+	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, parent);
+	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, clonedElt);
 
 
 	
@@ -265,9 +260,10 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 	context = clonedCanv.getContext("2d");
 	context.drawImage(srcCanv, 0, 0);		  
   	clonedElt.style.opacity = .5;	
-
 	clonedElt.className = "CLONE";
 	clonedElt.id = "CLONE";
+	
+	goog.events.removeAll(clonedElt);
 	
 	return clonedElt;
 }
