@@ -15,45 +15,54 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	
 	this.thumbnailDragDrop['dragOver'] = function(event) {
-		event.dropTargetItem.element.prevBorder =  event.dropTargetItem.element.style.borderColor;
-	    event.dropTargetItem.element.style.borderColor = 'white';
+		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+			event.dropTargetItem.element.prevBorder =  event.dropTargetItem.element.style.borderColor;
+		    event.dropTargetItem.element.style.borderColor = 'white';
+	   }
 	}
 	
 	
 	
 	
 	this.thumbnailDragDrop['dragOut'] = function(event) {
-		event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
+		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+			event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
+		}
+		
 	}
 	
 	
 	
 	
 	this.thumbnailDragDrop['drop'] = function(event) {
-		var dragElt, found;
-		var dropViewer = XV.Viewers(event.dropTargetItem.element);
 		
-		//
-		// Find the XVThumbnail that owns 'event.dragSourceItem.element'
-		//
-		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
-			if (!found && thumbObj.widget == event.dragSourceItem.element) {
-				
-				dragElt = thumbObj;
-				that.manageActiveThumbs(dropViewer, thumbObj);
-				
-				found = true;
+		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+			var dragElt, found;
+			var dropViewer = XV.Viewers(event.dropTargetItem.element);
+			//
+			// Find the XVThumbnail that owns 'event.dragSourceItem.element'
+			//
+			goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
+				if (!found && thumbObj.widget == event.dragSourceItem.element) {
+					
+					dragElt = thumbObj;
+					that.manageActiveThumbs(dropViewer, thumbObj);
+					
+					found = true;
+				}
+			})
+		
+			
+			if (dropViewer) {		
+				dropViewer.FrameViewer.loadDroppable(dragElt); 					
 			}
-		})
-	
-		
-		if (dropViewer) {		
-			dropViewer.FrameViewer.loadDroppable(dragElt); 					
-		}
-		
-		if (event.dropTargetItem.element.prevBorder) {
-			event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;	
-		}
+			
+			if (event.dropTargetItem.element.prevBorder) {
+				event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;	
+			}	
+					
+		}		
+
 	}
 	
 	
@@ -62,6 +71,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	 * @type {function(goog.ui.event)}
 	 */	
 	this.thumbnailDragDrop['dragStart'] = function(event) {
+		
 		var dragElt;
 	
 		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
@@ -147,7 +157,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			
 			
 			//
-			//  Wierd double click events sent out...
+			//  Weird double click events sent out...
 			//
 			if (p  && (n-p) < 1000) {
 				return;

@@ -6,9 +6,17 @@
 //  Init
 //
 //******************************************************
-function FrameViewer(args) {
-
-	utils.oo.init(this, this.defaultArgs, args);
+goog.require(GLOBALS.classNames.XVWidget);
+/**
+ * @constructor
+ * @extends {XVWidget}
+ */
+FrameViewer = function(args) {
+	
+	XVWidget.call(this, args);
+	
+	
+	
 	this.currFrame = this.args.onloadFrame;
 	
 
@@ -27,6 +35,7 @@ function FrameViewer(args) {
 		top: 0,
 		left: 0
 	});
+	utils.dom.addClass(this.canvas, GLOBALS.classNames.FrameViewerCanvas);
 	this.canvas.height = this.CSS.height;
 	this.canvas.width = this.CSS.width;
 	this.context = this.canvas.getContext('2d');
@@ -63,6 +72,7 @@ function FrameViewer(args) {
 
 	this.updateCSS();
 }
+goog.inherits(FrameViewer, XVWidget);
 
 
 

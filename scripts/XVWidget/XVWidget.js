@@ -8,6 +8,7 @@ goog.provide(GLOBALS.classNames.XVWidget);
 XVWidget = function (args) {
 	
 	utils.oo.init(this, this.defaultArgs, args);	
+	this.widget.id += "_" + utils.dom.uniqueId();
 	
 }
 

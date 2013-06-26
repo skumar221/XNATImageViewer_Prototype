@@ -317,19 +317,20 @@ GLOBALS = function (){
 		
 		XVWidget: 'XVWidget',
 		
-		Modal: 'XVWidget.Modal',
+		Modal: 'Modal',
 		
-		Thumbnail : 'XVWidget.Thumbnail',
-		ScanThumbnail : 'XVWidget.Thumbnail.ScanThumbnail',
-		SlicerThumbnail : 'XVWidget.Thumbnail.SlicerThumbnail',		
+		Thumbnail : 'Thumbnail',
+		ScanThumbnail : 'ScanThumbnail',
+		SlicerThumbnail : 'SlicerThumbnail',		
 		
-		ViewerBox : 'XVWidget.ViewerBox',
-		ScanViewerBox : 'XVWidget.ViewerBox.ScanViewerBox',
-		SlicerViewerBox : 'XVWidget.ViewerBox.SlicerViewerBox',		
+		ViewerBox : 'ViewerBox',
+		ScanViewerBox : 'ScanViewerBox',
+		SlicerViewerBox : 'SlicerViewerBox',		
 		
-		FrameViewer: 'XVWidget.FrameViewer',
+		FrameViewer: 'FrameViewer',
+		FrameViewerCanvas: 'FrameViewerCanvas',
 			
-		ScrollGallery: 'XVWidget.ScrollGallery',
+		ScrollGallery: 'XVWidget_ScrollGallery',
 
 
 		ThumbnailCanvas: 'ThumbnailCanvas',		

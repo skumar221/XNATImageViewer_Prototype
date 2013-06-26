@@ -65,7 +65,6 @@ Modal.prototype.addViewerManager = function () {
 			//	
 			var v = new ViewerBox({
 				parent: XV.modal,
-				id: "ViewerBox_" + utils.dom.uniqueId()
 			});	
 			return v;
 			

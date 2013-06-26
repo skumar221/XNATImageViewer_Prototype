@@ -14,9 +14,36 @@ Modal.prototype.initViewerBoxDragDrop = function() {
 	
 	
 	
-	this.viewerBoxDragDrop['dragOver'] = function(event) {
-		event.dropTargetItem.element.prevBorder =  event.dropTargetItem.element.style.borderColor;
-	    event.dropTargetItem.element.style.borderColor = 'white';
+	this.viewerBoxDragDrop['dragover'] = function(event) {
+		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.ViewerBox) > -1) {
+			
+			var target = event.dropTargetItem.element;
+			var source = event.dragSourceItem.element;
+			var sDims = utils.css.dims(source).position;
+			var tDims = utils.css.dims(target).position;
+
+			
+			var d = new Date();
+			var n = d.getTime();
+			var p = (source.clickTime) ? source.clickTime : undefined;
+			var clone = this;
+			var inserted = false;
+			source.clickTime = n;
+			
+			//
+			//  Weird double events sent out..
+			//
+			if (p  && (n-p) < 200) {
+				return;
+			}
+
+
+			utils.css.setCSS(target, sDims);
+			utils.css.setCSS(source, tDims);
+
+			XV.Viewers({'swap' : [source, target]});
+		}
+		
 	}
 	
 	
@@ -30,29 +57,10 @@ Modal.prototype.initViewerBoxDragDrop = function() {
 	
 	
 	this.viewerBoxDragDrop['drop'] = function(event) {
-		var dragElt, found;
-		var dropViewer = XV.Viewers(event.dropTargetItem.element);
-		
-		//
-		// Find the XVThumbnail that owns 'event.dragSourceItem.element'
-		//
-		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
-			if (!found && thumbObj.widget == event.dragSourceItem.element) {
-				
-				dragElt = thumbObj;
-				that.manageActiveThumbs(dropViewer, thumbObj);
-				
-				found = true;
-			}
-		})
-	
-		
-		if (dropViewer) {		
-			dropViewer.FrameViewer.loadDroppable(dragElt); 					
-		}
-		
-		if (event.dropTargetItem.element.prevBorder) {
-			event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;	
+		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.ViewerBox) > -1) {
+			XV.Viewers(function(viewer){
+				utils.fx.fadeIn(viewer.widget, 0);	
+			})	
 		}
 	}
 	
@@ -61,11 +69,8 @@ Modal.prototype.initViewerBoxDragDrop = function() {
 	/*
 	 * @type {function(goog.ui.event)}
 	 */	
-	this.viewerBoxDragDrop['dragStart'] = function(event) {
-
-		
-		console.log("Dragging Viewer: ", event.dragSourceItem.element);
-
+	this.viewerBoxDragDrop['dragstart'] = function(event) {
+		utils.fx.fadeOut(event.dragSourceItem.element, GLOBALS.animFast);
 	}	
 	
 }
@@ -79,9 +84,8 @@ Modal.prototype.initViewerBoxDragDrop = function() {
 Modal.prototype.setViewerBoxDragAndDrop = function () {
 
 	var that = this;
-
 	var viewerLen = XV.Viewers("total");
-	console.log(viewerLen);
+
 	if (viewerLen > 1) {
 		//	
 	    // Set valid targets for this.draggableWidgets
@@ -90,7 +94,6 @@ Modal.prototype.setViewerBoxDragAndDrop = function () {
 			
 			XV.Viewers(function (w) {
 				if (viewer !== w) { 
-					console.log(viewer.widget.id + " TARGET " + w.widget.id);
 					viewer.addTarget(w);
 				}
 			});
@@ -98,9 +101,10 @@ Modal.prototype.setViewerBoxDragAndDrop = function () {
 		})
 	
 		XV.Viewers(function (viewer) {
-			console.log(viewer.widget.id + " SETUP")
 			viewer.init();
-			goog.events.listen(viewer, 'dragstart', that.viewerBoxDragDrop['dragStart']);	
+			goog.events.listen(viewer, 'dragstart', that.viewerBoxDragDrop['dragstart']);	
+			goog.events.listen(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
+			goog.events.listen(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
 		})		
 	}
 

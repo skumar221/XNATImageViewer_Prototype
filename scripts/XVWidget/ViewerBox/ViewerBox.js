@@ -197,7 +197,7 @@ ViewerBox = function (args) {
 	// Setup procedure, defines the mouseenters
 	//--------------------------		
 	
-	//this.setJQueryEvents();
+
 	
 	this.updateCSS();
 	
@@ -218,7 +218,7 @@ ViewerBox = function (args) {
 		return this.currDroppableId;
 	}
 
-
+    this.setHoverEvents();
 }
 goog.inherits(ViewerBox, XVWidget);
 goog.inherits(ViewerBox, goog.fx.DragDrop);
@@ -276,34 +276,44 @@ ViewerBox.prototype.defaultArgs = {
 
 
 
-ViewerBox.prototype.setJQueryEvents = function () {
+ViewerBox.prototype.setHoverEvents = function () {
 	
 	var that = this;
 	
-	this.setDraggable_jQuery();
+	var keeperClasses = [
+		GLOBALS.classNames.FrameViewer
+	]
 	
-	$(this.widget).bind('mouseenter.hover', function () {
-
-		$(that.ViewPlaneMenu).stop().show();
-		$(that.LinkMenu).stop().show();
-		//$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, 1);
-		$(that.widget).stop().animate({
-			//borderColor: "rgb(115,115,115)"
-		}, GLOBALS.animFast)
-	
-	}).bind('mouseleave.hover', function () {
-
-		$(that.ViewPlaneMenu).stop().hide();
-		$(that.LinkMenu).stop().hide();
-		//$(that.FrameSlider.getWidget()).stop().fadeTo(GLOBALS.animFast, .7);
-		$(that.widget).stop().animate({
-			//borderColor: "rgb(85,85,85)"
-		}, GLOBALS.animFast)
+	function hoverOut() {
+		goog.array.forEach(that.widget.childNodes, function (node) { 
+			
+			var found = false;
+			goog.array.forEach(keeperClasses, function (keeper) { 
+				if (node.className.indexOf(keeper) > -1) {
+					found = true;
+				}	
+			});
+			
+			if (!found) {
+				
+				utils.fx.fadeOut(node, 0);
+				console.log("fading out: ", node)
+			}
 		
-	});
+		})		
+	}
 	
-	$(this.widget).mouseleave();	
+	function hoverIn() {
+		goog.array.forEach(that.widget.childNodes, function (node) { 
+
+			utils.fx.fadeIn(node, 0);
+			
+		})
+	}
 	
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() { hoverIn() });
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() { hoverOut() });
+
 }
 
 
@@ -314,24 +324,26 @@ ViewerBox.prototype.setJQueryEvents = function () {
 ViewerBox.prototype.createDragElement = function(srcElt) {
 
 	var parent, clonedElt, srcCanv, clonedCanv, context;
+	var keepClasses = [
+		GLOBALS.classNames.FrameViewer
+	];
+	var keepElts = [];
+		
+		
+	parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ViewerBox);
 
-	parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ViewerBox)		
-	
-
+	//
+	// Retain any children that you want to keep
+	//
 
 	//
 	// Create draggable ghost by cloning the parent
 	//	
-	clonedElt = parent.cloneNode(true);	
-	clonedElt.style.borderColor = "rgba(255,0,0,1)";
-
-
-	/*
-	//
-	// Get canvases for reference
-	//
-	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, parent);
-	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, clonedElt);
+	clonedElt = parent.cloneNode(true);
+	clonedElt.style.fontFamily = GLOBALS.fontFamily;
+	
+	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameViewerCanvas, parent);
+	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameViewerCanvas, clonedElt);
 
 
 	
@@ -340,14 +352,18 @@ ViewerBox.prototype.createDragElement = function(srcElt) {
 	//
 	context = clonedCanv.getContext("2d");
 	context.drawImage(srcCanv, 0, 0);		  
-  	clonedElt.style.opacity = .5;	
+  	//clonedElt.style.opacity = .5;	
 	clonedElt.className = "CLONE";
 	clonedElt.id = "CLONE";
-	*/
+
+	
+	utils.css.setCSS(clonedElt, {
+		cursor: 'move',
+        '-moz-user-select': 'none'
+	})
+
 	
 	goog.events.removeAll(clonedElt);
-	
-		
 	return clonedElt;
 }
 
