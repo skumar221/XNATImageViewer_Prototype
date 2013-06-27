@@ -155,7 +155,7 @@ var SliderLinker = function (args) {
 	/**
 	 * @param {Object}
 	 * @param {boolean=}
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */		
 	this.removeFromGroup = function (viewerInGroup, clearSelectorBox) {
 
@@ -229,7 +229,7 @@ var SliderLinker = function (args) {
 	/**
 	 * @param {Element}
 	 * @param {Object}
-	 * @return {Element}
+	 * @returns {Element}
 	 */		
 	this.addSelectorBox = function (parent, dims) {
 		
