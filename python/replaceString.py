@@ -24,34 +24,35 @@ def createBackup(rootDir, backupPath):
 def replaceInFile(src, findStr, replaceStr):
    
    # read the file line by line, store it.
-   lines = [line for line in open(src)]
-   newLines = []
-   for l in lines:
-       a = l.replace(findStr, replaceStr)
-       if (a != l):
-           print "In %s, replaced '%s' with '%s', in line: %i\n    %s\n    %s"%(src, findStr, replaceStr, lines.index(l), l, a)
-       newLines.append(a)
-
-   try:
-       fl = open(src, 'w')
-       for item in newLines:
-           fl.write("%s" % item)
-       fl.close()
-       #print "Replaced '%s' with '%s' in %s."%(findStr, replaceStr, src)
-   except ValueError:
-        print ValueError    
+   if os.path.exists(src):
+       lines = [line for line in open(src)]
+       newLines = []
+       for l in lines:
+           a = l.replace(findStr, replaceStr)
+           if (a != l):
+               print "In %s, replaced '%s' with '%s', in line: %i\n    %s\n    %s"%(src, findStr, replaceStr, lines.index(l), l, a)
+           newLines.append(a)
+    
+       try:
+           fl = open(src, 'w')
+           for item in newLines:
+               fl.write("%s" % item)
+           fl.close()
+           #print "Replaced '%s' with '%s' in %s."%(findStr, replaceStr, src)
+       except ValueError:
+            print ValueError    
         
         
         
 def main():
     
-    rootDir = "../scripts/widgets"
-    htmlFile = "../index.html"
+    rootDir = "../scripts/XVWidget"
+    htmlFile = "../index-uncompressed.html"
     backupDir = "scriptsBackup"
       
-    findStr = "getHolder"
-    replaceStr = "getWidget"
-    fileReplaceStr = "addDraggableMethods" #replaceStr.split(".")[2]
+    findStr = "ImageViewerModal"
+    replaceStr = "Modal"
+    fileReplaceStr = replaceStr #replaceStr.split(".")[2]
     
     skipDirs = ["jquery"];
 
@@ -80,12 +81,12 @@ def main():
                src = os.path.join(root, filename)
     
                dst = src;
-               if (findStr in src):
+               #if (findStr in src):
                    #
                    # RENAME FILE IF IT HAS THE STRING
                    # 
-                   dst = dst.replace(findStr, fileReplaceStr)
-                   os.rename(src, dst)
+                   #dst = dst.replace(findStr, fileReplaceStr)
+                   #os.rename(src, dst)
     
     
     

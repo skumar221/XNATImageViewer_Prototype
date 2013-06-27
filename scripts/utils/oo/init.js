@@ -9,12 +9,8 @@ utils.oo.init = function (obj, defaultArgs, args, initRoutine) {
 	
 	obj.CSS = (obj.args.CSS) ? obj.args.CSS : obj.args.widgetCSS;
 	
-	obj.widget = utils.dom.makeElement("div", obj.args.parent, obj.args.id, obj.CSS);
-	
-	if (obj.args['className']) {
-		utils.dom.addClass(obj.widget, obj.args['className']);
-	}
-	
+	obj.widget = utils.dom.makeElement("div", obj.args.parent, obj.args.className, obj.CSS);
+
 	/*
 	obj.widget = goog.dom.createDom('div', { 
 		'style': obj.CSS ,

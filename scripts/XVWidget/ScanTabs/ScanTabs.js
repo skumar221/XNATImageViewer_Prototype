@@ -1,14 +1,216 @@
-defaultArgs_ScanTabs = {
+goog.require('goog.ui.TabPane');
+
+//******************************************************
+//  Init
+//
+//******************************************************
+goog.require(GLOBALS.classNames.XVWidget);
+goog.provide(GLOBALS.classNames.ScanTabs);
+/**
+ * @constructor
+ * @extends {XVWidget}
+ */
+ScanTabs = function (args) {
+	
+	var that = this;
+	var tabPane;
+	
+	XVWidget.call(this, args);	
+	utils.dom.addCallbackManager(this);
+
+	// Adjust widgetcss
+	utils.css.setCSS( this.widget, {
+		backgroundColor: "rgb(55,55,55)",
+		color: "rgba(255,255,255,1)",
+	})
+	// Set Tabs, google -style
+	
+	/**
+	 * @type {goog.ui.TabPane}
+	 * @private
+	 */
+	this.tabPane = new goog.ui.TabPane(this.widget);	
+	/**
+	 * @type {Array}
+	 * @private
+	 */
+	this.tabs = [];
+
+
+
+	//------------------------------
+	// Tabs
+	//------------------------------
+
+	var tabWidth = 50;
+	var firstTab;
+	var selectedBorder = {
+		"border" : "solid 1px rgb(200,200,200)",
+		"border-bottom": "rgb(0,0,0)"
+	}
+	var deselectedBorder = {
+		"border" : "solid 1px rgba(0,0,0,0)"
+	}
+	
+	
+	
+	goog.array.forEach(this.args.tabTitles, function(title, i) { 
+		
+		var tab = utils.dom.makeElement("div", that.widget, "Tab", {
+			position: "absolute",
+			top: -1,
+			left: tabWidth * i + i*3, 
+			color: 'white',
+			fontSize: GLOBALS.fontSizeMed,
+			fontFamily: GLOBALS.fontFamily,
+			backgroundColor: 'rgb(0,0,0)',
+			width: tabWidth,
+			height: GLOBALS.minScanTabHeight,
+			cursor: 'pointer',
+			backgroundColor: "rgba(0,0,0,1)",
+		});
+
+		
+		if (i==0) {
+			firstTab = tab;
+		}
+		
+		var tabImg = utils.dom.makeElement("img", tab, "TabImage", {
+			position: "absolute",
+			top: (GLOBALS.minScanTabHeight - (GLOBALS.minScanTabHeight * .85))/2,
+			height: GLOBALS.minScanTabHeight * .85,
+			width: GLOBALS.minScanTabHeight * .85,
+			opacity: .6,
+			left: tabWidth/2 - (GLOBALS.minScanTabHeight * .85) / 2
+			
+		});
+		//t.innerHTML = title;
+		tabImg.src = that.args.tabImgSrc[i];
+		
+
+		
+		var tabPage = utils.dom.makeElement("div", args.parent, "TabPage", {
+			position: "absolute",
+			top: GLOBALS.minScanTabHeight -1,
+			//left: tabWidth * i, 
+			color: 'white',
+			fontFamily: GLOBALS.fontFamily,
+			backgroundColor: 'rgb(0,0,0)',
+			width: '100%',
+			height: 200
+		});
+		tabPage.label = title;
+		that.tabPane.addPage(new goog.ui.TabPane.TabPage(tabPage), i);
+		that.tabs.push(tabPage);
+		
+		
+		goog.events.listen(tab, goog.events.EventType.MOUSEOVER, function() { 
+			utils.css.setCSS(tab, {
+				backgroundColor: "rgba(90,90,90,1)"
+			})
+		});
+		
+		
+		goog.events.listen(tab, goog.events.EventType.MOUSEOUT, function() { 
+			utils.css.setCSS(tab, {
+				backgroundColor: "rgba(0,0,0,1)"
+			})		
+		});
+		
+
+
+
+
+		goog.events.listen(tab, goog.events.EventType.CLICK, function(e) { 
+			
+			
+			var ind = 0;
+			var targetImage = goog.dom.getElementsByClass('TabImage', e.currentTarget);
+			
+			e.currentTarget.isExpanded = (e.currentTarget.isExpanded === 'undefined') ? false : e.currentTarget.isExpanded;
+			e.currentTarget.isExpanded = !e.currentTarget.isExpanded;
+
+			
+			goog.array.forEach(goog.dom.getElementsByClass('TabImage', that.widget), function(elt, i) { 
+				
+				var op =  .6;
+				
+				if (elt == targetImage[0]) {
+					op = 1;
+					ind = i;
+					that.tabPane.setSelectedIndex(i);
+				}
+				
+				utils.css.setCSS(elt, { 
+					opacity: op,
+				})				
+			})
+			
+			
+			
+			goog.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
+
+				var border =  (i === ind) ? selectedBorder : deselectedBorder;
+				var zIndex =  (i === ind) ? 1000 : 10;
+				
+				utils.css.setCSS(elt, utils.dom.mergeArgs(border,{
+					zIndex: zIndex,
+				}));	
+				
+				utils.css.setCSS(that.tabPane.getPage(i).elContent_, utils.dom.mergeArgs(border,{
+					zIndex: zIndex,
+					'border-bottom' : selectedBorder['borderTop']
+				}));
+			})
+			
+			
+			var viewerHeight = utils.css.dims(that.widget.parentNode, 'height');
+			var widgetTop = (e.currentTarget.isExpanded) ? viewerHeight - GLOBALS.minScanTabHeight - GLOBALS.tabClickHeight : 
+							utils.css.dims(that.widget.parentNode, 'height') - GLOBALS.minScanTabHeight + 1;
+			
+			utils.css.setCSS( that.widget, {
+				top: widgetTop,
+			})
+			
+			goog.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {
+				utils.css.setCSS(elt, {
+					height: viewerHeight - widgetTop - GLOBALS.minScanTabHeight - 1
+				})
+			});
+	
+	
+		});
+	})
+
+
+	firstTab.click(); 
+	firstTab.isExpanded = false;
+
+	
+	//------------------------------
+	// CSS
+	//------------------------------	
+	this.updateCSS();
+}
+goog.inherits(ScanTabs, XVWidget);
+
+
+/**
+ * @protected
+ */
+ScanTabs.prototype.defaultArgs = {
 	parent: document.body,
-	id: "_ScanTabs",
+	className: GLOBALS.classNames.ScanTabs,
 	scanContents: 0,
-	tabTitles: ["<b>Info.</b>", "<b>Adjust</b>"],
+	tabTitles: ["Info", "Adjust"],
+	tabImgSrc: ["./icons/InfoIcon.png", "./icons/Adjust.png"],
 	contentFontSize: 10,
 	activeLineColor: GLOBALS.activeLineColor,
 	activeFontColor: GLOBALS.activeFontColor,
 	inactiveLineColor: GLOBALS.inactiveLineColor,
 	inactiveFontColor: GLOBALS.inactiveFontColor,
-	CSS: {
+	widgetCSS: {
+		position: 'absolute',
 		top: 400,
 		left: 20,
 		height: 300,
@@ -19,186 +221,28 @@ defaultArgs_ScanTabs = {
 
 
 
-
-//******************************************************
-//  The tab "titles" themselves are elements.  
-//  Treated this as a separate method b/c jQuery UI
-//  has some quirks as to how it treats tab titles.
-//******************************************************
-var makeTabTitles = function (parent, titles) {
-
-	var titleElt = utils.dom.makeElement("ul", parent);	
-	var titlesA = [];
-	var titlesLi = [];
-	
-	var iconList = [
-		{	
-			src: "./icons/InfoIcon.png",
-			w: 15,
-			h: 16
-		} , 
-		{
-			src: "./icons/Adjust.png",
-			w: 18,
-			h: 16
-		}
-	];
-
-	
-	for (var i = 0, len = titles.length; i < len; i++) {
-		var li = utils.dom.makeElement("li", titleElt);	
-		var a = utils.dom.makeElement("a", li);
-
-		$(a).attr('href', "#" + parent.id + "-" + (i+1).toString());
-		a.setAttribute("id", "tabA_" + i.toString());
-		li.setAttribute("id", "tabLi_" + i.toString());
-		a.innerHTML = titles[i];	
-		//a.innerHTML = item;	
-		a.style.color = "rgba(0,0,0,0)";
-		
-		var img = utils.dom.makeElement("img", a, a.id + " _img", {
-			position: "absolute"
-		});
-		
-		img.src = iconList[i].src;
-		img.height = iconList[i].h;
-		img.width = iconList[i].w;
-		img.style.left = utils.convert.px(GLOBALS.scanTabLabelWidth/2 - iconList[i].w/2);
-		img.style.top = utils.convert.px(GLOBALS.scanTabLabelHeight/2 - iconList[i].h/2);
-		
-		titlesA.push(a);
-		titlesLi.push(li);
-		
-	}	
-	//titleElt.className = "menu"
-	return {
-		titleElt: titleElt,
-		titlesA: titlesA,
-		titlesLi: titlesLi
-	}
-}
-
-
-
-
-//******************************************************
-//  Init
-//
-//******************************************************
-var ScanTabs = function (args) {
-	
-	var that = this;
-	
-	utils.dom.addCallbackManager(this);
-		
-	this.args = (args) ? utils.dom.mergeArgs(defaultArgs_ScanTabs, args) : defaultArgs_ScanTabs;
-	this.CSS = this.args.CSS;
-	
-	this.activeTab = 0;
-	
-	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.CSS);	
-	
-	utils.css.setCSS( this.widget, {
-		top: $(this.widget.parentNode).height() - GLOBALS.minScanTabHeight,
-		height: GLOBALS.minScanTabHeight
-	})
-	this.widget.className = GLOBALS.classNames.ViewerTabs;
-	
-	
-
-	
-	this.tabTitleObj = makeTabTitles(this.widget, this.args.tabTitles);
-	this.tabs = []
-	
-	
-	// Set Active Tab to 0
-	$(this.tabTitleObj.titlesA[this.activeTab]).click();  
-	
-
-
-
-
-
-	
-	//------------------------------
-	// Tab Titles
-	//------------------------------
-	for (var i = 0, len = this.args.tabTitles.length; i < len; i++) {	
-
-		var e = utils.dom.makeElement("div", this.widget, this.args.id + "-" + (i+1).toString());
-		e.label = this.tabTitleObj.titlesA[i].innerHTML;
-		this.tabs.push(e)
-	}
-
-	$(this.widget).tabs();
-	
-	
-
-	
-	//------------------------------
-	// ACTIVE TAB TRACKING
-	//------------------------------
-	for (var i = 0, len = this.tabTitleObj.titlesA.length; i < len; i++) {		
-		$(this.tabTitleObj.titlesA[i]).click(function (e) {
-			that.setActiveTab(e);
-			
-		})
-	}
-
-	
-	//------------------------------
-	// CSS
-	//------------------------------	
-	this.updateCSS();
-}
-
-
-
-
 //******************************************************
 //  getTab
 //
 //******************************************************
 ScanTabs.prototype.getTab = function (value) {
-	if (typeof value === "string") {
-		
-		value = value.toLowerCase();
-		
-		for (var i = 0, len = this.tabs.length; i < len; i++) {
+	var that = this;
+	var tab;
+	
+	for (var i=0; tab = this.tabs[i]; i++) {
+		if (typeof value === "string") {
 			
-			var v = (this.tabs[i].label).toLowerCase();
-			
-			if (v.indexOf(value) > -1) {
-				return this.tabs[i];
-			}
+			if (tab.label.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+
+				return tab;
+			}	
 		}		
 	}
+
+	
 }
 
 
-
-
-//******************************************************
-//  setActiveTab
-//
-//******************************************************
-ScanTabs.prototype.setActiveTab = function (e) {
-	
-	var elt = document.getElementById(e.currentTarget.id);
-	
-	var elt = e.currentTarget;
-	
-	for (var i = 0, len = this.tabTitleObj.titlesA.length; i < len; i++) {
-		if (this.tabTitleObj.titlesA[i] === elt) {
-
-			this.minClick = (this.activeTab !== i) ? false: true;
-
-			this.activeTab = i;
-				
-			this.runCallbacks('setActiveTab');
-		}
-	}
-}
 
 
 ScanTabs.prototype.topWithinCompressedRange = function (range) {
@@ -228,23 +272,17 @@ ScanTabs.prototype.updateCSS = function () {
 	//------------------------------
 	// WIDGET
 	//------------------------------
+
 	utils.css.setCSS( this.widget, {
-		"font-size": this.args.contentFontSize,
-		"padding": 0,
-		"borderRadius": 0,
-		"borderWidth": this.CSS.borderWidth,
-		 background: "none",
-		"borderColor": GLOBALS.inactiveLineColor,
-		//"backgroundColor": "rgba(25,25,25,1)",
-		"font-family": 'Helvetica, Helvetica neue, Arial, sans-serif'
+		top: utils.css.dims(this.widget.parentNode, 'height') - GLOBALS.minScanTabHeight + 1,
 	})
 
 
-
+	/*
 	//------------------------------
 	// TAB CONTENTS
 	//------------------------------
-	var contentsHeight = $(this.widget).height() - GLOBALS.scanTabLabelHeight;
+	var contentsHeight = utils.css.dims(this.widget, 'height') - GLOBALS.scanTabLabelHeight;
 	
 	
 	for (var i = 0, len = this.tabs.length; i < len; i++) {
@@ -267,9 +305,9 @@ ScanTabs.prototype.updateCSS = function () {
 
 		})
 	}
+	*/
 
-
-	
+	/*	
 	//------------------------------
 	// PARENT TITLE ELEMENT
 	//------------------------------
@@ -330,5 +368,6 @@ ScanTabs.prototype.updateCSS = function () {
 			marginLeft:-1* this.CSS.borderWidth
 		})
 	}	
+	*/
 
 }

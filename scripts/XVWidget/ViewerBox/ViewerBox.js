@@ -15,9 +15,8 @@ goog.provide(GLOBALS.classNames.ViewerBox);
  */
 ViewerBox = function (args) {
   	
-	//utils.oo.init(this, this.defaultArgs, args);	
-	XVWidget.call(this, args);
 
+	XVWidget.call(this, args);
 	goog.fx.DragDrop.call(this, this.widget, undefined);
 
 	
@@ -27,13 +26,10 @@ ViewerBox = function (args) {
 
 	this.axisIcons = [];
 
- 	
- 	    	
 	 //----------------------------------
 	 // FRAME VIEWER
 	 //----------------------------------
 	 this.FrameViewer = new FrameViewer({
-	 	id: "FrameViewer",
 	 	parent: this.widget,
 	 	"border-width": 0
 	 });
@@ -107,38 +103,12 @@ ViewerBox = function (args) {
 	//----------------------------------		
 	
 	this.ScanTabs = new ScanTabs({
-		
-		id: "tabs",
+
 		parent: this.widget,
-		tabTitles: ["<b>Session Info</b>", "<b>Adjust</b>"]
+		tabTitles: ["Info", "Adjust"]
 		
 	});
-	
-	this.ScanTabs.addCallback( 'setActiveTab', function () {
-		
-		//if (that.ScanTabs.minClick) {
-		var cPos = $(that.ContentDivider.widget).position();
-		var cHeight = $(that.widget.ContentDivider).height();
-		var minCTop = GLOBALS.minContentDividerTop($(that.widget).height());
-		var minDiff = Math.abs(cPos.top - minCTop);
-		
-		if (minDiff < 10 ) {
-			utils.css.setCSS( that.ContentDivider.widget,  {
-				top: $(that.widget).height() - GLOBALS.tabClickHeight - cHeight
-			});			
-		}
-		else{
-			if (that.ScanTabs.minClick) {
-				utils.css.setCSS( that.ContentDivider.widget,  {
-					top: minCTop
-				});	
-			}			
-		}			
 
-		that.updateCSS();
-	})
-
-	
 
 
 
@@ -176,7 +146,7 @@ ViewerBox = function (args) {
 
 
 	// DATA: Frame Number
-	this.displayableData.frameNumber = utils.dom.makeElement("div", this.widget, "_frameDisplay");
+	this.displayableData.frameNumber = utils.dom.makeElement("div", this.widget, "ViewerBoxDisplayableData");
 	utils.css.setCSS( this.displayableData.frameNumber, this.textCSS_small);		
 		
 		
@@ -232,7 +202,6 @@ goog.inherits(ViewerBox, goog.fx.DragDrop);
  * @protected
  */
 ViewerBox.prototype.defaultArgs = {
-	id: GLOBALS.ViewerBoxPreId,
 	parent: document.body,
 	className: GLOBALS.classNames.ViewerBox,
 	CSS: {
@@ -248,8 +217,7 @@ ViewerBox.prototype.defaultArgs = {
 	 	"overflow-y": "visible"
 	},
 	sliderCSS:	
-	{
-		id: "_FrameSlider", 
+	{ 
 		parent: document.body,
 		round: true,
 		handleOffsetLeft: 0,
@@ -279,12 +247,11 @@ ViewerBox.prototype.defaultArgs = {
 ViewerBox.prototype.setHoverEvents = function () {
 	
 	var that = this;
-	
 	var keeperClasses = [
 		GLOBALS.classNames.FrameViewer
 	]
 	
-	function hoverOut() {
+	this.hoverOut = function() {
 		goog.array.forEach(that.widget.childNodes, function (node) { 
 			
 			var found = false;
@@ -295,25 +262,21 @@ ViewerBox.prototype.setHoverEvents = function () {
 			});
 			
 			if (!found) {
-				
 				utils.fx.fadeOut(node, 0);
-				console.log("fading out: ", node)
 			}
-		
 		})		
 	}
 	
-	function hoverIn() {
+	this.hoverIn = function() {
 		goog.array.forEach(that.widget.childNodes, function (node) { 
-
 			utils.fx.fadeIn(node, 0);
-			
 		})
 	}
 	
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() { hoverIn() });
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() { hoverOut() });
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() { that.hoverIn() });
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT,  function() { that.hoverOut() });
 
+	that.hoverOut();
 }
 
 

@@ -31,11 +31,10 @@ FrameViewer = function(args) {
 	//----------------------------------
 	//	CANVAS AND CONTEXT
 	//----------------------------------
-	this.canvas = utils.dom.makeElement("canvas", this.widget, this.args.id + "_canvas", {
+	this.canvas = utils.dom.makeElement("canvas", this.widget, GLOBALS.classNames.FrameViewerCanvas, {
 		top: 0,
 		left: 0
 	});
-	utils.dom.addClass(this.canvas, GLOBALS.classNames.FrameViewerCanvas);
 	this.canvas.height = this.CSS.height;
 	this.canvas.width = this.CSS.width;
 	this.context = this.canvas.getContext('2d');
@@ -81,7 +80,6 @@ goog.inherits(FrameViewer, XVWidget);
  * @protected
  */
 FrameViewer.prototype.defaultArgs = {
-	id: "FrameViewer",
 	className: GLOBALS.classNames.FrameViewer,
 	parent: document.body,
 	onloadFrame: 0,

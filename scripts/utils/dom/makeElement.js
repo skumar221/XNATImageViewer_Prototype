@@ -5,21 +5,27 @@
 goog.require('goog.dom');
 goog.require('goog.style');
 
-utils.dom.makeElement = function (type, parent, id, css) {
+utils.dom.makeElement = function (type, parent, className, css) {
 	
 	if (!type) {
 		throw Error("utils.dom.makeElement: Cannot make element without a valid type.");
 	}
 	
 	if (!parent) {
-		throw Error("utils.dom.makeElement: Cannot make element without a valid parent. It currently is: ", parent);
+		utils.dom.debug(parent);
+		utils.dom.debug(type);
+		utils.dom.debug(className);
+		throw Error("utils.dom.makeElement: Cannot make element without a valid parent.");
 	}
 
 	var e = document.createElement(type);
 
-	if (id) {
-		e.id = id;
-	}		
+
+	e.id = className + "_" + utils.dom.uniqueId();
+	
+	utils.dom.addClass(e, className);
+	
+	
 	
 	if (css) {
 		utils.css.setCSS(e, css);		

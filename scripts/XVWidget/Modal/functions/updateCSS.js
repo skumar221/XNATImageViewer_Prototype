@@ -13,7 +13,9 @@ Modal.prototype.updateCSS = function (args) {
 	//----------------------------------
 	modalDims = this.modalDims();
 	utils.css.setCSS( this.modal, modalDims);	
-	if(args) {utils.css.setCSS( this.modal, args);}	
+	if(args) { 
+		utils.css.setCSS( this.modal, args);
+	}	
 	
 	
 	
@@ -31,13 +33,8 @@ Modal.prototype.updateCSS = function (args) {
 	//----------------------------------	
 	if (XV) {
 		XV.Viewers( function (ViewerBox, i, j) { 
-					
-			XV.Viewers( function (ViewerBox) { 	
-	
-				$(ViewerBox.widget).stop().fadeTo(0, 1);
-				$(ViewerBox.widget.childNodes).stop().fadeTo(0, 1);
-			});
-			
+
+						
 			ViewerBox.updateCSS({
 				
 				height: modalDims.ViewerBox.height,// - this.args.marginTop*2,

@@ -103,7 +103,7 @@ ViewerBox.prototype.addLinkMenu = function () {
 	
 	for (var i in iconVals) {
 		for (var j = 0, len = iconVals[i].images.length; j < len; j++) {
-			var icon = utils.dom.makeElement("img", this.LinkMenu.subMenu, "icon_" + iconVals[i].images[j],{
+			var icon = utils.dom.makeElement("img", this.LinkMenu.subMenu, "Icon_" + iconVals[i].images[j],{
 				position: "absolute",
 				top: iconDimMed  * (i-1),
 				// Right justify

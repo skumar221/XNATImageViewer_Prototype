@@ -60,3 +60,10 @@ goog.provide('utils.oo');
  * @constructor
  */
 utils.oo = function () {};
+
+
+goog.provide('utils.fx');
+/**
+ * @constructor
+ */
+utils.fx = function () {};

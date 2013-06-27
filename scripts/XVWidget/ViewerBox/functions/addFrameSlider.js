@@ -9,7 +9,7 @@ ViewerBox.prototype.addFrameSlider = function () {
 
 	this.FrameSlider = new FrameSlider({
 		parent: this.widget,
-		id : 'FrameSlider',
+		className: "FrameSlider",
 		widgetCSS : {
 			'height' : 8,
 			'width' : '96%',

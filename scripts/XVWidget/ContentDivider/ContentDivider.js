@@ -11,12 +11,19 @@ var ContentDivider = function (args) {
 	// The Widget
 	//-------------------------------	 
 
-	this.containmentDiv = utils.dom.makeElement("div", this.currArgs().parent, "Containment", {
+	this.containmentDiv = utils.dom.makeElement("div", 
+		this.currArgs().parent,  
+		this.currArgs().className + "Container", {
 		position: "absolute",
 		//backgroundColor: "rgba(255,0,0,.2)",
 		"pointer-events": "none"
 	});
-	this.widget = utils.dom.makeElement("div", this.currArgs().parent, "ContentDivider", this.currArgs().widgetCSS);	 
+	
+	
+	this.widget = utils.dom.makeElement("div", 
+		this.currArgs().parent, 
+		this.currArgs().className, 
+		this.currArgs().widgetCSS);	 
 	 
 	//-------------------------------
 	// UpdateCSS
@@ -37,13 +44,15 @@ var ContentDivider = function (args) {
 
 
 
-
-
+/**
+ * @protected
+ */
 ContentDivider.prototype.defaultArgs = function () {
 	return {
-		id: "ContentDivider",
+		className: "ContentDivider",
 		parent: document.body,
 		orientation: "vertical",
+		className: "ContentDivider",
 		widgetCSS: {
 			position: 'absolute',
 			top: "90%",

@@ -91,9 +91,9 @@ ViewerBox.prototype.updateCSS = function (args) {
 	//----------------------------------	
 	utils.css.setCSS(this.ScanTabs.widget, {
  		left: 0,//marginLeft,
- 	  	top: scanTabTop,
+ 	  	//top: scanTabTop,
  	  	width: widgetWidth - 2,// + marginLeft * 2,
- 	  	height: scanTabHeight -1
+ 	  	//height: scanTabHeight -1
 	});
    this.ScanTabs.updateCSS();
 

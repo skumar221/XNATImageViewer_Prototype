@@ -382,6 +382,10 @@ Modal.prototype.addViewerManager = function () {
 				}		
 			}
 			
+			loop(function(viewer){
+				viewer.hoverOut();
+			})
+			
 		}
 		
 		if (isInsert || isRemove) {

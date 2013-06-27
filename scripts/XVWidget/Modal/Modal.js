@@ -149,7 +149,6 @@ var Modal = function (args) {
  * @protected
  */
 Modal.prototype.defaultArgs = {
-	id: "XV",
 	className: GLOBALS.classNames.Modal,
 	layout: "all_columns",
 	numViewers: 1,

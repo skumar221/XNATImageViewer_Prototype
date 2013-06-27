@@ -24,9 +24,6 @@ Thumbnail = function (scanData, args) {
 
 	XVWidget.call(this, args);
 	goog.fx.DragDrop.call(this, this.widget, undefined);
-	
-	
-	utils.dom.addClass(this.widget,  this.widget.id);
 
 	
 	
@@ -373,7 +370,6 @@ Thumbnail.prototype.addHoverMethods = function () {
 * @protected
 */
 Thumbnail.prototype.defaultArgs = {
-	id: "Thumbnail",
 	className: GLOBALS.classNames.Thumbnail,
 	parent: document.body,
 	draggableParent: document.body,

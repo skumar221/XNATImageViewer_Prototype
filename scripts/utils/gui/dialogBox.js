@@ -22,7 +22,7 @@ utils.gui.dialogBox = function (args) {
 	//-----------------------
 	// WIDGET	
 	//-----------------------
-	var widget = utils.dom.makeElement("div", this.currArgs().parent, this.currArgs().id, this.currArgs().widgetCSS);
+	var widget = utils.dom.makeElement("div", this.currArgs().parent, this.currArgs().className, this.currArgs().widgetCSS);
 	utils.gui.draggable_jquery(widget);
 	this.widget = function () {return widget};
 
@@ -35,7 +35,7 @@ utils.gui.dialogBox = function (args) {
 
 	for (var i=buttonList.length-1; i>=0; i--) {
 		
-		var b = utils.dom.makeElement("button", widget, 'button', this.currArgs().buttonCSS);
+		var b = utils.dom.makeElement("button", widget, 'DialogBoxButton', this.currArgs().buttonCSS);
 
 		b.innerHTML = buttonList[i];
 		b.title = buttonList[i].toLowerCase();
@@ -156,7 +156,7 @@ utils.gui.dialogBox = function (args) {
 utils.gui.dialogBox.prototype.defaultArgs = function () {
 	
 	var args =  { 
-		id: "utils.gui.dialogBox",			//def "sliderScroller"
+		className: "utils.gui.dialogBox",			//def "sliderScroller"
 	  	parent: document.body,
 		defaultButtons: ["OK", "Cancel"],
 		defaultButtonList: ["OK", "Done", "Cancel", "Next", "Yes", "No"],

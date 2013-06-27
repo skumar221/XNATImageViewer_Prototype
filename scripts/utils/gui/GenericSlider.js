@@ -23,7 +23,9 @@ utils.gui.GenericSlider = function (arguments) {
 		args = arguments;
 	}
 	
-	this.id = (args['id']) ? args['id'] : "GenericSlider";
+	var className = (args['className']) ? args['className'] : "GenericSlider";
+	this.id = className + "_" + utils.dom.uniqueId();
+
 	
 	
 	//----------------------------
@@ -100,7 +102,7 @@ utils.gui.GenericSlider = function (arguments) {
 	//----------------------------
 	// HOLDER
 	//----------------------------	
-	var widget = utils.dom.makeElement('div', args['parent'], "widget", args['widgetCSS']);
+	var widget = utils.dom.makeElement('div', args['parent'], args['className'], args['widgetCSS']);
 	this.getWidget = function () {
 		return widget;
 	}
@@ -165,7 +167,10 @@ utils.gui.GenericSlider = function (arguments) {
 			});		
 		}	
 	}
-	
+
+	this.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
+		utils.dom.stopPropagation(event);
+	});	
 
 }
 

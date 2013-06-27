@@ -8,25 +8,17 @@ goog.require('goog.events');
 goog.require('goog.dom'); 
 
 
-goog.provide('ScrollGallery');
-
-
+goog.require(GLOBALS.classNames.XVWidget);
+goog.provide(GLOBALS.classNames.ScrollGallery);
 /**
  * @constructor
+ * @extends {XVWidget}
  */
 ScrollGallery = function (args) {
   	
   	
   	var that = this;
-	this.args = (args) ? utils.dom.mergeArgs(this.defaultArgs(), args) : this.defaultArgs();
-
-	/**
-	 * @private
-	 */	
-	this.widget = utils.dom.makeElement("div", this.args.parent, this.args.id, this.args.widgetCSS);
-	this.getWidget = function() {
-		return this.widget;
-	}
+	XVWidget.call(this, args);
 	
 	
 	/**
@@ -34,8 +26,6 @@ ScrollGallery = function (args) {
 	 * @protected
 	 */	
 	this.Scrollables = {};
-
-
 
 
 	var ScrollAreaWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.widgetCSS.width - 7;	
@@ -46,7 +36,6 @@ ScrollGallery = function (args) {
 	 */	
 	this.ScrollArea = utils.dom.makeElement("div", this.widget, "ScrollArea", {
 		position: "relative",
-		//top: -4,
 		width: ScrollAreaWidth,
 		left: utils.css.dims(this.widget, 'width') - ScrollAreaWidth
 	});
@@ -66,7 +55,7 @@ ScrollGallery = function (args) {
 	//-------------------------------	
 	this.ContentSlider = new utils.gui.GenericSlider({
 		parent: this.widget,
-		id: "ContentSlider",
+		className: "ContentSlider",
 		'orientation' : 'vertical',
 		widgetCSS : {
 			width: 7,//this.args.sliderCSS.widgetCSS.width,
@@ -85,56 +74,54 @@ ScrollGallery = function (args) {
 	
 	this.updateCSS();
 }
-
+goog.inherits(ScrollGallery, XVWidget);
 
 
 
 /**
- * @private
+ * @protected
  */
-ScrollGallery.prototype.defaultArgs = function () {
+ScrollGallery.prototype.defaultArgs = {
+
+	className: GLOBALS.classNames.ScrollGallery,
+	parent: document.body,
+	orientation: "vertical",
+	sliderLocation: "left",
+	sliderWidth: 8,
+	scrollMarginY: 8,
+	scrollMarginX: 8,
+	widgetCSS: {
+		top: 0,
+		left: 30,
+		width: GLOBALS.ScrollGalleryWidth,
+		height: 400,
+		position: "absolute",
+	 	overflow: "hidden",
+	 	"overflow-x": "hidden",
+	 	"overflow-y": "hidden"
+	 	//backgroundColor: "rgba(200,20,20,1)",
+	 	//border: "solid 1px rgba(255,0,0,1)"
+	},
 	
-	return {
-		id: "ScrollGallery",
+	sliderCSS:	
+	{ 
 		parent: document.body,
-		orientation: "vertical",
-		sliderLocation: "left",
-		sliderWidth: 8,
-		scrollMarginY: 8,
-		scrollMarginX: 8,
-		widgetCSS: {
-			top: 0,
-			left: 30,
-			width: GLOBALS.ScrollGalleryWidth,
-			height: 400,
-			position: "absolute",
-		 	overflow: "hidden",
-		 	"overflow-x": "hidden",
-		 	"overflow-y": "hidden"
-		 	//backgroundColor: "rgba(200,20,20,1)",
-		 	//border: "solid 1px rgba(255,0,0,1)"
+		thumbCSS:{
+			height: GLOBALS.ThumbnailWidgetHeight,
+			width: 7,
+			borderWidth: 0,
+			borderColor: GLOBALS.semiactiveLineColor,
+			backgroundColor: "rgba(105,105,105,1)"
 		},
-		
-		sliderCSS:	
-		{
-			id: "FrameSlider", 
-			parent: document.body,
-			thumbCSS:{
-				height: GLOBALS.ThumbnailWidgetHeight,
-				width: 7,
-				borderWidth: 0,
-				borderColor: GLOBALS.semiactiveLineColor,
-				backgroundColor: "rgba(105,105,105,1)"
-			},
-			widgetCSS:{
-				borderWidth: 0,
-				width: 7,
-				borderColor: GLOBALS.semiactiveLineColor,
-				backgroundColor: "rgba(0, 0, 0, 1)"
-			}
-		}		
-	}
+		widgetCSS:{
+			borderWidth: 0,
+			width: 7,
+			borderColor: GLOBALS.semiactiveLineColor,
+			backgroundColor: "rgba(0, 0, 0, 1)"
+		}
+	}		
 }
+
 
 
 
