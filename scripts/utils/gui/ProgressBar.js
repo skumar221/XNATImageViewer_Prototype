@@ -1,7 +1,7 @@
 goog.require('goog.ui.ProgressBar');
 goog.require('goog.style');
 
-utils.gui.progressBar = function (parent, args) {
+utils.gui.ProgressBar = function (parent, args) {
 
   
 	

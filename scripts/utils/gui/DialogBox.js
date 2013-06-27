@@ -1,8 +1,15 @@
 //******************************************************
 //  
 //******************************************************
-utils.gui.dialogBox = function (args) {
+utils.gui.DialogBox = function (args) {
+
+	var that = this;
 	
+	
+	/**
+	 * @param {Object}
+	 * @private
+	 */	
 	this.setArgs = function (newArgs) {
 		// Define currArgs either as default or previously entered args;
 		var currArgs = (this.currArgs)? this.currArgs() : this.defaultArgs();	
@@ -16,14 +23,13 @@ utils.gui.dialogBox = function (args) {
 	}	
 	
 	this.setArgs(args); 
-	var that = this;
+
 	
 
 	//-----------------------
 	// WIDGET	
 	//-----------------------
 	var widget = utils.dom.makeElement("div", this.currArgs().parent, this.currArgs().className, this.currArgs().widgetCSS);
-	utils.gui.draggable_jquery(widget);
 	this.widget = function () {return widget};
 
 
@@ -33,7 +39,7 @@ utils.gui.dialogBox = function (args) {
 	var buttonManager = {};
 	var buttonList = (this.currArgs().buttons && (this.currArgs().buttons.length > 0)) ? this.currArgs().buttons : this.currArgs().defaultButtons;
 
-	for (var i=buttonList.length-1; i>=0; i--) {
+	for (var i = buttonList.length-1; i >= 0; i--) {
 		
 		var b = utils.dom.makeElement("button", widget, 'DialogBoxButton', this.currArgs().buttonCSS);
 
@@ -85,6 +91,9 @@ utils.gui.dialogBox = function (args) {
 	}
 	
 
+	/**
+	 * @param {Object=}
+	 */
 	this.updateCSS = function (args) {
 		// If there are inputted args, we need to set + validate them
 		if (args) { this.setArgs(args) };
@@ -92,11 +101,7 @@ utils.gui.dialogBox = function (args) {
 		
 		utils.css.setCSS(widget, this.currArgs().widgetCSS);
 		
-		
-
 		var buttonHeight = this.currArgs().buttonCSS.height + this.currArgs().widgetCSS.margin;
-		
-		
 		var startL = this.currArgs().widgetCSS.width;		
 		var startT = this.currArgs().widgetCSS.height - buttonHeight;
 		var l = startL;
@@ -133,9 +138,13 @@ utils.gui.dialogBox = function (args) {
 	
 	
 	
-	//
+	//----------------------------
 	//  BUTTON CALLBACKS
-	//
+	//----------------------------
+	/**
+	 * @param {string}
+	 * @param {function}
+	 */
 	this.setButtonOnclick = function (name, callback) {
 		
 		for (var i in buttonManager) {
@@ -153,10 +162,16 @@ utils.gui.dialogBox = function (args) {
 }
 
 
-utils.gui.dialogBox.prototype.defaultArgs = function () {
+
+/**
+ * @type {function}
+ * @returns {Object}
+ * @private
+ */
+utils.gui.DialogBox.prototype.defaultArgs = function () {
 	
 	var args =  { 
-		className: "utils.gui.dialogBox",			//def "sliderScroller"
+		className: "utils.gui.DialogBox",			//def "sliderScroller"
 	  	parent: document.body,
 		defaultButtons: ["OK", "Cancel"],
 		defaultButtonList: ["OK", "Done", "Cancel", "Next", "Yes", "No"],
