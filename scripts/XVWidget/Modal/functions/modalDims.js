@@ -89,7 +89,8 @@ Modal.prototype.modalDims = function (conversion) {
 	//-------------------------	
 	var ViewerBoxLefts = [];
 	var ViewerBoxTops = [];
-	var viewerStart = $(this.ScrollGallery.widget).width() +  $(this.ScrollGallery.widget).position().left + GLOBALS.ViewerBoxVerticalMargin;
+	var ScrollGalleryDims = utils.css.dims(this.ScrollGallery.widget)
+	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims.left + GLOBALS.ViewerBoxVerticalMargin;
 
 	XV.Viewers( function (ViewerBox, i, j) { 
 			
@@ -135,7 +136,7 @@ Modal.prototype.modalDims = function (conversion) {
 		closeButton: {
 			
 			left: Math.round(_l) + Math.round(modalWidth) - (utils.convert.toInt(that.closeButton.style.width)) - 13,
-			top: Math.round(_t) + 10// + $(this.closeButton).height()/3,// (utils.convert.toInt(that.closeButton.style.width)/2),
+			top: Math.round(_t) + 10
 			
 		},
 		ColumnMenu: {

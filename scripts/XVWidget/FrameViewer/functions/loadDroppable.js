@@ -14,7 +14,7 @@ FrameViewer.prototype.loadCurrViewPlane = function () {
 		that.loaded = true;
 		// Show canvas
 		that.progBar.hide();	
-		$(that.canvas).fadeIn(GLOBALS.animFast);
+		utils.fx.fadeIn(that.canvas, GLOBALS.animFast);
 		
 		// Load Frames By ViewPlane
 		that.loadFramesByViewPlane(that.currViewPlane);				
@@ -55,7 +55,7 @@ FrameViewer.prototype.loadDroppable = function (droppable, viewPlane) {
 					"max" : setLength,
 					"clear": true
 				});
-				$(that.canvas).stop().fadeOut(0);
+				utils.fx.fadeOut(that.canvas, 0);
 				that.progBar.show();	
 							
 			},

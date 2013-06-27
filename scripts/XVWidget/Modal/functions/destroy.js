@@ -4,14 +4,13 @@
 //******************************************************
 Modal.prototype.destroy = function (fadeOut) {
 	var that = this;
-	var fadeOut = (fadeOut) ? fadeOut: 500;	
-	utils.dom.debug("Destroying! " + this.args.id);
 
-	$(this.widget).fadeOut(fadeOut, function () {
+	utils.dom.debug("Destroying! " + this.args.id);
+	utils.fx.fadeOut(this.widget, GLOBALS.animMed, function () {
 		try{
 			that.args.parent.removeChild(that.widget);			
 		}
 		catch(e) {//do nothing
-			}
+		}
 	});
 }

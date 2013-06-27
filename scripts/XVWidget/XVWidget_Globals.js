@@ -237,7 +237,7 @@ GLOBALS = function (){
 	 * @const
 	 * @type {string}
 	 */
-	this.scanTabLabelWidth = 40;
+	this.scanTabLabelWidth = 50;
 	/*
 	 * @const
 	 * @type {string}

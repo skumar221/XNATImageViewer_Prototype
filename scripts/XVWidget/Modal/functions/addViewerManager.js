@@ -273,17 +273,14 @@ Modal.prototype.addViewerManager = function () {
 					if (!animOff) {
 						
 						for (var i = 0, len = newRow.length; i < len; i++) {
-							
-							$(newRow[i].widget).fadeTo(0,0);
-						
+							utils.fx.fadeTo(newRow[i].widget , 0,0);
 						}
+						
 						this.animateModal(function () {
+							
 							for (var i = 0, len = newRow.length; i < len; i++) {
-								
-								$(newRow[i].widget).fadeTo(GLOBALS.animFast, 1);
-								newRow[i].updateCSS();
-								
-								
+								utils.fx.fadeTo(newRow[i].widget, GLOBALS.animFast, 1);
+								newRow[i].updateCSS();	
 							}						
 						});						
 					}
@@ -315,12 +312,12 @@ Modal.prototype.addViewerManager = function () {
 
 					if (!animOff) {
 						for (var i = 0, len = newColumn.length; i < len; i++) {
-							$(newColumn[i].widget).fadeTo(0,0);
+							utils.fx.fadeTo(newColumn[i].widget, 0,0);
 						}
 						this.animateModal(function () {
 							for (var i = 0, len = newColumn.length; i < len; i++) {
 								
-								$(newColumn[i].widget).fadeTo(GLOBALS.animFast, 1);
+								utils.fx.fadeTo(newColumn[i].widget , GLOBALS.animFast, 1);
 								newColumn[i].updateCSS();
 							}						
 						});					
@@ -348,7 +345,8 @@ Modal.prototype.addViewerManager = function () {
 						var delRow = viewers[viewers.length - 1];
 						
 						for (var i = 0, len = delRow.length; i < len; i++) {					
-							$(delRow[i].widget).fadeTo(GLOBALS.animFast, 0).remove();
+							utils.fx.fadeTo(delRow[i].widget, GLOBALS.animFast, 0);
+							delRow[i].widget.parentNode.removeChild(delRow[i].widget);
 						}
 						
 						viewers.splice(viewers.length -1, 1);
@@ -368,7 +366,8 @@ Modal.prototype.addViewerManager = function () {
 						
 						for (var i = 0, len = viewers.length; i < len; i++) {
 							var rowLen = viewers[i].length - 1;
-							$(viewers[i][rowLen].widget).fadeTo(GLOBALS.animFast, 0).remove();
+							utils.fx.fadeTo(viewers[i][rowLen].widget, GLOBALS.animFast, 0);
+							viewers[i][rowLen].widget.parentNode.removeChild(viewers[i][rowLen].widget);
 							viewers[i].splice(rowLen, 1);
 						}
 					}

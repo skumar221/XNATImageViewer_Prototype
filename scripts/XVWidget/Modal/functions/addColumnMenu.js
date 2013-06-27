@@ -30,31 +30,29 @@ Modal.prototype.addColumnMenu = function () {
 			"vertical-align": "bottom"
 		})	
 	
-		//-------------------------
+		//
 		// Its natural state -- slightly faded
-		//-------------------------
-		$(button).fadeTo(0, .5);
+		//
+		utils.fx.fadeTo(button, 0, .5);	
 		
-		//-------------------------
-		// What do do when the mouse leaves
-		//-------------------------		
-		$(button).mouseenter( function () {
-			
-			$(button).stop().fadeTo(GLOBALS.animFast, 1);
 		
-		}).mouseleave( function () { 
+		//
+		// set UI
+		//	
+		goog.events.listen(button, goog.events.EventType.MOUSEOVER, function(event) { 
+			utils.fx.fadeTo(button, GLOBALS.animFast, 1);
+		});
+		goog.events.listen(button, goog.events.EventType.MOUSEOUT, function(event) { 
+			utils.fx.fadeTo(button, GLOBALS.animFast, .5);	
+		});
 			
-			$(button).stop().fadeTo(GLOBALS.animFast, .5);		
-			
-	    });
-			
-		button.src = args.src		
-		button.title = args.title	
-		
-		$(button).click(function () {
-			$(this).stop().fadeTo(GLOBALS.animFast, .5);
+		button.src = args.src;	
+		button.title = args.title;
+
+		goog.events.listen(button, goog.events.EventType.CLICK, function(event) { 
+			utils.fx.fadeTo(button, GLOBALS.animFast, .5);
 			args.onclick();
-		})	
+		});		
 		
 		
 	}

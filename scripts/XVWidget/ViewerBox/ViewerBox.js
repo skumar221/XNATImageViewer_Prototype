@@ -77,23 +77,7 @@ ViewerBox = function (args) {
 	
 	 //----------------------------------
 	 // Content Divider CAllback
-	 //----------------------------------	 
-	 $(this.ContentDivider.widget).draggable( {
-		
-		start: function () {
-		   this.dragging = true;		
-		},
-		
-	 	drag: function () {
-		   that.updateCSS();
-		},
-		
-		stop: function () {
-			this.dragging = false;
-		}
-		
-	});
-   	
+	 //----------------------------------	
 
 	
 		

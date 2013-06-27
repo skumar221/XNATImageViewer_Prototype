@@ -1,3 +1,9 @@
+goog.require('goog.dom');
+goog.require('goog.fx');
+goog.require('goog.fx.dom');
+goog.require('goog.fx.AnimationQueue');
+
+
 Modal.prototype.animateModal  = function (callback) {
 		
 		var that = this;
@@ -8,40 +14,37 @@ Modal.prototype.animateModal  = function (callback) {
 		//-------------------------	
 		 var modalDims = this.modalDims();
 		
-		
-		
-		//-------------------------
-		// Animate the window
-		//-------------------------	
-		 $(this.modal).stop().animate({
-		 	
-		    width: modalDims.width,
-		    left: modalDims.left,
-		    height: modalDims.height,
-		    top: modalDims.top
-		    
-		  }, GLOBALS.animMed, function () {
+		function slide(el, a, b, duration) {
+			var x = el.offsetLeft;
+			var y = el.offsetTop;
+			var anim = new goog.fx.dom.Slide(el, [x, y], [a, b], duration, goog.fx.easing.easeOut);
+			goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN, function(){
 
-		    $.when(that.updateCSS()).then(function () {
+			});
+			goog.events.listen(anim, goog.fx.Transition.EventType.END, function(){
+
+			});
+			anim.play();
+		}
 				
-				$.when(callback()).then(function () { 
-					
-					XV.Viewers( function (ViewerBox) { 	
-
-						$(ViewerBox.widget).stop().fadeTo(0, 1);
-						$(ViewerBox.widget.childNodes).stop().fadeTo(0, 1);	
-						//ViewerBox.setJQueryEvents();
-					
-					}); 						
-					
-					
-				});
-			  	    	
-		    });
-		
-		 });
-
-
+		function resize(el, a, b, duration) {
+			
+			var w = el.offsetWidth;
+			var h = el.offsetHeight;
+			var anim = new goog.fx.dom.Resize(el, [w, h], [a, b], duration, goog.fx.easing.easeOut);
+			
+			goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN, function() {
+				
+			});
+			goog.events.listen(anim, goog.fx.Transition.EventType.END, function() {
+				that.updateCSS();
+				callback();
+			});
+			anim.play();
+		}
+      
+      	resize(this.modal, modalDims.width, modalDims.height, GLOBALS.animMed);
+      	slide(this.modal, modalDims.left, modalDims.top, GLOBALS.animMed);
 
 
 		//-------------------------
@@ -49,31 +52,12 @@ Modal.prototype.animateModal  = function (callback) {
 		//-------------------------	
 		
 		XV.Viewers( function (ViewerBox, i, j) { 
-			//$(ViewerBox.widget).stop().fadeTo( GLOBALS.animMed, 0);
-			
 			//
 			// FADE OUT/IN: ViewerBox contents
 			//
 			 if (modalDims.ViewerBox.height !== utils.convert.toInt(ViewerBox.widget.style.height)) {
-			 	$(ViewerBox.widget.childNodes).stop().fadeTo(GLOBALS.animFast, 0);	
-			 }
-			 
-
-			//
-			// ANIMATE: ViewerBox widget
-			//
-			
-			/*
-			 $(ViewerBox.widget).draggable( "destroy").unbind().stop().animate({
-			    
-			    left: modalDims.ViewerBox.lefts[i][j],
-			    top: modalDims.ViewerBox.tops[i][j],
-			    width: modalDims.ViewerBox.width,
-			    height: modalDims.ViewerBox.height
-			    
-			  }, GLOBALS.animMed, function () {	});	
-			  */	
-			  		
+			 	utils.fx.fadeTo(ViewerBox.widget.childNodes, GLOBALS.animFast, 0);	
+			 }		
 		})
 		
 
@@ -82,11 +66,9 @@ Modal.prototype.animateModal  = function (callback) {
 		//-------------------------
 		// Animate the close button
 		//-------------------------		
-		 $(this.closeButton).stop().animate({
-		    left: modalDims.closeButton.left,
-		    top: modalDims.closeButton.top
-		  }, GLOBALS.animMed, function () {
-		    // Animation complete.
-		 })
+		 slide(this.closeButton, 
+		 	   modalDims.closeButton.left, 
+		 	   modalDims.closeButton.top, 
+		 	   GLOBALS.animMed)
 		
 }
