@@ -1,6 +1,9 @@
 //******************************************************
 //  
 //******************************************************
+/**
+ * @constructor
+ */
 utils.gui.DialogBox = function (args) {
 
 	var that = this;
@@ -157,6 +160,28 @@ utils.gui.DialogBox = function (args) {
 			
 		}			
 	}
+	
+	
+	
+	
+	
+	//
+	//  Set drag options
+	//
+	goog.events.listen(widget, goog.events.EventType.MOUSEDOWN, function(e) {
+	
+		var d = new goog.fx.Dragger(widget);
+		
+		d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {});
+		
+		d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
+			d.dispose();
+		});
+		
+		d.startDrag(e);
+	
+	});
+	
 	
 	this.updateCSS();
 }

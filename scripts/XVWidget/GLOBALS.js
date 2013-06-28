@@ -14,12 +14,12 @@ goog.provide('GLOBALS');
 GLOBALS = function (){
 
 
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
  	this.ModalId = "XNATModal";
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
@@ -30,52 +30,52 @@ GLOBALS = function (){
 	//---------------------------
 	//  FONTS AND COLORS
 	//---------------------------
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.inactiveFontColor = "rgba(55,55,55,1)";
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.inactiveLineColor = "rgba(55,55,55,1)"; 	
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.activeFontColor = "rgba(255,255,255,1)"; 
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.activeLineColor = "rgba(205,205,205,1)"; 		
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.semiactiveFontColor = "rgba(85,85,85,1)"; 
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.semiactiveLineColor = "rgba(85,85,85,1)"; 	
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.fontSizeSmall = 10;
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.fontSizeMed = 12;
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
 	this.fontSizeLarge = 14;
-	/*
+	/**
 	 * @const
 	 * @type {string}
 	 */
@@ -87,24 +87,24 @@ GLOBALS = function (){
 	//---------------------------
 	//  ANIMATION LENGTHS
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.animVeryFast = 100;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.animFast = 200;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.animMed = 500;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.animSlow = 1000;
 	
@@ -115,14 +115,14 @@ GLOBALS = function (){
 	//---------------------------
 	//  FRAME VIEWER
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.minFrameViewerHeight = 150;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.minFrameViewerWidth = 150;
 	
@@ -132,29 +132,29 @@ GLOBALS = function (){
 	//---------------------------
 	//  SCAN VIEWER
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ViewerBoxDimRatio = .85
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.minViewerBoxHeight = 320;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.minViewerBoxWidth = this.minViewerBoxHeight * this.ViewerBoxDimRatio;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ViewerBoxVerticalMargin = 20;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ViewerBoxHorizontalMargin = 20;
 	
@@ -164,34 +164,35 @@ GLOBALS = function (){
 	//---------------------------
 	//  THUMBNAILS
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ThumbnailImageHeight = 72;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ThumbnailImageWidth = 72;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ThumbnailImageMarginX = 8;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ThumbnailImageMarginY = 8;
-	/*
+	
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	 this.ThumbnailWidgetHeight = this.ThumbnailImageHeight + this.ThumbnailImageMarginX*2;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ThumbnailWidgetWidth = 200;
 	
@@ -201,9 +202,9 @@ GLOBALS = function (){
 	//---------------------------
 	//  EXPAND BUTTON
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.expandButtonWidth = 30;
 	
@@ -214,9 +215,9 @@ GLOBALS = function (){
 	//---------------------------
 	//  SCROLL GALLERY
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.ScrollGalleryWidth = 180;
 	
@@ -228,39 +229,39 @@ GLOBALS = function (){
 	//---------------------------
 	//  SCAN TABS
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.scanTabLabelHeight = 20;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.scanTabLabelWidth = 50;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.minScanTabHeight = this.scanTabLabelHeight;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.defaultScanTabHeight = this.minScanTabHeight;	
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.maxModalWidthPct = .90;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
 	this.maxModalHeightPct = .95;
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
  	this.tabClickHeight = 300;
 	
@@ -270,11 +271,16 @@ GLOBALS = function (){
 	//---------------------------
 	//  SCROLL LINK GROUPS
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
  	this.maxScrollLinkGroups = 10;
+ 	
+ 	/**
+ 	 * @const
+ 	 * @type {SliderLinker}
+ 	 */
 	this.SliderLinker = new SliderLinker();
 	
 	
@@ -283,14 +289,16 @@ GLOBALS = function (){
 	//---------------------------
 	//  CONTENT DIVIDER HEIGHT
 	//---------------------------
-	/*
+	/**
 	 * @const
-	 * @type {string}
+	 * @type {number}
 	 */
  	this.ContentDividerHeight = 6;
-	/*
-	 * @const 
-	 * */ 
+	
+	/**
+	 * @param {number}
+	 * @return {number}
+	 */
 	this.minContentDividerTop = function (widgetHeight) {
 		return widgetHeight - this.ContentDividerHeight - this.minScanTabHeight;
 	} 
@@ -301,7 +309,8 @@ GLOBALS = function (){
 	//---------------------------
 	//  DRAG AND DROP IMAGE
 	//---------------------------
-	/*
+	/**
+	 * @const
 	 * @type {Image}
 	 */
 	this.dragAndDropImage = new Image();
@@ -310,7 +319,8 @@ GLOBALS = function (){
 	
 	
 	
-	/*
+	/**
+	 * @const
 	 * @struct
 	 */	
 	this.classNames = {
@@ -318,6 +328,8 @@ GLOBALS = function (){
 		XVWidget: 'XVWidget',
 		
 		Modal: 'Modal',
+		
+		ContentDivider: 'ContentDivider',
 		
 		Thumbnail : 'Thumbnail',
 		ScanThumbnail : 'ScanThumbnail',

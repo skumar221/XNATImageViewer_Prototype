@@ -8,7 +8,6 @@ utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
 	var dimArgs = [];
 	var retObj = {};
 	
-	
 	if (arguments.length > 1) {
 		for (var i=1, len = arguments.length; i < len; i++) {
 			dimArgs.push(arguments[i])

@@ -19,6 +19,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 		utils.fx.fadeOutAndRemove(popup, GLOBALS.animFast, function(){ 
 			that.clearAll_();
 		})
+		that.processGroups();
 	});
 
 

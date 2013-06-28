@@ -393,12 +393,12 @@ var SliderLinker = function (args) {
 	 * @private
 	 */
 	 this.forEach_ = function(callbacks) {
-		
+
 		var callbacks_ = {};
-		
+
 		if (typeof callbacks === 'function') {
 		
-			callbacks.during = callbacks;
+			callbacks_.during = callbacks;
 		
 		} else if (typeof callbacks === 'object') {
 		
@@ -462,6 +462,7 @@ var SliderLinker = function (args) {
 	 */
 	this.processGroups = function () {
 		
+
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
@@ -477,14 +478,13 @@ var SliderLinker = function (args) {
 		//
 		//  Process viewers that are in an existing groups
 		//
-		goog.array.forEach(groups,  function(group){
-			goog.array.forEach(groups,  function(groupedViewer){
-				
-				goog.events.listen(groupedViewer.widget, goog.events.EventType.MOUSEOVER, that.sliderlink_mouseover);
-				goog.events.listen(groupedViewer.widget, goog.events.EventType.MOUSEOUT, that.sliderlink_mouseout);
+		that.forEach_(function(viewer) {
 
-			})
+			goog.events.listen(viewer.widget, goog.events.EventType.MOUSEOVER, that.sliderlink_mouseover);
+			goog.events.listen(viewer.widget, goog.events.EventType.MOUSEOUT, that.sliderlink_mouseout);
+
 		})
+		
 	}
 
 		
@@ -500,7 +500,7 @@ var SliderLinker = function (args) {
  * @private
  */
 SliderLinker.prototype.sliderlink_mouseover = function (event) {	
-	console.log('sliderlink - mouseover');	
+	console.log('sliderlink - mouseover', event);	
 	//
 	//  Get the linked set based on the event.currentTarget.id
 	//
@@ -530,7 +530,7 @@ SliderLinker.prototype.sliderlink_mouseover = function (event) {
  * @private
  */
 SliderLinker.prototype.sliderlink_mouseout =  function (event) {	
-	console.log('sliderlink - mouseout');				
+	console.log('sliderlink - mouseout: ', event);				
 	var set = GLOBALS.SliderLinker.getViewerSetFromID(event.currentTarget.id);
 	
 	if (set) {				

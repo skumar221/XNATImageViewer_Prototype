@@ -13,32 +13,33 @@ ViewerBox.prototype.updateCSS = function (args) {
 	var widgetTop = (args && args.top) ? args.top : widgetDims['top'];
 	var widgetLeft = (args && args.left) ? args.left : widgetDims['left'];
 
-
+	//
+	//  CONTENT DIVIDER
+	//
+	// The ContentDivider dictates the position of all of the
+	// other widgets in the ViewerBox
 	
 	
-	/*
-	 * CONTENT DIVIDER
-	 * 
-	 * The ContentDivider dictates the position of all of the
-	 * other widgets in the ViewerBox
-	 */
-	
-	//  Onload case: this only happens once
-
-
-	if (!this.ContentDivider.widget.dragging) {
-
+	//
+	//  Onload case: this only happens once.
+	//
+	if (!this.ContentDivider.dragging) {
+		
+		//
+		//  If there's a change in the width of the widget, proceed
+		//
 		var dimChange = !(utils.css.dims(this.ContentDivider.containmentDiv, 'width') === widgetWidth);
 		if (dimChange) {
 
+			//
+			//  Determine the top of the content divider and its containment
+			//
+			var t = GLOBALS.minFrameViewerHeight;		
+			var h = widgetHeight - t - utils.css.dims(this.ContentDivider.widget, 'height') - GLOBALS.minScanTabHeight + 5;	
+			
 			utils.css.setCSS(this.ContentDivider.widget, {
 				top: GLOBALS.minContentDividerTop(widgetHeight)
 			});
-			
-			
-			var t = GLOBALS.minFrameViewerHeight		
-			
-			var h = widgetHeight - t - utils.css.dims(this.ContentDivider.widget, 'height') - GLOBALS.minScanTabHeight + 5;	
 			
 			utils.css.setCSS(this.ContentDivider.containmentDiv, {
 				top: t,			
@@ -49,7 +50,7 @@ ViewerBox.prototype.updateCSS = function (args) {
 			
 		}
 	}
-
+	
 	
 	
 	
@@ -91,9 +92,8 @@ ViewerBox.prototype.updateCSS = function (args) {
 	//----------------------------------	
 	utils.css.setCSS(this.ScanTabs.widget, {
  		left: 0,//marginLeft,
- 	  	//top: scanTabTop,
- 	  	width: widgetWidth - 2,// + marginLeft * 2,
- 	  	//height: scanTabHeight -1
+ 	  	top: scanTabTop,
+ 	  	width: '100%',
 	});
    this.ScanTabs.updateCSS();
 

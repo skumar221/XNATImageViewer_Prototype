@@ -2,32 +2,68 @@
 //  Init
 //
 //******************************************************
-var ContentDivider = function (args) {
 
-  	this.setArgs(args); 
+goog.require(GLOBALS.classNames.XVWidget);
+goog.provide(GLOBALS.classNames.ContentDivider);
+/**
+ * @constructor
+ * @param {Object=}
+ * @extends {XVWidget}
+ */
+ContentDivider = function (args) {
+
+	XVWidget.call(this, args);
 	var that = this;
-	
-	//-------------------------------
-	// The Widget
-	//-------------------------------	 
 
+	
+	
+	
+	//-------------------------------
+	// CONTAINER
+	//-------------------------------	 
+	/**
+	 * @private
+	 * @type {Element}
+	 */
 	this.containmentDiv = utils.dom.makeElement("div", 
-		this.currArgs().parent,  
-		this.currArgs().className + "Container", {
+		this.args.parent,  
+		this.args.className + "Container", {
 		position: "absolute",
-		//backgroundColor: "rgba(255,0,0,.2)",
-		"pointer-events": "none"
+		//backgroundColor: "rgba(255,0,0,.5)",
+		"pointer-events": "none",
 	});
-	
-	
-	this.widget = utils.dom.makeElement("div", 
-		this.currArgs().parent, 
-		this.currArgs().className, 
-		this.currArgs().widgetCSS);	 
+
+
+
+
+
+	//-------------------------------
+	// WIDGET ICON
+	//-------------------------------		
+	/**
+	 * @private
+	 * @type {Element}
+	 */
+	this.widgetIcon = utils.dom.makeElement("div", this.widget, 'widgetIcon', {
+		position: 'absolute',	
+		color: "rgba(85,85,85)",
+		width: "20%",
+		left: '40%',
+		top: -15,
+		fontSize: 25,
+		textAlign: "center"
+	});	
+	this.widgetIcon.innerHTML = "..."	 
 	 
-	//-------------------------------
+	 
+	 
+	 
+	//
 	// UpdateCSS
-	//-------------------------------
+	//
+	/**
+	 *  @param {Object=}
+	 */
 	this.updateCSS = function (args) {		
 		if (args) { 
 			this.setArgs(args) 
@@ -36,19 +72,70 @@ var ContentDivider = function (args) {
 
 	}
 
+
+
+
+	/**
+	 * @type {Array}
+	 * @private
+	 */
+	this.dragCallbacks = [];
+	/**
+	 * @param {function}
+	 * @private
+	 */
+	this.setDrag = function(callback) {
+		if (this.dragCallbacks.indexOf(callback) === -1) {
+
+			this.dragCallbacks.push(callback);	
+		}
+	}
+
+
+	//
+	//  Set drag options
+	//
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEDOWN, function(e) {
 	
-	$(that.widget).draggable({containment: this.containmentDiv});
+		utils.dom.stopPropagation(e);
+		
+		var cDims = utils.css.dims(that.containmentDiv);
+		var d = new goog.fx.Dragger(that.widget, null, new goog.math.Rect(0, cDims.top, 0, cDims.height - GLOBALS.ContentDividerHeight));
+		
+		that.dragging = true;	
+		
+		
+		
+		d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
+			
+			goog.array.forEach(that.dragCallbacks, function(callback) {
+				callback(e);	
+			})	
+				
+		});
+		
+		
+		d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
+			that.dragging = false;
+			d.dispose();
+		});
+		
+		
+		d.startDrag(e);
+	
+	});
+	
 	this.updateCSS();	
 }
-
+goog.inherits(ContentDivider, XVWidget);
 
 
 
 /**
+ * @type {object}
  * @protected
  */
-ContentDivider.prototype.defaultArgs = function () {
-	return {
+ContentDivider.prototype.defaultArgs = {
 		className: "ContentDivider",
 		parent: document.body,
 		orientation: "vertical",
@@ -58,10 +145,13 @@ ContentDivider.prototype.defaultArgs = function () {
 			top: "90%",
 			left: 0,
 			width: "100%",
-			height: 6,
+			height: GLOBALS.ContentDividerHeight,
 			cursor: "n-resize",
-			//backgroundColor: "rgba(250,50,50, 1)",
-			opacity: 1
+			backgroundColor: "rgba(40,40,40, 1)",
+			opacity: 1,
+			color: "rgb(85,85,85)",
+			fontSize: 25,
+			textAlign: "center"
 		},
 		boundaryCSS: {
 			top: 0,
@@ -69,29 +159,7 @@ ContentDivider.prototype.defaultArgs = function () {
 			width: 650,
 			height: 400
 		}
-	}
 }
 
 
-
-//******************************************************
-//  
-//******************************************************
-ContentDivider.prototype.setArgs = function (newArgs) {
-
-	
-	// See if newArgs are valid for entry based on the default keys
-	utils.dom.validateArgs("ContentDivider", this.defaultArgs(), newArgs, function () {});
-
-	
-	// Define currArgs either as default or previously entered args;
-	var currArgs = (this.currArgs)? this.currArgs() : this.defaultArgs();	
-
-	
-	// merge currArgs with newArgs
-	var mergedArgs = (newArgs) ? utils.dom.mergeArgs(currArgs, newArgs) : currArgs;
-	
-	// Define the currArgsfunction
-	this.currArgs = function () {return mergedArgs};
-}
 

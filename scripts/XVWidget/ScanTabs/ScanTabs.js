@@ -45,6 +45,7 @@ goog.inherits(ScanTabs, XVWidget);
 
 
 /**
+ * @type {Object}
  * @protected
  */
 ScanTabs.prototype.defaultArgs = {
@@ -70,11 +71,13 @@ ScanTabs.prototype.defaultArgs = {
 
 
 
-//******************************************************
-//  getTab
-//
-//******************************************************
+
+/**
+ * @param {string} 
+ * @return {Element}
+ */
 ScanTabs.prototype.getTab = function (value) {
+	
 	var that = this;
 	var tab;
 	
@@ -87,40 +90,33 @@ ScanTabs.prototype.getTab = function (value) {
 			}	
 		}		
 	}
-
 	
 }
 
 
 
 
-ScanTabs.prototype.topWithinCompressedRange = function (range) {
-	
-	var rangeVal = (typeof range === 'undefined') ? 10 : range;	
-	var parentHeight = utils.css.dims(this.widget.parentNode, 'height');
-	var defaultTop = parentHeight - GLOBALS.defaultScanTabHeight;
-	var currTop = utils.css.dims(this.widget, 'top');
-	var diff = Math.abs(currTop - defaultTop);	
-	
-	
-	if ( diff <= rangeVal) {
-		return true;
-	}		
-	return false;	
-}
 
 
 ScanTabs.prototype.updateCSS = function () {
 
+	var that = this;
 
-	//------------------------------
-	// WIDGET
-	//------------------------------
-
-	utils.css.setCSS( this.widget, {
-		top: utils.css.dims(this.widget.parentNode, 'height') - GLOBALS.minScanTabHeight + 1,
-		width: '100%'
-	})
+	
+	//
+	// Set the height of the tab page
+	//
+	var widgetDims = utils.css.dims(this.widget);
+	var pageWidth = widgetDims.width - 2;
+	var pageHeight = widgetDims.height - GLOBALS.minScanTabHeight - 1;
+	
+	goog.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(tabPage, i) {
+		
+		utils.css.setCSS(tabPage, { 
+			height: pageHeight,
+			width: pageWidth 		
+		})	
+	});
 
 
 }

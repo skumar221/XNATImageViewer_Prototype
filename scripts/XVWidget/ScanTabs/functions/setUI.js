@@ -6,15 +6,22 @@ ScanTabs.prototype.setUI = function() {
 	// CSS
 	//------------------------------
 	
+	/**
+	 * @type {Object}
+	 */
 	var selectedBorder = {
 		"border" : "solid 1px rgb(200,200,200)",
 		"border-bottom": "rgb(0,0,0)"
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var deselectedBorder = {
 		"border" : "solid 1px rgb(80,80,80)"
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var tabCSS = {
 		position: "absolute",
 		top: 0,	
@@ -27,7 +34,9 @@ ScanTabs.prototype.setUI = function() {
 		cursor: 'pointer',
 		backgroundColor: "rgba(0,0,0,1)"			
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var tabIconCSS = {
 		position: "absolute",
 		top: (GLOBALS.minScanTabHeight - (GLOBALS.minScanTabHeight * .85))/2,
@@ -36,7 +45,9 @@ ScanTabs.prototype.setUI = function() {
 		opacity: .6,
 		left: GLOBALS.scanTabLabelWidth/2 - (GLOBALS.minScanTabHeight * .85) / 2
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var tabPageCSS = {
 		position: "absolute",
 		top: GLOBALS.minScanTabHeight -1,
@@ -44,11 +55,15 @@ ScanTabs.prototype.setUI = function() {
 		fontFamily: GLOBALS.fontFamily,
 		backgroundColor: 'rgb(0,0,0)',
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var mouseoverBG = {
 		backgroundColor: "rgba(90,90,90,1)"		
 	}
-	
+	/**
+	 * @type {Object}
+	 */	
 	var mouseoutBG = {
 		backgroundColor: "rgba(0,0,0,1)"
 	}
@@ -165,9 +180,6 @@ ScanTabs.prototype.setUI = function() {
 			//
 			// Set the border of the tabs, clicked vs. other...
 			//			
-			utils.css.setCSS( that.widget, {
-				//top: widgetTop,
-			})	
 			
 			var dims = utils.css.dims(that.widget);
 			var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, widgetTop], GLOBALS.animMed, goog.fx.easing.easeOut);

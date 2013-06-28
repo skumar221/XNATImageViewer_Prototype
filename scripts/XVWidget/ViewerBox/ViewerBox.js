@@ -15,20 +15,19 @@ goog.provide(GLOBALS.classNames.ViewerBox);
  */
 ViewerBox = function (args) {
   	
-
 	XVWidget.call(this, args);
 	goog.fx.DragDrop.call(this, this.widget, undefined);
-
+	
 	
 	var that = this;
-	this.widget.defaultMouseEvents = [];
 	
-
-	this.axisIcons = [];
 
 	 //----------------------------------
 	 // FRAME VIEWER
 	 //----------------------------------
+	 /**
+	  * @type {FrameViewer}
+	  */
 	 this.FrameViewer = new FrameViewer({
 	 	parent: this.widget,
 	 	"border-width": 0
@@ -68,24 +67,26 @@ ViewerBox = function (args) {
 
 	//----------------------------------
 	// CONTENT DIVIDER
-	//----------------------------------	
+	//----------------------------------
+	/**
+	 * @type {ContentDivider}
+	 */	
 	this.ContentDivider = new ContentDivider( {	
-		parent: this.widget
+		parent: this.widget,
 	});
-	
-	
-	
-	 //----------------------------------
-	 // Content Divider CAllback
-	 //----------------------------------	
+	this.ContentDivider.setDrag(function(e) {
+		that.updateCSS();
+	})
 
-	
-		
+
+
 	
 	//----------------------------------
 	// SCAN TABS
 	//----------------------------------		
-	
+	/**
+	 * @type {ScanTabs}
+	 */	
 	this.ScanTabs = new ScanTabs({
 
 		parent: this.widget,
@@ -94,17 +95,6 @@ ViewerBox = function (args) {
 	});
 
 
-
-
-
-
-
-
-
-	//----------------------------------
-	// BRIGHNESS AND CONTRAST SLIDERS
-	//----------------------------------	
-	
 	
 	//----------------------------------
 	// ADJUST / IMAGE PROCESSING SLIDERS
@@ -116,7 +106,14 @@ ViewerBox = function (args) {
 	//----------------------------------
 	// METADATA, A.K.A. DISPLAYABLE DATA
 	//----------------------------------	
+	/**
+	 * @type {object}
+	 */
 	this.displayableData = {};
+	/**
+	 * @type {object}
+	 * @private
+	 */
 	this.textCSS_small = {
 		color: "rgba(255,255,255,1)",
 		position: "absolute",
@@ -129,50 +126,46 @@ ViewerBox = function (args) {
 	};
 
 
-	// DATA: Frame Number
+
+
+	/**
+	 * @protected
+	 */
 	this.displayableData.frameNumber = utils.dom.makeElement("div", this.widget, "ViewerBoxDisplayableData");
 	utils.css.setCSS( this.displayableData.frameNumber, this.textCSS_small);		
 		
 		
 		
 		
-	//----------------------------------
+	//
 	// Synchronize current frame number with display
-	//----------------------------------	
+	//
 	this.FrameViewer.addOnloadCallback(function () {
 		that.displayableData.frameNumber.innerHTML = "Frame: "+ (that.FrameViewer.currFrame) + 
 													 " / " + that.FrameViewer.frames.length;	
 	});
-	
 
 	
-	
-	//--------------------------
-	// Setup procedure, defines the mouseenters
-	//--------------------------		
-	
-
-	
-	this.updateCSS();
-	
-	/*
+	/**
+	 * @type {string}
 	 * @private
 	 */
 	this.currDroppableId = undefined;
-	/*
-	 * @type {function(string)}
+	/**
+	 * @param {string}
 	 */	
 	this.setDroppable = function(dId) {
 		this.currDroppableId = dId;
 	}
-	/*
-	 * @type {function(): string}
+	/**
+	 * @return {string}
 	 */	
 	this.getDroppable = function() {
 		return this.currDroppableId;
 	}
 
     this.setHoverEvents();
+    this.updateCSS();
 }
 goog.inherits(ViewerBox, XVWidget);
 goog.inherits(ViewerBox, goog.fx.DragDrop);
@@ -227,7 +220,9 @@ ViewerBox.prototype.defaultArgs = {
 
 
 
-
+/**
+ * @private
+ */
 ViewerBox.prototype.setHoverEvents = function () {
 	
 	var that = this;
@@ -264,10 +259,10 @@ ViewerBox.prototype.setHoverEvents = function () {
 }
 
 
-/*
-* @type {function(element)}
-* @protected
-*/
+/**
+ * @param {Element}
+ * @protected
+ */
 ViewerBox.prototype.createDragElement = function(srcElt) {
 
 	var parent, clonedElt, srcCanv, clonedCanv, context;

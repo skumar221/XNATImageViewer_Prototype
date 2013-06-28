@@ -6,7 +6,7 @@ Modal.prototype.updateCSS = function (args) {
 
 	
 	var that = this;
-	
+
 	
     //----------------------------------
 	//	RESIZE THE MODAL
@@ -17,7 +17,7 @@ Modal.prototype.updateCSS = function (args) {
 		utils.css.setCSS( this.modal, args);
 	}	
 	
-	
+
 	
 	//----------------------------------
 	//	SCROLL GALLERY
