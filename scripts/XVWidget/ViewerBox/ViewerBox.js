@@ -73,10 +73,11 @@ ViewerBox = function (args) {
 	 */	
 	this.ContentDivider = new ContentDivider( {	
 		parent: this.widget,
+		widgetCSS: {
+			backgroundColor: "rgb(35,35,35)" 
+		}
 	});
-	this.ContentDivider.setDrag(function(e) {
-		that.updateCSS();
-	})
+
 
 
 
@@ -90,9 +91,15 @@ ViewerBox = function (args) {
 	this.ScanTabs = new ScanTabs({
 
 		parent: this.widget,
-		tabTitles: ["Info", "Adjust"]
+		tabTitles: ["Info", "Adjust"],
+		widgetCSS: {
+			height: GLOBALS.minScanTabHeight,
+			width: '100%'
+		}
 		
 	});
+	this.linkContentDividerToScanTabs();
+	
 
 
 	
@@ -196,24 +203,22 @@ ViewerBox.prototype.defaultArgs = {
 	sliderCSS:	
 	{ 
 		parent: document.body,
-		round: true,
-		handleOffsetLeft: 0,
-	  	handleOffsetTop: 0,
+		className: 'FrameSlider',
 		widgetCSS:{
+			'height' : 8,
+			'width' : '96%',
+			'left' : '2%'
 		},
-		handleCSS:{
-			height: 8,
-			width: 8,
+		thumbCSS:{
+			height: 7,
+			width: 7,
 			borderRadius: 2,
-			borderColor: GLOBALS.semiactiveLineColor,
-			backgroundColor: "rgba(255,255,255,1)"
+			backgroundColor: "rgba(195,195,195,1)"
 		},
 		trackCSS:{
 			height: 3,
-			borderWidth: 1,
-			borderColor: GLOBALS.semiactiveLineColor,
-			backgroundColor: "rgba(70, 70, 70, 1)",
-			borderRadius: "3px"
+			backgroundColor: "rgba(55, 55, 55, 1)",
+			borderRadius: 2
 		}
 	}
 }
@@ -231,10 +236,10 @@ ViewerBox.prototype.setHoverEvents = function () {
 	]
 	
 	this.hoverOut = function() {
-		goog.array.forEach(that.widget.childNodes, function (node) { 
+		utils.array.forEach(that.widget.childNodes, function (node) { 
 			
 			var found = false;
-			goog.array.forEach(keeperClasses, function (keeper) { 
+			utils.array.forEach(keeperClasses, function (keeper) { 
 				if (node.className.indexOf(keeper) > -1) {
 					found = true;
 				}	
@@ -247,7 +252,7 @@ ViewerBox.prototype.setHoverEvents = function () {
 	}
 	
 	this.hoverIn = function() {
-		goog.array.forEach(that.widget.childNodes, function (node) { 
+		utils.array.forEach(that.widget.childNodes, function (node) { 
 			utils.fx.fadeIn(node, 0);
 		})
 	}

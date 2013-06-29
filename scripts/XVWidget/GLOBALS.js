@@ -264,6 +264,11 @@ GLOBALS = function (){
 	 * @type {number}
 	 */
  	this.tabClickHeight = 300;
+	/**
+	 * @const
+	 * @type {number}
+	 */ 	
+	this.minScanTabHeightBeforeActive = 80;
 	
 	
 	
@@ -293,8 +298,7 @@ GLOBALS = function (){
 	 * @const
 	 * @type {number}
 	 */
- 	this.ContentDividerHeight = 6;
-	
+ 	this.ContentDividerHeight = 4;
 	/**
 	 * @param {number}
 	 * @return {number}
@@ -302,6 +306,11 @@ GLOBALS = function (){
 	this.minContentDividerTop = function (widgetHeight) {
 		return widgetHeight - this.ContentDividerHeight - this.minScanTabHeight;
 	} 
+	/**
+	 * @const
+	 * @type {string}
+	 */
+	this.ContentDividerColor = 'rgb(35,35,35)';
 	
 	
 	

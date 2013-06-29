@@ -7,18 +7,9 @@ ViewerBox.prototype.addFrameSlider = function () {
 	var that = this;
 
 
-	this.FrameSlider = new FrameSlider({
-		parent: this.widget,
-		className: "FrameSlider",
-		widgetCSS : {
-			'height' : 8,
-			'width' : '96%',
-			'left' : '2%'
-		},
-		trackCSS : {
-			'backgroundColor' : 'rgba(100,100,100,1)',
-		}
-	});
+	this.FrameSlider = new FrameSlider(utils.dom.mergeArgs(this.args.sliderCSS, {
+		parent: this.widget
+	}));
 	
 
 	this.FrameSlider.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
@@ -28,8 +19,12 @@ ViewerBox.prototype.addFrameSlider = function () {
 		var val = Math.round(that.FrameSlider.getValue());
 		
 		// Update any displayable data
-		if (that.displayableData && that.displayableData.frameNumber) {		
-			that.displayableData.frameNumber.innerHTML = "Frame: "+ (val + 1) + " / " + that.FrameViewer.frames.length;	
+		if (that.displayableData && that.displayableData.frameNumber) {	
+			var displayText = (that.FrameViewer.frames.length > 0) ?
+							  "Frame: "+ (val + 1) + " / " + that.FrameViewer.frames.length :
+							  "Drag or click on any thumbnail to view."
+	
+			that.displayableData.frameNumber.innerHTML = displayText;	
 		}
 		
 		// Draw the frame

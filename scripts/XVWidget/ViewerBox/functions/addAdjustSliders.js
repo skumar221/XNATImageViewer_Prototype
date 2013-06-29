@@ -51,7 +51,6 @@ ViewerBox.prototype.addAdjustSliders = function () {
 	//---------------------------
 	// BRIGHTNESS SLIDER
 	//---------------------------
-
 	this.BrightnessSlider = new utils.gui.GenericSlider(utils.dom.mergeArgs(imgProcSliderCSS, {
 		parent: that.ScanTabs.getTab("Adjust"),
 		className: "BrightnessSlider",

@@ -13,7 +13,7 @@ Modal.prototype.manageActiveThumbs = function (viewer, thumb) {
 
 	if (t) {	
 		var found;
-		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
+		utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
 			
 			if (!found && thumbObj.widget.id == t) {
 				thumbObj.setActive(false);

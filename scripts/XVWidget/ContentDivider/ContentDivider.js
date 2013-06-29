@@ -44,15 +44,7 @@ ContentDivider = function (args) {
 	 * @private
 	 * @type {Element}
 	 */
-	this.widgetIcon = utils.dom.makeElement("div", this.widget, 'widgetIcon', {
-		position: 'absolute',	
-		color: "rgba(85,85,85)",
-		width: "20%",
-		left: '40%',
-		top: -15,
-		fontSize: 25,
-		textAlign: "center"
-	});	
+	this.widgetIcon = utils.dom.makeElement("div", this.widget, 'widgetIcon', this.args.iconCSS);	
 	this.widgetIcon.innerHTML = "..."	 
 	 
 	 
@@ -97,19 +89,21 @@ ContentDivider = function (args) {
 	//
 	goog.events.listen(this.widget, goog.events.EventType.MOUSEDOWN, function(e) {
 	
-		utils.dom.stopPropagation(e);
 		
+		utils.dom.stopPropagation(e);
+
 		var cDims = utils.css.dims(that.containmentDiv);
 		var d = new goog.fx.Dragger(that.widget, null, new goog.math.Rect(0, cDims.top, 0, cDims.height - GLOBALS.ContentDividerHeight));
 		
 		that.dragging = true;	
 		
 		
-		
 		d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
 			
-			goog.array.forEach(that.dragCallbacks, function(callback) {
-				callback(e);	
+			utils.dom.stopPropagation(e);
+
+			utils.array.forEach(that.dragCallbacks, function(callback) {
+				callback(that.widget, e);	
 			})	
 				
 		});
@@ -147,7 +141,7 @@ ContentDivider.prototype.defaultArgs = {
 			width: "100%",
 			height: GLOBALS.ContentDividerHeight,
 			cursor: "n-resize",
-			backgroundColor: "rgba(40,40,40, 1)",
+			backgroundColor: GLOBALS.ContentDividerColor,
 			opacity: 1,
 			color: "rgb(85,85,85)",
 			fontSize: 25,
@@ -158,8 +152,105 @@ ContentDivider.prototype.defaultArgs = {
 			left: 0,
 			width: 650,
 			height: 400
+		},
+		iconCSS: {
+			position: 'absolute',	
+			color: "rgba(0,0,0)",
+			width: "20%",
+			left: '40%',
+			top: -11,
+			fontSize: 20,
+			textAlign: "center"
 		}
 }
 
 
+
+/**
+ * @param {number}
+ */
+ContentDivider.prototype.slideTo = function(newTop, animate) {
+	
+	var that = this;
+
+	
+	var dims = utils.css.dims(that.widget);
+	var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, newTop], GLOBALS.animMed, goog.fx.easing.easeOut);
+	
+	goog.events.listen(slide, goog.fx.Animation.EventType.ANIMATE, function() {
+		utils.array.forEach(that.dragCallbacks, function(callback) {
+			callback(that.widget);	
+		})			
+	});
+	
+	slide.play();
+	
+} 
+
+
+/**
+ * @return {number}
+ */
+ContentDivider.prototype.getUpperLimit = function() {
+
+	var that = this;
+	var p;
+	var d = new Date();
+	var n = d.getTime();
+	
+	console.log(" ")
+	console.log("UPPER")
+	
+	var vals = ['top', 'left', 'height', 'width']
+	utils.array.forEach(vals, function(val) { 
+		console.time(val)
+		var p = utils.css.dims(that.containmentDiv, val);
+		console.timeEnd(val)	
+	})
+
+
+	
+	
+	console.time("EVERYTHING")
+	var a = utils.css.dims(this.containmentDiv);
+	console.timeEnd("EVERYTHING")
+	
+	
+	
+	return utils.css.dims(this.containmentDiv, 'top');
+} 
+
+
+/**
+ * @return {number}
+ */
+ContentDivider.prototype.getLowerLimit = function() {
+	
+	var that = this;
+	var p;
+	var d = new Date();
+	var n = d.getTime();
+	
+		console.log(" ")
+		console.log("LOWER")
+		
+	var vals = ['top', 'left', 'height', 'width']
+	utils.array.forEach(vals, function(val) { 
+		console.time(val)
+		var p = utils.css.dims(that.containmentDiv, val);
+		console.timeEnd(val)	
+	})
+
+
+	
+	
+	console.time("EVERYTHING")
+	var a = utils.css.dims(this.containmentDiv);
+	console.timeEnd("EVERYTHING")
+	
+	
+	return utils.css.dims(this.containmentDiv, 'top') + 
+		   utils.css.dims(this.containmentDiv, 'height') - 
+		   utils.css.dims(this.widget, 'height') - 2;
+} 
 

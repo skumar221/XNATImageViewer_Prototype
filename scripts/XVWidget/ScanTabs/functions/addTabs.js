@@ -1,24 +1,10 @@
-ScanTabs.prototype.setUI = function() {
+ScanTabs.prototype.addTabs = function() {
 	
 	var that = this;
 	
 	//------------------------------
 	// CSS
 	//------------------------------
-	
-	/**
-	 * @type {Object}
-	 */
-	var selectedBorder = {
-		"border" : "solid 1px rgb(200,200,200)",
-		"border-bottom": "rgb(0,0,0)"
-	}
-	/**
-	 * @type {Object}
-	 */	
-	var deselectedBorder = {
-		"border" : "solid 1px rgb(80,80,80)"
-	}
 	/**
 	 * @type {Object}
 	 */	
@@ -55,19 +41,7 @@ ScanTabs.prototype.setUI = function() {
 		fontFamily: GLOBALS.fontFamily,
 		backgroundColor: 'rgb(0,0,0)',
 	}
-	/**
-	 * @type {Object}
-	 */	
-	var mouseoverBG = {
-		backgroundColor: "rgba(90,90,90,1)"		
-	}
-	/**
-	 * @type {Object}
-	 */	
-	var mouseoutBG = {
-		backgroundColor: "rgba(0,0,0,1)"
-	}
-	
+
 	
 	
 	
@@ -75,8 +49,7 @@ ScanTabs.prototype.setUI = function() {
 	//
 	//  Loop through tabTitles array to create them
 	//
-	goog.array.forEach(this.args.tabTitles, function(title, i) { 
-		
+	utils.array.forEach(this.args.tabTitles, function(title, i) { 
 		
 		
 		
@@ -88,7 +61,6 @@ ScanTabs.prototype.setUI = function() {
 			utils.dom.mergeArgs(tabCSS, {
 			left: GLOBALS.scanTabLabelWidth * i + i*3, 
 		}));
-		utils.css.setCSS(tab, deselectedBorder);
 		
 		
 		
@@ -113,33 +85,11 @@ ScanTabs.prototype.setUI = function() {
 		that.tabs.push(tabPage);
 			
 
-
-		//
-		//	MOUSEOVER
-		//
-		goog.events.listen(tab, goog.events.EventType.MOUSEOVER, function(e) { 
-		
-			if (!e.currentTarget.isExpanded) {
-				utils.css.setCSS(tab, mouseoverBG)				
-			}
-		
-		});
-		
-		
-		
-		
-		//
-		//	MOUSEOUT
-		//		
-		goog.events.listen(tab, goog.events.EventType.MOUSEOUT, function(e) { 
-			
-			utils.css.setCSS(tab, mouseoutBG)		
-		
-		});
-		
-		
+	})
+}
 
 
+/*
 		//
 		//	CLICK
 		//
@@ -154,7 +104,7 @@ ScanTabs.prototype.setUI = function() {
 			//
 			// Set the isExpanded on clicked tab, false on unclicked tab
 			//
-			goog.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
+			utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
 				
 				if (elt == e.currentTarget) {
 					elt.isExpanded = (elt.isExpanded === 'undefined') ? false : elt.isExpanded;
@@ -190,7 +140,7 @@ ScanTabs.prototype.setUI = function() {
 			//
 			// Set the opacity of Icon when you click (1 for clicked, .6 for unclicked)
 			//
-			goog.array.forEach(goog.dom.getElementsByClass('TabIcon', that.widget), function(elt, i) { 
+			utils.array.forEach(goog.dom.getElementsByClass('TabIcon', that.widget), function(elt, i) { 
 				
 				var op =  .6;	
 				if (elt == targetImage[0] && goog.dom.getAncestorByClass(elt, "Tab").isExpanded) {
@@ -210,7 +160,7 @@ ScanTabs.prototype.setUI = function() {
 			//
 			// Set the border of the tabs, clicked vs. other...
 			//
-			goog.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
+			utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
 
 				var border =  deselectedBorder;
 				var zIndex =  10;
@@ -248,7 +198,7 @@ ScanTabs.prototype.setUI = function() {
 			//
 			// Set the height of the tab page
 			//
-			goog.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {
+			utils.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {
 
 				var pageWidth = utils.css.dims(that.widget, 'width')-2;
 				utils.css.setCSS(elt, {
@@ -265,6 +215,4 @@ ScanTabs.prototype.setUI = function() {
 
 				anim.play();
 			});
-		});
-	})
-}
+border */

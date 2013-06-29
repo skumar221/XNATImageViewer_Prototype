@@ -142,7 +142,7 @@ var SliderLinker = function (args) {
 		goog.events.unlisten(ViewerBox.widget, goog.events.EventType.MOUSEOVER, that.sliderlink_mouseover);
 		goog.events.unlisten(ViewerBox.widget, goog.events.EventType.MOUSEOUT, that.sliderlink_mouseout);
 		
-		goog.array.forEach(ViewerBox.widget.defaultMouseEvents, function(event) {
+		utils.array.forEach(ViewerBox.widget.defaultMouseEvents, function(event) {
 			event();		
 		})
 
@@ -163,7 +163,7 @@ var SliderLinker = function (args) {
 		var removed = false;
 		
 		
-		goog.array.forEach(groups,  function(group){
+		utils.array.forEach(groups,  function(group){
 			
 			if (!removed) {
 				
@@ -405,14 +405,14 @@ var SliderLinker = function (args) {
 			callbacks_ = {};
 		
 		}
-		goog.array.forEach(groups,  function(group){
+		utils.array.forEach(groups,  function(group){
 			
 			if (callbacks_.before) { 
 				callbacks_.before(group, groups);
 			}
 			
 			
-			goog.array.forEach(group.Viewers,  function(viewer){
+			utils.array.forEach(group.Viewers,  function(viewer){
 			
 				if (callbacks_.during) { 
 					callbacks_.during(viewer, group, groups);
@@ -516,7 +516,7 @@ SliderLinker.prototype.sliderlink_mouseover = function (event) {
 	//
 	//  Loop through viewergroup, apply "linkSlider" rule on !mouseoverViewer viewers
 	//
-	goog.array.forEach( viewerGroup, function(otherViewer) { 
+	utils.array.forEach( viewerGroup, function(otherViewer) { 
 		if (otherViewer !== mouseoverViewer) {
 			mouseoverViewer.FrameSlider.linkSlider(otherViewer.FrameSlider);	
 		}		

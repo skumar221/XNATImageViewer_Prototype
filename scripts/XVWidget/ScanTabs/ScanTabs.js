@@ -18,11 +18,6 @@ ScanTabs = function (args) {
 	XVWidget.call(this, args);	
 	utils.dom.addCallbackManager(this);
 
-	// Adjust widgetcss
-	utils.css.setCSS( this.widget, {
-		backgroundColor: "rgb(55,55,55)",
-	})
-	// Set Tabs, google -style
 	
 	/**
 	 * @type {goog.ui.TabPane}
@@ -35,11 +30,67 @@ ScanTabs = function (args) {
 	 */
 	this.tabs = [];
 
-	this.setUI();
+	this.addTabs();
+	
+	
+	/**
+	 * @private
+	 */
+	this.lastSelectedTab = 0;
+	/**
+	 * @return {number}
+	 */
+	this.getLastSelectedTab = function() {
+		return this.lastSelectedTab;
+	}
+	
+
+
+
+	/**
+	 * @param {string} 
+	 * @return {Element}
+	 */
+	this.getTab = function (value) {
+		
+		var that = this;
+		var retVal;
+		
+		if (typeof value === 'string') {
+			value = value.toLowerCase();
+			utils.array.forEach(this.tabs, function(tab) {
+				if (tab.label.toLowerCase().indexOf(value) > -1 && !retVal) { 
+					retVal = tab; 
+				}				
+			})
+								
+		} else if (typeof value === 'number') {
+
+			utils.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(tabPage, i) { 			
+				if (i === value) {
+					retVal = tabPage;
+				}
+			})			
+			
+		}
+		return retVal;
+	}
+
+
+	
 
 	this.updateCSS();
+	this.setClickUI();
+
+	this.setActive(0);
+	utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(tab, i) { 
+		tab.isActive = false;
+	})
+
+
 }
 goog.inherits(ScanTabs, XVWidget);
+
 
 
 
@@ -51,21 +102,16 @@ goog.inherits(ScanTabs, XVWidget);
 ScanTabs.prototype.defaultArgs = {
 	parent: document.body,
 	className: GLOBALS.classNames.ScanTabs,
-	scanContents: 0,
 	tabTitles: ["Info", "Adjust"],
 	tabIconSrc: ["./icons/InfoIcon.png", "./icons/Adjust.png"],
-	contentFontSize: 10,
-	activeLineColor: GLOBALS.activeLineColor,
-	activeFontColor: GLOBALS.activeFontColor,
-	inactiveLineColor: GLOBALS.inactiveLineColor,
-	inactiveFontColor: GLOBALS.inactiveFontColor,
 	widgetCSS: {
 		position: 'absolute',
 		top: 400,
 		left: 20,
 		height: 300,
 		width: '100%',
-		borderWidth: 1
+		borderWidth: 1,
+		backgroundColor: GLOBALS.ContentDividerColor,
 	}
 }
 
@@ -73,23 +119,48 @@ ScanTabs.prototype.defaultArgs = {
 
 
 /**
- * @param {string} 
- * @return {Element}
+ * @private
  */
-ScanTabs.prototype.getTab = function (value) {
+ScanTabs.prototype.setClickUI = function() {
 	
 	var that = this;
-	var tab;
-	
-	for (var i=0; tab = this.tabs[i]; i++) {
-		if (typeof value === "string") {
-			
-			if (tab.label.toLowerCase().indexOf(value.toLowerCase()) > -1) {
+	//
+	// CYCLE THROUGH
+	//
+	utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(tab, i) { 
+		
+		goog.events.listen(tab, goog.events.EventType.CLICK, function(event) { 
 
-				return tab;
-			}	
-		}		
+			if (!tab.isActive) {
+				that.setActive(i);
+				that.callbacks['activate']();	
+			}
+			else {
+				that.callbacks['deactivate']();
+				tab.isActive = false;
+			}
+			
+		})
+		
+	})	
+	
+}
+
+
+
+
+/**
+ * @param {Object}
+ */
+ScanTabs.prototype.setClickCallbacks = function(object) {
+
+	if (!this.callbacks) {
+		this.callbacks = {};
 	}
+	
+	for (callbackType in object) {
+		this.callbacks[callbackType] = object[callbackType];
+	}	
 	
 }
 
@@ -97,26 +168,125 @@ ScanTabs.prototype.getTab = function (value) {
 
 
 
+/**
+ * @param {number}
+ */
+ScanTabs.prototype.setActive = function (activeTabNum) {
+	
+	var that = this;
+	var setActiveColor = "rgb(120,120,120)";
+	var deselectColor = "rgb(80,80,80)";
+	var black = "rgb(0,0,0)";
+	var border, zIndex;//, disp;
+	
+	/**
+	 * @type {Object}
+	 */
+	var selectedBorder = {
+		"border" : "solid 1px " + setActiveColor,
+	}
+	/**
+	 * @type {Object}
+	 */	
+	var deselectedBorder = {
+		"border" : "solid 1px " + deselectColor,
+	}	
+
+
+	this.tabPane.setSelectedIndex(activeTabNum);
+	//
+	// CYCLE THROUGH, hightlihting the tab associated with tabNum, not hightlting the other
+	//
+	utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(tab, i) { 
+		
+		//
+		// params: if current tab is the one to setActive or not
+		//
+		border =  deselectedBorder;
+		zIndex =  10;
+		tab.isActive = false;
+		
+		if (i === activeTabNum) {
+			border = selectedBorder;
+			zIndex = 1000;
+			disp = 'visible';
+			tab.isActive = true;
+		}
+		
+		
+		
+		//
+		// Set Tab background and zIndex
+		//
+		utils.css.setCSS(tab, utils.dom.mergeArgs(border,{
+			zIndex: zIndex,
+			backgroundColor: black,
+			'border-bottom': black
+		}));	
+		
+		
+		
+		//
+		// Set the tabPage border
+		//
+
+		utils.css.setCSS(that.getTab(i), utils.dom.mergeArgs(border, {
+			zIndex: zIndex,
+		}));
+
+
+	})
+}
+
+
+
+
+
+/**
+ * @param {number}
+ */
+ScanTabs.prototype.expandVertically = function (newTop) {
+	
+	var that = this;
+	var parentHeight = utils.css.dims(that.widget.parentNode, 'height');
+	var parentWidth = utils.css.dims(that.widget.parentNode, 'width');
+	var tabHeight = utils.css.dims(goog.dom.getElementsByClass('Tab', that.widget)[0] , 'outerHeight')
+	var pageHeight =  parentHeight - newTop - tabHeight;
+	
+
+	utils.css.setCSS(this.widget, {
+		top: newTop
+	})
+	
+	utils.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {			
+		//
+		// Set the tabPage border
+		//
+		utils.css.setCSS(elt, {
+			height: pageHeight - 1,
+			width: parentWidth-2
+		});
+	})
+}
+
+
 
 ScanTabs.prototype.updateCSS = function () {
 
 	var that = this;
+	var parentHeight = utils.css.dims(that.widget.parentNode, 'height');
+	var parentWidth = utils.css.dims(that.widget.parentNode, 'width');
+	var tabHeight = utils.css.dims(goog.dom.getElementsByClass('Tab', that.widget)[0] , 'outerHeight')
+	var pageHeight =  (parentHeight - utils.css.dims(that.widget, 'top') - tabHeight -1) || 0;
 
 	
-	//
-	// Set the height of the tab page
-	//
-	var widgetDims = utils.css.dims(this.widget);
-	var pageWidth = widgetDims.width - 2;
-	var pageHeight = widgetDims.height - GLOBALS.minScanTabHeight - 1;
-	
-	goog.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(tabPage, i) {
-		
-		utils.css.setCSS(tabPage, { 
+	//-----------------------------
+	// TAB PAGE
+	//-----------------------------
+	utils.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {			
+		utils.css.setCSS(elt, {
 			height: pageHeight,
-			width: pageWidth 		
-		})	
-	});
-
-
+			width: parentWidth-2
+		});
+	})
 }

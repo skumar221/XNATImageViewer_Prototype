@@ -204,7 +204,7 @@ Thumbnail.prototype.setActive = function(active) {
 	var nodes = goog.dom.getElementsByClass(that.widget.id);
 	
 	
-	goog.array.forEach(nodes, function(node) { 
+	utils.array.forEach(nodes, function(node) { 
 		node.isActive = active;
 		utils.css.setCSS(node, {
 			backgroundColor: bgColor,

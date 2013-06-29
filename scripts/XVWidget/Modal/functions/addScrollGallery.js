@@ -80,5 +80,4 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 		this.dragDropThumbnails.push(scanThumb);
 	}
 	
-
 }

@@ -98,7 +98,6 @@ var Modal = function (args) {
 	//	ROW MENU
 	//----------------------------------	
 	this.addRowMenu();
-	
 
 	
 	//----------------------------------
@@ -111,6 +110,7 @@ var Modal = function (args) {
 	this.initThumbnailDragDrop();
 	this.initViewerBoxDragDrop();
 	
+
 	
 	
 	//----------------------------------
@@ -123,11 +123,12 @@ var Modal = function (args) {
 			that.setViewerBoxDragAndDrop();
 		}
 	})
-	
+
 	this.Viewers({
 		"insert" : "column",
 		"animate" : "off"
 	});
+
 	this.Viewers({
 		"insert" : "column",
 		"animate" : "off"

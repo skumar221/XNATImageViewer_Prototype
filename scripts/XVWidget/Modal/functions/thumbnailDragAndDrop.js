@@ -42,7 +42,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 			//
 			// Find the XVThumbnail that owns 'event.dragSourceItem.element'
 			//
-			goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
+			utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
 				if (!found && thumbObj.widget == event.dragSourceItem.element) {
 					
 					dragElt = thumbObj;
@@ -74,7 +74,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 		
 		var dragElt;
 	
-		goog.array.forEach(that.dragDropThumbnails, function(thumbObj) {
+		utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
 			if (thumbObj.widget == event.dragSourceItem.element) {
 				dragElt = thumbObj
 			}
@@ -98,7 +98,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 	//
 	XV.Viewers(function (viewer) {
 
-		goog.array.forEach(that.dragDropThumbnails, function(thumb) {
+		utils.array.forEach(that.dragDropThumbnails, function(thumb) {
 			thumb.addTarget(viewer);	
 		});
 
@@ -112,7 +112,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 	//
 	// Set additional classes used to indicate dragging
 	//
-	goog.array.forEach(that.dragDropThumbnails, function(thumb) {
+	utils.array.forEach(that.dragDropThumbnails, function(thumb) {
 
 		//thumb.setTargetClass('ThumbnailTarget');
 		thumb.init();
@@ -144,7 +144,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	//
  	// SET CLICK EVENT
  	//
- 	goog.array.forEach(that.dragDropThumbnails, function(srcObj) {
+ 	utils.array.forEach(that.dragDropThumbnails, function(srcObj) {
 		goog.events.listen(srcObj.widget, goog.events.EventType.CLICK, function(){
 
 			var d = new Date();

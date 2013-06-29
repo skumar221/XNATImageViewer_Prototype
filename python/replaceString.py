@@ -50,8 +50,8 @@ def main():
     htmlFile = "../index-uncompressed.html"
     backupDir = "scriptsBackup"
       
-    findStr = "@returns "
-    replaceStr = "@return "
+    findStr = "goog.array.forEach"
+    replaceStr = "utils.array.forEach"
     fileReplaceStr = replaceStr #replaceStr.split(".")[2]
     
     skipDirs = ["jquery"];

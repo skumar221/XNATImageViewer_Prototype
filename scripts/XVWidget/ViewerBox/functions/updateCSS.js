@@ -7,11 +7,13 @@ ViewerBox.prototype.updateCSS = function (args) {
 
 	var that = this;
 	
-	var widgetDims = utils.css.dims(this.widget)
+	var widgetDims = utils.css.dims(this.widget);
+
 	var widgetHeight = (args && args.height) ? args.height : widgetDims['height'];
 	var widgetWidth = (args && args.width) ? args.width : widgetDims['width'];
 	var widgetTop = (args && args.top) ? args.top : widgetDims['top'];
 	var widgetLeft = (args && args.left) ? args.left : widgetDims['left'];
+
 
 	//
 	//  CONTENT DIVIDER
@@ -38,7 +40,7 @@ ViewerBox.prototype.updateCSS = function (args) {
 			var h = widgetHeight - t - utils.css.dims(this.ContentDivider.widget, 'height') - GLOBALS.minScanTabHeight + 5;	
 			
 			utils.css.setCSS(this.ContentDivider.widget, {
-				top: GLOBALS.minContentDividerTop(widgetHeight)
+				top: GLOBALS.minContentDividerTop(widgetHeight) - 1
 			});
 			
 			utils.css.setCSS(this.ContentDivider.containmentDiv, {
@@ -50,8 +52,7 @@ ViewerBox.prototype.updateCSS = function (args) {
 			
 		}
 	}
-	
-	
+
 	
 	
 	
@@ -87,6 +88,8 @@ ViewerBox.prototype.updateCSS = function (args) {
 	});
 
 	
+	
+	
 	//----------------------------------
 	// Tabs
 	//----------------------------------	
@@ -96,6 +99,8 @@ ViewerBox.prototype.updateCSS = function (args) {
  	  	width: '100%',
 	});
    this.ScanTabs.updateCSS();
+	
+
 
 
 	//----------------------------------
@@ -104,6 +109,7 @@ ViewerBox.prototype.updateCSS = function (args) {
     utils.css.setCSS(this.FrameSlider.getWidget(), { 
  		top : sliderTop,
     })
+	
 	
 	
 	 
@@ -125,8 +131,10 @@ ViewerBox.prototype.updateCSS = function (args) {
 	 // CSS: FRAME NUMBER DISPLAY
 	 //----------------------------------	 
 	 utils.css.setCSS(this.displayableData.frameNumber, {
-	 	top: utils.css.dims(this.FrameViewer.widget, 'height') - 20,// -2,
-	 	left: 10
+	 	top: sliderTop - 15,// -2,
+	 	left: 10,
+	 	width: widgetWidth - 10,
+	 	fontSize: GLOBALS.fontSizeSmall
 	 });
 	 
 	 

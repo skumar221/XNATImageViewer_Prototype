@@ -3,67 +3,62 @@
 //******************************************************
 goog.require('goog.style');
 
-utils.css.dims = function (elt, arg1, arg2, arg3, arg4) {
+utils.css.dims = function (elt, arg1) {
 	
-	var dimArgs = [];
-	var retObj = {};
-	
-	if (arguments.length > 1) {
-		for (var i=1, len = arguments.length; i < len; i++) {
-			dimArgs.push(arguments[i])
-		}
-	}
-	else {
-		dimArgs = ['height', 'width', 'position'];
-	}
-
-	var size = goog.style.getSize(elt);
-	
-	if (dimArgs.indexOf('height') > -1) {
-		retObj['height'] = $(elt).height();
-
-	}
-	
-	if (dimArgs.indexOf('width') > -1) {
-		retObj['width'] = $(elt).width();
-	}
-	
-	
-	var includePos = (dimArgs.indexOf('position') > -1) 
-					 || (dimArgs.indexOf('pos') > -1) 
-					 || (dimArgs.indexOf('left') > -1) 
-					 || (dimArgs.indexOf('top') > -1);
-	
-	if (includePos) {
+	if (arg1 && typeof arg1 === 'string') {
+		//
+		// Basically, if we're looking for just attribute we go right to the kill...
+		//
+		var val, conv;
 		
-		var p = $(elt).position();
-		retObj['left'] = p.left;
-		retObj['top'] = p.top;
-		retObj['position'] = p;
-		retObj['pos'] = p;
+		switch(arg1) {
+			case 'height':
+				return elt.clientHeight;// || $(elt).height();
+			case 'width':
+				return elt.clientWidth;// || $(elt).width();
+			case 'outerHeight':
+				return $(elt).outerHeight();
+			case 'outerWidth':
+				return $(elt).outerWidth();
+			case 'offsetTop':
+				return elt.offsetTop;
+			case 'offsetLeft':
+				return elt.offsetLeft
+			default:
 
-	}
-	
+				val = /%emt/.test(elt.style[arg1]);
+				
+				if (!val) {
+					return utils.convert.toInt(elt.style[arg1]);
+				}
 
-	if (dimArgs.indexOf('outerHeight') > -1) {
-		retObj['outerHeight'] = $(elt).outerHeight();
-	}
-
-	if (dimArgs.indexOf('outerWidth') > -1) {
-		retObj['outerWidth'] = $(elt).outerWidth();
-	}
-
-
-	
-	//
-	// If only one argument after element,
-	// simply return the number, not the object.
-	//
-	if (arguments.length == 2) {
-		for (var i in retObj) {
-			return retObj[i];
+				return $(elt).position()[arg1];
+				//return utils.convert.toInt(elt.style[arg1]) //||  $(elt).position()[arg1];
+				//return $(elt).position()[arg1];
 		}
-	}
-	return retObj;
+		
+	} else {
+
+
+		var retObj = {};
+		var p = $(elt).position();
+
+		var posObj = {
+			left: utils.convert.toInt(elt.style.left) || p.left,
+			top: utils.convert.toInt(elt.style.top) || p.top,
+		};
+		retObj = utils.dom.mergeArgs(retObj, posObj);		
+		
+		
+		retObj['position'] = posObj;
+		retObj['height'] = elt.clientHeight;
+		retObj['width'] = elt.clientWidth;			
+		retObj['outerHeight'] = $(elt).outerHeight();
+		retObj['outerWidth'] = $(elt).outerWidth();
+		retObj['offsetTop'] = elt.offsetTop;
+		retObj['offsetLeft'] = elt.offsetLeft;	
+
+		return retObj;
 	
+	}
 }

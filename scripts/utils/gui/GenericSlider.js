@@ -26,7 +26,7 @@ utils.gui.GenericSlider = function (arguments) {
 	var className = (args['className']) ? args['className'] : "GenericSlider";
 	this.id = className + "_" + utils.dom.uniqueId();
 
-	
+
 	
 	//----------------------------
 	// Set CSS - VERTICAL ORIENTATION

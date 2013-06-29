@@ -63,9 +63,10 @@ Modal.prototype.addViewerManager = function () {
 			//	
 			// Create ViewerBox
 			//	
+
 			var v = new ViewerBox({
 				parent: XV.modal,
-			});	
+			});
 			return v;
 			
 		}
@@ -260,7 +261,7 @@ Modal.prototype.addViewerManager = function () {
 					var newRow = [];
 					var rowLen = (viewers[0] && viewers[0].length) ? viewers[0].length : 1;
 
-					for (var i=0, len = rowLen; i < len; i++) { 						
+					for (var i=0; i < rowLen; i++) { 						
 						var v = makeViewer();
 						newRow.push(v);
 						
@@ -269,7 +270,7 @@ Modal.prototype.addViewerManager = function () {
 
 					viewers.push(newRow);
 			
-									
+		
 					if (!animOff) {
 						
 						for (var i = 0, len = newRow.length; i < len; i++) {
@@ -294,10 +295,9 @@ Modal.prototype.addViewerManager = function () {
 					
 					var newColumn = [];
 					var columnLen = (viewers.length) ? viewers.length : 1;
-
-					for (var i = 0, len = columnLen; i < len; i++) {						var v = makeViewer();
-						newColumn.push(v);
-						
+	
+					for (var i = 0; i < columnLen; i++) {					
+						newColumn.push(makeViewer());						
 					}
 					
 					if (viewers.length === 0) {
@@ -311,18 +311,21 @@ Modal.prototype.addViewerManager = function () {
 
 
 					if (!animOff) {
-						for (var i = 0, len = newColumn.length; i < len; i++) {
-							utils.fx.fadeTo(newColumn[i].widget, 0,0);
-						}
+						
 						this.animateModal(function () {
-							for (var i = 0, len = newColumn.length; i < len; i++) {
+							utils.array.forEach(newColumn, function(newViewer){
 								
-								utils.fx.fadeTo(newColumn[i].widget , GLOBALS.animFast, 1);
-								newColumn[i].updateCSS();
-							}						
-						});					
+								utils.fx.fadeOut(newViewer.widget, 0, function() {
+									utils.fx.fadeIn(newViewer.widget , GLOBALS.animFast);	
+								})
+								newViewer.updateCSS();
+								
+							});			
+						});			
+						
 					}
 					else {
+											
 						this.updateCSS();
 					}
 
@@ -389,7 +392,7 @@ Modal.prototype.addViewerManager = function () {
 		
 		if (isInsert || isRemove) {
 			if (insertRemoveCallbacks.length > 0) {
-				goog.array.forEach(insertRemoveCallbacks, function(item) {
+				utils.array.forEach(insertRemoveCallbacks, function(item) {
 					item();					
 				});
 			}			

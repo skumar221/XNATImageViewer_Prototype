@@ -67,3 +67,10 @@ goog.provide('utils.fx');
  * @constructor
  */
 utils.fx = function () {};
+
+
+goog.provide('utils.array');
+/**
+ * @constructor
+ */
+utils.array = function () {};

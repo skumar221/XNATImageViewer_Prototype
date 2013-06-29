@@ -39,7 +39,7 @@ FrameViewer = function(args) {
 	this.canvas.width = this.CSS.width;
 	this.context = this.canvas.getContext('2d');
 	
-	
+
 	
 	//----------------------------------
 	//	ONLOAD CALLBACKS
@@ -47,7 +47,7 @@ FrameViewer = function(args) {
 	this.onloadCallbacks = [];
 	this.adjustMethods = {};
 	
-	
+
 	
 	//----------------------------------
 	//	CAVAS STYLING
@@ -67,9 +67,11 @@ FrameViewer = function(args) {
 			that.loadFrames(dropable.frames);
 		}
 	}
-
+	
 
 	this.updateCSS();
+	
+
 }
 goog.inherits(FrameViewer, XVWidget);
 
@@ -86,22 +88,22 @@ FrameViewer.prototype.defaultArgs = {
 	blankMsg : "drag and drop Thumbnail here",
 	contrastThreshold: .01,
 	CSS: {
-			position: 'absolute',
-			top: 15,
-			left: 20,
-			height: 300,
-			width: 300,	
-			"fontSize": 16,		
-			"overflow-y": "hidden",
-			"overflow-x": "hidden",
-		    "font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
-		    "border" : "solid",
-			"borderColor": "rgba(50,50,50,1)",
-			"color": "rgba(255,255,255,1)",
-		  	"border-width" : 0,
-		  	"border-radius": 0,	 
-		  	 overflow: "visible"
-  		 }
+		position: 'absolute',
+		top: 15,
+		left: 20,
+		height: 300,
+		width: 300,	
+		"fontSize": 16,		
+		"overflow-y": "hidden",
+		"overflow-x": "hidden",
+	    "font-family": 'Helvetica, Helvetica neue, Arial, sans-serif',
+	    "border" : "solid",
+		"borderColor": "rgba(50,50,50,1)",
+		"color": "rgba(255,255,255,1)",
+	  	"border-width" : 0,
+	  	"border-radius": 0,	 
+	  	 overflow: "visible"
+  	}
 }
 
 

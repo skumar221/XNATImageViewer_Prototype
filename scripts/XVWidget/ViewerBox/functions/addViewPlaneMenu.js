@@ -75,7 +75,7 @@ ViewerBox.prototype.addViewPlaneMenu = function () {
 	this.ViewPlaneMenu.subMenu.icons = [];	
 	
 	var startI = 0;
-	goog.array.forEach(iconVals, function(iconVal) {
+	utils.array.forEach(iconVals, function(iconVal) {
 		
 		if (iconVal != that.ViewPlaneMenu.mainIcon.axis)	{
 			//
@@ -104,7 +104,7 @@ ViewerBox.prototype.addViewPlaneMenu = function () {
 	//
 	// SET onclick
 	//
-	goog.array.forEach(allIcons, function(icon, i) { 
+	utils.array.forEach(allIcons, function(icon, i) { 
 		
 		if (icon.axis !== "3D") {
 			
@@ -203,10 +203,10 @@ ViewerBox.prototype.addViewPlaneMenu = function () {
 		//
 		// default fade state
 		//		
-		goog.array.forEach(that.ViewPlaneMenu.subMenu.icons, function (icon) {
+		utils.array.forEach(that.ViewPlaneMenu.subMenu.icons, function (icon) {
 			utils.fx.fadeTo(icon, 0, .5);	
 		})
-		goog.array.forEach(that.ViewPlaneMenu.subMenu.icons, function (icon) {
+		utils.array.forEach(that.ViewPlaneMenu.subMenu.icons, function (icon) {
 			//
 			//  mouseover
 			//
@@ -250,7 +250,7 @@ ViewerBox.prototype.addViewPlaneMenu = function () {
 	
 	this.ViewPlaneMenu.activateIcon = function (iconName) {
 		
-		goog.array.forEach(that.ViewPlaneMenu.subMenu.icons, function(icon) {
+		utils.array.forEach(that.ViewPlaneMenu.subMenu.icons, function(icon) {
 			
 			if (icon.title.toLowerCase() === iconName.toLowerCase()) {
 				
