@@ -37,24 +37,31 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	this.thumbnailDragDrop['drop'] = function(event) {
 		
 		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
-			var dragElt, found;
+			var dragThumb, found, newViewer;
 			var dropViewer = XV.Viewers(event.dropTargetItem.element);
+			
+			
 			//
 			// Find the XVThumbnail that owns 'event.dragSourceItem.element'
 			//
 			utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
+				
 				if (!found && thumbObj.widget == event.dragSourceItem.element) {
 					
-					dragElt = thumbObj;
-					that.manageActiveThumbs(dropViewer, thumbObj);
-					
+					dragThumb = thumbObj;
+					that.manageActiveThumbs(dropViewer, thumbObj);				
 					found = true;
+					
 				}
+				
 			})
 		
 			
 			if (dropViewer) {		
-				dropViewer.FrameViewer.loadDroppable(dragElt); 					
+
+				XV.Viewers.adaptAndLoad(dropViewer, dragThumb);
+				that.updateCSS();
+									
 			}
 			
 			if (event.dropTargetItem.element.prevBorder) {
@@ -72,11 +79,11 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	 */	
 	this.thumbnailDragDrop['dragStart'] = function(event) {
 		
-		var dragElt;
+		var dragThumb;
 	
 		utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
 			if (thumbObj.widget == event.dragSourceItem.element) {
-				dragElt = thumbObj
+				dragThumb = thumbObj
 			}
 		})
 

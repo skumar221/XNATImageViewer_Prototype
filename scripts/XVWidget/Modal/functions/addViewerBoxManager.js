@@ -3,12 +3,13 @@ goog.require('goog.array');
 Modal.prototype.addViewerManager = function () {
 	
 	var viewers = [[]];
-	var ViewersChangedCallbacks = [];
+	var insertRemoveCallbacks = [];
 	
 	this.Viewers = function (args1, args2, args3, args4, args5) {
 		
 		//utils.dom.debug(typeof args1)
 		//var viewers = [[]];
+		
 		
 		var isUndefined = (typeof args1 === 'undefined');
 		var isString = (typeof args1 === 'string');
@@ -16,13 +17,6 @@ Modal.prototype.addViewerManager = function () {
 		var isFunction = (typeof args1 === 'function');	
 		
 		
-		function runViewersChangedCallbacks() {
-			if (ViewersChangedCallbacks.length > 0) {
-				utils.array.forEach(ViewersChangedCallbacks, function(item) {
-					item();					
-				});
-			}	
-		}
 	
 		function widget(args1, args2) {
 			return viewers[args1][args2]
@@ -164,12 +158,10 @@ Modal.prototype.addViewerManager = function () {
 			var isInsert = args1['insert'];
 			var isRemove = args1['remove'];
 			var isViewerAfter = args1['viewerAfter'];
-			var isAddViewersChangedCallback = args1['addViewersChangedCallback'];
-
+			var isAddInsertRemoveCallback = args1['addInsertRemoveCallback'];
 
 			var isDOMElement = args1.tagName;
 			
-
 			if (isDOMElement) {
 				var e = loop (function (ViewerBox) { 
 					if (ViewerBox.widget == args1) {
@@ -180,8 +172,8 @@ Modal.prototype.addViewerManager = function () {
 			}
 
 
-			if (isAddViewersChangedCallback) {
-				ViewersChangedCallbacks.push(args1['addViewersChangedCallback']);
+			if (isAddInsertRemoveCallback) {
+				insertRemoveCallbacks.push(args1['addInsertRemoveCallback']);
 			}
 			
 			
@@ -399,9 +391,11 @@ Modal.prototype.addViewerManager = function () {
 		}
 		
 		if (isInsert || isRemove) {
-			
-			runViewersChangedCallbacks();
-		
+			if (insertRemoveCallbacks.length > 0) {
+				utils.array.forEach(insertRemoveCallbacks, function(item) {
+					item();					
+				});
+			}			
 		}
 
 					
@@ -412,41 +406,6 @@ Modal.prototype.addViewerManager = function () {
 			loop(args1)
 		}
 		
-	
-	
-		/**
-		 * @param {Viewer}
-		 * @param {Thumbnail}
-		 */
-		this.Viewers.adaptAndLoad = function(oldViewer, Thumbnail) {
-	
-			var newViewer;
-			
-			switch(Thumbnail.widget.className) {
-				
-				case GLOBALS.classNames.ScanThumbnail:
-					newViewer = new ScanViewerBox({
-						parent: oldViewer.widget.parentNode,
-					})
-					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
-					
-					
-					
-			}
-			
-			loop(function (viewer, i, j) {
-				
-				if (viewer === oldViewer) {
-					viewers[i][j] = newViewer;
-					oldViewer.widget.parentNode.removeChild(oldViewer.widget);
-					delete oldViewer;	
-				}
-				
-			})
-			newViewer.loadThumbnail(Thumbnail);
-			runViewersChangedCallbacks();
-		}
-	
 	}
 
 }
