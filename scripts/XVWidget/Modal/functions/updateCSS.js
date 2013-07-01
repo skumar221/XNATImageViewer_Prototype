@@ -32,25 +32,25 @@ Modal.prototype.updateCSS = function (args) {
 	//	SCAN VIEWERS
 	//----------------------------------	
 	if (XV) {
-		XV.Viewers( function (ViewerBox, i, j) { 
+		XV.Viewers( function (Viewer, i, j) { 
 
 						
-			ViewerBox.updateCSS({
+			Viewer.updateCSS({
 				
-				height: modalDims.ViewerBox.height,// - this.args.marginTop*2,
-				width: modalDims.ViewerBox.width,
-				left: modalDims.ViewerBox.lefts[i][j],
-				top: modalDims.ViewerBox.tops[i][j]
+				height: modalDims.Viewer.height,// - this.args.marginTop*2,
+				width: modalDims.Viewer.width,
+				left: modalDims.Viewer.lefts[i][j],
+				top: modalDims.Viewer.tops[i][j]
 				
 			});	
 			
-			if (ViewerBox.selectorBox) {
+			if (Viewer.selectorBox) {
 				
-				utils.css.setCSS(ViewerBox.selectorBox, {
-					height: modalDims.ViewerBox.height,// - this.args.marginTop*2,
-					width: modalDims.ViewerBox.width,
-					left: modalDims.ViewerBox.lefts[i][j],
-					top: modalDims.ViewerBox.tops[i][j]
+				utils.css.setCSS(Viewer.selectorBox, {
+					height: modalDims.Viewer.height,// - this.args.marginTop*2,
+					width: modalDims.Viewer.width,
+					left: modalDims.Viewer.lefts[i][j],
+					top: modalDims.Viewer.tops[i][j]
 				});				
 			} 	
 			

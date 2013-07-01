@@ -176,7 +176,7 @@ ContentDivider.prototype.slideTo = function(newTop, animate) {
 	
 	var dims = utils.css.dims(that.widget);
 	var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, newTop], GLOBALS.animMed, goog.fx.easing.easeOut);
-	
+	//goog.fx.Transition.EventType.END
 	goog.events.listen(slide, goog.fx.Animation.EventType.ANIMATE, function() {
 		utils.array.forEach(that.dragCallbacks, function(callback) {
 			callback(that.widget);	

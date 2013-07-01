@@ -29,24 +29,24 @@ Modal.prototype.modalDims = function (conversion) {
 	
 	//	Get the number of scan viewers
 	var viewers = XV.Viewers();
-	var ViewerBoxColumns = viewers[0].length;
-	var ViewerBoxRows = viewers.length;
+	var ViewerColumns = viewers[0].length;
+	var ViewerRows = viewers.length;
 	
 	
 	// determine the minimum modal width
 	var minModalWidth = GLOBALS.ScrollGalleryWidth + 
-						GLOBALS.minViewerBoxWidth * ViewerBoxColumns + 
-						GLOBALS.ViewerBoxVerticalMargin * ViewerBoxColumns + 
+						GLOBALS.minViewerWidth * ViewerColumns + 
+						GLOBALS.ViewerVerticalMargin * ViewerColumns + 
 						GLOBALS.expandButtonWidth;
 	
 	// determine the the modal width based on prescribed proportions
-	var ViewerBoxHeight = ( modalHeight - ((ViewerBoxRows + 1) * GLOBALS.expandButtonWidth)) / ViewerBoxRows;
-	var ViewerBoxWidth = GLOBALS.ViewerBoxDimRatio * ViewerBoxHeight;
+	var ViewerHeight = ( modalHeight - ((ViewerRows + 1) * GLOBALS.expandButtonWidth)) / ViewerRows;
+	var ViewerWidth = GLOBALS.ViewerDimRatio * ViewerHeight;
 	
 	// determine the minimum modal width
 	var modalWidth = GLOBALS.ScrollGalleryWidth + 
-					 ViewerBoxWidth  * ViewerBoxColumns + 
-					 GLOBALS.ViewerBoxVerticalMargin * ViewerBoxColumns + 
+					 ViewerWidth  * ViewerColumns + 
+					 GLOBALS.ViewerVerticalMargin * ViewerColumns + 
 					 GLOBALS.expandButtonWidth;
 
 
@@ -58,10 +58,10 @@ Modal.prototype.modalDims = function (conversion) {
 	
 	if (modalWidth > maxModalWidth) {	
 
-		ViewerBoxWidth = (maxModalWidth - (GLOBALS.ScrollGalleryWidth + GLOBALS.ViewerBoxVerticalMargin * ViewerBoxColumns + GLOBALS.expandButtonWidth))/ViewerBoxColumns;	
-		ViewerBoxHeight = ViewerBoxWidth / GLOBALS.ViewerBoxDimRatio;
+		ViewerWidth = (maxModalWidth - (GLOBALS.ScrollGalleryWidth + GLOBALS.ViewerVerticalMargin * ViewerColumns + GLOBALS.expandButtonWidth))/ViewerColumns;	
+		ViewerHeight = ViewerWidth / GLOBALS.ViewerDimRatio;
 		modalWidth= maxModalWidth;
-		modalHeight = (ViewerBoxHeight * ViewerBoxRows) + (GLOBALS.ViewerBoxVerticalMargin  * (ViewerBoxRows  - 1)) + GLOBALS.expandButtonWidth*2;
+		modalHeight = (ViewerHeight * ViewerRows) + (GLOBALS.ViewerVerticalMargin  * (ViewerRows  - 1)) + GLOBALS.expandButtonWidth*2;
 
 	}
 	
@@ -87,30 +87,30 @@ Modal.prototype.modalDims = function (conversion) {
 	//-------------------------
 	// SCAN VIEWER DIMS
 	//-------------------------	
-	var ViewerBoxLefts = [];
-	var ViewerBoxTops = [];
+	var ViewerLefts = [];
+	var ViewerTops = [];
 	var ScrollGalleryDims = utils.css.dims(this.ScrollGallery.widget)
-	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims.left + GLOBALS.ViewerBoxVerticalMargin;
+	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims.left + GLOBALS.ViewerVerticalMargin;
 
-	XV.Viewers( function (ViewerBox, i, j) { 
+	XV.Viewers( function (Viewer, i, j) { 
 			
-		l = viewerStart + j * (ViewerBoxWidth + GLOBALS.ViewerBoxVerticalMargin);
+		l = viewerStart + j * (ViewerWidth + GLOBALS.ViewerVerticalMargin);
 		
 
-		if (j==0 || !ViewerBoxLefts[i]) {
-			ViewerBoxLefts.push([])
+		if (j==0 || !ViewerLefts[i]) {
+			ViewerLefts.push([])
 		}
 		
-		ViewerBoxLefts[i][j] = l;
+		ViewerLefts[i][j] = l;
 		
-		if (j==0 || !ViewerBoxTops[i]) {
-			ViewerBoxTops.push([]);
+		if (j==0 || !ViewerTops[i]) {
+			ViewerTops.push([]);
 		}
 		
-		ViewerBoxTops[i][j] = (-1 + i * (ViewerBoxHeight + GLOBALS.ViewerBoxHorizontalMargin));
+		ViewerTops[i][j] = (-1 + i * (ViewerHeight + GLOBALS.ViewerHorizontalMargin));
 		
 		//if (i==0)
-		ViewerBoxTops[i][j] +=  GLOBALS.expandButtonWidth;
+		ViewerTops[i][j] +=  GLOBALS.expandButtonWidth;
 		
 	});
 
@@ -120,12 +120,12 @@ Modal.prototype.modalDims = function (conversion) {
 		left: Math.round(_l),
 		height: Math.round(modalHeight),
 		top: Math.round(_t),
-		ViewerBox: {
+		Viewer: {
 			
-			width: Math.round(ViewerBoxWidth),
-			height: Math.round(ViewerBoxHeight),
-			lefts: ViewerBoxLefts,
-			tops: ViewerBoxTops	
+			width: Math.round(ViewerWidth),
+			height: Math.round(ViewerHeight),
+			lefts: ViewerLefts,
+			tops: ViewerTops	
 			
 		},
 		ScrollGallery: {
@@ -142,14 +142,14 @@ Modal.prototype.modalDims = function (conversion) {
 		ColumnMenu: {
 			
 			left: Math.round(modalWidth) - GLOBALS.expandButtonWidth,
-			top: ViewerBoxTops[0][0] + Math.round(modalHeight)/2 - GLOBALS.expandButtonWidth - 20,
+			top: ViewerTops[0][0] + Math.round(modalHeight)/2 - GLOBALS.expandButtonWidth - 20,
 			width: GLOBALS.expandButtonWidth - 1,
 			height: 40
 			
 		},
 		RowMenu: {
 			
-			left: ViewerBoxLefts[0][0] + (Math.round(modalWidth) - ViewerBoxLefts[0][0] - GLOBALS.expandButtonWidth)/2 - 17,
+			left: ViewerLefts[0][0] + (Math.round(modalWidth) - ViewerLefts[0][0] - GLOBALS.expandButtonWidth)/2 - 17,
 			top: Math.round(modalHeight) - GLOBALS.expandButtonWidth,
 			width: 40,
 			height: GLOBALS.expandButtonWidth - 1

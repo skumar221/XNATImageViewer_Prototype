@@ -3,7 +3,7 @@
 //
 //
 //******************************************************
-SliderLinker.prototype.setViewerBoxClickListen = function (currViewer) {
+SliderLinker.prototype.setViewerClickListen = function (currViewer) {
 	
 	var that = this;
 	
@@ -11,27 +11,27 @@ SliderLinker.prototype.setViewerBoxClickListen = function (currViewer) {
 	this.showExisting();
 		
 
-	XV.Viewers( function (ViewerBox) {
+	XV.Viewers( function (Viewer) {
 				
 		//
 		//  Make a selector box if it doesn't exist'
 		//
-		if (!ViewerBox.selectorBox) {
+		if (!Viewer.selectorBox) {
 
-			ViewerBox.selectorBox =  GLOBALS.SliderLinker.addSelectorBox( 
-				ViewerBox.widget.parentNode , 
-				utils.css.dims(ViewerBox.widget)
+			Viewer.selectorBox =  GLOBALS.SliderLinker.addSelectorBox( 
+				Viewer.widget.parentNode , 
+				utils.css.dims(Viewer.widget)
 			);
 				
-			ViewerBox.selectorBox.style.border = 'none';	
-			ViewerBox.selectorBox.ViewerBox = ViewerBox;	
+			Viewer.selectorBox.style.border = 'none';	
+			Viewer.selectorBox.Viewer = Viewer;	
 			
 			
 			
-			ViewerBox.selectorBox.onclick = function () {				
+			Viewer.selectorBox.onclick = function () {				
 				
 				var box = this;
-				var viewer = box.ViewerBox;
+				var viewer = box.Viewer;
 
 				that.lastViewerSelected = viewer;
 				that.addToLastGroup(viewer);
@@ -41,7 +41,7 @@ SliderLinker.prototype.setViewerBoxClickListen = function (currViewer) {
 						
 		} else {
 			
-			that.enableSelectorBox_(ViewerBox.selectorBox);
+			that.enableSelectorBox_(Viewer.selectorBox);
 			
 		}
 
@@ -51,9 +51,9 @@ SliderLinker.prototype.setViewerBoxClickListen = function (currViewer) {
 		//--------------------------
 		//  SELECT CURRVIEWER
 		//--------------------------
-		if (ViewerBox === currViewer) {
+		if (Viewer === currViewer) {
 			
-			ViewerBox.selectorBox.onclick();
+			Viewer.selectorBox.onclick();
 
 		}		
 	});

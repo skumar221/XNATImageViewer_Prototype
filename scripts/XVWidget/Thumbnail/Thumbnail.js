@@ -1,8 +1,8 @@
 
-//******************************************************
+//*******************************************************
 //  Init
 //
-//******************************************************
+//*******************************************************
 
 
 goog.require('goog.fx.DragDrop');
@@ -13,6 +13,8 @@ goog.require(GLOBALS.classNames.XVWidget);
 
 
 goog.provide(GLOBALS.classNames.Thumbnail);
+
+
 
 /**
  * @constructor
@@ -38,7 +40,7 @@ Thumbnail = function (scanData, args) {
 	//--------------------------------
 	// THUMBNAIL IMAGE (goes Into Canvas)
 	//--------------------------------	
-	/*
+	/**
 	* @type {Image}
 	* @protected
 	*/	
@@ -50,7 +52,7 @@ Thumbnail = function (scanData, args) {
 	//--------------------------------
 	// THUMBNAIL CANVAS
 	//--------------------------------
-	/*
+	/**
 	* @type {Canvas}
 	* @protected
 	*/	
@@ -64,21 +66,22 @@ Thumbnail = function (scanData, args) {
 	//--------------------------------
 	this.frames = {};
 
-	/*
+	/**
 	* @type {function(string)}
 	*/		
 	function populateFramesObject(viewPlane) {
 		
-		var b = that.getFrameList(viewPlane);
+		var pathNames = that.getFrameList(viewPlane);
 
-		that[viewPlane + "FrameCount"] = b.length;
+		that[viewPlane + "FrameCount"] = pathNames.length;
 		that[viewPlane + "LoadCount"] = 0;
-
-		for (var i = 0, len = b.length; i < len; i++) {			that.frames[that.pathMolder(b[i])] = {
+		
+		utils.array.forEach(pathNames, function(pathName){			
+			that.frames[that.pathMolder(pathName)] = {
 				'viewPlane': viewPlane, 
-				'src' : b[i]
+				'src' : pathName
 			}
-		} 
+		}); 
 
 	}
 
@@ -128,22 +131,20 @@ Thumbnail = function (scanData, args) {
 	populateFramesObject("sagittal");
 	populateFramesObject("coronal");
 	populateFramesObject("transverse");
-	
-	
-	var thumbPos = utils.css.dims(this.ThumbnailCanvas)
+
 	//--------------------------------
 	// TEXT ELEMENT
 	//--------------------------------
-	/*
+	/**
 	* @type {Element}
 	* @protected
 	*/	
 	this.TextElement = utils.dom.makeElement("div", this.widget, "TextElement", {
-		position: "relative",
+		position: "absolute",
 		height: this.args.ThumbnailImageCSS.height,
 		width: this.args.ThumbnailImageCSS.width,
 		top: GLOBALS.ThumbnailImageMarginX*1,
-		left: thumbPos.width + GLOBALS.ThumbnailImageMarginX*2,
+		left: this.args.ThumbnailImageCSS.width + GLOBALS.ThumbnailImageMarginX*2,
 		fontSize: 11,		
 	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
@@ -194,7 +195,7 @@ goog.inherits(Thumbnail, XVWidget);
 goog.inherits(Thumbnail, goog.fx.DragDrop);
 
 
-/*
+/**
 * @type {function(boolean)}
 */
 Thumbnail.prototype.setActive = function(active) {
@@ -218,7 +219,7 @@ Thumbnail.prototype.setActive = function(active) {
 }
 
 
-/*
+/**
 * @type {function(element)}
 * @protected
 */
@@ -226,7 +227,7 @@ Thumbnail.prototype.createDragElement = function(srcElt) {
 
 	var parent, clonedElt, srcCanv, clonedCanv, context;
 
-	parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.Thumbnail);
+	parent = goog.dom.getAncestorByClass(srcElt, this.args.className);
 	//
 	// Create draggable ghost by cloning the parent
 	//	
@@ -258,7 +259,7 @@ Thumbnail.prototype.createDragElement = function(srcElt) {
 
 
 
-/*
+/**
 * @type {function(string)}
 * @protected
 */
@@ -270,10 +271,10 @@ Thumbnail.prototype.pathMolder = function (path) {
 
 
 
-//****************************************
+//*****************************************
 // THUMB CANVASES
-//****************************************
-/*
+//*****************************************
+/**
 * @type {function()}
 * @protected
 */
@@ -295,7 +296,7 @@ Thumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 }
 
 
-/*
+/**
 * @type {function()}
 * @protected
 */
@@ -365,12 +366,12 @@ Thumbnail.prototype.addHoverMethods = function () {
 
 
 
-/*
+/**
 * @type {Object}
 * @protected
 */
 Thumbnail.prototype.defaultArgs = {
-	className: GLOBALS.classNames.Thumbnail,
+	className: GLOBALS.classNames.ScanThumbnail,
 	parent: document.body,
 	draggableParent: document.body,
 	returnAnimMax: 300,
@@ -407,7 +408,7 @@ Thumbnail.prototype.defaultArgs = {
 }
 
 
-/*
+/**
 * @type {function(string)}
 */
 Thumbnail.prototype.getFrameList = function (type) {
@@ -418,19 +419,19 @@ Thumbnail.prototype.getFrameList = function (type) {
 
 
 
-//****************************************
+//*****************************************
 // WINDOW RESIZING
-//****************************************
+//*****************************************
 Thumbnail.prototype.updateCSS = function () {
 
 }
 
 
 
-//****************************************
+//*****************************************
 // activated callaback
-//****************************************
-/*
+//*****************************************
+/**
 * @type {function(function)}
 */
 Thumbnail.prototype.addActivatedCallback = function (callback) {

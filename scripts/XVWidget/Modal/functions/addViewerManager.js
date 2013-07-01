@@ -57,8 +57,8 @@ Modal.prototype.addViewerManager = function () {
 		
 		
 		function widgets() {
-			var ws = loop (function (ViewerBox) { 
-				return ViewerBox.widget;	
+			var ws = loop (function (Viewer) { 
+				return Viewer.widget;	
 			})
 
 			return ws;				
@@ -67,10 +67,10 @@ Modal.prototype.addViewerManager = function () {
 		
 		function makeViewer() {
 			//	
-			// Create ViewerBox
+			// Create Viewer
 			//	
 
-			var v = new ViewerBox({
+			var v = new Viewer({
 				parent: XV.modal,
 			});
 			return v;
@@ -122,7 +122,7 @@ Modal.prototype.addViewerManager = function () {
 		else if (isString) {
 			
 			var isWidget = (args1.toLowerCase().indexOf("widgets")  === 0 );
-			var isId = (args1.indexOf(GLOBALS.ViewerBoxPreId)  === 0 );
+			var isId = (args1.indexOf(GLOBALS.ViewerPreId)  === 0 );
 			var isTotal = (args1.toLowerCase().indexOf("total")  === 0 );
 
 			
@@ -132,11 +132,11 @@ Modal.prototype.addViewerManager = function () {
 			
 			else if (isId) {
 				
-				var a = loop( function (ViewerBox) {
+				var a = loop( function (Viewer) {
 					
-					if (ViewerBox.widget.id === args1) {
+					if (Viewer.widget.id === args1) {
 
-						return ViewerBox;
+						return Viewer;
 						
 					}
 				})
@@ -171,9 +171,9 @@ Modal.prototype.addViewerManager = function () {
 			
 
 			if (isDOMElement) {
-				var e = loop (function (ViewerBox) { 
-					if (ViewerBox.widget == args1) {
-						return ViewerBox;
+				var e = loop (function (Viewer) { 
+					if (Viewer.widget == args1) {
+						return Viewer;
 					};	
 				})
 				return e;		
@@ -425,7 +425,7 @@ Modal.prototype.addViewerManager = function () {
 			switch(Thumbnail.widget.className) {
 				
 				case GLOBALS.classNames.ScanThumbnail:
-					newViewer = new ScanViewerBox({
+					newViewer = new ScanViewer({
 						parent: oldViewer.widget.parentNode,
 					})
 					newViewer.updateCSS(utils.css.dims(oldViewer.widget));

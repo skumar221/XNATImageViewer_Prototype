@@ -7,7 +7,7 @@ goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
 
 goog.require(GLOBALS.classNames.XVWidget);
-goog.require(GLOBALS.classNames.ViewerBox);
+goog.require(GLOBALS.classNames.Viewer);
 
 goog.provide(GLOBALS.classNames.Modal);
 
@@ -108,7 +108,7 @@ var Modal = function (args) {
 
 
 	this.initThumbnailDragDrop();
-	this.initViewerBoxDragDrop();
+	this.initViewerDragDrop();
 	
 
 	
@@ -118,9 +118,9 @@ var Modal = function (args) {
 	//----------------------------------	
 	this.addViewerManager();
 	this.Viewers({
-		'addInsertRemoveCallback' : function() {
+		'addViewersChangedCallback' : function() {
 			that.setThumbnailDragAndDrop();
-			that.setViewerBoxDragAndDrop();
+			that.setViewerDragAndDrop();
 		}
 	})
 

@@ -14,7 +14,7 @@ var SliderLinker = function (args) {
 	/**
 	 * @type {Array}
 	 */	
-	var ViewerBoxs = [];
+	var Viewers = [];
 
 
 	/**
@@ -103,27 +103,27 @@ var SliderLinker = function (args) {
 	 * @param {Object}
 	 * @private
 	 */		
-	this.addToLastGroup = function (ViewerBox) {
+	this.addToLastGroup = function (Viewer) {
 		//
 		//  Remove the scan viewer from group if it exists
 		//
-		this.removeFromGroup(ViewerBox, false);
+		this.removeFromGroup(Viewer, false);
 		
 		
 		//
-		//  1. Add the ViewerBox to the last group
+		//  1. Add the Viewer to the last group
 		//
-		if (groups[groups.length - 1].Viewers.indexOf(ViewerBox) === -1) {
+		if (groups[groups.length - 1].Viewers.indexOf(Viewer) === -1) {
 		
 			//("HERE - last group: ", this.lastGroup().border)
-			groups[groups.length - 1].Viewers.push(ViewerBox);
+			groups[groups.length - 1].Viewers.push(Viewer);
 			
 			//
 			//  Set the border color
 			//
-			ViewerBox.selectorBox.style.border = this.lastGroup().border;
-			utils.fx.fadeTo(ViewerBox.selectorBox, GLOBALS.animFast, 1);
-			//(ViewerBox.selectorBox.style.border)
+			Viewer.selectorBox.style.border = this.lastGroup().border;
+			utils.fx.fadeTo(Viewer.selectorBox, GLOBALS.animFast, 1);
+			//(Viewer.selectorBox.style.border)
 
 		}
 	
@@ -134,19 +134,19 @@ var SliderLinker = function (args) {
 	 * @param {Object}
 	 * @private
 	 */	
-	this.clearSelectorBox = function (ViewerBox) {
+	this.clearSelectorBox = function (Viewer) {
 		
-		//("CLEARING SELECTOR BOX of ", ViewerBox.widget.id)
-		ViewerBox.selectorBox.style.border = "none";		
+		//("CLEARING SELECTOR BOX of ", Viewer.widget.id)
+		Viewer.selectorBox.style.border = "none";		
 		
-		goog.events.unlisten(ViewerBox.widget, goog.events.EventType.MOUSEOVER, that.sliderlink_mouseover);
-		goog.events.unlisten(ViewerBox.widget, goog.events.EventType.MOUSEOUT, that.sliderlink_mouseout);
+		goog.events.unlisten(Viewer.widget, goog.events.EventType.MOUSEOVER, that.sliderlink_mouseover);
+		goog.events.unlisten(Viewer.widget, goog.events.EventType.MOUSEOUT, that.sliderlink_mouseout);
 		
-		utils.array.forEach(ViewerBox.widget.defaultMouseEvents, function(event) {
+		utils.array.forEach(Viewer.widget.defaultMouseEvents, function(event) {
 			event();		
 		})
 
-		ViewerBox.FrameSlider.clearLinked();		
+		Viewer.FrameSlider.clearLinked();		
 	}
 	
 	
@@ -252,8 +252,8 @@ var SliderLinker = function (args) {
 	this.clearAll_ = function () {
 			
 		
-		XV.Viewers( function (ViewerBox) {
-				that.removeFromGroup(ViewerBox, true);
+		XV.Viewers( function (Viewer) {
+				that.removeFromGroup(Viewer, true);
 		});
 
 		groups = [];
@@ -466,9 +466,9 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		XV.Viewers( function (ViewerBox) {
+		XV.Viewers( function (Viewer) {
 			
-			that.disableSelectorBox_(ViewerBox.selectorBox);
+			that.disableSelectorBox_(Viewer.selectorBox);
 			that.hideExisting(500);
 							
 		});

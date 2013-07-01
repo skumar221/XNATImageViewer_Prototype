@@ -51,12 +51,12 @@ Modal.prototype.animateModal  = function (callback) {
 		// SCAN VIEWERS
 		//-------------------------	
 		
-		XV.Viewers( function (ViewerBox, i, j) { 
+		XV.Viewers( function (Viewer, i, j) { 
 			//
-			// FADE OUT/IN: ViewerBox contents
+			// FADE OUT/IN: Viewer contents
 			//
-			 if (modalDims.ViewerBox.height !== utils.convert.toInt(ViewerBox.widget.style.height)) {
-			 	utils.fx.fadeTo(ViewerBox.widget.childNodes, GLOBALS.animFast, 0);	
+			 if (modalDims.Viewer.height !== utils.convert.toInt(Viewer.widget.style.height)) {
+			 	utils.fx.fadeTo(Viewer.widget.childNodes, GLOBALS.animFast, 0);	
 			 }		
 		})
 		

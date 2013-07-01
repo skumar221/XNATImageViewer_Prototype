@@ -135,10 +135,10 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	// Set Click
  	//
  	
- 	function invokeDrop(ViewerBox, srcObj) {
+ 	function invokeDrop(Viewer, srcObj) {
 		that.thumbnailDragDrop['drop']({
 			dropTargetItem : {
-				element : ViewerBox.widget
+				element : Viewer.widget
 			},
 			dragSourceItem : {
 				element : srcObj.widget
@@ -174,24 +174,24 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			//
 			// Try setting target to empty scan viewers
 			//
-			XV.Viewers( function (ViewerBox) {
-				if (!inserted  && !ViewerBox.getDroppable()) {
+			XV.Viewers( function (Viewer) {
+				if (!inserted  && !Viewer.getDroppable()) {
 					inserted = true;	
-					invokeDrop(ViewerBox, srcObj);												
+					invokeDrop(Viewer, srcObj);												
 				}
 			});
 			
 							
 			
 			//
-			// If all ViewerBoxs have content...
+			// If all Viewers have content...
 			//
 			if (!inserted) { 
 				//
 				// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
 				//
 
-				XV.Viewers( function (ViewerBox) { 
+				XV.Viewers( function (Viewer) { 
 					if (!inserted) {
 						
 						var newTargetViewer;
@@ -199,9 +199,9 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 						if (!GLOBALS.thumbClickTarget) {
 							newTargetViewer = XV.Viewers()[0][0];	
 						}
-						else if (GLOBALS.thumbClickTarget === ViewerBox.widget.id) {
+						else if (GLOBALS.thumbClickTarget === Viewer.widget.id) {
 							newTargetViewer = XV.Viewers({
-								"viewerAfter" : ViewerBox
+								"viewerAfter" : Viewer
 							});
 						}
 						else {

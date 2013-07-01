@@ -15,6 +15,7 @@ XVWidget = function (args) {
 	 */
 	this.args = (args) ? utils.dom.mergeArgs(this.defaultArgs, args) : this.defaultArgs;
 
+
 	/**
 	 * @type {object}
 	 * @protected
@@ -33,14 +34,10 @@ XVWidget = function (args) {
 		return this.widget;
 	}
 	
+	this.getDefaultArgs = function() {
+		return this.defaultArgs;
+	}
+	
 	
 }
 
-
-/**
- * @protected
- */
-XVWidget.prototype.defaultArgs = {
-	className: GLOBALS.classNames.XVWidget,
-	parent: document.body
-}

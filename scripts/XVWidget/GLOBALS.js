@@ -23,7 +23,7 @@ GLOBALS = function (){
 	 * @const
 	 * @type {string}
 	 */
- 	this.ViewerBoxPreId = "ViewerBox";
+ 	this.ViewerPreId = "Viewer";
 	
 	
 	
@@ -119,12 +119,12 @@ GLOBALS = function (){
 	 * @const
 	 * @type {number}
 	 */
-	this.minFrameViewerHeight = 150;
+	this.minFrameHolderHeight = 150;
 	/**
 	 * @const
 	 * @type {number}
 	 */
-	this.minFrameViewerWidth = 150;
+	this.minFrameHolderWidth = 150;
 	
 	
 	
@@ -136,27 +136,27 @@ GLOBALS = function (){
 	 * @const
 	 * @type {number}
 	 */
-	this.ViewerBoxDimRatio = .85
+	this.ViewerDimRatio = .85
 	/**
 	 * @const
 	 * @type {number}
 	 */
-	this.minViewerBoxHeight = 320;
+	this.minViewerHeight = 320;
 	/**
 	 * @const
 	 * @type {number}
 	 */
-	this.minViewerBoxWidth = this.minViewerBoxHeight * this.ViewerBoxDimRatio;
+	this.minViewerWidth = this.minViewerHeight * this.ViewerDimRatio;
 	/**
 	 * @const
 	 * @type {number}
 	 */
-	this.ViewerBoxVerticalMargin = 20;
+	this.ViewerVerticalMargin = 20;
 	/**
 	 * @const
 	 * @type {number}
 	 */
-	this.ViewerBoxHorizontalMargin = 20;
+	this.ViewerHorizontalMargin = 20;
 	
 	
 	
@@ -344,12 +344,12 @@ GLOBALS = function (){
 		ScanThumbnail : 'ScanThumbnail',
 		SlicerThumbnail : 'SlicerThumbnail',		
 		
-		ViewerBox : 'ViewerBox',
-		ScanViewerBox : 'ScanViewerBox',
-		SlicerViewerBox : 'SlicerViewerBox',		
+		Viewer : 'Viewer',
+		ScanViewer : 'ScanViewer',
+		SlicerViewer : 'SlicerViewer',		
 		
-		FrameViewer: 'FrameViewer',
-		FrameViewerCanvas: 'FrameViewerCanvas',
+		FrameHolder: 'FrameHolder',
+		FrameHolderCanvas: 'FrameHolderCanvas',
 			
 		ScrollGallery: 'XVWidget_ScrollGallery',
 

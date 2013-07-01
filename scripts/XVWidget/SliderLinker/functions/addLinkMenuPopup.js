@@ -2,7 +2,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	this.takeSnapshot_();
 	this.lastViewerSelected = currViewer;		
-	this.setViewerBoxClickListen(currViewer);
+	this.setViewerClickListen(currViewer);
 	
 	
 	var that = this;
