@@ -261,14 +261,15 @@ ScanViewer.prototype.setHoverEvents = function () {
  * @protected
  */
 ScanViewer.prototype.createDragElement = function(srcElt) {
+	
+	var emptyClone = ScanViewer.superClass_.createDragElement.call(this, srcElt);
+	if (emptyClone) { return emptyClone };
+
 
 	var parent, clonedElt, srcCanv, clonedCanv, context;
-	var keepClasses = [
-		GLOBALS.classNames.FrameHolder
-	];
+	var keepClasses = [ GLOBALS.classNames.FrameHolder ];
 	var keepElts = [];
-		
-		
+			
 	parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ScanViewer);
 
 	//
@@ -280,7 +281,6 @@ ScanViewer.prototype.createDragElement = function(srcElt) {
 	//	
 	clonedElt = parent.cloneNode(true);
 	clonedElt.style.fontFamily = GLOBALS.fontFamily;
-	
 	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, parent);
 	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, clonedElt);
 
@@ -291,8 +291,8 @@ ScanViewer.prototype.createDragElement = function(srcElt) {
 	//
 	context = clonedCanv.getContext("2d");
 	context.drawImage(srcCanv, 0, 0);		  
-  	//clonedElt.style.opacity = .5;	
-	clonedElt.className = "CLONE";
+  	clonedElt.style.opacity = .5;	
+	clonedElt.className = "VIEWERCLONE";
 	clonedElt.id = "CLONE";
 
 	
@@ -303,6 +303,9 @@ ScanViewer.prototype.createDragElement = function(srcElt) {
 
 	
 	goog.events.removeAll(clonedElt);
-	return clonedElt;
+	
+	
+	return clonedElt;		
+
 }
 

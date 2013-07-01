@@ -193,6 +193,7 @@ ContentDivider.prototype.slideTo = function(newTop, animate) {
  */
 ContentDivider.prototype.getUpperLimit = function() {
 
+	/*
 	var that = this;
 	var p;
 	var d = new Date();
@@ -215,7 +216,7 @@ ContentDivider.prototype.getUpperLimit = function() {
 	var a = utils.css.dims(this.containmentDiv);
 	console.timeEnd("EVERYTHING")
 	
-	
+	*/
 	
 	return utils.css.dims(this.containmentDiv, 'top');
 } 
@@ -225,28 +226,7 @@ ContentDivider.prototype.getUpperLimit = function() {
  * @return {number}
  */
 ContentDivider.prototype.getLowerLimit = function() {
-	
-	var that = this;
-	var p;
-	var d = new Date();
-	var n = d.getTime();
-	
-		console.log(" ")
-		console.log("LOWER")
-		
-	var vals = ['top', 'left', 'height', 'width']
-	utils.array.forEach(vals, function(val) { 
-		console.time(val)
-		var p = utils.css.dims(that.containmentDiv, val);
-		console.timeEnd(val)	
-	})
 
-
-	
-	
-	console.time("EVERYTHING")
-	var a = utils.css.dims(this.containmentDiv);
-	console.timeEnd("EVERYTHING")
 	
 	
 	return utils.css.dims(this.containmentDiv, 'top') + 

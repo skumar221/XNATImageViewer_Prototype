@@ -18,5 +18,6 @@ utils.dom.mergeArgs = function (obj1,obj2, recursionDepth) {
 	    	obj3[attr] = obj2[attr];     		
     	}
     }
+
     return obj3;
 }

@@ -6,14 +6,13 @@ Modal.prototype.initViewerDragDrop = function() {
 	
 	var that = this;
 	
-	/*
-	 * @type {Object.<string, function>}
+	/**
+	 * @type {Object.<string, function(goog.ui.event)>}
 	 * @protected
 	 */
 	this.viewerBoxDragDrop = {};
-	
-	
-	
+
+
 	this.viewerBoxDragDrop['dragover'] = function(event) {
 		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Viewer) > -1) {
 			
@@ -58,14 +57,10 @@ Modal.prototype.initViewerDragDrop = function() {
 	}
 	
 	
-	
-	
 	this.viewerBoxDragDrop['dragOut'] = function(event) {
-		console.log("dragout")
+
 		event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
 	}
-	
-	
 	
 	
 	this.viewerBoxDragDrop['drop'] = function(event) {
@@ -80,26 +75,37 @@ Modal.prototype.initViewerDragDrop = function() {
 	
 	
 	
-	/*
-	 * @type {function(goog.ui.event)}
-	 */	
 	this.viewerBoxDragDrop['dragstart'] = function(event) {
-		utils.fx.fadeOut(event.dragSourceItem.element, 
-						 GLOBALS.animFast);
-		XV.Viewers(function(viewer){
-			viewer.widget.oldDims = utils.css.dims(viewer.widget);
-		})
-
+		//
+		//  Doesn't cleanup the clones when you drag a child
+		//  of the Viewer.  In this case, when you drag a slider, 
+		//  and don't want the viewer to drag, you need to remove the clone
+		//  still.
+		//
+		event.dragSourceItem.element.isCloneable = true;
+		
+		if (event.dragSourceItem.currentDragElement_.className.indexOf('slider') > -1) {
+		
+			that.disableViewerDragAndDrop();	
+			event.dragSourceItem.element.isCloneable = false;
+			
+		}
+		else {
+			console.log(event.dragSourceItem.element.isCloneable)
+			that.enableViewerDragAndDrop();
+			utils.fx.fadeOut(event.dragSourceItem.element, GLOBALS.animFast);
+			XV.Viewers(function(viewer){
+				viewer.widget.oldDims = utils.css.dims(viewer.widget);
+			})
+							
+		}
 	}	
 	
-	
-	/*
-	 * @type {function(goog.ui.event)}
-	 */	
+
 	this.viewerBoxDragDrop['dragend'] = function(event) {
 
 		XV.Viewers(function(viewer) { 
-			utils.css.setCSS(viewer.widget, viewer.widget.oldDims);		
+			utils.css.setCSS(viewer.widget, viewer.widget.oldDims);	
 			delete viewer.widget.oldDims;
 		})
 
@@ -108,13 +114,13 @@ Modal.prototype.initViewerDragDrop = function() {
 		utils.fx.fadeIn(event.dragSourceItem.element, GLOBALS.animFast);
 		
 	}	
+
 	
 }
 
 
 
-/*
- * @type {function()}
+/**
  * @protected
  */
 Modal.prototype.setViewerDragAndDrop = function () {
@@ -123,6 +129,7 @@ Modal.prototype.setViewerDragAndDrop = function () {
 	var viewerLen = XV.Viewers("total");
 
 	if (viewerLen > 1) {
+		
 		//	
 	    // Set valid targets for this.draggableWidgets
 		//
@@ -133,16 +140,47 @@ Modal.prototype.setViewerDragAndDrop = function () {
 					viewer.addTarget(w);
 				}
 			});
-		
+			goog.events.listen(viewer, 'dragstart', that.viewerBoxDragDrop['dragstart']);	
 		})
 	
-		XV.Viewers(function (viewer) {
-			viewer.init();
-			goog.events.listen(viewer, 'dragstart', that.viewerBoxDragDrop['dragstart']);	
-			goog.events.listen(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
-			goog.events.listen(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
-			goog.events.listen(viewer, 'dragend', that.viewerBoxDragDrop['dragend']);	
-		})		
+		that.enableViewerDragAndDrop();	
+		
 	}
+
+}
+
+
+
+Modal.prototype.disableViewerDragAndDrop = function () {
+	
+	var that = this;
+	
+	XV.Viewers(function (viewer) {
+
+		//goog.events.unlisten(viewer, 'dragstart', that.viewerBoxDragDrop['dragstart']);	
+		goog.events.unlisten(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
+		goog.events.unlisten(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
+		goog.events.unlisten(viewer, 'dragend', that.viewerBoxDragDrop['dragend']);	
+
+	})		
+	
+
+}
+
+
+
+Modal.prototype.enableViewerDragAndDrop = function () {
+	
+	var that = this;
+
+	XV.Viewers(function (viewer) {
+		viewer.init();
+		//goog.events.listen(viewer, 'dragstart', that.viewerBoxDragDrop['dragstart']);	
+		goog.events.listen(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
+		goog.events.listen(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
+		goog.events.listen(viewer, 'dragend', that.viewerBoxDragDrop['dragend']);	
+
+	})		
+	
 
 }

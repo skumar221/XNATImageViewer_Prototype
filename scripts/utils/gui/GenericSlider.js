@@ -122,18 +122,18 @@ utils.gui.GenericSlider = function (arguments) {
 	//----------------------------
 	// TRACK
 	//----------------------------	
-	//var sliderThumb = goog.dom.getElementsByClass( 'goog-slider-thumb', widget)[0];
-	var childNodes = goog.dom.getChildren(widget);
-	for (var i=0; i < childNodes.length; i++) {
-		if (childNodes[i].className === 'goog-slider-thumb') {
-			var sliderThumb  = childNodes[i]; 
-			utils.css.setCSS( sliderThumb, args['thumbCSS']);
-			this.getThumb = function () {
-				return sliderThumb;
+
+	utils.array.forEach(goog.dom.getChildren(widget), function(child) {
+		
+		if (child.className === 'goog-slider-thumb') {
+			utils.css.setCSS(child, args['thumbCSS']);
+			that.getThumb = function () {
+				return child;
 			}	
-			break;
-		}
-	}
+		}		
+		
+
+	})
 	
 
 
@@ -161,16 +161,23 @@ utils.gui.GenericSlider = function (arguments) {
 	this.addSlideCallback = function (callback, args) {
 		//console.log("callback: ", callback.toString())
 		if (callback) {
-//			console.log(callback.toString())
-			that.addEventListener(goog.ui.Component.EventType.CHANGE, function () {
+
+			that.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
+				event.stopPropagation();
+				utils.dom.stopPropagation(event);
 				callback(that, args);
 			});		
 		}	
 	}
+	
+	
 
 	this.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
+		event.stopPropagation();
 		utils.dom.stopPropagation(event);
 	});	
+
+	
 
 }
 

@@ -133,3 +133,18 @@ Viewer.prototype.setHoverEvents = function () {
 	that.hoverOut();
 }
 
+
+/**
+ * @param {Element}
+ * @protected
+ */
+Viewer.prototype.createDragElement = function(srcElt) {
+
+	if (!this.widget.isCloneable) {
+		//
+		//  Return an empty div, basically
+		//
+		return document.createElement("div");
+	}
+	
+}

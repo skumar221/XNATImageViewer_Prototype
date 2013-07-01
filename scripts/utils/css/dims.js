@@ -9,13 +9,13 @@ utils.css.dims = function (elt, arg1) {
 		//
 		// Basically, if we're looking for just attribute we go right to the kill...
 		//
-		var val, conv;
+		var val;
 		
 		switch(arg1) {
 			case 'height':
-				return elt.clientHeight;// || $(elt).height();
+				return elt.clientHeight || $(elt).height();
 			case 'width':
-				return elt.clientWidth;// || $(elt).width();
+				return elt.clientWidth || $(elt).width();
 			case 'outerHeight':
 				return $(elt).outerHeight();
 			case 'outerWidth':
@@ -49,8 +49,8 @@ utils.css.dims = function (elt, arg1) {
 		};
 		retObj = utils.dom.mergeArgs(retObj, posObj);		
 		
-		
-		retObj['position'] = posObj;
+		retObj['left'] = posObj.left;
+		retObj['top'] = posObj.top;
 		retObj['height'] = elt.clientHeight;
 		retObj['width'] = elt.clientWidth;			
 		retObj['outerHeight'] = $(elt).outerHeight();
