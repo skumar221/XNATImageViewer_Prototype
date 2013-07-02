@@ -27,7 +27,7 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 
 	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
 		//var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
-		var scanThumb = new Thumbnail(that.scanDataPaths[i], {		  	
+		var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {		  	
 		  	parent: thumbContents,  	
 		  	widgetCSS: {
 		  		position: "relative",
@@ -59,7 +59,7 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 	
 	for (var i = 0, len = that.scanDataPaths.length; i < len; i++) {
 		//var h = i * (GLOBALS.ThumbnailWidgetHeight + 2);  	
-		var scanThumb = new Thumbnail(that.scanDataPaths[i], {		  	
+		var scanThumb = new ScanThumbnail(that.scanDataPaths[i], {		  	
 		  	parent: thumbContents,  	
 		  	widgetCSS: {
 		  		position: "relative",

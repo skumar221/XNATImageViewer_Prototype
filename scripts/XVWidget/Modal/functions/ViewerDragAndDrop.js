@@ -91,7 +91,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			
 		}
 		else {
-			console.log(event.dragSourceItem.element.isCloneable)
+
 			that.enableViewerDragAndDrop();
 			utils.fx.fadeOut(event.dragSourceItem.element, GLOBALS.animFast);
 			XV.Viewers(function(viewer){

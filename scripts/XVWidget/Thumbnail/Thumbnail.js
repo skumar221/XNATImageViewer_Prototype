@@ -20,21 +20,13 @@ goog.provide(GLOBALS.classNames.Thumbnail);
  * @constructor
  * @extends {XVWidget}
  */
-Thumbnail = function (scanData, args) {
+Thumbnail = function (args) {
 	
 	var that = this;
 
-	XVWidget.call(this, args);
+	XVWidget.call(this, utils.dom.mergeArgs(Thumbnail.prototype.defaultArgs, args));
 	goog.fx.DragDrop.call(this, this.widget, undefined);
 
-	
-	
-	//--------------------------------
-	// T
-	//--------------------------------
-	// AJAX QUERY WOULD BE HERE
-	this.scanData = scanData;	
-	
 	
 	
 	//--------------------------------
@@ -45,8 +37,6 @@ Thumbnail = function (scanData, args) {
 	* @protected
 	*/	
 	this.ThumbnailImage = new Image();
-	this.ThumbnailImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
-
 	
 	
 	//--------------------------------
@@ -61,76 +51,8 @@ Thumbnail = function (scanData, args) {
 	
 	
 	
-	//--------------------------------
-	// FRAMES
-	//--------------------------------
-	this.frames = {};
-
-	/**
-	* @type {function(string)}
-	*/		
-	function populateFramesObject(viewPlane) {
-		
-		var pathNames = that.getFrameList(viewPlane);
-
-		that[viewPlane + "FrameCount"] = pathNames.length;
-		that[viewPlane + "LoadCount"] = 0;
-		
-		utils.array.forEach(pathNames, function(pathName){			
-			that.frames[that.pathMolder(pathName)] = {
-				'viewPlane': viewPlane, 
-				'src' : pathName
-			}
-		}); 
-
-	}
-
-	this.getFrames = function (args1) {
-
-		var isObject = (typeof args1 === 'object');
-		var isString = (typeof args1 === 'string');
-		
-		if (isString) {
-			var viewPlane = args1;
-			var returnArr = [];	
-
-			for (var i in that.frames) {
-				if (that.frames[i]['viewPlane'] === viewPlane) {
-					returnArr.push(that.frames[i])					
-				}
-			}	
-
-			return returnArr;			
-		}		
-		
-		else if (isObject) {
-			
-			var viewPlane = args1["viewPlane"];
-			var isFilter = args1['filter'] ? args1['filter'] : false;
-			var returnArr = [];
-	
-			
-			for (var i in that.frames) {
-				if (that.frames[i]['viewPlane'] === viewPlane) {
-					
-					
-					if (isFilter && that.frames[i][args1['filter']]) {
-						//utils.dom.debug(that.frames[i]['img'])
-						returnArr.push(that.frames[i][args1['filter']]);	
-					}
-
-				}
-			}
-			return returnArr;			
-		}
-		
 
 
-	}
-
-	populateFramesObject("sagittal");
-	populateFramesObject("coronal");
-	populateFramesObject("transverse");
 
 	//--------------------------------
 	// TEXT ELEMENT
@@ -150,20 +72,8 @@ Thumbnail = function (scanData, args) {
 	});
 	utils.dom.addClass(this.ThumbnailCanvas, GLOBALS.classNames.ThumbnailCanvas);
 
-	this.ThumbnailCanvas.metaText = [];
-	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData.sessionInfo["Scan"].value);
-	this.ThumbnailCanvas.metaText[1] = this.scanData.sessionInfo["type"].value.toString().toLowerCase();
-	this.ThumbnailCanvas.metaText[2] = this.scanData["sagittalPaths"].length.toString().toLowerCase();
-	
-	
-	this.TextElement.innerHTML += "<b><font size = '3'>" + this.ThumbnailCanvas.metaText[0]  + "</font></b><br>";
-	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[1]  + "<br>";
-	this.TextElement.innerHTML += this.ThumbnailCanvas.metaText[2]  + " frames<br>";
 
-	this.addHoverMethods();
-
-	
-		
+	this.addHoverMethods();
 
 	
 	
@@ -371,10 +281,9 @@ Thumbnail.prototype.addHoverMethods = function () {
 * @protected
 */
 Thumbnail.prototype.defaultArgs = {
-	className: GLOBALS.classNames.ScanThumbnail,
+	className: GLOBALS.classNames.Thumbnail,
 	parent: document.body,
 	draggableParent: document.body,
-	returnAnimMax: 300,
 	activated: false,
 	bgDefault : "rgb(0,0,0)",
 	bgHighlight: "rgb(50, 50, 50)",
@@ -408,13 +317,7 @@ Thumbnail.prototype.defaultArgs = {
 }
 
 
-/**
-* @type {function(string)}
-*/
-Thumbnail.prototype.getFrameList = function (type) {
 
-	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
-}
 
 
 
