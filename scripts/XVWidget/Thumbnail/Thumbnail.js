@@ -39,6 +39,8 @@ Thumbnail = function (args) {
 	this.ThumbnailImage = new Image();
 	
 	
+	
+	
 	//--------------------------------
 	// THUMBNAIL CANVAS
 	//--------------------------------
@@ -49,9 +51,6 @@ Thumbnail = function (args) {
 	this.ThumbnailCanvas = this.makeThumbnailCanvas("ThumbCanvas");
 
 	
-	
-	
-
 
 
 	//--------------------------------
@@ -110,22 +109,11 @@ goog.inherits(Thumbnail, goog.fx.DragDrop);
 */
 Thumbnail.prototype.setActive = function(active) {
 	
-
-	var that = this;
-	var bgColor = (active) ? that.args.bgHighlight : that.args.bgDefault;
-	var nodes = goog.dom.getElementsByClass(that.widget.className);
-	
-	
-	utils.array.forEach(nodes, function(node) { 
-		utils.css.setCSS(node, {
-			backgroundColor: bgColor,
-		})		
-	})
-
-
-	this.isActive = function () {
-		return active;
-	}		
+	/**
+	 *@private 
+	 */
+	this.isActive_ = active;
+	this.hoverMethods.setDefault();	
 }
 
 
@@ -213,6 +201,8 @@ Thumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 Thumbnail.prototype.addHoverMethods = function () {
 	
 	var that = this;
+	
+	if (!this.hoverMethods) { this.hoverMethods = /**@private*/{}};
 
 	//
 	// SET HOVER METHOD
@@ -221,26 +211,26 @@ Thumbnail.prototype.addHoverMethods = function () {
 	
 	
 	// set defaults
-	function setDefault() {
+	this.hoverMethods.setDefault = function() {
 		
-		if (!that.isActive) {
-			utils.css.setCSS(that.widget, {
-				backgroundColor: that.args.bgDefault,
-			})
-		}
-		
+		var hText = (that.isActive_) ? that.args.textHighlight : that.args.textDefault;
 		utils.css.setCSS(that.TextElement, {
-			color: that.args.textDefault,
-		})	
+			color: hText,
+		})		
+
 		
 		utils.css.setCSS(that.ThumbnailCanvas, {
-			borderColor: that.args.textDefault,
+			borderColor: hText,
+		})	
+		
+		utils.css.setCSS(that.widget, {
+			backgroundColor: that.args.bgDefault,
 		})			
 	}
 	
 	
 	
-	function highlight() {
+	this.hoverMethods.highlight = function() {
 
 		utils.css.setCSS(that.widget, {
 			backgroundColor: that.args.bgHighlight,
@@ -257,23 +247,23 @@ Thumbnail.prototype.addHoverMethods = function () {
 	}
 	
 	// hover function
-	function applyHover(hover) {
+	this.hoverMethods.applyHover = function(hover) {
 		if (hover) {
-			highlight();
+			that.hoverMethods.highlight();
 		}   
 		else {
-			setDefault();
+			that.hoverMethods.setDefault();
 		}
 	}
 
 	// mouseover
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() {applyHover(true) });
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOVER, function() {that.hoverMethods.applyHover(true) });
 	                   
 	// mouseout
-	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() {applyHover(false) });	
+	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() {that.hoverMethods.applyHover(false) });	
 	
 	
-	setDefault();
+	that.hoverMethods.setDefault();
 	
 }
 
@@ -300,7 +290,7 @@ Thumbnail.prototype.defaultArgs = {
 		top: 0,
 		left: 0,			 
 	  	"cursor": "pointer",
-	  	backgroundColor: "rgb(244,0,0)"
+	  	backgroundColor: "rgb(0,0,0)"
 	},
 	ThumbnailImageCSS: {
 		position: "absolute",

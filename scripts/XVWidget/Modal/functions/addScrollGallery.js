@@ -58,7 +58,7 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 	var thumbContents = this.ScrollGallery.getScrollables(slicerKey , 'content');
 	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
 	
-	
+						//
 	utils.array.forEach(that.scanDataPaths, function(dataPath) { 	
 		//--------------------------------
 		// ********AMANDA CODE HERE*******
