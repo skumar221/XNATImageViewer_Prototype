@@ -4,5 +4,6 @@
 //******************************************************
 utils.css.setCSS = function (elt, cssObj) {
 
-	$(elt).css(cssObj);
+	if (cssObj) { $(elt).css(cssObj); }
+
 }

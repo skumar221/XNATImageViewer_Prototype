@@ -48,8 +48,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 				
 				if (!found && thumbObj.widget == event.dragSourceItem.element) {
 					
-					dragThumb = thumbObj;
-					that.manageActiveThumbs(dropViewer, thumbObj);				
+					dragThumb = thumbObj;			
 					found = true;
 					
 				}
@@ -160,13 +159,13 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			var clone = this;
 			var inserted = false;
 			srcObj.clickTime = n;
-			
+
 			
 			
 			//
 			//  Weird double click events sent out...
 			//
-			if (p  && (n-p) < 1000) {
+			if (p  && ((n-p) < 1000)) {
 				return;
 			}
 

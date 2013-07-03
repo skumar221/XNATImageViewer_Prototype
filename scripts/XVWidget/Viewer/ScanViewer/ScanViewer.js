@@ -147,29 +147,9 @@ ScanViewer = function (args) {
 													 " / " + that.FrameHolder.frames.length;	
 	});
 
-	
-	/**
-	 * @type {string}
-	 * @private
-	 */
-	this.currDroppableId = undefined;
-	/**
-	 * @param {string}
-	 */	
-	this.setDroppable = function(dId) {
-		this.currDroppableId = dId;
-	}
-	/**
-	 * @return {string}
-	 */	
-	this.getDroppable = function() {
-		return this.currDroppableId;
-	}
-
 
     
     this.setHoverEvents();
-
     this.updateCSS();
 }
 goog.inherits(ScanViewer, Viewer);
@@ -210,7 +190,8 @@ ScanViewer.prototype.defaultArgs = {
 
 
 ScanViewer.prototype.loadThumbnail = function (thumb) {
-
+	
+	ScanViewer.superClass_.loadThumbnail.call(this, thumb);
 	this.FrameHolder.loadThumbnail(thumb); 
 	
 }
@@ -262,50 +243,51 @@ ScanViewer.prototype.setHoverEvents = function () {
  */
 ScanViewer.prototype.createDragElement = function(srcElt) {
 	
-	var emptyClone = ScanViewer.superClass_.createDragElement.call(this, srcElt);
-	if (emptyClone) { return emptyClone };
-
-
-	var parent, clonedElt, srcCanv, clonedCanv, context;
-	var keepClasses = [ GLOBALS.classNames.FrameHolder ];
-	var keepElts = [];
-			
-	parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ScanViewer);
-
-	//
-	// Retain any children that you want to keep
-	//
-
-	//
-	// Create draggable ghost by cloning the parent
-	//	
-	clonedElt = parent.cloneNode(true);
-	clonedElt.style.fontFamily = GLOBALS.fontFamily;
-	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, parent);
-	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, clonedElt);
-
-
+	var returner = ScanViewer.superClass_.createDragElement.call(this, srcElt);
+	if (returner.id !== 'DUMMY') {
 	
-	//
-	// Draw text on draggable ghost
-	//
-	context = clonedCanv.getContext("2d");
-	context.drawImage(srcCanv, 0, 0);		  
-  	clonedElt.style.opacity = .5;	
-	clonedElt.className = "VIEWERCLONE";
-	clonedElt.id = "CLONE";
-
+		var parent, srcCanv, clonedCanv, context;
+		var keepClasses = [ GLOBALS.classNames.FrameHolder ];
+		var keepElts = [];
+				
+		parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ScanViewer);
 	
-	utils.css.setCSS(clonedElt, {
-		cursor: 'move',
-        '-moz-user-select': 'none'
-	})
-
+		//
+		// Retain any children that you want to keep
+		//
 	
-	goog.events.removeAll(clonedElt);
+		//
+		// Create draggable ghost by cloning the parent
+		//	
+		returner = parent.cloneNode(true);
+		returner.style.fontFamily = GLOBALS.fontFamily;
+		srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, parent);
+		clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, returner);
 	
 	
-	return clonedElt;		
+		
+		//
+		// Draw text on draggable ghost
+		//
+		context = clonedCanv.getContext("2d");
+		context.drawImage(srcCanv, 0, 0);		  
+	  	returner.style.opacity = .7;	
+		returner.className = "VIEWERCLONE";
+		returner.id = "CLONE";
+	
+		
+		utils.css.setCSS(returner, {
+			cursor: 'move',
+	        '-moz-user-select': 'none'
+		})
+	
+		
+		goog.events.removeAll(returner);		
+	}
+
+	
+	
+	return returner;		
 
 }
 

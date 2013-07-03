@@ -279,12 +279,12 @@ FrameHolder.prototype.imageAdjust = function (methodType, value) {
 					imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
 					break;
 				case "contrast":
-					imageData.data = linearContrast(imageData.data, this.adjustMethods[i], this.args.contrastThreshold);
+					imageData.data = linearContrast(imageData.data, this.adjustMethods[i], this.defaultArgs.contrastThreshold);
 					break;
 			}
 		}
 		
-		
+
 		//
 		// Put the new image data back into canvas
 		//

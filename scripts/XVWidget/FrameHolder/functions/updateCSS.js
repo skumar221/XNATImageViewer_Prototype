@@ -2,16 +2,20 @@
 //  updateCSS
 //
 //******************************************************
-FrameHolder.prototype.updateCSS = function () {
+FrameHolder.prototype.updateCSS = function (args) {
 
 
 
 	//----------------------------------
 	//	CANVAS
 	//----------------------------------
-	var widgetDims = utils.css.dims(this.widget);
+	var widgetDims = utils.dom.mergeArgs(utils.css.dims(this.widget), args);
+	
+	utils.css.setCSS(this.widget, widgetDims);
+	
 	this.canvas.height = widgetDims['height'];
 	this.canvas.width = widgetDims['width'];
+	
 	utils.css.setCSS(this.canvas, widgetDims);
 
 

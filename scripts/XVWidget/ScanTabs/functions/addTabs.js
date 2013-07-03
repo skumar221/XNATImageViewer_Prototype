@@ -25,11 +25,11 @@ ScanTabs.prototype.addTabs = function() {
 	 */	
 	var tabIconCSS = {
 		position: "absolute",
-		top: (GLOBALS.minScanTabHeight - (GLOBALS.minScanTabHeight * .85))/2,
-		height: GLOBALS.minScanTabHeight * .85,
-		width: GLOBALS.minScanTabHeight * .85,
-		opacity: .6,
-		left: GLOBALS.scanTabLabelWidth/2 - (GLOBALS.minScanTabHeight * .85) / 2
+		top: Math.round((GLOBALS.minScanTabHeight - (GLOBALS.minScanTabHeight * .85))/2),
+		left: Math.round(GLOBALS.scanTabLabelWidth/2 - (GLOBALS.minScanTabHeight * .85) / 2),
+		height: Math.round(GLOBALS.minScanTabHeight * .75),
+		width: Math.round(GLOBALS.minScanTabHeight * .75),
+		opacity: .6
 	}
 	/**
 	 * @type {Object}
@@ -61,7 +61,7 @@ ScanTabs.prototype.addTabs = function() {
 			utils.dom.mergeArgs(tabCSS, {
 			left: GLOBALS.scanTabLabelWidth * i + i*3, 
 		}));
-		
+		tab.title = title;
 		
 		
 		
@@ -87,132 +87,3 @@ ScanTabs.prototype.addTabs = function() {
 
 	})
 }
-
-
-/*
-		//
-		//	CLICK
-		//
-		goog.events.listen(tab, goog.events.EventType.CLICK, function(e) { 			
-			
-			var ind = 0;
-			var targetImage = goog.dom.getElementsByClass('TabIcon', e.currentTarget);
-			var viewerHeight = utils.css.dims(that.widget.parentNode, 'height');
-	
-							
-		
-			//
-			// Set the isExpanded on clicked tab, false on unclicked tab
-			//
-			utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
-				
-				if (elt == e.currentTarget) {
-					elt.isExpanded = (elt.isExpanded === 'undefined') ? false : elt.isExpanded;
-					elt.isExpanded = !elt.isExpanded;					
-				}
-				else {
-					elt.isExpanded = false;
-				}
-				
-			})
-
-
-			
-			//
-			// widgetTop calculated based on the isExpanded parameter
-			//
-			var widgetTop = (e.currentTarget.isExpanded) ? viewerHeight - GLOBALS.minScanTabHeight - GLOBALS.tabClickHeight : 
-							utils.css.dims(that.widget.parentNode, 'height') - GLOBALS.minScanTabHeight + 1;
-			var pageHeight = viewerHeight - widgetTop - GLOBALS.minScanTabHeight - 1;
-
-
-
-			//
-			// Set the border of the tabs, clicked vs. other...
-			//			
-			
-			var dims = utils.css.dims(that.widget);
-			var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, widgetTop], GLOBALS.animMed, goog.fx.easing.easeOut);
-			slide.play();
-			
-
-			
-			//
-			// Set the opacity of Icon when you click (1 for clicked, .6 for unclicked)
-			//
-			utils.array.forEach(goog.dom.getElementsByClass('TabIcon', that.widget), function(elt, i) { 
-				
-				var op =  .6;	
-				if (elt == targetImage[0] && goog.dom.getAncestorByClass(elt, "Tab").isExpanded) {
-					op = 1;
-					ind = i;
-					that.tabPane.setSelectedIndex(i);
-				}
-				
-				utils.css.setCSS(elt, { 
-					opacity: op,
-				})		
-						
-			})			
-			
-			
-			
-			//
-			// Set the border of the tabs, clicked vs. other...
-			//
-			utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(elt, i) { 
-
-				var border =  deselectedBorder;
-				var zIndex =  10;
-				
-				if (i === ind && elt.isExpanded) {
-					border = selectedBorder;
-					zIndex = 1000;
-				}
-				
-				
-				
-				//
-				// Set Tab background and zIndex
-				//
-				utils.css.setCSS(elt, utils.dom.mergeArgs(border,{
-					zIndex: zIndex,
-					backgroundColor: "rgba(0,0,0,1)"
-				}));	
-				
-				
-				
-				
-				//
-				// Set the tabPage border
-				//
-				utils.css.setCSS(that.tabPane.getPage(i).elContent_, utils.dom.mergeArgs(border,{
-					zIndex: zIndex,
-					'border-bottom' : selectedBorder['borderTop']
-				}));
-			})
-			
-			
-			
-			
-			//
-			// Set the height of the tab page
-			//
-			utils.array.forEach(goog.dom.getElementsByClass('TabPage', that.widget), function(elt, i) {
-
-				var pageWidth = utils.css.dims(that.widget, 'width')-2;
-				utils.css.setCSS(elt, {
-					width: pageWidth
-				})	
-				
-				
-				var dims = utils.css.dims(elt);
-				var anim = new goog.fx.dom.Resize(
-					elt, 
-					[pageWidth, dims.height], 
-					[pageWidth, pageHeight], 
-					GLOBALS.animMed, goog.fx.easing.easeOut);
-
-				anim.play();
-			});
-border */

@@ -12,7 +12,9 @@ ScanViewer.prototype.linkContentDividerToScanTabs = function () {
 		
 	this.ScanTabs.setClickCallbacks({
 		'activate' : function() {
-			that.ContentDivider.slideTo(that.ContentDivider.getUpperLimit(), animate);
+			var ul = that.ContentDivider.getUpperLimit();
+			
+			that.ContentDivider.slideTo(ul + .5 * ul, animate);
 		},
 		'deactivate' : function() {
 			that.ContentDivider.slideTo(that.ContentDivider.getLowerLimit(), animate);		

@@ -102,37 +102,43 @@ utils.gui.GenericSlider = function (arguments) {
 	//----------------------------
 	// HOLDER
 	//----------------------------	
-	var widget = utils.dom.makeElement('div', args['parent'], args['className'], args['widgetCSS']);
+	/**
+	 * @private
+	 */
+	this.widget_ = utils.dom.makeElement('div', args['parent'], args['className'], args['widgetCSS']);
 	this.getWidget = function () {
-		return widget;
+		return this.widget_;
 	}
+
+
 
 	//----------------------------
 	// TRACK
-	//----------------------------		
-	var track = utils.dom.makeElement("div", widget, "SliderTrack", args['trackCSS']);
+	//----------------------------	
+	/**
+	 * @private
+	 */	
+	this.track_ = utils.dom.makeElement("div", this.widget_, "SliderTrack", args['trackCSS']);
 	this.getTrack = function () {
-		return track;
-	}		
-	
-	that.decorate(widget);		
+		return this.track_;
+	}			
+	that.decorate(this.widget_);		
 
 
 	
 	//----------------------------
 	// TRACK
 	//----------------------------	
-
-	utils.array.forEach(goog.dom.getChildren(widget), function(child) {
+	utils.array.forEach(goog.dom.getChildren(this.widget_), function(child) {
 		
 		if (child.className === 'goog-slider-thumb') {
 			utils.css.setCSS(child, args['thumbCSS']);
+			
 			that.getThumb = function () {
 				return child;
+				
 			}	
 		}		
-		
-
 	})
 	
 

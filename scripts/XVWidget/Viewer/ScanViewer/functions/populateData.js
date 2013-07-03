@@ -23,7 +23,7 @@ ScanViewer.prototype.populateData = function (data) {
 			orientation: "vertical",
 			widgetCSS: {
 				left: 0,
-				height: that.ScanTabs.CSS.height * .80,
+				height: '80%',
 				width: 440,
 				top: GLOBALS.scanTabLabelHeight + 10
 			}

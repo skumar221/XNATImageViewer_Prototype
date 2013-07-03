@@ -47,8 +47,10 @@ FrameSlider = function (arguments) {
 
 
 	this.clearLinked = function () {
+		
 		that.linkedCallbacks = [];
 		that.linkedSliders = [];
+		
 	}
 
 
@@ -57,6 +59,7 @@ FrameSlider = function (arguments) {
 	// linkedCallbacks - Handler
 	//----------------------------------	
 	this.addLinkedCallback = function (func) {
+		
   		if (!that.linkedCallbacks) {
   			that.linkedCallbacks = [];	
   		}
@@ -71,18 +74,21 @@ FrameSlider = function (arguments) {
 	this.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
 
 		if (that.linkedCallbacks && that.linkedCallbacks.length > 0) {
-			for (var i=0, len = that.linkedCallbacks.length; i < len; i++) {
-				that.linkedCallbacks[i](that);
-			}
+			
+			utils.array.forEach(that.linkedCallbacks, function(callback) { 
+				callback(that);
+			})
+
 		}	
 	});
   	
 
 }
-
-
-
-
 goog.inherits(FrameSlider, utils.gui.GenericSlider);
+
+
+FrameSlider.prototype.updateCSS = function(args) {
+	utils.css.setCSS(this.widget_, args);
+}
 
 

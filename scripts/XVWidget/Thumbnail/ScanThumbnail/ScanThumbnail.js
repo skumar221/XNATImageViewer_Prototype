@@ -137,28 +137,7 @@ goog.inherits(ScanThumbnail, Thumbnail);
 
 
 
-/**
-* @type {function(boolean)}
-*/
-Thumbnail.prototype.setActive = function(active) {
-	
-	var that = this;
-	var bgColor = (active) ? that.args.bgHighlight : that.args.bgDefault;	
-	var nodes = goog.dom.getElementsByClass(that.widget.id);
-	
-	
-	utils.array.forEach(nodes, function(node) { 
-		node.isActive = active;
-		utils.css.setCSS(node, {
-			backgroundColor: bgColor,
-		})		
-	})
 
-
-	this.isActive = function () {
-		return active;
-	}		
-}
 
 
 /**

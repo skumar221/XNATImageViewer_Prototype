@@ -5,8 +5,8 @@
 goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
-goog.require(GLOBALS.classNames.XVWidget);
 
+goog.require(GLOBALS.classNames.XVWidget);
 goog.provide(GLOBALS.classNames.Viewer);
 
 /**
@@ -23,20 +23,26 @@ Viewer = function (args) {
 	 * @type {string}
 	 * @private
 	 */
-	this.currDroppableId = undefined;
+	this.currDroppableId_ = undefined;
 	/**
 	 * @param {string}
 	 */	
 	this.setDroppable = function(dId) {
-		this.currDroppableId = dId;
+		if (dId) {
+			this.currDroppableId_ = dId;			
+		}
 	}
 	/**
 	 * @return {string}
 	 */	
 	this.getDroppable = function() {
-		return this.currDroppableId;
+		return this.currDroppableId_;
 	}
 
+
+
+
+	
     this.setHoverEvents();
 }
 goog.inherits(Viewer, XVWidget);
@@ -144,7 +150,22 @@ Viewer.prototype.createDragElement = function(srcElt) {
 		//
 		//  Return an empty div, basically
 		//
-		return document.createElement("div");
+		var dummy = document.createElement("div");
+		dummy.id = "DUMMY";
+		return dummy;
+		
 	}
+	
+	return srcElt.cloneNode(false);
+}
+
+
+/**
+ * @param {Element}
+ * @protected
+ */
+Viewer.prototype.loadThumbnail = function (thumb) {
+
+	this.setDroppable(thumb.widget.id);
 	
 }

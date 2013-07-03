@@ -50,8 +50,8 @@ def main():
     htmlFile = "../index-uncompressed.html"
     backupDir = "scriptsBackup"
       
-    findStr = "FrameViewer"
-    replaceStr = "FrameHolder"
+    findStr = "currDroppableId"
+    replaceStr = "currDroppableId_"
     fileReplaceStr = replaceStr #replaceStr.split(".")[2]
     
     skipDirs = ["jquery"];

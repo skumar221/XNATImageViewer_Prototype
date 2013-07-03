@@ -110,13 +110,13 @@ goog.inherits(Thumbnail, goog.fx.DragDrop);
 */
 Thumbnail.prototype.setActive = function(active) {
 	
+
 	var that = this;
-	var bgColor = (active) ? that.args.bgHighlight : that.args.bgDefault;	
-	var nodes = goog.dom.getElementsByClass(that.widget.id);
+	var bgColor = (active) ? that.args.bgHighlight : that.args.bgDefault;
+	var nodes = goog.dom.getElementsByClass(that.widget.className);
 	
 	
 	utils.array.forEach(nodes, function(node) { 
-		node.isActive = active;
 		utils.css.setCSS(node, {
 			backgroundColor: bgColor,
 		})		
@@ -223,7 +223,7 @@ Thumbnail.prototype.addHoverMethods = function () {
 	// set defaults
 	function setDefault() {
 		
-		if (!that.widget.isActive) {
+		if (!that.isActive) {
 			utils.css.setCSS(that.widget, {
 				backgroundColor: that.args.bgDefault,
 			})
@@ -237,7 +237,8 @@ Thumbnail.prototype.addHoverMethods = function () {
 			borderColor: that.args.textDefault,
 		})			
 	}
-	setDefault();
+	
+	
 	
 	function highlight() {
 
@@ -270,6 +271,9 @@ Thumbnail.prototype.addHoverMethods = function () {
 	                   
 	// mouseout
 	goog.events.listen(this.widget, goog.events.EventType.MOUSEOUT, function() {applyHover(false) });	
+	
+	
+	setDefault();
 	
 }
 

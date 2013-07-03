@@ -26,6 +26,9 @@ var Modal = function (args) {
 		that.destroy();
 	}	
 	
+	window.onresize = function () {
+		that.updateCSS();
+	};
 	
 	
 	

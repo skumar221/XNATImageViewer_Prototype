@@ -119,7 +119,7 @@ GLOBALS = function (){
 	 * @const
 	 * @type {number}
 	 */
-	this.minFrameHolderHeight = 150;
+	this.minFrameHolderHeight = 200;
 	/**
 	 * @const
 	 * @type {number}
@@ -233,7 +233,7 @@ GLOBALS = function (){
 	 * @const
 	 * @type {number}
 	 */
-	this.scanTabLabelHeight = 20;
+	this.scanTabLabelHeight = 15;
 	/**
 	 * @const
 	 * @type {number}

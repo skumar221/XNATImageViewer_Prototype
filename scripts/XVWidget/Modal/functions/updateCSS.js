@@ -7,15 +7,14 @@ Modal.prototype.updateCSS = function (args) {
 	
 	var that = this;
 
+
 	
     //----------------------------------
 	//	RESIZE THE MODAL
 	//----------------------------------
 	modalDims = this.modalDims();
 	utils.css.setCSS( this.modal, modalDims);	
-	if(args) { 
-		utils.css.setCSS( this.modal, args);
-	}	
+	if (args) {  utils.css.setCSS( this.modal, args);}	
 	
 
 	
@@ -29,12 +28,11 @@ Modal.prototype.updateCSS = function (args) {
 
  
  	//----------------------------------
-	//	SCAN VIEWERS
+	//	VIEWERS
 	//----------------------------------	
 	if (XV) {
 		XV.Viewers( function (Viewer, i, j) { 
 
-						
 			Viewer.updateCSS({
 				
 				height: modalDims.Viewer.height,// - this.args.marginTop*2,
@@ -43,16 +41,6 @@ Modal.prototype.updateCSS = function (args) {
 				top: modalDims.Viewer.tops[i][j]
 				
 			});	
-			
-			if (Viewer.selectorBox) {
-				
-				utils.css.setCSS(Viewer.selectorBox, {
-					height: modalDims.Viewer.height,// - this.args.marginTop*2,
-					width: modalDims.Viewer.width,
-					left: modalDims.Viewer.lefts[i][j],
-					top: modalDims.Viewer.tops[i][j]
-				});				
-			} 	
 			
 		}); 		
 	}	
@@ -100,5 +88,6 @@ Modal.prototype.updateCSS = function (args) {
 		})		
 		
 	}
-
+	
+	
 }

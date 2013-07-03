@@ -12,6 +12,9 @@ Thumbnail.prototype.loadFramesToDOM = function (args) {
 	if (args["before"]) {  args["before"] (setLen) };	
 
 
+
+
+
 	for (i in this.frames) {
 		
 		var viewPlane = this.frames[i]['viewPlane'];
@@ -21,8 +24,7 @@ Thumbnail.prototype.loadFramesToDOM = function (args) {
 			if (args['viewPlane'] && viewPlane === args['viewPlane']) {
 				loadQueue.push(this.frames[i]['src']);
 			}		
-		}
-		else {
+		} else {
 			//utils.dom.debug("image already loaded!: ", this.frames[i]['img'])
 		}
 	}
@@ -41,9 +43,7 @@ Thumbnail.prototype.loadFramesToDOM = function (args) {
 			}	
 		})
 		
-	}
-	// otherwise send to loader
-	else {
+	} else {
 		
 		var imageLoader = new goog.net.ImageLoader();
 		

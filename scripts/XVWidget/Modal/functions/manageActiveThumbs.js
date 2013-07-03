@@ -5,24 +5,32 @@
  * @type {function(XVViewer, XVThumbnail)}
  * @ protected
  */
-Modal.prototype.manageActiveThumbs = function (viewer, thumb) {
+Modal.prototype.manageActiveThumbs = function () {
 
 	var that = this;
-	var t = viewer.getDroppable();
+	var droppableIds = [];
+	var droppableId;
 	
+	XV.Viewers(function(Viewer){
+		var droppableId = Viewer.getDroppable();
+		if (droppableId) {
+			droppableIds.push(droppableId)		
+		}
+	})
 
-	if (t) {	
-		var found;
-		utils.array.forEach(that.dragDropThumbnails, function(thumbObj) {
-			
-			if (!found && thumbObj.widget.id == t) {
-				thumbObj.setActive(false);
-				found = true;
-			}
+	
+	utils.array.forEach(that.dragDropThumbnails, function(thumb) {
+
+		utils.array.forEach(droppableIds, function(id) {
+			if (thumb.widget.id === id) {
+				thumb.setActive(true);
+			}	
 		})
-	}
-	
+		
+		if (!found) {
+			thumb.setActive(false);
+		}
+	})
 
-	thumb.setActive(true);
-	viewer.setDroppable(thumb.widget.id);
+	
 }

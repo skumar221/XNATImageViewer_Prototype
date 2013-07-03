@@ -130,7 +130,7 @@ ScanTabs.prototype.setClickUI = function() {
 	utils.array.forEach(goog.dom.getElementsByClass('Tab', that.widget), function(tab, i) { 
 		
 		goog.events.listen(tab, goog.events.EventType.CLICK, function(event) { 
-
+			
 			if (!tab.isActive) {
 				that.setActive(i);
 				that.callbacks['activate']();	
@@ -140,6 +140,11 @@ ScanTabs.prototype.setClickUI = function() {
 				tab.isActive = false;
 			}
 			
+		})
+		
+		goog.events.listen(tab, goog.events.EventType.MOUSEOVER, function(event) { 
+			
+			tab.style.opacity = 1;
 		})
 		
 	})	
@@ -264,14 +269,16 @@ ScanTabs.prototype.expandVertically = function (newTop) {
 		//
 		utils.css.setCSS(elt, {
 			height: pageHeight - 1,
-			width: parentWidth-2
+			width: parentWidth - 2
 		});
 	})
 }
 
 
 
-ScanTabs.prototype.updateCSS = function () {
+ScanTabs.prototype.updateCSS = function (args) {
+
+	utils.css.setCSS(this.widget, args);
 
 	var that = this;
 	var parentHeight = utils.css.dims(that.widget.parentNode, 'height');

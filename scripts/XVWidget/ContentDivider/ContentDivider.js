@@ -130,10 +130,12 @@ goog.inherits(ContentDivider, XVWidget);
  * @protected
  */
 ContentDivider.prototype.defaultArgs = {
+	
 		className: "ContentDivider",
 		parent: document.body,
 		orientation: "vertical",
 		className: "ContentDivider",
+		
 		widgetCSS: {
 			position: 'absolute',
 			top: "90%",
@@ -147,12 +149,14 @@ ContentDivider.prototype.defaultArgs = {
 			fontSize: 25,
 			textAlign: "center"
 		},
+		
 		boundaryCSS: {
 			top: 0,
 			left: 0,
 			width: 650,
 			height: 400
 		},
+		
 		iconCSS: {
 			position: 'absolute',	
 			color: "rgba(0,0,0)",
@@ -193,31 +197,6 @@ ContentDivider.prototype.slideTo = function(newTop, animate) {
  */
 ContentDivider.prototype.getUpperLimit = function() {
 
-	/*
-	var that = this;
-	var p;
-	var d = new Date();
-	var n = d.getTime();
-	
-	console.log(" ")
-	console.log("UPPER")
-	
-	var vals = ['top', 'left', 'height', 'width']
-	utils.array.forEach(vals, function(val) { 
-		console.time(val)
-		var p = utils.css.dims(that.containmentDiv, val);
-		console.timeEnd(val)	
-	})
-
-
-	
-	
-	console.time("EVERYTHING")
-	var a = utils.css.dims(this.containmentDiv);
-	console.timeEnd("EVERYTHING")
-	
-	*/
-	
 	return utils.css.dims(this.containmentDiv, 'top');
 } 
 
