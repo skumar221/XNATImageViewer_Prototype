@@ -20,10 +20,12 @@ Modal.prototype.manageActiveThumbs = function () {
 
 	
 	utils.array.forEach(that.dragDropThumbnails, function(thumb) {
-
+		var found = false;
 		utils.array.forEach(droppableIds, function(id) {
 			if (thumb.widget.id === id) {
+				console.log("Setting active", id)
 				thumb.setActive(true);
+				found = true;
 			}	
 		})
 		
