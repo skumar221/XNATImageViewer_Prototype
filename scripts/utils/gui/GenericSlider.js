@@ -1,29 +1,24 @@
 //******************************************************
 //  
 //******************************************************
+//goog.require('goog.ui.Component');
+////////@extends goog.ui.Slider
+goog.provide('GenericSlider');	
+goog.require('goog.ui.Slider');
 
-
-goog.provide('goog.ui.Slider'); 
-goog.provide('goog.dom'); 
-
-	
 /**
  * @constructor
  * @extends {goog.ui.Slider}
  */
 GenericSlider = function (args) {	 
-	
-	goog.base(this);
 
- 
-	var args = {};
-	var that = this;
-	 
-	if (typeof args === 'object') {
-		args = args;
-	}
-	
-	var className = (args['className']) ? args['className'] : "GenericSlider";
+
+	goog.ui.Slider.call(this)
+
+
+	var args_ = (typeof args === 'object') ? args : {};
+	var that = this;	
+	var className = (args_['className']) ? args_['className'] : "GenericSlider";
 	this.id = className + "_" + utils.dom.uniqueId();
 
 
@@ -31,37 +26,37 @@ GenericSlider = function (args) {
 	//----------------------------
 	// Set CSS - VERTICAL ORIENTATION
 	//----------------------------
-	if (args['orientation'] && args['orientation'].toLowerCase() == 'vertical') {
+	if (args_['orientation'] && args_['orientation'].toLowerCase() == 'vertical') {
 		
 		this.setOrientation(goog.ui.Slider.Orientation.VERTICAL);
 		this.setValue(this.getMaximum());
 		this.setStep(-1);
 
-		args['widgetCSS'] = utils.dom.mergeArgs({
+		args_['widgetCSS'] = utils.dom.mergeArgs({
 			'position' : 'absolute',
 			'width' : 10,
 			'height' : '100%',
 			'left' : 0,
 			'top' : 0,	
 			'backgroundColor' : 'rgb(255,255,255)'		
-		}, args['widgetCSS']);
+		}, args_['widgetCSS']);
 
-		args['thumbCSS'] = utils.dom.mergeArgs({
+		args_['thumbCSS'] = utils.dom.mergeArgs({
 			'position' : 'absolute',
 			'top' : 0,
 			'height' : 10,
-			'width': args['widgetCSS']['width'],
+			'width': args_['widgetCSS']['width'],
 			'backgroundColor': "rgb(225, 225, 225)"				
-		}, args['thumbCSS']);
+		}, args_['thumbCSS']);
 		
-		args['trackCSS'] = utils.dom.mergeArgs({
+		args_['trackCSS'] = utils.dom.mergeArgs({
 			'position': 'absolute',
 			'width' : '40%',
 			'height' : '100%',
 			'left': '30%',
 			'borderRadius' : 3,
 			'backgroundColor' : 'rgba(100,100,100,0)'				
-		}, args['trackCSS']);
+		}, args_['trackCSS']);
 		
 	}
 	//----------------------------
@@ -69,35 +64,33 @@ GenericSlider = function (args) {
 	//----------------------------
 	else {
 		
-		args['widgetCSS'] = utils.dom.mergeArgs({
+		args_['widgetCSS'] = utils.dom.mergeArgs({
 			'position' : 'absolute',
 			'width' : '100%',
 			'height' : 10,
 			'left' : 0,
 			'top' : 0,	
 			'borderColor' : 'rgba(200,200,200,1)'			
-		}, args['widgetCSS']);
+		}, args_['widgetCSS']);
 	
 
-		args['thumbCSS'] = utils.dom.mergeArgs({
+		args_['thumbCSS'] = utils.dom.mergeArgs({
 			'position': 'absolute',
-			'height': args['widgetCSS']['height'],
-			'width': args['widgetCSS']['height'],
+			'height': args_['widgetCSS']['height'],
+			'width': args_['widgetCSS']['height'],
 			'backgroundColor': "rgb(225, 225, 225)",
 			'borderRadius': 0	
-		}, args['thumbCSS']);
+		}, args_['thumbCSS']);
 			
-		args['trackCSS'] = utils.dom.mergeArgs({
+		args_['trackCSS'] = utils.dom.mergeArgs({
 			'position': 'absolute',
 			'width' : '100%',
 			'height' : '40%',
 			'top': '30%',
 			'borderRadius' : 3,
 			'backgroundColor' : 'rgba(100,100,100,0)'			
-		}, args['trackCSS']);
+		}, args_['trackCSS']);
 	}
-	
-	
 
 	//----------------------------
 	// HOLDER
@@ -105,11 +98,10 @@ GenericSlider = function (args) {
 	/**
 	 * @private
 	 */
-	this.widget_ = utils.dom.makeElement('div', args['parent'], args['className'], args['widgetCSS']);
+	this.widget_ = utils.dom.makeElement('div', args_['parent'], args_['className'], args_['widgetCSS']);
 	this.getWidget = function () {
 		return this.widget_;
 	}
-
 
 
 	//----------------------------
@@ -118,7 +110,7 @@ GenericSlider = function (args) {
 	/**
 	 * @private
 	 */	
-	this.track_ = utils.dom.makeElement("div", this.widget_, "SliderTrack", args['trackCSS']);
+	this.track_ = utils.dom.makeElement("div", this.widget_, "SliderTrack", args_['trackCSS']);
 	this.getTrack = function () {
 		return this.track_;
 	}			
@@ -132,7 +124,7 @@ GenericSlider = function (args) {
 	utils.array.forEach(goog.dom.getChildren(this.widget_), function(child) {
 		
 		if (child.className === 'goog-slider-thumb') {
-			utils.css.setCSS(child, args['thumbCSS']);
+			utils.css.setCSS(child, args_['thumbCSS']);
 			
 			that.getThumb = function () {
 				return child;
@@ -164,14 +156,14 @@ GenericSlider = function (args) {
 	
 	
 	
-	this.addSlideCallback = function (callback, args) {
+	this.addSlideCallback = function (callback, args_) {
 		//console.log("callback: ", callback.toString())
 		if (callback) {
 
 			that.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
 				event.stopPropagation();
 				utils.dom.stopPropagation(event);
-				callback(that, args);
+				callback(that, args_);
 			});		
 		}	
 	}
@@ -186,5 +178,4 @@ GenericSlider = function (args) {
 	
 
 }
-
-goog.inherits(GenericSlider, goog.ui.Slider);
+goog.inherits(GenericSlider, goog.ui.Slider);			 

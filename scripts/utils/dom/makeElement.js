@@ -2,9 +2,6 @@
 //  Returns an element based on the given parameters.
 //******************************************************
 
-goog.require('goog.dom');
-goog.require('goog.style');
-
 utils.dom.makeElement = function (type, parent, className, css) {
 	
 	if (!type) {

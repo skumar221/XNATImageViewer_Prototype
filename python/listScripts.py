@@ -3,7 +3,7 @@ import os
 
 def main():
     
-    scriptPath = "../scripts"
+    scriptPath = "../scripts/thirdparty/"
     
     """
     from os import listdir
@@ -15,17 +15,18 @@ def main():
     s = []
     
     
-    prependStr = '' #'<script src="'
-    appendStr = '' #"></script>'
+    prependStr = '<script  type="text/javascript" src="'
+    appendStr = '"></script>'
     
     for root, dirs, files in os.walk(scriptPath):
        for f in files:
            a = root + os.sep + f
            a = prependStr + a.replace("\\", "/").replace("..",".") + appendStr
-           print '"' + a  + '"' + " ,"
+           print a
+           #print '"' + a  + '"' + " ,"
            s.append(a)
  
-    print s
+    #print s
 
 
 if __name__ == "__main__":

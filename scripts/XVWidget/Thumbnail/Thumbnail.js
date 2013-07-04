@@ -5,16 +5,14 @@
 //*******************************************************
 
 
-goog.require('goog.fx.DragDrop');
-goog.require('goog.fx.DragDropGroup');
-goog.require('goog.array');
+//goog.require('goog.fx.DragDrop');
+//goog.require('goog.fx.DragDropGroup');
+//goog.require('goog.array');
 goog.require('XVWidget');
 
 
 
 goog.provide('Thumbnail');
-
-
 
 /**
  * @constructor
@@ -37,6 +35,7 @@ Thumbnail = function (args) {
 	* @protected
 	*/	
 	this.ThumbnailImage = new Image();
+	this.ThumbnailImage.className = 'ThumbnailImage';
 	
 	
 	
@@ -163,7 +162,7 @@ Thumbnail.prototype.createDragElement = function(srcElt) {
 */
 Thumbnail.prototype.pathMolder = function (path) {	
 	
-	splitStrs = path.split("testscans");
+	splitStrs = path.split("demoscans");
 	return splitStrs[1];
 }
 

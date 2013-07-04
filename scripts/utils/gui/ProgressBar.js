@@ -1,5 +1,4 @@
-goog.provide('goog.ui.ProgressBar');
-goog.provide('goog.style');
+
 
 utils.gui.ProgressBar = function (parent, args) {
 

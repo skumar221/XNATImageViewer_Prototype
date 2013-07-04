@@ -11,8 +11,9 @@ goog.provide('ScanViewer');
  */
 ScanViewer = function (args) {
 						
-	//Viewer.call(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
-	goog.base(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
+	Viewer.call(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
+	//goog.base(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
+	
 
 	var that = this;
 	
@@ -23,7 +24,7 @@ ScanViewer = function (args) {
 	 /**
 	  * @type {FrameHolder}
 	  */
-	 this.FrameHolder = new FrameHolder({
+	this.FrameHolder = new FrameHolder({
 	 	parent: this.widget,
 	 	"border-width": 0
 	 });

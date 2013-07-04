@@ -28,7 +28,8 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
 	
 	
-	utils.array.forEach(that.scanDataPaths, function(dataPath) { 	
+	utils.array.forEach(that.scanDataPaths, function(dataPath) { 
+		console.log('data path ', dataPath)	
 		that.dragDropThumbnails.push(new ScanThumbnail(dataPath, {		  	
 		  	parent: thumbContents,  	
 		  	widgetCSS: {

@@ -1,22 +1,21 @@
+
+
+
+
 //******************************************************
 //  Init
 //
 //******************************************************
-
-
-goog.provide('FrameHolder');
-
 goog.require('XVWidget');
 /**
  * @constructor
  * @extends {XVWidget}
  */
 FrameHolder = function(args) {
-
-	goog.base(this, utils.dom.mergeArgs(FrameHolder.prototype.defaultArgs, args));
-	//XVWidget.call(this, utils.dom.mergeArgs(this.prototype.defaultArgs, args));
 	
-	//console.log(this.prototype.defaultArgs)	
+	XVWidget.call(this, args);
+	
+	
 	
 	this.currFrame = this.args.onloadFrame;
 	
@@ -36,8 +35,6 @@ FrameHolder = function(args) {
 		top: 0,
 		left: 0
 	});
-
-
 	this.canvas.height = this.CSS.height;
 	this.canvas.width = this.CSS.width;
 	this.context = this.canvas.getContext('2d');
@@ -81,7 +78,7 @@ goog.inherits(FrameHolder, XVWidget);
 
 
 /**
- * @type {Object}
+ * @type {object}
  * @protected
  */
 FrameHolder.prototype.defaultArgs = {
@@ -108,6 +105,8 @@ FrameHolder.prototype.defaultArgs = {
 	  	 overflow: "visible"
   	}
 }
+
+
 
 
 
@@ -292,3 +291,4 @@ FrameHolder.prototype.imageAdjust = function (methodType, value) {
 		this.context.putImageData(imageData, 0, 0);	
 	}
 }
+

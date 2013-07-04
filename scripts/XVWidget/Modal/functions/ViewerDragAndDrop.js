@@ -1,5 +1,4 @@
 /**
- * @type {function()}
  * @protected
  */
 Modal.prototype.initViewerDragDrop = function() {

@@ -1,4 +1,4 @@
-goog.require('goog.array'); 
+
 
 Modal.prototype.addViewerManager = function () {
 	

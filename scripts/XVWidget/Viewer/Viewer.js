@@ -2,8 +2,6 @@
 //  Init
 //	
 //******************************************************
-goog.provide('goog.fx.DragDrop');
-goog.provide('goog.fx.DragDropGroup');
 
 goog.require('XVWidget');
 goog.provide('Viewer');

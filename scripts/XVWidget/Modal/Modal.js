@@ -2,20 +2,18 @@
 //  Init
 //
 //******************************************************
-goog.require('goog.fx.DragDrop');
-goog.require('goog.fx.DragDropGroup');
-goog.require('goog.array');
 
 goog.require('XVWidget');
-goog.require('Viewer');
-
 goog.provide('Modal');
 
-
+/**
+ * @constructor
+ * @extends {XVWidget}
+ */
 Modal = function (args) {
 
 	var that = this;
-	utils.oo.init(this, this.defaultArgs, args, function () {});
+	XVWidget.call(this, utils.dom.mergeArgs(Modal.prototype.defaultArgs, args));
 	XV = this;
 
 	
@@ -35,7 +33,7 @@ Modal = function (args) {
 	//----------------------------------
 	//	MODAL
 	//----------------------------------
-	/*
+	/**
 	* @type {Element}
 	*/	
 	this.modal = utils.dom.makeElement("div", this.widget, GLOBALS.ModalId, this.args.modalCSS);	
@@ -61,7 +59,7 @@ Modal = function (args) {
 	//----------------------------------
 	//	CLOSE BUTTON
 	//----------------------------------
-	/*
+	/**
 	* @type {Element}
 	*/	
 	this.closeButton = utils.dom.makeElement("img", this.widget, "closeIcon", {
@@ -80,12 +78,12 @@ Modal = function (args) {
 	//
 	// FOR PROTOTYPING PURPOSES
 	//----------------------------------	
-	this.scanDataPaths = TESTSCANDATA;
+	this.scanDataPaths = demoScanData;
 
 
 
 	
-	/*
+	/**
 	 * @type {Array.<Object>}
 	 * @protected
 	 */
@@ -94,7 +92,6 @@ Modal = function (args) {
 	//	SCROLL GALLERY
 	//----------------------------------
 	this.addScrollGallery();	
-
 
 
 	//----------------------------------
@@ -145,7 +142,7 @@ Modal = function (args) {
 	this.updateCSS();
 }
 
-
+goog.inherits(Modal, XVWidget);
 
 
 

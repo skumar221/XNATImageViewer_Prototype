@@ -1,7 +1,7 @@
-goog.provide( 'goog.events' );
-goog.provide( 'goog.net.ImageLoader' );
 
-Thumbnail.prototype.loadFramesToDOM = function (args) {
+
+
+ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 
 	var that = this;
 	var loadQueue = [];
@@ -12,7 +12,7 @@ Thumbnail.prototype.loadFramesToDOM = function (args) {
 	if (args["before"]) {  args["before"] (setLen) };	
 
 
-
+	console.log(this.frames)
 
 
 	for (i in this.frames) {
@@ -22,6 +22,7 @@ Thumbnail.prototype.loadFramesToDOM = function (args) {
 		// only add to queue if if it's not cached
 		if (!this.frames[i]['img']) {
 			if (args['viewPlane'] && viewPlane === args['viewPlane']) {
+				console.log("pushing: ", this.frames[i]['src'])
 				loadQueue.push(this.frames[i]['src']);
 			}		
 		} else {

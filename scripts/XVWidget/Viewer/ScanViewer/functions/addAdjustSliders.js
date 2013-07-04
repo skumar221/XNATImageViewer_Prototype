@@ -58,9 +58,9 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		sliderKey = SliderName + 'Slider';
 		
 		 /**
-		 * @type {utils.gui.GenericSlider}
+		 * @type {GenericSlider}
 		 */
-		this[sliderKey] = new utils.gui.GenericSlider(utils.dom.mergeArgs(imgProcSliderCSS, {
+		this[sliderKey] = new GenericSlider(utils.dom.mergeArgs(imgProcSliderCSS, {
 			parent: that.ScanTabs.getTab("Adjust"),
 			className: SliderName + 'Slider',
 			widgetCSS:{

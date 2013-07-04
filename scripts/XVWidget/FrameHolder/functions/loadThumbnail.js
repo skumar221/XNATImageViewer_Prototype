@@ -26,10 +26,10 @@ FrameHolder.prototype.loadCurrViewPlane = function () {
 FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 
 	var that = this;
-	
+	console.log("load thumbnail")
 	if (droppable.frames) {
 		
-
+		console.log("ere")
 		var that = this;		
 		this.currDroppable = droppable;		
 		this.currViewPlane = (viewPlane) ? viewPlane : "sagittal";

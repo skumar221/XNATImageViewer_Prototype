@@ -5,28 +5,40 @@
   <meta charset="utf-8" />
   <title>XNAT Image Viewer (Prototype)</title>
   
-	<link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css" />
-	<script type="text/javascript" src="./scripts/utils/lib/jquery/jquery-1.10.1.min.js"></script>
-	<script type="text/javascript" src="./scripts/utils/lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
-	<script type="text/javascript" src="./scripts/utils/lib/jquery/jquery-collision.min.js"></script>
-	<script type="text/javascript" src="./scripts/utils/lib/closure-library/closure/goog/base.js"></script>
-	
-	<script> 
-	
-		goog.require('goog.ui.Slider'); 
-		goog.require('goog.events.MouseWheelHandler');
-		goog.require('goog.fx.DragDrop');
-goog.require('goog.fx.DragDropGroup');
-goog.require('goog.array');
 
-	</script>
+	<script type="text/javascript" src="./scripts/thirdparty/jquery/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="./scripts/thirdparty/closure-library/closure/goog/base.js"></script>
+
+
+
+
+	<script type="text/javascript" src="./scripts/utils/includes.js"></script>
+	<script type="text/javascript" src="./scripts/XVWidget/includes.js"></script>
 	
-	<script src="./scripts/utils/utils.js"></script>	
+	<script src="./demoscans/SCAN_07_Defaced.js"></script>
+	<script src="./demoscans/SCAN_08_Defaced.js"></script>
+	<script src="./demoscans/SCAN_09_Defaced.js"></script>
+	<script src="./demoscans/SCAN_10_Defaced.js"></script>
+	<script src="./demoscans/SCAN_17_Defaced.js"></script>
+	<script src="./demoscans/SCAN_18_Defaced.js"></script>
+	<script src="./demoscans/SCAN_19_Defaced.js"></script>
+	<script src="./demoscans/SCAN_20_Defaced.js"></script>
+	<script src="./demoscans/SCAN_21_Defaced.js"></script>
+	<script src="./demoscans/SCAN_24_Defaced.js"></script>	
+	<script src="./demoscans/demoScanData.js"></script>	
+</head>
+
+
+
 	
+<body onload = "ModalOnload()"> 
+
+	
+	<script src="./scripts/utils/utils.js"></script>		
 	<script src="./scripts/utils/globals/globals.js"></script>
-
-	<script src="./scripts/utils/array/forEach.js"></script>
 	
+	
+	<script src="./scripts/utils/array/forEach.js"></script>
 		
 	<script src="./scripts/utils/convert/remap1D.js"></script>
 	<script src="./scripts/utils/convert/toInt.js"></script>
@@ -45,6 +57,7 @@ goog.require('goog.array');
 	<script src="./scripts/utils/gui/GenericSlider.js"></script>
 	<script src="./scripts/utils/gui/ProgressBar.js"></script>
 	<script src="./scripts/utils/gui/DialogBox.js"></script>
+	
 	
 	<script src="./scripts/utils/dom/debug.js"></script>
 	<script src="./scripts/utils/dom/addClass.js"></script>
@@ -80,6 +93,8 @@ goog.require('goog.array');
 	
 
 	<script src="./scripts/XVWidget/ContentDivider/ContentDivider.js"></script>
+	
+
 	<script src="./scripts/XVWidget/FrameHolder/FrameHolder.js"></script>
 	<script src="./scripts/XVWidget/FrameHolder/functions/loadFrames.js"></script>
 	<script src="./scripts/XVWidget/FrameHolder/functions/updateCSS.js"></script>
@@ -114,19 +129,8 @@ goog.require('goog.array');
 	<script src="./scripts/XVWidget/ScrollGallery/ScrollGallery.js"></script>
 	
 	
-	<script src="./testscans/SCAN_07_Defaced.js"></script>
-	<script src="./testscans/SCAN_08_Defaced.js"></script>
-	<script src="./testscans/SCAN_09_Defaced.js"></script>
-	<script src="./testscans/SCAN_10_Defaced.js"></script>
-	<script src="./testscans/SCAN_17_Defaced.js"></script>
-	<script src="./testscans/SCAN_18_Defaced.js"></script>
-	<script src="./testscans/SCAN_19_Defaced.js"></script>
-	<script src="./testscans/SCAN_20_Defaced.js"></script>
-	<script src="./testscans/SCAN_21_Defaced.js"></script>
-	<script src="./testscans/SCAN_24_Defaced.js"></script>
-	
-	<script src="./testscans/TestScanData.js"></script>
-	
+
+
 	<script src="./scripts/XVWidget/Modal/Modal.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/animateModal.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/destroy.js"></script>
@@ -139,15 +143,9 @@ goog.require('goog.array');
 	<script src="./scripts/XVWidget/Modal/functions/addScrollGallery.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ThumbnailDragAndDrop.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ViewerDragAndDrop.js"></script>
-	<script src="./scripts/XVWidget/Modal/ModalOnload.js"></script>
-
-
-</head>
-<body onload = "ModalOnload()"> </body>
-
-
-
-
+	<script src="./scripts/XVWidget/Modal/ModalOnload.js"></script>	
+	
+</body>
 
 
 

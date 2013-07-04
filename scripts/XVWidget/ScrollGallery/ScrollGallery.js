@@ -3,8 +3,6 @@
 //
 //******************************************************
 
-goog.provide('goog.ui.AnimatedZippy'); 
-
 
 goog.require('XVWidget');
 goog.provide('ScrollGallery');
@@ -37,6 +35,9 @@ ScrollGallery = function (args) {
 		width: ScrollAreaWidth,
 		left: utils.css.dims(this.widget, 'width') - ScrollAreaWidth
 	});
+	/**
+	 * @return Element
+	 */
 	this.getScrollArea = function () {
 		return this.ScrollArea;
 	}
@@ -45,13 +46,14 @@ ScrollGallery = function (args) {
 	//-------------------------------
 	// WIDGET
 	//-------------------------------	 
-	 utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.args.widgetCSS, args.widgetCSS));
-
+	 utils.css.setCSS(this.widget, utils.dom.mergeArgs(this.args.widgetCSS, 
+	 														args.widgetCSS));
 
 	//-------------------------------
 	// THE SLIDER
 	//-------------------------------	
-	this.ContentSlider = new utils.gui.GenericSlider({
+							 
+	this.ContentSlider = new GenericSlider({
 		parent: this.widget,
 		className: "ContentSlider",
 		'orientation' : 'vertical',

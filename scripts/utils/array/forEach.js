@@ -1,4 +1,3 @@
-goog.provide('goog.array')
 
 
 utils.array.forEach = function (arr, loopFcn) {

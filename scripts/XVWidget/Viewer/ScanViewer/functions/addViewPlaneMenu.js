@@ -3,7 +3,7 @@
 //
 //******************************************************
 
-goog.provide('goog.async.Delay');
+//goog.provide('goog.async.Delay');
 
 ScanViewer.prototype.addViewPlaneMenu = function () {
 
