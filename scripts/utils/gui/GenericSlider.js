@@ -3,15 +3,15 @@
 //******************************************************
 
 
-goog.require('goog.ui.Slider'); 
-goog.require('goog.dom'); 
-goog.provide('utils.gui.GenericSlider');
+goog.provide('goog.ui.Slider'); 
+goog.provide('goog.dom'); 
+
 	
 /**
  * @constructor
  * @extends {goog.ui.Slider}
  */
-utils.gui.GenericSlider = function (arguments) {	 
+GenericSlider = function (args) {	 
 	
 	goog.base(this);
 
@@ -19,8 +19,8 @@ utils.gui.GenericSlider = function (arguments) {
 	var args = {};
 	var that = this;
 	 
-	if (typeof arguments === 'object') {
-		args = arguments;
+	if (typeof args === 'object') {
+		args = args;
 	}
 	
 	var className = (args['className']) ? args['className'] : "GenericSlider";
@@ -43,7 +43,7 @@ utils.gui.GenericSlider = function (arguments) {
 			'height' : '100%',
 			'left' : 0,
 			'top' : 0,	
-			'backgroundColor' : 'rgb(255,255,255)',		
+			'backgroundColor' : 'rgb(255,255,255)'		
 		}, args['widgetCSS']);
 
 		args['thumbCSS'] = utils.dom.mergeArgs({
@@ -51,7 +51,7 @@ utils.gui.GenericSlider = function (arguments) {
 			'top' : 0,
 			'height' : 10,
 			'width': args['widgetCSS']['width'],
-			'backgroundColor': "rgb(225, 225, 225)",				
+			'backgroundColor': "rgb(225, 225, 225)"				
 		}, args['thumbCSS']);
 		
 		args['trackCSS'] = utils.dom.mergeArgs({
@@ -60,7 +60,7 @@ utils.gui.GenericSlider = function (arguments) {
 			'height' : '100%',
 			'left': '30%',
 			'borderRadius' : 3,
-			'backgroundColor' : 'rgba(100,100,100,0)',				
+			'backgroundColor' : 'rgba(100,100,100,0)'				
 		}, args['trackCSS']);
 		
 	}
@@ -93,7 +93,7 @@ utils.gui.GenericSlider = function (arguments) {
 			'height' : '40%',
 			'top': '30%',
 			'borderRadius' : 3,
-			'backgroundColor' : 'rgba(100,100,100,0)',			
+			'backgroundColor' : 'rgba(100,100,100,0)'			
 		}, args['trackCSS']);
 	}
 	
@@ -187,4 +187,4 @@ utils.gui.GenericSlider = function (arguments) {
 
 }
 
-goog.inherits(utils.gui.GenericSlider, goog.ui.Slider);
+goog.inherits(GenericSlider, goog.ui.Slider);

@@ -1,5 +1,4 @@
-goog.require('goog.ui.Component');
-goog.require('goog.dom');
+
 
 ModalOnload = function () {
 

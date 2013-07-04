@@ -6,13 +6,13 @@ goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
 
-goog.require(GLOBALS.classNames.XVWidget);
-goog.require(GLOBALS.classNames.Viewer);
+goog.require('XVWidget');
+goog.require('Viewer');
 
-goog.provide(GLOBALS.classNames.Modal);
+goog.provide('Modal');
 
 
-var Modal = function (args) {
+Modal = function (args) {
 
 	var that = this;
 	utils.oo.init(this, this.defaultArgs, args, function () {});
@@ -149,7 +149,7 @@ var Modal = function (args) {
 
 
 
-/*
+/**
  * @protected
  */
 Modal.prototype.defaultArgs = {

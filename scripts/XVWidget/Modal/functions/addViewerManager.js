@@ -71,7 +71,7 @@ Modal.prototype.addViewerManager = function () {
 			//	
 
 			var v = new Viewer({
-				parent: XV.modal,
+				parent: XV.modal
 			});
 			return v;
 			
@@ -382,7 +382,7 @@ Modal.prototype.addViewerManager = function () {
 				
 				case GLOBALS.classNames.ScanThumbnail:
 					newViewer = new ScanViewer({
-						parent: oldViewer.widget.parentNode,
+						parent: oldViewer.widget.parentNode
 					})
 					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
 

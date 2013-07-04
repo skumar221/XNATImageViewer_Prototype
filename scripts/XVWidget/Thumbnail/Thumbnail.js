@@ -8,11 +8,11 @@
 goog.require('goog.fx.DragDrop');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.array');
-goog.require(GLOBALS.classNames.XVWidget);
+goog.require('XVWidget');
 
 
 
-goog.provide(GLOBALS.classNames.Thumbnail);
+goog.provide('Thumbnail');
 
 
 
@@ -182,7 +182,7 @@ Thumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	
 	var elt = utils.dom.makeElement("canvas", this.widget, idAppend, utils.dom.mergeArgs(this.args.ThumbnailImageCSS,{
 		top: GLOBALS.ThumbnailImageMarginY,
-		left: GLOBALS.ThumbnailImageMarginX,
+		left: GLOBALS.ThumbnailImageMarginX
 		 //color: "rgb(255,255,255)"
 	}));
 
@@ -215,16 +215,16 @@ Thumbnail.prototype.addHoverMethods = function () {
 		
 		var hText = (that.isActive_) ? that.args.textHighlight : that.args.textDefault;
 		utils.css.setCSS(that.TextElement, {
-			color: hText,
+			color: hText
 		})		
 
 		
 		utils.css.setCSS(that.ThumbnailCanvas, {
-			borderColor: hText,
+			borderColor: hText
 		})	
 		
 		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgDefault,
+			backgroundColor: that.args.bgDefault
 		})			
 	}
 	
@@ -233,16 +233,16 @@ Thumbnail.prototype.addHoverMethods = function () {
 	this.hoverMethods.highlight = function() {
 
 		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgHighlight,
+			backgroundColor: that.args.bgHighlight
 		})			
 
 
 		utils.css.setCSS(that.TextElement, {
-			color: that.args.textHighlight,
+			color: that.args.textHighlight
 		})	
 		
 		utils.css.setCSS(that.ThumbnailCanvas, {
-			borderColor: that.args.textHighlight,
+			borderColor: that.args.textHighlight
 		})			
 	}
 	

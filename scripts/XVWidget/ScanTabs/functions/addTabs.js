@@ -39,7 +39,7 @@ ScanTabs.prototype.addTabs = function() {
 		top: GLOBALS.minScanTabHeight -1,
 		color: 'white',
 		fontFamily: GLOBALS.fontFamily,
-		backgroundColor: 'rgb(0,0,0)',
+		backgroundColor: 'rgb(0,0,0)'
 	}
 
 	
@@ -59,7 +59,7 @@ ScanTabs.prototype.addTabs = function() {
 		var tab = utils.dom.makeElement("div", 
 			that.widget, "Tab", 
 			utils.dom.mergeArgs(tabCSS, {
-			left: GLOBALS.scanTabLabelWidth * i + i*3, 
+			left: GLOBALS.scanTabLabelWidth * i + i*3
 		}));
 		tab.title = title;
 		

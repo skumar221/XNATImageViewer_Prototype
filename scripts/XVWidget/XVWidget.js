@@ -1,6 +1,6 @@
 
 
-goog.provide(GLOBALS.classNames.XVWidget);
+goog.provide('XVWidget');
 
 /**
  * @constructor

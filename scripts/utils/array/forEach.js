@@ -1,4 +1,4 @@
-goog.require('goog.array')
+goog.provide('goog.array')
 
 
 utils.array.forEach = function (arr, loopFcn) {

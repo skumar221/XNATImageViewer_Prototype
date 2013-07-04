@@ -1,5 +1,5 @@
-goog.require( 'goog.events' );
-goog.require( 'goog.net.ImageLoader' );
+goog.provide( 'goog.events' );
+goog.provide( 'goog.net.ImageLoader' );
 
 Thumbnail.prototype.loadFramesToDOM = function (args) {
 

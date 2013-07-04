@@ -16,6 +16,8 @@
 		goog.require('goog.ui.Slider'); 
 		goog.require('goog.events.MouseWheelHandler');
 		goog.require('goog.fx.DragDrop');
+goog.require('goog.fx.DragDropGroup');
+goog.require('goog.array');
 
 	</script>
 	
@@ -70,7 +72,6 @@
 	<script src="./scripts/XVWidget/SliderLinker/SliderLinker.js"></script>
 	<script src="./scripts/XVWidget/SliderLinker/functions/addClearAllPopup.js"></script>
 	<script src="./scripts/XVWidget/SliderLinker/functions/addLinkMenuPopup.js"></script>
-	<script src="./scripts/XVWidget/SliderLinker/functions/setViewerClickListen.js"></script>
 	
 
 	<script src="./scripts/XVWidget/GLOBALS.js"></script>
@@ -105,7 +106,6 @@
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addLinkMenu.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addViewPlaneMenu.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/populateData.js"></script>
-	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/setDraggable_jQuery.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addAdjustSliders.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addFrameSlider.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/linkContentDividerToScanTabs.js"></script>
@@ -139,13 +139,11 @@
 	<script src="./scripts/XVWidget/Modal/functions/addScrollGallery.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ThumbnailDragAndDrop.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ViewerDragAndDrop.js"></script>
-	<script src="./scripts/XVWidget/Modal/functions/setViewerToThumb.js"></script>
 	<script src="./scripts/XVWidget/Modal/ModalOnload.js"></script>
 
 
 </head>
-<body onload = "ModalOnload()"> 
-	</body>
+<body onload = "ModalOnload()"> </body>
 
 
 

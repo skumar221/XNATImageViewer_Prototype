@@ -1,4 +1,4 @@
-/*
+/**
  * @type {function()}
  * @protected
  */
@@ -111,7 +111,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			var targPos = utils.css.dims(event.dragSourceItem.element);
 			var newPos = {
 				top: targPos.top - relPos.y,
-				left: targPos.left - relPos.x,
+				left: targPos.left - relPos.x
 			}
 			var anim = new goog.fx.dom.Slide(event.dragSourceItem.element, 
 											 [newPos.left, newPos.top], 

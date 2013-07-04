@@ -2,12 +2,11 @@
 //  Init
 //	
 //******************************************************
-goog.require('goog.fx.DragDrop');
-goog.require('goog.fx.DragDropGroup');
-goog.require('goog.array');
+goog.provide('goog.fx.DragDrop');
+goog.provide('goog.fx.DragDropGroup');
 
-goog.require(GLOBALS.classNames.XVWidget);
-goog.provide(GLOBALS.classNames.Viewer);
+goog.require('XVWidget');
+goog.provide('Viewer');
 
 /**
  * @constructor
@@ -52,7 +51,7 @@ goog.inherits(Viewer, goog.fx.DragDrop);
 
 
 
-/*
+/**
  * @type {object}
  * @protected
  */
@@ -70,7 +69,7 @@ Viewer.prototype.defaultArgs = {
 	 	overflow: "hidden",
 	 	"overflow-x": "visible",
 	 	"overflow-y": "visible"
-	},
+	}
 }
 
 
@@ -94,7 +93,7 @@ Viewer.prototype.updateCSS = function(args) {
 		height: this.widgetDims.height,
 		top: this.widgetDims.top,
 		left: this.widgetDims.left,
-		overflow: "hidden",
+		overflow: "hidden"
 		
 	}, args));
 	

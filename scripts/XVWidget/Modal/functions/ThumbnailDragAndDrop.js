@@ -1,4 +1,4 @@
-/*
+/**
  * @type {function()}
  * @protected
  */
@@ -6,7 +6,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	var that = this;
 	
-	/*
+	/**
 	 * @type {Object.<string, function>}
 	 * @protected
 	 */
@@ -73,7 +73,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	
 	
-	/*
+	/**
 	 * @type {function(goog.ui.event)}
 	 */	
 	this.thumbnailDragDrop['dragStart'] = function(event) {
@@ -90,7 +90,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 }
 
 
-/*
+/**
  * @type {function()}
  * @protected
  */

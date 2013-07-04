@@ -3,8 +3,8 @@
 //
 //******************************************************
 
-goog.require(GLOBALS.classNames.XVWidget);
-goog.provide(GLOBALS.classNames.ContentDivider);
+goog.require('XVWidget');
+goog.provide('ContentDivider');
 /**
  * @constructor
  * @param {Object=}
@@ -30,7 +30,7 @@ ContentDivider = function (args) {
 		this.args.className + "Container", {
 		position: "absolute",
 		//backgroundColor: "rgba(255,0,0,.5)",
-		"pointer-events": "none",
+		"pointer-events": "none"
 	});
 
 

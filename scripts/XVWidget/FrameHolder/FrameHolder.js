@@ -6,7 +6,7 @@
 //  Init
 //
 //******************************************************
-goog.require(GLOBALS.classNames.XVWidget);
+goog.require('XVWidget');
 /**
  * @constructor
  * @extends {XVWidget}
@@ -77,7 +77,7 @@ goog.inherits(FrameHolder, XVWidget);
 
 
 
-/*
+/**
  * @type {object}
  * @protected
  */

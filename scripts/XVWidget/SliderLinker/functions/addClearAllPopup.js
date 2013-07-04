@@ -8,7 +8,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	
 	var b = new utils.gui.DialogBox(utils.dom.mergeArgs(that.popupArgs, {	  	
 		buttons: ["Yes", "Cancel"],
-		message: messageVal,
+		message: messageVal
   	}));
   	
 	var popup = b.widget();		

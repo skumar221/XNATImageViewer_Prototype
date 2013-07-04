@@ -1,14 +1,14 @@
-goog.provide('FrameSlider');
-goog.require('utils.gui.GenericSlider'); 
 
+goog.require('GenericSlider'); 
+goog.provide('FrameSlider');
 
 /**
  * @constructor
- * @extends {utils.gui.GenericSlider}
+ * @extends {GenericSlider}
  */
-FrameSlider = function (arguments) {	
+FrameSlider = function (args) {	
 
-	goog.base(this, arguments);	
+	goog.base(this, args);	
 
 	var that = this;
 	
@@ -84,7 +84,7 @@ FrameSlider = function (arguments) {
   	
 
 }
-goog.inherits(FrameSlider, utils.gui.GenericSlider);
+goog.inherits(FrameSlider, GenericSlider);
 
 
 FrameSlider.prototype.updateCSS = function(args) {

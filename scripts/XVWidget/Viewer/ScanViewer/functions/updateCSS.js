@@ -73,7 +73,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	this.ScanTabs.updateCSS({
 		left: 0,//marginLeft,
 		top: scanTabTop,
-		width: '100%',
+		width: '100%'
 	});
 	
 
@@ -83,7 +83,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	// FRAME SLIDER
 	//----------------------------------	
    this.FrameSlider.updateCSS({ 
- 		top : sliderTop,
+ 		top : sliderTop
     })
 	
 	

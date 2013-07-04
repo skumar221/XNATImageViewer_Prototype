@@ -9,7 +9,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	var messageVal = (typeof message === 'undefined') ?  "Select viewers to link. Click 'Done' when finished." : message;	
 	var b = new utils.gui.DialogBox(utils.dom.mergeArgs(that.popupArgs, {	  	
 		buttons: ["DONE", "Cancel"],
-		message: messageVal,
+		message: messageVal
   	}));
 	var popup = b.widget();	
 

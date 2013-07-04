@@ -1,7 +1,5 @@
-goog.require('goog.dom');
-goog.require('goog.fx');
-goog.require('goog.fx.dom');
-goog.require('goog.fx.AnimationQueue');
+goog.provide('goog.fx.dom');
+goog.provide('goog.fx.AnimationQueue');
 
 
 Modal.prototype.animateModal  = function (callback) {

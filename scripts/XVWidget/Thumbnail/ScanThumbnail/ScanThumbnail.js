@@ -5,11 +5,11 @@
 //*******************************************************
 
 goog.require('goog.array');
-goog.require(GLOBALS.classNames.Thumbnail);
+goog.require('Thumbnail');
 
 
 
-goog.provide(GLOBALS.classNames.ScanThumbnail);
+goog.provide('ScanThumbnail');
 
 
 

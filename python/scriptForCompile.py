@@ -43,7 +43,7 @@ def replaceInFile(src, findStr, replaceStr):
         
 def main():
     
-    indexFile = "../index.html"
+    indexFile = "../index-uncompressed.html"
 
 
     textArr = [];

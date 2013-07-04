@@ -1,11 +1,11 @@
-goog.require('goog.ui.TabPane');
+goog.provide('goog.ui.TabPane');
 
 //******************************************************
 //  Init
 //
 //******************************************************
-goog.require(GLOBALS.classNames.XVWidget);
-goog.provide(GLOBALS.classNames.ScanTabs);
+goog.require('XVWidget');
+goog.provide('ScanTabs');
 /**
  * @constructor
  * @extends {XVWidget}
@@ -111,7 +111,7 @@ ScanTabs.prototype.defaultArgs = {
 		height: 300,
 		width: '100%',
 		borderWidth: 1,
-		backgroundColor: GLOBALS.ContentDividerColor,
+		backgroundColor: GLOBALS.ContentDividerColor
 	}
 }
 
@@ -183,18 +183,13 @@ ScanTabs.prototype.setActive = function (activeTabNum) {
 	var deselectColor = "rgb(80,80,80)";
 	var black = "rgb(0,0,0)";
 	var border, zIndex;//, disp;
-	
-	/**
-	 * @type {Object}
-	 */
+
 	var selectedBorder = {
-		"border" : "solid 1px " + setActiveColor,
+		"border" : "solid 1px " + setActiveColor
 	}
-	/**
-	 * @type {Object}
-	 */	
+
 	var deselectedBorder = {
-		"border" : "solid 1px " + deselectColor,
+		"border" : "solid 1px " + deselectColor
 	}	
 
 
@@ -236,7 +231,7 @@ ScanTabs.prototype.setActive = function (activeTabNum) {
 		//
 
 		utils.css.setCSS(that.getTab(i), utils.dom.mergeArgs(border, {
-			zIndex: zIndex,
+			zIndex: zIndex
 		}));
 
 

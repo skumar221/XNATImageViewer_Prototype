@@ -2,9 +2,9 @@
 //  Init
 //	
 //******************************************************
-goog.require(GLOBALS.classNames.Viewer);
+goog.require('Viewer');
 
-goog.provide(GLOBALS.classNames.ScanViewer);
+goog.provide('ScanViewer');
 /**
  * @constructor
  * @extends {Viewer}
@@ -159,7 +159,7 @@ goog.inherits(ScanViewer, Viewer);
 
 
 
-/*
+/**
  * @type {object}
  * @protected
  */
