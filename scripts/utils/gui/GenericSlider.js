@@ -3,14 +3,14 @@
 //******************************************************
 //goog.require('goog.ui.Component');
 ////////@extends goog.ui.Slider
-goog.provide('GenericSlider');	
+goog.provide('utils.gui.GenericSlider');	
 goog.require('goog.ui.Slider');
 
 /**
  * @constructor
  * @extends {goog.ui.Slider}
  */
-GenericSlider = function (args) {	 
+utils.gui.GenericSlider = function (args) {	 
 
 
 	goog.ui.Slider.call(this)
@@ -178,4 +178,5 @@ GenericSlider = function (args) {
 	
 
 }
-goog.inherits(GenericSlider, goog.ui.Slider);			 
+goog.inherits(utils.gui.GenericSlider, goog.ui.Slider);		
+goog.exportSymbol('utils.gui.GenericSlider', utils.gui.GenericSlider);	 

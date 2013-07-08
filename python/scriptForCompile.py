@@ -58,12 +58,16 @@ def main():
                 print scr
                 textArr.append(scr)
 
-    cmdStr = "java -jar ./compiler.jar "
-    endStr = "--js_output_file ../XNATImageViewerTesting/XMIV-min.js"
+    startStr = "python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=scripts/utils/  "
+    midStr = ""
+    endStr = "--output_mode=compiled --compiler_jar=../GoogleClosure/compiler.jar --output_file=utils-compiled.js"
+    advancedStr = '--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS"'
 
     for t in textArr:
-        cmdStr += "--js=" + t.replace("./", "../XNATImageViewerTesting/") + " "
+        if ("utils" in t and not "jquery" in t):
+            midStr += "--input=" + t.replace("./", "") + " "
 
-    print cmdStr + endStr
+    print midStr    
+    print startStr + midStr + endStr
 if __name__ == "__main__":
     main()

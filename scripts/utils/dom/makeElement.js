@@ -1,6 +1,7 @@
 //******************************************************
 //  Returns an element based on the given parameters.
 //******************************************************
+goog.provide('utils.dom.makeElement');
 
 utils.dom.makeElement = function (type, parent, className, css) {
 	
@@ -32,3 +33,5 @@ utils.dom.makeElement = function (type, parent, className, css) {
 	
   return e;
 }
+
+goog.exportSymbol('utils.dom.makeElement', utils.dom.makeElement);

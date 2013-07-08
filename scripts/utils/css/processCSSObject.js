@@ -2,6 +2,8 @@
 //  REturns total width of object including borders
 //
 //******************************************************
+goog.provide('utils.css.processCSSObject');
+
 utils.css.processCSSObject = function (obj) {
 	
 	var pxConvertArr = [
@@ -35,3 +37,5 @@ utils.css.processCSSObject = function (obj) {
 	
 	return obj
 }
+
+goog.exportSymbol('utils.css.processCSSObject', utils.css.processCSSObject);

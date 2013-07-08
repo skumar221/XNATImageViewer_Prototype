@@ -3,8 +3,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>XNAT Image Viewer (Prototype)</title>
+  <title>INDEX</title>
+  
 
+	<script type="text/javascript" src="./scripts/utils/thirdparty/jquery/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="closure-library/closure/goog/base.js"></script>
+
+	<script type="text/javascript" src="./utils-compiled.js"></script>	
+
+	<script type="text/javascript" src="./scripts/XVWidget/includes.js"></script>
+	
 	<script src="./demoscans/SCAN_07_Defaced.js"></script>
 	<script src="./demoscans/SCAN_08_Defaced.js"></script>
 	<script src="./demoscans/SCAN_09_Defaced.js"></script>
@@ -17,19 +25,88 @@
 	<script src="./demoscans/SCAN_24_Defaced.js"></script>	
 	<script src="./demoscans/demoScanData.js"></script>	
 
+	<script src="./scripts/imaging/imageProcessingFunctions.js"></script>
 
+
+
+	<script src="./scripts/XVWidget/FrameSlider/FrameSlider.js"></script>
+	<script src="./scripts/XVWidget/SliderLinker/SliderLinker.js"></script>
+	<script src="./scripts/XVWidget/SliderLinker/functions/addClearAllPopup.js"></script>
+	<script src="./scripts/XVWidget/SliderLinker/functions/addLinkMenuPopup.js"></script>
+	
+
+	<script src="./scripts/XVWidget/GLOBALS.js"></script>
+		
+	<script src="./scripts/XVWidget/XVWidget.js"></script>
+	
+
+	<script src="./scripts/XVWidget/ContentDivider/ContentDivider.js"></script>
+	
+
+	<script src="./scripts/XVWidget/FrameHolder/FrameHolder.js"></script>
+	<script src="./scripts/XVWidget/FrameHolder/functions/loadFrames.js"></script>
+	<script src="./scripts/XVWidget/FrameHolder/functions/updateCSS.js"></script>
+	<script src="./scripts/XVWidget/FrameHolder/functions/loadThumbnail.js"></script>
+	<script src="./scripts/XVWidget/FrameHolder/functions/loadFramesByViewPlane.js"></script>
+	
+	
+	
+	<script src="./scripts/XVWidget/ScanTabs/ScanTabs.js"></script>
+	<script src="./scripts/XVWidget/ScanTabs/functions/addTabs.js"></script>
+	
+	<script src="./scripts/XVWidget/Thumbnail/Thumbnail.js"></script>
+	
+	
+	<script src="./scripts/XVWidget/Thumbnail/ScanThumbnail/ScanThumbnail.js"></script>
+	<script src="./scripts/XVWidget/Thumbnail/ScanThumbnail/functions/loadFramesToDOM.js"></script>
+	
+	
+	<script src="./scripts/XVWidget/Viewer/Viewer.js"></script>
+	
+	
+
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/ScanViewer.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addLinkMenu.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addViewPlaneMenu.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/populateData.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addAdjustSliders.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addFrameSlider.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/linkContentDividerToScanTabs.js"></script>
+	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/updateCSS.js"></script>
+	
+	<script src="./scripts/XVWidget/ScrollGallery/ScrollGallery.js"></script>
+	
 	
 
 
-
+	<script src="./scripts/XVWidget/Modal/Modal.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/animateModal.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/destroy.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/addColumnMenu.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/addRowMenu.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/addViewerManager.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/manageActiveThumbs.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/modalDims.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/updateCSS.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/addScrollGallery.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/ThumbnailDragAndDrop.js"></script>
+	<script src="./scripts/XVWidget/Modal/functions/ViewerDragAndDrop.js"></script>
+	<script src="./scripts/xmiv.start.js"></script>	
+	
+	
 </head>
-<body onload = "ModalOnload()"> 
-	</body>
-
-	<script type="text/javascript" src="./XMIV-min.js"></script>
-	<script src="./scripts/XVWidget/Modal/ModalOnload.js"></script>	 
 
 
+
+	
+<body> 
+
+<script>
+      xmiv.start();
+</script>
+
+	
+</body>
 
 
 

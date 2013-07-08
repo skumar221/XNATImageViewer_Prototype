@@ -1,3 +1,5 @@
+goog.provide('utils.convert.remap1D');
+
 utils.convert.remap1D = function (n, dold, dnew) {
 
 
@@ -58,5 +60,5 @@ utils.convert.remap1D = function (n, dold, dnew) {
 	};
 }
 
-
+goog.exportSymbol('utils.convert.remap1D', utils.convert.remap1D);
 

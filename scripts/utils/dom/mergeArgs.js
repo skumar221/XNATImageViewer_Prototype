@@ -1,6 +1,9 @@
 //******************************************************
 //  Merges two javaScript objects, giving obj2 the priority
 //******************************************************
+goog.provide('utils.dom.mergeArgs');
+
+
 utils.dom.mergeArgs = function (obj1, obj2, recursionDepth) {
 	var recDepth = (recursionDepth) ? recursionDepth : 2; 
 	// obj2 gets the priority
@@ -24,3 +27,5 @@ utils.dom.mergeArgs = function (obj1, obj2, recursionDepth) {
 
     return obj3;
 }
+
+goog.exportSymbol('utils.dom.mergeArgs', utils.dom.mergeArgs);

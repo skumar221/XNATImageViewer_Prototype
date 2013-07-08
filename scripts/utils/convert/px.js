@@ -1,3 +1,5 @@
+goog.provide('utils.convert.px', utils.convert.px);
+
 utils.convert.px = function (args) {
 	if (args instanceof Array) {
 		return args.map(function (a) {return a.toString() + 'px'});
@@ -9,3 +11,5 @@ utils.convert.px = function (args) {
 		}
 	}
 }
+
+goog.exportSymbol('utils.convert.px', utils.convert.px);

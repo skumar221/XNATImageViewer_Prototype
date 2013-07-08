@@ -53,7 +53,7 @@ ScrollGallery = function (args) {
 	// THE SLIDER
 	//-------------------------------	
 							 
-	this.ContentSlider = new GenericSlider({
+	this.ContentSlider = new utils.gui.GenericSlider({
 		parent: this.widget,
 		className: "ContentSlider",
 		'orientation' : 'vertical',

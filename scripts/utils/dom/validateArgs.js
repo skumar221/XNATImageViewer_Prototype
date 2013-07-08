@@ -2,6 +2,7 @@
 //  Determines if there's an argument match between template and args
 //  with template being the priority
 //******************************************************
+goog.provide('utils.dom.validateArgs');
 utils.dom.validateArgs = function (originString, templateArgs, args, callback) {
 	
 	var errorStr = "A " + originString + " has invalid arguments:";
@@ -21,3 +22,5 @@ utils.dom.validateArgs = function (originString, templateArgs, args, callback) {
 
 	if (callback) { callback() };
 }
+
+goog.exportSymbol('utils.dom.validateArgs', utils.dom.validateArgs)

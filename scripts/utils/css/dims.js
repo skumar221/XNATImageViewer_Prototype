@@ -1,6 +1,7 @@
 //******************************************************
 //  
 //******************************************************
+goog.provide('utils.css.dims')
 
 utils.css.dims = function (elt, arg1) {
 	
@@ -61,3 +62,5 @@ utils.css.dims = function (elt, arg1) {
 	
 	}
 }
+
+goog.exportSymbol('utils.css.dims', utils.css.dims);

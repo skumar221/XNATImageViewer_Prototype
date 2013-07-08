@@ -1,6 +1,7 @@
 //******************************************************
 //  
 //******************************************************
+goog.provide('utils.dom.getMouseXY');
 utils.dom.getMouseXY = function (e) {
     if (navigator.appName === 'Microsoft Internet Explorer') {
       tempX = event.clientX + document.body.scrollLeft;
@@ -16,3 +17,4 @@ utils.dom.getMouseXY = function (e) {
 
     return {x:tempX, y:tempY};
 }
+goog.exportSymbol('utils.dom.getMouseXY', utils.dom.getMouseXY);

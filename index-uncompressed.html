@@ -6,10 +6,10 @@
   <title>XNAT Image Viewer (Prototype)</title>
   
 
-	<script type="text/javascript" src="./scripts/thirdparty/jquery/jquery-1.10.1.min.js"></script>
-	<script type="text/javascript" src="./scripts/thirdparty/closure-library/closure/goog/base.js"></script>
+	<script type="text/javascript" src="./scripts/utils/thirdparty/jquery/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="closure-library/closure/goog/base.js"></script>
 
-
+<script src="./scripts/utils/utils.js"></script>	
 
 
 	<script type="text/javascript" src="./scripts/utils/includes.js"></script>
@@ -26,15 +26,8 @@
 	<script src="./demoscans/SCAN_21_Defaced.js"></script>
 	<script src="./demoscans/SCAN_24_Defaced.js"></script>	
 	<script src="./demoscans/demoScanData.js"></script>	
-</head>
-
-
 
 	
-<body onload = "ModalOnload()"> 
-
-	
-	<script src="./scripts/utils/utils.js"></script>		
 	<script src="./scripts/utils/globals/globals.js"></script>
 	
 	
@@ -48,7 +41,7 @@
 	
 	<script src="./scripts/utils/css/dims.js"></script>
 	<script src="./scripts/utils/css/absolutePosition.js"></script>
-	<script src="./scripts/utils/css/setCSS_jquery.js"></script>
+	<script src="./scripts/utils/css/setCSS.js"></script>
 	<script src="./scripts/utils/css/totalHeight.js"></script>
 	<script src="./scripts/utils/css/totalWidth.js"></script>
 	<script src="./scripts/utils/css/processCSSObject.js"></script>
@@ -143,7 +136,20 @@
 	<script src="./scripts/XVWidget/Modal/functions/addScrollGallery.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ThumbnailDragAndDrop.js"></script>
 	<script src="./scripts/XVWidget/Modal/functions/ViewerDragAndDrop.js"></script>
-	<script src="./scripts/XVWidget/Modal/ModalOnload.js"></script>	
+	<script src="./scripts/xmiv.start.js"></script>	
+	
+	
+</head>
+
+
+
+	
+<body> 
+
+<script>
+      xmiv.start();
+</script>
+
 	
 </body>
 

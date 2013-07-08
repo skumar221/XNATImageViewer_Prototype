@@ -1,3 +1,5 @@
+goog.provide('utils.dom.addCallbackManager');
+
 utils.dom.addCallbackManager = function (obj) {
 	
 	obj.callbacks = {}
@@ -26,3 +28,5 @@ utils.dom.addCallbackManager = function (obj) {
 	}
 
 }
+
+goog.exportSymbol('utils.dom.addCallbackManager', utils.dom.addCallbackManager);

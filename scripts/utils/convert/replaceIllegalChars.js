@@ -1,3 +1,5 @@
+goog.provide('utils.convert.replaceIllegalChars')
+
 utils.convert.replaceIllegalChars = function (value, replaceStr) {
 	
 	if (typeof value !== 'string') {
@@ -13,3 +15,5 @@ utils.convert.replaceIllegalChars = function (value, replaceStr) {
 	return replaced;
 	
 }
+
+goog.exportSymbol('utils.convert.replaceIllegalChars', utils.convert.replaceIllegalChars);
