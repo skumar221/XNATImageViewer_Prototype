@@ -1,10 +1,12 @@
 //******************************************************
 //  
 //******************************************************
-//goog.require('goog.ui.Component');
-////////@extends goog.ui.Slider
-goog.provide('utils.gui.GenericSlider');	
+
+goog.require('goog.dom');
+goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
+
+goog.provide('utils.gui.GenericSlider');	
 
 /**
  * @constructor
@@ -21,7 +23,21 @@ utils.gui.GenericSlider = function (args) {
 	var className = (args_['className']) ? args_['className'] : "GenericSlider";
 	this.id = className + "_" + utils.dom.uniqueId();
 
-
+	/**
+	 * @expose
+	 * @return {number}
+	 */	
+	this.getMin = function() {
+		return this.getMinimum();
+	}
+	
+	/**
+	 * @expose
+	 * @return {number}
+	 */	
+	this.getMax = function() {
+		return this.getMaximum();
+	}
 	
 	//----------------------------
 	// Set CSS - VERTICAL ORIENTATION
@@ -99,6 +115,10 @@ utils.gui.GenericSlider = function (args) {
 	 * @private
 	 */
 	this.widget_ = utils.dom.makeElement('div', args_['parent'], args_['className'], args_['widgetCSS']);
+
+	/**
+	 * @expose
+	 */	
 	this.getWidget = function () {
 		return this.widget_;
 	}
@@ -111,6 +131,10 @@ utils.gui.GenericSlider = function (args) {
 	 * @private
 	 */	
 	this.track_ = utils.dom.makeElement("div", this.widget_, "SliderTrack", args_['trackCSS']);
+
+	/**
+	 * @expose
+	 */	
 	this.getTrack = function () {
 		return this.track_;
 	}			
@@ -126,6 +150,9 @@ utils.gui.GenericSlider = function (args) {
 		if (child.className === 'goog-slider-thumb') {
 			utils.css.setCSS(child, args_['thumbCSS']);
 			
+			/**
+			 * @expose
+			 */	
 			that.getThumb = function () {
 				return child;
 				
@@ -135,40 +162,14 @@ utils.gui.GenericSlider = function (args) {
 	
 
 
-	this.bindToMouseWheel = function (element) {
-		
-		function handleMouseWheel(e) {
-			
-		  var addVal = Math.round(that.getValue() + e.deltaY / 3);
-		  that.setValue(addVal);
-		  e.preventDefault();	
-		  
-		}
-		//
-		// Bind mousewheel scrolling to slider	
-		//
-		var MouseWheelHandler = goog.events.MouseWheelHandler;
-		var MOUSEWHEEL = MouseWheelHandler.EventType.MOUSEWHEEL;
-		var mwh = new MouseWheelHandler(element);
-		goog.events.listen(mwh, MOUSEWHEEL, handleMouseWheel);		
-	}
-	
-	
-	
-	
-	this.addSlideCallback = function (callback, args_) {
-		//console.log("callback: ", callback.toString())
-		if (callback) {
 
-			that.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
-				event.stopPropagation();
-				utils.dom.stopPropagation(event);
-				callback(that, args_);
-			});		
-		}	
+	
+	/*
+	 * @expose
+	 */
+	this.enable = function(bool) {
+		this.superClass_.setEnabled.call(this, 'setEnabled', bool);
 	}
-	
-	
 
 	this.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
 		event.stopPropagation();
@@ -180,3 +181,46 @@ utils.gui.GenericSlider = function (args) {
 }
 goog.inherits(utils.gui.GenericSlider, goog.ui.Slider);		
 goog.exportSymbol('utils.gui.GenericSlider', utils.gui.GenericSlider);	 
+
+/**
+ * @expose
+ * @param {Element}
+ */
+utils.gui.GenericSlider.prototype.bindToMouseWheel = function (element) {
+	
+	var that = this;
+	function handleMouseWheel(e) {
+		
+	  var addVal = Math.round(that.getValue() + e.deltaY / 3);
+	  that.setValue(addVal);
+	  e.preventDefault();	
+	  
+	}
+	//
+	// Bind mousewheel scrolling to slider	
+	//
+	var MouseWheelHandler = goog.events.MouseWheelHandler;
+	var MOUSEWHEEL = MouseWheelHandler.EventType.MOUSEWHEEL;
+	var mwh = new MouseWheelHandler(element);
+	goog.events.listen(mwh, MOUSEWHEEL, handleMouseWheel);		
+}
+
+
+
+/**
+ * @expose
+ * @param {Function} callback
+ * @param {Object} args_
+ */
+utils.gui.GenericSlider.prototype.addSlideCallback = function (callback, args_) {
+	//console.log("callback: ", callback.toString())
+	var that = this;
+	if (callback) {
+
+		that.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
+			event.stopPropagation();
+			utils.dom.stopPropagation(event);
+			callback(that, args_);
+		});		
+	}	
+}

@@ -1,6 +1,9 @@
 //******************************************************
 //  
 //******************************************************
+
+goog.provide('utils.gui.DialogBox');
+
 /**
  * @constructor
  */
@@ -33,6 +36,10 @@ utils.gui.DialogBox = function (args) {
 	// WIDGET	
 	//-----------------------
 	var widget = utils.dom.makeElement("div", this.currArgs().parent, this.currArgs().className, this.currArgs().widgetCSS);
+	/**
+	 * @expose
+	 * @return {Element}
+	 */
 	this.widget = function () {return widget};
 
 
@@ -78,23 +85,30 @@ utils.gui.DialogBox = function (args) {
 	message.innerHTML = this.currArgs().message;
 
 	
-	
+	/**
+	 * @expose
+	 */	
 	this.addStandardButton = function () {
 		
 	}
 	
-	
+	/**
+	 * @expose
+	 */		
 	this.addStandardButton = function () {
 		
 	}
 	
-	
+	/**
+	 * @expose
+	 */		
 	this.addButton = function () {
 		
 	}
 	
 
 	/**
+	 * @expose
 	 * @param {Object=}
 	 */
 	this.updateCSS = function (args) {
@@ -145,6 +159,7 @@ utils.gui.DialogBox = function (args) {
 	//  BUTTON CALLBACKS
 	//----------------------------
 	/**
+	 * @expose
 	 * @param {string}
 	 * @param {function}
 	 */
@@ -185,7 +200,7 @@ utils.gui.DialogBox = function (args) {
 	
 	this.updateCSS();
 }
-
+goog.exportSymbol('utils.gui.DialogBox', utils.gui.DialogBox);
 
 
 /**

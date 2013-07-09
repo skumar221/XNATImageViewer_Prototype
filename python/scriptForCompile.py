@@ -44,12 +44,17 @@ def replaceInFile(src, findStr, replaceStr):
 def main():
     
     indexFile = "../index-uncompressed.html"
+    namespaceDir = "../scripts/utils"
 
 
     textArr = [];
+    nameSpaces = [];
 
+   
+    #
+    # Parse index-uncompressed for scripts
+    #
     lines = [line for line in open(indexFile)]
-    
     for l in lines:
         if (".js" in l):
             if (not "testscans" in l):
@@ -58,6 +63,26 @@ def main():
                 print scr
                 textArr.append(scr)
 
+
+    #
+    # Parse the namespace dir for namespaces
+    #
+    for root, dirs, files in os.walk(namespaceDir):
+       for f in files:
+           if f.endswith('.js'):
+               lines = [line for line in open(os.path.join(root, f))]
+               for l in lines:
+                   if ("goog.exportSymbol" in l):
+                       nameSpaces.append(l.split(",")[1].split(")")[0].strip())
+    
+    
+    namespaceStr = ""
+    for n in nameSpaces:
+        namespaceStr += '--n="' + n + '" '
+    
+    print namespaceStr
+    
+    
     startStr = "python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=scripts/utils/  "
     midStr = ""
     endStr = "--output_mode=compiled --compiler_jar=../GoogleClosure/compiler.jar --output_file=utils-compiled.js"
@@ -65,9 +90,11 @@ def main():
 
     for t in textArr:
         if ("utils" in t and not "jquery" in t):
-            midStr += "--input=" + t.replace("./", "") + " "
+            midStr += "--i=" + t.replace("./", "") + " "
 
     print midStr    
-    print startStr + midStr + endStr
+    #print startStr + namespaceStr + midStr + endStr
+    print startStr + namespaceStr + endStr
+    #print startStr + '--n="utils" ' + endStr
 if __name__ == "__main__":
     main()

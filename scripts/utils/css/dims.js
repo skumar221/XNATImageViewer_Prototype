@@ -1,7 +1,9 @@
 //******************************************************
 //  
 //******************************************************
-goog.provide('utils.css.dims')
+goog.provide('utils.css.dims');
+goog.require('goog.style')
+
 
 utils.css.dims = function (elt, arg1) {
 	
@@ -13,13 +15,13 @@ utils.css.dims = function (elt, arg1) {
 		
 		switch(arg1) {
 			case 'height':
-				return elt.clientHeight || $(elt).height();
+				return elt.clientHeight;// || $(elt).height();
 			case 'width':
-				return elt.clientWidth || $(elt).width();
+				return elt.clientWidth;// || $(elt).width();
 			case 'outerHeight':
-				return $(elt).outerHeight();
+				return elt.offsetHeight;
 			case 'outerWidth':
-				return $(elt).outerWidth();
+				return elt.offsetWidth;
 			case 'offsetTop':
 				return elt.offsetTop;
 			case 'offsetLeft':
@@ -31,8 +33,14 @@ utils.css.dims = function (elt, arg1) {
 				if (!val) {
 					return utils.convert.toInt(elt.style[arg1]);
 				}
+				
+				var p = goog.style.getRelativePosition(elt, elt.parentNode);
+				var posObj = {
+					left: utils.convert.toInt(elt.style.left) || p.x,
+					top: utils.convert.toInt(elt.style.top) || p.y
+				};
 
-				return $(elt).position()[arg1];
+				return posObj[arg1];
 				//return utils.convert.toInt(elt.style[arg1]) //||  $(elt).position()[arg1];
 				//return $(elt).position()[arg1];
 		}
@@ -41,20 +49,20 @@ utils.css.dims = function (elt, arg1) {
 
 
 		var retObj = {};
-		var p = $(elt).position();
 
+		var p = goog.style.getRelativePosition(elt, elt.parentNode);
 		var posObj = {
-			left: utils.convert.toInt(elt.style.left) || p.left,
-			top: utils.convert.toInt(elt.style.top) || p.top
+			left: utils.convert.toInt(elt.style.left) || p.x,
+			top: utils.convert.toInt(elt.style.top) || p.y
 		};
+
 		retObj = utils.dom.mergeArgs(retObj, posObj);		
-		
 		retObj['left'] = posObj.left;
 		retObj['top'] = posObj.top;
 		retObj['height'] = elt.clientHeight;
 		retObj['width'] = elt.clientWidth;			
-		retObj['outerHeight'] = $(elt).outerHeight();
-		retObj['outerWidth'] = $(elt).outerWidth();
+		retObj['outerHeight'] = elt.offsetWidth;
+		retObj['outerWidth'] = elt.offsetHeight;
 		retObj['offsetTop'] = elt.offsetTop;
 		retObj['offsetLeft'] = elt.offsetLeft;	
 

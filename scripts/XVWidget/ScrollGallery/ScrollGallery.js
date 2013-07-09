@@ -69,6 +69,7 @@ ScrollGallery = function (args) {
 		}
 	});
 	
+	console.log(this.ContentSlider)	
 	this.ContentSlider.addSlideCallback(that.moveContents, that);  
 	this.ContentSlider.bindToMouseWheel(that.widget);
 	
@@ -139,7 +140,7 @@ ScrollGallery.prototype.defaultArgs = {
 ScrollGallery.prototype.moveContents = function (Slider, that) {
 
 	var widgetHeight = utils.css.dims(that.widget, 'height');
-	var beforeRange = [Slider.getMinimum(), Slider.getMaximum()];
+	var beforeRange = [Slider.getMin(), Slider.getMax()];
 	var scrollAreaHeight = 0;
 	var afterRange = [0, utils.css.dims(that.ScrollArea, 'height') - widgetHeight];
 	var thumb = Slider.getThumb();
@@ -151,7 +152,7 @@ ScrollGallery.prototype.moveContents = function (Slider, that) {
 			height: widgetHeight * (beforeRange[1] / afterRange[1])
 		});
 				
-		Slider.setEnabled(true);
+		Slider.enable(true);
 			
 		var sendVal = Math.abs(Slider.getValue() - 100);
 		var remap = utils.convert.remap1D(sendVal, beforeRange, afterRange);
@@ -169,7 +170,7 @@ ScrollGallery.prototype.moveContents = function (Slider, that) {
 		utils.css.setCSS(thumb, {
 			opacity: 0
 		});
-		Slider.setEnabled(false);
+		Slider.enable(false);
 		Slider.setValue(100);
 	}	
 }
