@@ -52,7 +52,7 @@ ScrollGallery = function (args) {
 	//-------------------------------
 	// THE SLIDER
 	//-------------------------------	
-							 
+		 
 	this.ContentSlider = new utils.gui.GenericSlider({
 		parent: this.widget,
 		className: "ContentSlider",
@@ -72,7 +72,7 @@ ScrollGallery = function (args) {
 	console.log(this.ContentSlider)	
 	this.ContentSlider.addSlideCallback(that.moveContents, that);  
 	this.ContentSlider.bindToMouseWheel(that.widget);
-	
+
 	this.updateCSS();
 }
 goog.inherits(ScrollGallery, XVWidget);

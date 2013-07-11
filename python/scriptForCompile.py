@@ -72,14 +72,17 @@ def main():
            if f.endswith('.js'):
                lines = [line for line in open(os.path.join(root, f))]
                for l in lines:
-                   if ("goog.exportSymbol" in l):
+                   if ("goog.exportSymbol" in l) and (not "//" in l):
                        nameSpaces.append(l.split(",")[1].split(")")[0].strip())
     
-    
+
     namespaceStr = ""
+
     for n in nameSpaces:
-        namespaceStr += '--n="' + n + '" '
+        if (not lookStr in n):
+            namespaceStr += '--n="' + n + '" '
     
+
     print namespaceStr
     
     

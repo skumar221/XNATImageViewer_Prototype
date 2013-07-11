@@ -10,10 +10,10 @@ utils.dom.makeElement = function (type, parent, className, css) {
 	}
 	
 	if (!parent) {
-		utils.dom.debug(parent);
-		utils.dom.debug(type);
-		utils.dom.debug(className);
-		throw Error("utils.dom.makeElement: Cannot make element without a valid parent.");
+		utils.dom.debug("utils.dom.makeElement: ", parent);
+		utils.dom.debug("utils.dom.makeElement: ", type);
+		utils.dom.debug("utils.dom.makeElement: ", className);
+		//throw Error("utils.dom.makeElement: Cannot make element without a valid parent.");
 	}
 
 	var e = document.createElement(type);
@@ -29,7 +29,7 @@ utils.dom.makeElement = function (type, parent, className, css) {
 		utils.css.setCSS(e, css);		
 	}
 	
-	parent.appendChild(e);
+	parent && parent.appendChild(e);
 	
   return e;
 }

@@ -5,6 +5,7 @@
 goog.require('goog.dom');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
+goog.require('goog.events.EventTarget')
 goog.provide('utils.gui.GenericSlider');	
 
 /**
@@ -20,6 +21,7 @@ utils.gui.GenericSlider = function (args) {
 	var args_ = (typeof args === 'object') ? args : {};
 	var that = this;	
 	var className = (args_['className']) ? args_['className'] : "GenericSlider";
+
 	this.id = className + "_" + utils.dom.uniqueId();
 
 	/**
@@ -163,10 +165,7 @@ utils.gui.GenericSlider = function (args) {
 		utils.gui.GenericSlider.superClass_.setEnabled.call(this, bool);
 	}
 
-	goog.exportProperty(goog.ui.Slider, 'addEventListener', goog.ui.Slider.addEventListener);
 	
-	
-
 }
 
 goog.inherits(utils.gui.GenericSlider, goog.ui.Slider);		
@@ -200,27 +199,25 @@ utils.gui.GenericSlider.prototype.setValue = function(a) {
    return utils.gui.GenericSlider.superClass_.setValue.call(this, a);
 };
  
+ 
+ 
 /**
  * @expose
  * @param {Element}
  */
 utils.gui.GenericSlider.prototype.bindToMouseWheel = function (element) {
-	
-	var that = this;
-	function handleMouseWheel(e) {
-		
-	  var addVal = Math.round(that.getValue() + e.deltaY / 3);
-	  that.setValue(addVal);
-	  e.preventDefault();	
-	  
-	}
 	//
 	// Bind mousewheel scrolling to slider	
-	//
-	var MouseWheelHandler = goog.events.MouseWheelHandler;
-	var MOUSEWHEEL = MouseWheelHandler.EventType.MOUSEWHEEL;
-	var mwh = new MouseWheelHandler(element);
-	goog.events.listen(mwh, MOUSEWHEEL, handleMouseWheel);		
+	//	
+	var that = this;
+	var mwh = new goog.events.MouseWheelHandler(element);
+	
+	mwh.addEventListener( 
+		goog.events.MouseWheelHandler.EventType.MOUSEWHEEL, function(e) { 
+		that.setValue(Math.round(that.getValue() 
+			+ e.deltaY / 3));
+		e.preventDefault();		
+	});		
 }
 
 
@@ -241,4 +238,3 @@ utils.gui.GenericSlider.prototype.addSlideCallback = function (callback, args_) 
 	
 }
 
-//var megaSlider = new utils.gui.GenericSlider();
