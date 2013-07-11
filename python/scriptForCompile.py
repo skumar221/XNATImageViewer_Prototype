@@ -44,7 +44,7 @@ def replaceInFile(src, findStr, replaceStr):
 def main():
     
     indexFile = "../index-uncompressed.html"
-    namespaceDir = "../scripts/utils"
+    namespaceDir = "../scripts"
 
 
     textArr = [];
@@ -79,17 +79,17 @@ def main():
     namespaceStr = ""
 
     for n in nameSpaces:
-        if (not lookStr in n):
-            namespaceStr += '--n="' + n + '" '
+        namespaceStr += '--n="' + n + '" '
     
-
+    #namespaceStr += '--n="utils.init" 'scr
+    namespaceStr += ' --i=scripts/XVWidget/Modal/functions/addScrollGallery.js '
     print namespaceStr
     
     
-    startStr = "python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=scripts/utils/  "
+    startStr = "python closure-library/closure/bin/build/closurebuilder.py --root=closure-library/ --root=scripts/ "
     midStr = ""
     endStr = "--output_mode=compiled --compiler_jar=../GoogleClosure/compiler.jar --output_file=utils-compiled.js"
-    advancedStr = '--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS"'
+    advancedStr = ' --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" '
 
     for t in textArr:
         if ("utils" in t and not "jquery" in t):
@@ -97,7 +97,7 @@ def main():
 
     print midStr    
     #print startStr + namespaceStr + midStr + endStr
-    print startStr + namespaceStr + endStr
+    print startStr + namespaceStr + advancedStr + endStr
     #print startStr + '--n="utils" ' + endStr
 if __name__ == "__main__":
     main()

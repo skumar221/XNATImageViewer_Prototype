@@ -7,6 +7,7 @@
 goog.provide('FrameHolder');
 
 goog.require('XVWidget');
+goog.require('XVGlobals');
 /**
  * @constructor
  * @extends {XVWidget}
@@ -32,7 +33,7 @@ FrameHolder = function(args) {
 	//----------------------------------
 	//	CANVAS AND CONTEXT
 	//----------------------------------
-	this.canvas = utils.dom.makeElement("canvas", this.widget, GLOBALS.classNames.FrameHolderCanvas, {
+	this.canvas = utils.dom.makeElement("canvas", this.widget, XVGlobals.classNames.FrameHolderCanvas, {
 		top: 0,
 		left: 0
 	});
@@ -85,7 +86,7 @@ goog.inherits(FrameHolder, XVWidget);
  * @protected
  */
 FrameHolder.prototype.defaultArgs = {
-	className: GLOBALS.classNames.FrameHolder,
+	className: XVGlobals.classNames.FrameHolder,
 	parent: document.body,
 	onloadFrame: 0,
 	blankMsg : "drag and drop Thumbnail here",

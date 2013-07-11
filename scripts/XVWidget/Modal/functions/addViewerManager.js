@@ -71,7 +71,7 @@ Modal.prototype.addViewerManager = function () {
 			//	
 
 			var v = new Viewer({
-				parent: XV.modal
+				parent: that.modal
 			});
 			return v;
 			
@@ -117,7 +117,7 @@ Modal.prototype.addViewerManager = function () {
 		} else if (isString) {
 			
 			var isWidget = (args1.toLowerCase().indexOf("widgets")  === 0 );
-			var isId = (args1.indexOf(GLOBALS.ViewerPreId)  === 0 );
+			var isId = (args1.indexOf(XVGlobals.ViewerPreId)  === 0 );
 			var isTotal = (args1.toLowerCase().indexOf("total")  === 0 );
 
 			
@@ -297,7 +297,7 @@ Modal.prototype.addViewerManager = function () {
 										
 				} else {
 					
-					XV.updateCSS();
+					that.updateCSS();
 					
 				}	
 			}
@@ -319,7 +319,7 @@ Modal.prototype.addViewerManager = function () {
 						var delRow = viewers[viewers.length - 1];
 						
 						utils.array.forEach(delRow, function(currDelViewer) { 
-							utils.fx.fadeTo(currDelViewer.widget, GLOBALS.animFast, 0);
+							utils.fx.fadeTo(currDelViewer.widget, XVGlobals.animFast, 0);
 							currDelViewer.widget.parentNode.removeChild(currDelViewer.widget);
 						})
 						
@@ -334,7 +334,7 @@ Modal.prototype.addViewerManager = function () {
 						utils.array.forEach(viewers, function(Viewer, i) {
 							
 							var rowLen = Viewer.length - 1;
-							utils.fx.fadeTo(Viewer[rowLen].widget, GLOBALS.animFast, 0);
+							utils.fx.fadeTo(Viewer[rowLen].widget, XVGlobals.animFast, 0);
 							Viewer[rowLen].widget.parentNode.removeChild(Viewer[rowLen].widget);
 							Viewer.splice(rowLen, 1);							
 						})
@@ -380,7 +380,7 @@ Modal.prototype.addViewerManager = function () {
 			
 			switch(Thumbnail.widget.className) {
 				
-				case GLOBALS.classNames.ScanThumbnail:
+				case XVGlobals.classNames.ScanThumbnail:
 					
 					newViewer = new ScanViewer({
 						parent: oldViewer.widget.parentNode

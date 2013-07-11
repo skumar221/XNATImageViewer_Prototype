@@ -12,11 +12,11 @@ ScanTabs.prototype.addTabs = function() {
 		position: "absolute",
 		top: 0,	
 		color: 'white',
-		fontSize: GLOBALS.fontSizeMed,
-		fontFamily: GLOBALS.fontFamily,
+		fontSize: XVGlobals.fontSizeMed,
+		fontFamily: XVGlobals.fontFamily,
 		backgroundColor: 'rgb(0,0,0)',
-		width: GLOBALS.scanTabLabelWidth,
-		height: GLOBALS.minScanTabHeight - 1,
+		width: XVGlobals.scanTabLabelWidth,
+		height: XVGlobals.minScanTabHeight - 1,
 		cursor: 'pointer',
 		backgroundColor: "rgba(0,0,0,1)"			
 	}
@@ -25,10 +25,10 @@ ScanTabs.prototype.addTabs = function() {
 	 */	
 	var tabIconCSS = {
 		position: "absolute",
-		top: Math.round((GLOBALS.minScanTabHeight - (GLOBALS.minScanTabHeight * .85))/2),
-		left: Math.round(GLOBALS.scanTabLabelWidth/2 - (GLOBALS.minScanTabHeight * .85) / 2),
-		height: Math.round(GLOBALS.minScanTabHeight * .75),
-		width: Math.round(GLOBALS.minScanTabHeight * .75),
+		top: Math.round((XVGlobals.minScanTabHeight - (XVGlobals.minScanTabHeight * .85))/2),
+		left: Math.round(XVGlobals.scanTabLabelWidth/2 - (XVGlobals.minScanTabHeight * .85) / 2),
+		height: Math.round(XVGlobals.minScanTabHeight * .75),
+		width: Math.round(XVGlobals.minScanTabHeight * .75),
 		opacity: .6
 	}
 	/**
@@ -36,9 +36,9 @@ ScanTabs.prototype.addTabs = function() {
 	 */	
 	var tabPageCSS = {
 		position: "absolute",
-		top: GLOBALS.minScanTabHeight -1,
+		top: XVGlobals.minScanTabHeight -1,
 		color: 'white',
-		fontFamily: GLOBALS.fontFamily,
+		fontFamily: XVGlobals.fontFamily,
 		backgroundColor: 'rgb(0,0,0)'
 	}
 
@@ -59,7 +59,7 @@ ScanTabs.prototype.addTabs = function() {
 		var tab = utils.dom.makeElement("div", 
 			that.widget, "Tab", 
 			utils.dom.mergeArgs(tabCSS, {
-			left: GLOBALS.scanTabLabelWidth * i + i*3
+			left: XVGlobals.scanTabLabelWidth * i + i*3
 		}));
 		tab.title = title;
 		

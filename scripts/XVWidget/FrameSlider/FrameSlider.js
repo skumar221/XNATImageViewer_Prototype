@@ -1,6 +1,7 @@
 
 goog.require('utils.gui.GenericSlider'); 
 goog.require('goog.ui.Component'); 
+goog.require('XVGlobals');
 
 goog.provide('FrameSlider');
 

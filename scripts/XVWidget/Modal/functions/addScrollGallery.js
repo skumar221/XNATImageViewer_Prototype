@@ -1,8 +1,14 @@
+goog.require('Modal')
+goog.provide('Modal.addScrollGallery')
+
+/**
+ * @private
+ */
 Modal.prototype.addScrollGallery = function (rowPos) {	
-	
+	console.log("here")
 	var that = this;
 
-	
+
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
@@ -89,3 +95,4 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 
 	
 }
+goog.exportProperty(Modal.prototype, 'addScrollGallery', Modal.prototype.addScrollGallery); 

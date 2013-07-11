@@ -24,8 +24,8 @@ Modal.prototype.addColumnMenu = function () {
 			position: "absolute",
 			"cursor": "pointer",
 			zIndex: 100,
-			width: utils.convert.px(GLOBALS.expandButtonWidth * .5),
-			left: utils.convert.px(GLOBALS.expandButtonWidth * .25),
+			width: utils.convert.px(XVGlobals.expandButtonWidth * .5),
+			left: utils.convert.px(XVGlobals.expandButtonWidth * .25),
 			top: utils.convert.px(args.top),
 			"vertical-align": "bottom"
 		})	
@@ -40,17 +40,17 @@ Modal.prototype.addColumnMenu = function () {
 		// set UI
 		//	
 		goog.events.listen(button, goog.events.EventType.MOUSEOVER, function(event) { 
-			utils.fx.fadeTo(button, GLOBALS.animFast, 1);
+			utils.fx.fadeTo(button, XVGlobals.animFast, 1);
 		});
 		goog.events.listen(button, goog.events.EventType.MOUSEOUT, function(event) { 
-			utils.fx.fadeTo(button, GLOBALS.animFast, .5);	
+			utils.fx.fadeTo(button, XVGlobals.animFast, .5);	
 		});
 			
 		button.src = args.src;	
 		button.title = args.title;
 
 		goog.events.listen(button, goog.events.EventType.CLICK, function(event) { 
-			utils.fx.fadeTo(button, GLOBALS.animFast, .5);
+			utils.fx.fadeTo(button, XVGlobals.animFast, .5);
 			args.onclick();
 		});		
 		

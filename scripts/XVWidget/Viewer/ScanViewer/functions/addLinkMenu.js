@@ -130,7 +130,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 				icon.onclick = function (event) {	
 
 					utils.dom.stopPropagation(event);
-					GLOBALS.SliderLinker.addLinkMenuPopup(that);
+					XVGlobals.SliderLinker.addLinkMenuPopup(that);
 					that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Closed.png";
 				}				
 			}
@@ -141,8 +141,8 @@ ScanViewer.prototype.addLinkMenu = function () {
 
 					
 					utils.dom.stopPropagation(event);
-					GLOBALS.SliderLinker.addGroup();				
-					GLOBALS.SliderLinker.addLinkMenuPopup(that, "Select viewers for new link group.  Click 'Done' when finished.");
+					XVGlobals.SliderLinker.addGroup();				
+					XVGlobals.SliderLinker.addLinkMenuPopup(that, "Select viewers for new link group.  Click 'Done' when finished.");
 					that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Closed.png";
 					
 				}				
@@ -152,10 +152,10 @@ ScanViewer.prototype.addLinkMenu = function () {
 			else if (icon.title === "Unlink from group") {
 				icon.onclick = function (event) {	
 					
-					GLOBALS.SliderLinker.flashExisting();
+					XVGlobals.SliderLinker.flashExisting();
 					
 					if (that.selectorBox) {
-						GLOBALS.SliderLinker.removeFromGroup(that, true);
+						XVGlobals.SliderLinker.removeFromGroup(that, true);
 						that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					}
 
@@ -165,10 +165,10 @@ ScanViewer.prototype.addLinkMenu = function () {
 			else if (icon.title === "Remove group") {
 				icon.onclick = function (event) {	
 					
-					GLOBALS.SliderLinker.flashExisting();
+					XVGlobals.SliderLinker.flashExisting();
 					
 					if (that.selectorBox) {
-						GLOBALS.SliderLinker.removeGroup(that);
+						XVGlobals.SliderLinker.removeGroup(that);
 						that.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 					}
 
@@ -179,8 +179,8 @@ ScanViewer.prototype.addLinkMenu = function () {
 			else if (icon.title === "Clear all groups") {
 				icon.onclick = function (event) {	
 
-					GLOBALS.SliderLinker.showExisting();
-					GLOBALS.SliderLinker.addClearAllPopup(that);
+					XVGlobals.SliderLinker.showExisting();
+					XVGlobals.SliderLinker.addClearAllPopup(that);
 					
 					XV.ViewerManager( function (Viewer) {
 						if (Viewer.type == 'ScanViewer') {
@@ -206,12 +206,12 @@ ScanViewer.prototype.addLinkMenu = function () {
 					if (typeof event !== 'undefined') {
 						// Initiate global view
 						if (icon.viewAll) {
-							GLOBALS.SliderLinker.stayVisible = true;
-							GLOBALS.SliderLinker.showExisting();
+							XVGlobals.SliderLinker.stayVisible = true;
+							XVGlobals.SliderLinker.showExisting();
 						}
 						else{
-							GLOBALS.SliderLinker.stayVisible = false;
-							GLOBALS.SliderLinker.hideExisting();
+							XVGlobals.SliderLinker.stayVisible = false;
+							XVGlobals.SliderLinker.hideExisting();
 						}	
 						
 						// Re-invert on the button pressed

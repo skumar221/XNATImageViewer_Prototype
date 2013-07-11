@@ -25,7 +25,7 @@ ScanViewer.prototype.addAdjustSliders = function () {
 			height: 18,
 			width: 6,
 			borderRadius: 0,
-			borderColor: GLOBALS.semiactiveLineColor,
+			borderColor: XVGlobals.semiactiveLineColor,
 			backgroundColor: "rgba(185,185,185,1)"
 		},
 		trackCSS: {
@@ -42,8 +42,8 @@ ScanViewer.prototype.addAdjustSliders = function () {
 	var labelCSS = {
 		position: "absolute",
 		color: "rgba(255, 255, 255)",
-		fontSize: GLOBALS.fontSizeSmall,
-		fontFamily: GLOBALS.fontFamily,
+		fontSize: XVGlobals.fontSizeSmall,
+		fontFamily: XVGlobals.fontFamily,
 		//border: "solid 1px rgba(255,255,0,1)",
 		width: sliderLeft * .75,
 		height: 10
@@ -77,16 +77,16 @@ ScanViewer.prototype.addAdjustSliders = function () {
 
 
 	    bLabel = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
-	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - GLOBALS.fontSizeMed/2 + 2,
+	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - XVGlobals.fontSizeMed/2 + 2,
 	    	left: labelLeft
 	    }))
 	    bLabel.innerHTML = SliderName;
 	    
 
 	    bNum = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
-	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - GLOBALS.fontSizeMed/2 - 2 + 3,
+	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - XVGlobals.fontSizeMed/2 - 2 + 3,
 	    	left: numLeft ,
-	    	fontSize: GLOBALS.fontSizeMed
+	    	fontSize: XVGlobals.fontSizeMed
 	    }))
 	    bNum.innerHTML = "0";
 

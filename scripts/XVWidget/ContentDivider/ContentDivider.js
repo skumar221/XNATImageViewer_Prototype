@@ -4,6 +4,8 @@
 //******************************************************
 
 goog.require('XVWidget');
+goog.require('XVGlobals');
+
 goog.provide('ContentDivider');
 /**
  * @constructor
@@ -93,7 +95,7 @@ ContentDivider = function (args) {
 		utils.dom.stopPropagation(e);
 
 		var cDims = utils.css.dims(that.containmentDiv);
-		var d = new goog.fx.Dragger(that.widget, null, new goog.math.Rect(0, cDims.top, 0, cDims.height - GLOBALS.ContentDividerHeight));
+		var d = new goog.fx.Dragger(that.widget, null, new goog.math.Rect(0, cDims.top, 0, cDims.height - XVGlobals.ContentDividerHeight));
 		
 		that.dragging = true;	
 		
@@ -141,9 +143,9 @@ ContentDivider.prototype.defaultArgs = {
 			top: "90%",
 			left: 0,
 			width: "100%",
-			height: GLOBALS.ContentDividerHeight,
+			height: XVGlobals.ContentDividerHeight,
 			cursor: "n-resize",
-			backgroundColor: GLOBALS.ContentDividerColor,
+			backgroundColor: XVGlobals.ContentDividerColor,
 			opacity: 1,
 			color: "rgb(85,85,85)",
 			fontSize: 25,
@@ -179,7 +181,7 @@ ContentDivider.prototype.slideTo = function(newTop, animate) {
 
 	
 	var dims = utils.css.dims(that.widget);
-	var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, newTop], GLOBALS.animMed, goog.fx.easing.easeOut);
+	var slide = new goog.fx.dom.Slide(that.widget, [dims.left, dims.top], [0, newTop], XVGlobals.animMed, goog.fx.easing.easeOut);
 	//goog.fx.Transition.EventType.END
 	goog.events.listen(slide, goog.fx.Animation.EventType.ANIMATE, function() {
 		utils.array.forEach(that.dragCallbacks, function(callback) {

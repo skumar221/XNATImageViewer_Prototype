@@ -5,6 +5,8 @@
 
 
 goog.require('XVWidget');
+goog.require('XVGlobals');
+
 goog.provide('ScrollGallery');
 /**
  * @constructor
@@ -14,15 +16,15 @@ ScrollGallery = function (args) {
   	
   	
   	var that = this;
+  	
 	XVWidget.call(this, args);
 	
-	
+
 	/**
 	 * @type {Object}
 	 * @protected
 	 */	
 	this.Scrollables = {};
-
 
 	var ScrollAreaWidth = utils.css.dims(this.widget, 'width') - this.args.sliderCSS.widgetCSS.width - 7;	
 	
@@ -69,22 +71,24 @@ ScrollGallery = function (args) {
 		}
 	});
 	
-	console.log(this.ContentSlider)	
+
 	this.ContentSlider.addSlideCallback(that.moveContents, that);  
 	this.ContentSlider.bindToMouseWheel(that.widget);
 
 	this.updateCSS();
 }
 goog.inherits(ScrollGallery, XVWidget);
-
+goog.exportSymbol('ScrollGallery', ScrollGallery)
 
 
 /**
+ * @const
+ * @override
  * @protected
  */
 ScrollGallery.prototype.defaultArgs = {
 
-	className: GLOBALS.classNames.ScrollGallery,
+	className: 'ScrollGallery',
 	parent: document.body,
 	orientation: "vertical",
 	sliderLocation: "left",
@@ -94,7 +98,7 @@ ScrollGallery.prototype.defaultArgs = {
 	widgetCSS: {
 		top: 0,
 		left: 30,
-		width: GLOBALS.ScrollGalleryWidth,
+		width: XVGlobals.ScrollGalleryWidth,
 		height: 400,
 		position: "absolute",
 	 	overflow: "hidden",
@@ -108,16 +112,16 @@ ScrollGallery.prototype.defaultArgs = {
 	{ 
 		parent: document.body,
 		thumbCSS:{
-			height: GLOBALS.ThumbnailWidgetHeight,
+			height: XVGlobals.ThumbnailWidgetHeight,
 			width: 7,
 			borderWidth: 0,
-			borderColor: GLOBALS.semiactiveLineColor,
+			borderColor: XVGlobals.semiactiveLineColor,
 			backgroundColor: "rgba(105,105,105,1)"
 		},
 		widgetCSS:{
 			borderWidth: 0,
 			width: 7,
-			borderColor: GLOBALS.semiactiveLineColor,
+			borderColor: XVGlobals.semiactiveLineColor,
 			backgroundColor: "rgba(0, 0, 0, 1)"
 		}
 	}		
@@ -231,7 +235,7 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 
 
 	var that = this;
-	var headerHeight = GLOBALS.fontSizeMed * 2;
+	var headerHeight = XVGlobals.fontSizeMed * 2;
 	var headerLeft = this.args.sliderCSS.widgetCSS.width + 5;	
 	this.Scrollables[zKey] = {};
 	
@@ -261,11 +265,11 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 		width: utils.css.dims(this.ScrollArea, 'width'),
 		height: '1.5em',
 		color: 'rgb(0, 0, 0)',
-		fontSize: GLOBALS.fontSizeMed,
-		fontFamily: GLOBALS.fontFamily,
+		fontSize: XVGlobals.fontSizeMed,
+		fontFamily: XVGlobals.fontFamily,
 		cursor: 'pointer'
 	})
-	header.className = GLOBALS.classNames.ScrollGalleryZippyHeader;
+	header.className = XVGlobals.classNames.ScrollGalleryZippyHeader;
 	header.key = zKey;
 	this.Scrollables[zKey]['header'] = header;
 	
@@ -379,7 +383,7 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 			utils.css.setCSS(e.target, cssObj)				
 		}	
 		else {
-			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, GLOBALS.classNames.ScrollGalleryZippyHeader), cssObj)			
+			utils.css.setCSS(goog.dom.getAncestorByClass(e.target, XVGlobals.classNames.ScrollGalleryZippyHeader), cssObj)			
 		}
 		utils.css.setCSS(expandIcon, cssObj['iconColor'])		   
 	}

@@ -25,7 +25,7 @@ ScanViewer.prototype.populateData = function (data) {
 				left: 0,
 				height: '80%',
 				width: 440,
-				top: GLOBALS.scanTabLabelHeight + 10
+				top: XVGlobals.scanTabLabelHeight + 10
 			}
 		});	
 		var contents = utils.dom.makeElement("div", that.sessionInfo.getScrollArea(), className + "_MetadataContents", {});

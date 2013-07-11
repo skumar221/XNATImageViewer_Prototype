@@ -15,7 +15,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	
 	this.thumbnailDragDrop['dragOver'] = function(event) {
-		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+		if (event.dragSourceItem.element.className.indexOf(XVGlobals.classNames.Thumbnail) > -1) {
 			event.dropTargetItem.element.prevBorder =  event.dropTargetItem.element.style.borderColor;
 		    event.dropTargetItem.element.style.borderColor = 'white';
 	   }
@@ -25,7 +25,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	
 	this.thumbnailDragDrop['dragOut'] = function(event) {
-		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+		if (event.dragSourceItem.element.className.indexOf(XVGlobals.classNames.Thumbnail) > -1) {
 			event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;
 		}
 		
@@ -36,9 +36,9 @@ Modal.prototype.initThumbnailDragDrop = function() {
 	
 	this.thumbnailDragDrop['drop'] = function(event) {
 		
-		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
+		if (event.dragSourceItem.element.className.indexOf(XVGlobals.classNames.Thumbnail) > -1) {
 			var dragThumb, found, newViewer;
-			var dropViewer = XV.ViewerManager(event.dropTargetItem.element);
+			var dropViewer = that.ViewerManager(event.dropTargetItem.element);
 			
 			
 			//
@@ -59,7 +59,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 			
 			if (dropViewer) {		
 
-				XV.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
+				that.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
 				
 				that.updateCSS();
 									
@@ -105,7 +105,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 	//	
     // Set valid targets for this.draggableWidgets
 	//
-	XV.ViewerManager(function (viewer) {
+	that.ViewerManager(function (viewer) {
 
 		utils.array.forEach(that.dragDropThumbnails, function(thumb) {
 			thumb.addTarget(viewer);	
@@ -176,7 +176,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			//
 			// Try setting target to empty scan viewers
 			//
-			XV.ViewerManager( function (Viewer) {
+			that.ViewerManager( function (Viewer) {
 				if (!inserted  && !Viewer.getThumbnail()) {
 					inserted = true;	
 					invokeDrop(Viewer, srcObj);												
@@ -193,16 +193,16 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 				// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
 				//
 
-				XV.ViewerManager( function (Viewer) { 
+				that.ViewerManager( function (Viewer) { 
 					if (!inserted) {
 						
 						var newTargetViewer;
 						
-						if (!GLOBALS.thumbClickTarget) {
-							newTargetViewer = XV.ViewerManager()[0][0];	
+						if (!XVGlobals.thumbClickTarget) {
+							newTargetViewer = that.ViewerManager()[0][0];	
 						}
-						else if (GLOBALS.thumbClickTarget === Viewer.widget.id) {
-							newTargetViewer = XV.ViewerManager({
+						else if (XVGlobals.thumbClickTarget === Viewer.widget.id) {
+							newTargetViewer = that.ViewerManager({
 								"viewerAfter" : Viewer
 							});
 						}
@@ -210,7 +210,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 							return;
 						}	
 						
-						GLOBALS.thumbClickTarget = newTargetViewer.widget.id;
+						XVGlobals.thumbClickTarget = newTargetViewer.widget.id;
 						invokeDrop(newTargetViewer, srcObj);
 						inserted = true;
 					}

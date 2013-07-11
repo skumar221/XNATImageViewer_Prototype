@@ -16,7 +16,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	b.setButtonOnclick("done", function (event) {
 		utils.dom.stopPropagation(event);
-		utils.fx.fadeOutAndRemove(popup, GLOBALS.animFast, function(){ 
+		utils.fx.fadeOutAndRemove(popup, XVGlobals.animFast, function(){ 
 			that.clearAll_();
 		})
 		that.processGroups();
@@ -25,7 +25,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 
 	b.setButtonOnclick("cancel", function (event) {		
 		utils.dom.stopPropagation(event);
-		utils.fx.fadeOutAndRemove(popup, GLOBALS.animFast, function(){ 
+		utils.fx.fadeOutAndRemove(popup, XVGlobals.animFast, function(){ 
 			that.clearAll_();
 		})
 		that.cancel();
@@ -36,7 +36,7 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	
 	utils.fx.fadeOut(popup, 0, function () {
-		utils.fx.fadeIn(popup, GLOBALS.animFast);
+		utils.fx.fadeIn(popup, XVGlobals.animFast);
 	});
 
 }

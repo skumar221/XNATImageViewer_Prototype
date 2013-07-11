@@ -34,8 +34,8 @@ Modal.prototype.updateCSS = function (args) {
  	//----------------------------------
 	//	VIEWERS
 	//----------------------------------	
-	if (XV) {
-		XV.ViewerManager( function (Viewer, i, j) { 
+	if (that.ViewerManager) {
+		that.ViewerManager( function (Viewer, i, j) { 
 
 			Viewer.updateCSS({
 				

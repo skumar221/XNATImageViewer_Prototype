@@ -1,8 +1,10 @@
 goog.require('goog.fx')
 goog.require('utils.css.setCSS');
+goog.require('XVGlobals');
 
 goog.provide('xmiv');
-xmiv = {};
+//xmiv = {};
+//goog.exportSymbol('xmiv', xmiv);
 
 goog.provide('xmiv.start');
 xmiv.start = function () {
@@ -14,9 +16,14 @@ xmiv.start = function () {
 
 	document.body.style.overflow = 'hidden';
 
-	GLOBALS.ModalID = "thuravingal";
+	XVGlobals.ModalID = "thuravingal";
+	/**
+	 * @const
+	 * @type {SliderLinker}
+	 */
+	XVGlobals.SliderLinker = new SliderLinker();
 	
-	var _ooo = new Modal({
+	XV = new Modal({
 		parent : document.body
 	});	
 	
@@ -24,3 +31,4 @@ xmiv.start = function () {
 }
 
 goog.exportSymbol('xmiv.start', xmiv.start);
+

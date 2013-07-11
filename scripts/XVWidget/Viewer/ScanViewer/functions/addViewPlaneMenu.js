@@ -140,8 +140,8 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 		//
 		goog.events.listen(that.ViewPlaneMenu.mainIcon, goog.events.EventType.MOUSEOVER, function() { 
 			
-			utils.fx.fadeTo(that.ViewPlaneMenu.mainIcon, GLOBALS.animFast, 1);
-			utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, GLOBALS.animFast, 1);
+			utils.fx.fadeTo(that.ViewPlaneMenu.mainIcon, XVGlobals.animFast, 1);
+			utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, XVGlobals.animFast, 1);
 			
 		});	
 		//
@@ -151,8 +151,8 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			
 			function fadeOut() {
 				if (!that.ViewPlaneMenu.subMenu.mouseover) {
-					utils.fx.fadeTo(that.ViewPlaneMenu.mainIcon, GLOBALS.animFast, .5);
-					utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, GLOBALS.animFast, 0);		
+					utils.fx.fadeTo(that.ViewPlaneMenu.mainIcon, XVGlobals.animFast, .5);
+					utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, XVGlobals.animFast, 0);		
 				}
 			}
 			
@@ -185,7 +185,7 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			
 			function fadeOut() {
 				if (!that.ViewPlaneMenu.subMenu.mouseover) {
-					utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, GLOBALS.animFast, 0);		
+					utils.fx.fadeTo(that.ViewPlaneMenu.subMenu, XVGlobals.animFast, 0);		
 				}
 			}
 			
@@ -211,13 +211,13 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			//  mouseover
 			//
 			goog.events.listen(icon, goog.events.EventType.MOUSEOVER, function(event) { 
-				utils.fx.fadeTo(event.currentTarget, GLOBALS.animFast, 1);
+				utils.fx.fadeTo(event.currentTarget, XVGlobals.animFast, 1);
 			});
 			//
 			//  mouseout
 			//
 			goog.events.listen(icon, goog.events.EventType.MOUSEOUT, function(event) { 
-				utils.fx.fadeTo(event.currentTarget, GLOBALS.animFast, .5);
+				utils.fx.fadeTo(event.currentTarget, XVGlobals.animFast, .5);
 			});
 		});
 
@@ -254,12 +254,12 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 			
 			if (icon.title.toLowerCase() === iconName.toLowerCase()) {
 				
-				utils.fx.fadeTo(icon, GLOBALS.animFast, 1);
+				utils.fx.fadeTo(icon, XVGlobals.animFast, 1);
 				setMainIcon(icon);
 
 			}
 			else{			
-				utils.fx.fadeTo(icon, GLOBALS.animFast, .5);				
+				utils.fx.fadeTo(icon, XVGlobals.animFast, .5);				
 			}
 		});
 		

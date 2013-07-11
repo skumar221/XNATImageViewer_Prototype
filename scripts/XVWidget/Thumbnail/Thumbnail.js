@@ -9,6 +9,7 @@
 //goog.require('goog.fx.DragDropGroup');
 //goog.require('goog.array');
 goog.require('XVWidget');
+goog.require('XVGlobals');
 
 
 
@@ -63,12 +64,12 @@ Thumbnail = function (args) {
 		position: "absolute",
 		height: this.args.ThumbnailImageCSS.height,
 		width: this.args.ThumbnailImageCSS.width,
-		top: GLOBALS.ThumbnailImageMarginX*1,
-		left: this.args.ThumbnailImageCSS.width + GLOBALS.ThumbnailImageMarginX*2,
+		top: XVGlobals.ThumbnailImageMarginX*1,
+		left: this.args.ThumbnailImageCSS.width + XVGlobals.ThumbnailImageMarginX*2,
 		fontSize: 11,		
 	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif'
 	});
-	utils.dom.addClass(this.ThumbnailCanvas, GLOBALS.classNames.ThumbnailCanvas);
+	utils.dom.addClass(this.ThumbnailCanvas, XVGlobals.classNames.ThumbnailCanvas);
 
 
 	this.addHoverMethods();
@@ -135,8 +136,8 @@ Thumbnail.prototype.createDragElement = function(srcElt) {
 	//
 	// Get canvases for reference
 	//
-	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, parent);
-	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, clonedElt);
+	srcCanv = goog.dom.getElementByClass(XVGlobals.classNames.ThumbnailCanvas, parent);
+	clonedCanv = goog.dom.getElementByClass(XVGlobals.classNames.ThumbnailCanvas, clonedElt);
 
 
 	
@@ -180,8 +181,8 @@ Thumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	var that = this;
 	
 	var elt = utils.dom.makeElement("canvas", this.widget, idAppend, utils.dom.mergeArgs(this.args.ThumbnailImageCSS,{
-		top: GLOBALS.ThumbnailImageMarginY,
-		left: GLOBALS.ThumbnailImageMarginX
+		top: XVGlobals.ThumbnailImageMarginY,
+		left: XVGlobals.ThumbnailImageMarginX
 		 //color: "rgb(255,255,255)"
 	}));
 
@@ -274,7 +275,7 @@ Thumbnail.prototype.addHoverMethods = function () {
 * @protected
 */
 Thumbnail.prototype.defaultArgs = {
-	className: GLOBALS.classNames.Thumbnail,
+	className: XVGlobals.classNames.Thumbnail,
 	parent: document.body,
 	draggableParent: document.body,
 	activated: false,
@@ -284,8 +285,8 @@ Thumbnail.prototype.defaultArgs = {
 	textHighlight: "rgb(230, 230, 230)",
 	widgetCSS: {
 		position: "absolute",
-		width: GLOBALS.ThumbnailWidgetWidth,
-		height: GLOBALS.ThumbnailWidgetHeight,
+		width: XVGlobals.ThumbnailWidgetWidth,
+		height: XVGlobals.ThumbnailWidgetHeight,
 		top: 0,
 		left: 0,			 
 	  	"cursor": "pointer",
@@ -293,8 +294,8 @@ Thumbnail.prototype.defaultArgs = {
 	},
 	ThumbnailImageCSS: {
 		position: "absolute",
-		width: GLOBALS.ThumbnailImageWidth - 2,
-		height: GLOBALS.ThumbnailImageHeight - 2,
+		width: XVGlobals.ThumbnailImageWidth - 2,
+		height: XVGlobals.ThumbnailImageHeight - 2,
 		top: 0,
 		left: 0,	
 		"overflow-y": "hidden",

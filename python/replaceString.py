@@ -50,8 +50,8 @@ def main():
     htmlFile = "../index-uncompressed.html"
     backupDir = "scriptsBackup"
       
-    findStr = ".Viewers"
-    replaceStr = ".ViewerManager"
+    findStr = "GLOBALS"
+    replaceStr = "XVGlobals"
     fileReplaceStr = replaceStr #replaceStr.split(".")[2]
     
     skipDirs = ["jquery"];

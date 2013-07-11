@@ -4,7 +4,9 @@
 //******************************************************
 
 goog.require('XVWidget');
+goog.require('XVGlobals');
 goog.provide('Viewer');
+
 
 /**
  * @constructor
@@ -53,7 +55,7 @@ goog.inherits(Viewer, goog.fx.DragDrop);
  */
 Viewer.prototype.defaultArgs = {
 	parent: document.body,
-	className: GLOBALS.classNames.Viewer,
+	className: XVGlobals.classNames.Viewer,
 	widgetCSS: {
 		top: 0,
 		left: 80,
@@ -103,7 +105,7 @@ Viewer.prototype.setHoverEvents = function () {
 	
 	var that = this;
 	var keeperClasses = [
-		GLOBALS.classNames.FrameHolder
+		XVGlobals.classNames.FrameHolder
 	]
 	
 	this.hoverOut = function() {

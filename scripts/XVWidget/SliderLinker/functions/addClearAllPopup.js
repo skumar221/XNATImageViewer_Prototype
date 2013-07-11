@@ -17,7 +17,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	
 	b.setButtonOnclick("yes", function (event) {
 		utils.dom.stopPropagation(event);
-		utils.fx.fadeOutAndRemove(popup, GLOBALS.animFast, function(){ 
+		utils.fx.fadeOutAndRemove(popup, XVGlobals.animFast, function(){ 
 			that.clearAll_();
 		})
 	});
@@ -26,7 +26,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 
 	b.setButtonOnclick("cancel", function (event) {
 		utils.dom.stopPropagation(event);
-		utils.fx.fadeOutAndRemove(popup, GLOBALS.animFast, function(){ 
+		utils.fx.fadeOutAndRemove(popup, XVGlobals.animFast, function(){ 
 			that.clearAll_();
 		})	
 	});
@@ -34,7 +34,7 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	
 	XV.updateCSS();	
 	utils.fx.fadeOut(popup, 0, function () {
-		utils.fx.fadeIn(popup, GLOBALS.animFast);
+		utils.fx.fadeIn(popup, XVGlobals.animFast);
 	});
 		
 }

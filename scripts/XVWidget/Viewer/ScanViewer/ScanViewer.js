@@ -89,7 +89,7 @@ ScanViewer = function (args) {
 		parent: this.widget,
 		tabTitles: ["Info", "Adjust"],
 		widgetCSS: {
-			height: GLOBALS.minScanTabHeight,
+			height: XVGlobals.minScanTabHeight,
 			width: '100%'
 		}
 		
@@ -122,7 +122,7 @@ ScanViewer = function (args) {
 		position: "absolute",
 		top: 0,
 		left: 0,
-		fontSize: GLOBALS.fontSizeMed,
+		fontSize: XVGlobals.fontSizeMed,
 		textAlign: "left",
 		//border: "solid 1px rgb(255,255,255)",
 		width: 140
@@ -165,7 +165,7 @@ goog.inherits(ScanViewer, Viewer);
  * @protected
  */
 ScanViewer.prototype.defaultArgs = {
-	className: GLOBALS.classNames.ScanViewer,
+	className: XVGlobals.classNames.ScanViewer,
 	sliderCSS:	
 	{ 
 		parent: document.body,
@@ -206,7 +206,7 @@ ScanViewer.prototype.setHoverEvents = function () {
 	
 	var that = this;
 	var keeperClasses = [
-		GLOBALS.classNames.FrameHolder
+		XVGlobals.classNames.FrameHolder
 	]
 	
 	this.hoverOut = function() {
@@ -248,10 +248,10 @@ ScanViewer.prototype.createDragElement = function(srcElt) {
 	if (returner.id !== 'DUMMY') {
 	
 		var parent, srcCanv, clonedCanv, context;
-		var keepClasses = [ GLOBALS.classNames.FrameHolder ];
+		var keepClasses = [ XVGlobals.classNames.FrameHolder ];
 		var keepElts = [];
 				
-		parent = goog.dom.getAncestorByClass(srcElt, GLOBALS.classNames.ScanViewer);
+		parent = goog.dom.getAncestorByClass(srcElt, XVGlobals.classNames.ScanViewer);
 	
 		//
 		// Retain any children that you want to keep
@@ -261,9 +261,9 @@ ScanViewer.prototype.createDragElement = function(srcElt) {
 		// Create draggable ghost by cloning the parent
 		//	
 		returner = parent.cloneNode(true);
-		returner.style.fontFamily = GLOBALS.fontFamily;
-		srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, parent);
-		clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.FrameHolderCanvas, returner);
+		returner.style.fontFamily = XVGlobals.fontFamily;
+		srcCanv = goog.dom.getElementByClass(XVGlobals.classNames.FrameHolderCanvas, parent);
+		clonedCanv = goog.dom.getElementByClass(XVGlobals.classNames.FrameHolderCanvas, returner);
 	
 	
 		

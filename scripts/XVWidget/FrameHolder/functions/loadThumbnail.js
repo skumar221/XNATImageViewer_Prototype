@@ -14,7 +14,7 @@ FrameHolder.prototype.loadCurrViewPlane = function () {
 		that.loaded = true;
 		// Show canvas
 		that.progBar.hide();	
-		utils.fx.fadeIn(that.canvas, GLOBALS.animFast);
+		utils.fx.fadeIn(that.canvas, XVGlobals.animFast);
 		
 		// Load Frames By ViewPlane
 		that.loadFramesByViewPlane(that.currViewPlane);				

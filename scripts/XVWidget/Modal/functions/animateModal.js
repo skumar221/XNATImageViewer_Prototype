@@ -28,9 +28,9 @@ Modal.prototype.animateModal  = function (callback) {
       	// MODAL
       	//-----------------------
       	animQueue.add(resize(this.modal, modalDims.width, 
-      						 modalDims.height, GLOBALS.animMed));
+      						 modalDims.height, XVGlobals.animMed));
       	animQueue.add(slide(this.modal, modalDims.left, 
-      						 modalDims.top, GLOBALS.animMed));
+      						 modalDims.top, XVGlobals.animMed));
       	
       	
       	
@@ -38,7 +38,7 @@ Modal.prototype.animateModal  = function (callback) {
       	// CLOSE BUTTON
       	//-----------------------
 		animQueue.add(slide(this.closeButton, modalDims.closeButton.left, 
-							modalDims.closeButton.top, GLOBALS.animMed));
+							modalDims.closeButton.top, XVGlobals.animMed));
 
 
 
@@ -48,9 +48,9 @@ Modal.prototype.animateModal  = function (callback) {
 		XV.ViewerManager( function (Viewer, i, j) { 
 
 			animQueue.add(slide(Viewer.widget, modalDims.Viewer.lefts[i][j], 
-								modalDims.Viewer.tops[i][j], GLOBALS.animMed));	
+								modalDims.Viewer.tops[i][j], XVGlobals.animMed));	
 			animQueue.add(resize(Viewer.widget, modalDims.Viewer.width, 
-								modalDims.Viewer.height, GLOBALS.animMed));	
+								modalDims.Viewer.height, XVGlobals.animMed));	
 			
 		})
 
@@ -63,7 +63,7 @@ Modal.prototype.animateModal  = function (callback) {
 			utils.array.forEach(goog.dom.getElementsByClass(menuType), function(menuElt) {
 	
 				animQueue.add(slide(menuElt, modalDims[menuType].left, 
-									modalDims[menuType].top, GLOBALS.animMed));	
+									modalDims[menuType].top, XVGlobals.animMed));	
 	
 			})
 		})
@@ -83,7 +83,7 @@ Modal.prototype.animateModal  = function (callback) {
 			//
 			XV.ViewerManager( function (Viewer, i, j) { 
 				if (Viewer.widget.style.opacity == 0) {
-					utils.fx.fadeIn(Viewer.widget, GLOBALS.animFast);
+					utils.fx.fadeIn(Viewer.widget, XVGlobals.animFast);
 				}
 			})
 			//

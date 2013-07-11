@@ -6,7 +6,7 @@ goog.provide('XVWidget');
  * @constructor
  * @param{Object=}
  */
-XVWidget = function (args) {
+XVWidget = function (args, defaultArgs) {
 	
 
 	/**
@@ -40,4 +40,4 @@ XVWidget = function (args) {
 	
 	
 }
-
+goog.exportSymbol('XVWidget', XVWidget);

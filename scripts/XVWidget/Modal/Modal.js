@@ -2,8 +2,9 @@
 //  Init
 //
 //******************************************************
-
+goog.require('XVGlobals');
 goog.require('XVWidget');
+
 goog.provide('Modal');
 
 /**
@@ -14,7 +15,6 @@ Modal = function (args) {
 
 	var that = this;
 	XVWidget.call(this, utils.dom.mergeArgs(Modal.prototype.defaultArgs, args));
-	XV = this;
 
 	
 	//----------------------------------
@@ -36,7 +36,7 @@ Modal = function (args) {
 	/**
 	* @type {Element}
 	*/	
-	this.modal = utils.dom.makeElement("div", this.widget, GLOBALS.ModalId, this.args.modalCSS);	
+	this.modal = utils.dom.makeElement("div", this.widget, XVGlobals.ModalId, this.args.modalCSS);	
 	utils.css.setCSS( this.modal, {
 		"overflow-x": "hidden",
 		"overflow-y": "hidden"
@@ -80,19 +80,21 @@ Modal = function (args) {
 	//----------------------------------	
 	this.scanDataPaths = demoScanData;
 
-
-
+	
 	
 	/**
 	 * @type {Array.<Object>}
 	 * @protected
 	 */
 	this.dragDropThumbnails = [];
+	
+	console.log("addScrollGallery: ", this.addScrollGallery)
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
 	this.addScrollGallery();	
-
+	
+	console.log("addRowMenu")
 
 	//----------------------------------
 	//	ROW MENU
@@ -112,7 +114,8 @@ Modal = function (args) {
 	
 
 	
-	
+
+
 	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------	
@@ -143,14 +146,15 @@ Modal = function (args) {
 }
 
 goog.inherits(Modal, XVWidget);
-
+goog.exportSymbol('Modal', Modal);
 
 
 /**
+ * @const
  * @protected
  */
 Modal.prototype.defaultArgs = {
-	className: GLOBALS.classNames.Modal,
+	className: XVGlobals.classNames.Modal,
 	layout: "all_columns",
 	numViewers: 1,
 	parent: document.body,

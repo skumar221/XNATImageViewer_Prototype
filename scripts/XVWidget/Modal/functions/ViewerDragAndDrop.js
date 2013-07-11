@@ -14,7 +14,7 @@ Modal.prototype.initViewerDragDrop = function() {
 
 	this.viewerBoxDragDrop['dragover'] = function(event) {
 		
-		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Viewer) > -1) {
+		if (event.dragSourceItem.element.className.indexOf(XVGlobals.classNames.Viewer) > -1) {
 			
 			var target = event.dropTargetItem.element;
 			var source = event.dragSourceItem.element;
@@ -43,7 +43,7 @@ Modal.prototype.initViewerDragDrop = function() {
 						
 			var slide = new goog.fx.dom.Slide(target, [tDims.left, tDims.top], 
 													  [sDims.left, sDims.top], 
-													  GLOBALS.animFast);
+													  XVGlobals.animFast);
 			slide.play();
 
 			goog.events.listen(slide, goog.fx.Transition.EventType.END, function() {
@@ -51,7 +51,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			});
 
 			
-			XV.ViewerManager({'swap' : [source, target]});
+			that.ViewerManager({'swap' : [source, target]});
 		}
 		
 	}
@@ -65,7 +65,7 @@ Modal.prototype.initViewerDragDrop = function() {
 	
 	this.viewerBoxDragDrop['drop'] = function(event) {
 		
-		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Viewer) > -1) {
+		if (event.dragSourceItem.element.className.indexOf(XVGlobals.classNames.Viewer) > -1) {
 
 		}
 	}
@@ -91,12 +91,12 @@ Modal.prototype.initViewerDragDrop = function() {
 		else {
 			
 			that.enableViewerDragAndDrop();
-			utils.fx.fadeOut(event.dragSourceItem.element, GLOBALS.animFast);
+			utils.fx.fadeOut(event.dragSourceItem.element, XVGlobals.animFast);
 
 			//
 			//  set the 'oldDims'
 			//
-			XV.ViewerManager(function(viewer){
+			that.ViewerManager(function(viewer){
 				viewer.widget.oldDims = utils.css.dims(viewer.widget);
 			})
 							
@@ -115,7 +115,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			var anim = new goog.fx.dom.Slide(event.dragSourceItem.element, 
 											 [newPos.left, newPos.top], 
 										 	 [targPos.left, targPos.top], 
-										 	 GLOBALS.animFast);
+										 	 XVGlobals.animFast);
 
 
 
@@ -123,7 +123,7 @@ Modal.prototype.initViewerDragDrop = function() {
 		    event.dragSourceItem.element.style.opacity = 1;
 		    
 			goog.events.listen(anim, 'end', function() { 
-				XV.updateCSS();		
+				that.updateCSS();		
 			})
 			anim.play();
 
@@ -138,16 +138,16 @@ Modal.prototype.initViewerDragDrop = function() {
 Modal.prototype.setViewerDragAndDrop = function () {
 
 	var that = this;
-	var viewerLen = XV.ViewerManager("total");
+	var viewerLen = that.ViewerManager("total");
 
 	if (viewerLen > 1) {
 		
 		//	
 	    // Set valid targets for this.draggableWidgets
 		//
-		XV.ViewerManager(function (viewer) {
+		that.ViewerManager(function (viewer) {
 			
-			XV.ViewerManager(function (w) {
+			that.ViewerManager(function (w) {
 				if (viewer !== w) { 
 					viewer.addTarget(w);
 				}
@@ -167,7 +167,7 @@ Modal.prototype.disableViewerDragAndDrop = function () {
 	
 	var that = this;
 	
-	XV.ViewerManager(function (viewer) {
+	that.ViewerManager(function (viewer) {
 
 		goog.events.unlisten(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
 		goog.events.unlisten(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
@@ -184,7 +184,7 @@ Modal.prototype.enableViewerDragAndDrop = function () {
 	
 	var that = this;
 
-	XV.ViewerManager(function (viewer) {
+	that.ViewerManager(function (viewer) {
 		viewer.init();
 		goog.events.listen(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
 		goog.events.listen(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	

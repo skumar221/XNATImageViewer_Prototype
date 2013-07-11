@@ -6,7 +6,7 @@ Modal.prototype.destroy = function (fadeOut) {
 	var that = this;
 
 	utils.dom.debug("Destroying! " + this.args.id);
-	utils.fx.fadeOut(this.widget, GLOBALS.animMed, function () {
+	utils.fx.fadeOut(this.widget, XVGlobals.animMed, function () {
 		try{
 			that.args.parent.removeChild(that.widget);			
 		}

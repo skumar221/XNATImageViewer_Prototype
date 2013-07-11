@@ -160,8 +160,8 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 	//
 	// Get canvases for reference
 	//
-	srcCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, parent);
-	clonedCanv = goog.dom.getElementByClass(GLOBALS.classNames.ThumbnailCanvas, clonedElt);
+	srcCanv = goog.dom.getElementByClass(XVGlobals.classNames.ThumbnailCanvas, parent);
+	clonedCanv = goog.dom.getElementByClass(XVGlobals.classNames.ThumbnailCanvas, clonedElt);
 
 
 	
@@ -188,7 +188,7 @@ ScanThumbnail.prototype.createDragElement = function(srcElt) {
 * @protected
 */
 ScanThumbnail.prototype.defaultArgs = {
-	className: GLOBALS.classNames.ScanThumbnail
+	className: XVGlobals.classNames.ScanThumbnail
 }
 
 

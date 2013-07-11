@@ -30,12 +30,12 @@ ScanViewer.prototype.updateCSS = function (args) {
 			//
 			//  Determine the top of the content divider and its containment
 			//
-			var t = GLOBALS.minFrameHolderHeight;	
+			var t = XVGlobals.minFrameHolderHeight;	
 			
-			var h = this.widgetDims.height - t - utils.css.dims(this.ContentDivider.widget, 'height') - GLOBALS.minScanTabHeight + 5;	
+			var h = this.widgetDims.height - t - utils.css.dims(this.ContentDivider.widget, 'height') - XVGlobals.minScanTabHeight + 5;	
 			
 			utils.css.setCSS(this.ContentDivider.widget, {
-				top: GLOBALS.minContentDividerTop(this.widgetDims.height) - 1
+				top: XVGlobals.minContentDividerTop(this.widgetDims.height) - 1
 			});
 			
 			utils.css.setCSS(this.ContentDivider.containmentDiv, {
@@ -111,7 +111,7 @@ ScanViewer.prototype.updateCSS = function (args) {
 	 	top: sliderTop - 15,// -2,
 	 	left: 10,
 	 	width: this.widgetDims.width - 10,
-	 	fontSize: GLOBALS.fontSizeSmall
+	 	fontSize: XVGlobals.fontSizeSmall
 	 });
 	 
 	 

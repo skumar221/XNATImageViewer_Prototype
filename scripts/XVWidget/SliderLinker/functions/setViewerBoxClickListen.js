@@ -18,7 +18,7 @@ SliderLinker.prototype.setViewerClickListen = function (currViewer) {
 		//
 		if (!Viewer.selectorBox) {
 
-			Viewer.selectorBox =  GLOBALS.SliderLinker.addSelectorBox( 
+			Viewer.selectorBox =  XVGlobals.SliderLinker.addSelectorBox( 
 				Viewer.widget.parentNode , 
 				utils.css.dims(Viewer.widget)
 			);

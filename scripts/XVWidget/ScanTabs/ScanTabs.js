@@ -5,7 +5,10 @@
 //
 //******************************************************
 goog.require('XVWidget');
+goog.require('XVGlobals');
+
 goog.provide('ScanTabs');
+
 /**
  * @constructor
  * @extends {XVWidget}
@@ -101,7 +104,7 @@ goog.inherits(ScanTabs, XVWidget);
  */
 ScanTabs.prototype.defaultArgs = {
 	parent: document.body,
-	className: GLOBALS.classNames.ScanTabs,
+	className: XVGlobals.classNames.ScanTabs,
 	tabTitles: ["Info", "Adjust"],
 	tabIconSrc: ["./icons/InfoIcon.png", "./icons/Adjust.png"],
 	widgetCSS: {
@@ -111,7 +114,7 @@ ScanTabs.prototype.defaultArgs = {
 		height: 300,
 		width: '100%',
 		borderWidth: 1,
-		backgroundColor: GLOBALS.ContentDividerColor
+		backgroundColor: XVGlobals.ContentDividerColor
 	}
 }
 
