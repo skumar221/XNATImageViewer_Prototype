@@ -63,7 +63,7 @@ Modal.prototype.addColumnMenu = function () {
 		top: 0,
 		title: "Insert Column",
 		onclick: function () { 
-			XV.Viewers({"insert" : "column"}); 
+			XV.ViewerManager({"insert" : "column"}); 
 		}	
 	});
 
@@ -73,7 +73,7 @@ Modal.prototype.addColumnMenu = function () {
 		top: 22,
 		title: "Remove Column",
 		onclick: function () { 
-			XV.Viewers({"remove" : "column"});  
+			XV.ViewerManager({"remove" : "column"});  
 		}	
 	});
 }

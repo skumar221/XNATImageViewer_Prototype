@@ -117,19 +117,19 @@ Modal = function (args) {
 	//	SCAN VIEWERS
 	//----------------------------------	
 	this.addViewerManager();
-	this.Viewers({
+	this.ViewerManager({
 		'addViewersChangedCallback' : function() {
 			that.setThumbnailDragAndDrop();
 			that.setViewerDragAndDrop();
 		}
 	})
 
-	this.Viewers({
+	this.ViewerManager({
 		"insert" : "column",
 		"animate" : "off"
 	});
 
-	this.Viewers({
+	this.ViewerManager({
 		"insert" : "column",
 		"animate" : "off"
 	});

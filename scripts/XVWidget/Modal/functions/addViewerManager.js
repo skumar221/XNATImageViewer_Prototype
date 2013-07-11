@@ -6,7 +6,7 @@ Modal.prototype.addViewerManager = function () {
 	var ViewersChangedCallbacks = [];
 	var that = this;
 	
-	this.Viewers = function (args1, args2, args3, args4, args5) {
+	this.ViewerManager = function (args1, args2, args3, args4, args5) {
 		
 		//utils.dom.debug(typeof args1)
 		//var viewers = [[]];
@@ -374,16 +374,18 @@ Modal.prototype.addViewerManager = function () {
 		 * @param {Viewer}
 		 * @param {Thumbnail}
 		 */
-		this.Viewers.adaptAndLoad = function(oldViewer, Thumbnail) {
+		this.ViewerManager.adaptAndLoad = function(oldViewer, Thumbnail) {
 	
 			var newViewer;
 			
 			switch(Thumbnail.widget.className) {
 				
 				case GLOBALS.classNames.ScanThumbnail:
+					
 					newViewer = new ScanViewer({
 						parent: oldViewer.widget.parentNode
 					})
+					
 					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
 
 			}

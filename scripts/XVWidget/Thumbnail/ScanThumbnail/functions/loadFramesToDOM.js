@@ -11,10 +11,6 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	// Call any before methods
 	if (args["before"]) {  args["before"] (setLen) };	
 
-
-	console.log(this.frames)
-
-
 	for (i in this.frames) {
 		
 		var viewPlane = this.frames[i]['viewPlane'];
@@ -22,7 +18,6 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 		// only add to queue if if it's not cached
 		if (!this.frames[i]['img']) {
 			if (args['viewPlane'] && viewPlane === args['viewPlane']) {
-				console.log("pushing: ", this.frames[i]['src'])
 				loadQueue.push(this.frames[i]['src']);
 			}		
 		} else {
@@ -37,7 +32,7 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	// if already cached
 	if (loadQueue.length === 0) {
 		
-		XV.Viewers( function (Viewer, i, j) { 
+		XV.ViewerManager( function (Viewer, i, j) { 
 			if (Viewer.FrameHolder.currDroppable === that) {
 				utils.dom.debug("Using cached images for " + Viewer.FrameHolder.currViewPlane + " plane.");
 				Viewer.FrameHolder.loadCurrViewPlane();	

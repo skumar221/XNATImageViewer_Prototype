@@ -182,7 +182,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 					GLOBALS.SliderLinker.showExisting();
 					GLOBALS.SliderLinker.addClearAllPopup(that);
 					
-					XV.Viewers( function (Viewer) {
+					XV.ViewerManager( function (Viewer) {
 						if (Viewer.type == 'ScanViewer') {
 							Viewer.LinkMenu.childNodes[0].src = "./icons/LinkMenu/Chain-Broken.png";
 						}		
@@ -218,7 +218,7 @@ ScanViewer.prototype.addLinkMenu = function () {
 						var icons;
 						
 						icon.viewAll = !icon.viewAll;
-						XV.Viewers( function (Viewer) { 
+						XV.ViewerManager( function (Viewer) { 
 							
 							// CAll onclick on all Viewer eye buttons
 							// this will send you below

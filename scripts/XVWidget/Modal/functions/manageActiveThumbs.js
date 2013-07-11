@@ -11,10 +11,10 @@ Modal.prototype.manageActiveThumbs = function () {
 	var droppableIds = [];
 	var droppableId;
 	
-	XV.Viewers(function(Viewer){
-		var droppableId = Viewer.getDroppable();
-		if (droppableId) {
-			droppableIds.push(droppableId)		
+	XV.ViewerManager(function(Viewer){
+		var droppable = Viewer.getThumbnail();
+		if (droppable) {
+			droppableIds.push(droppable.widget.id);		
 		}
 	})
 

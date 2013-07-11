@@ -10,11 +10,13 @@ ScanViewer.prototype.addFrameSlider = function () {
 	this.FrameSlider = new FrameSlider(utils.dom.mergeArgs(this.args.sliderCSS, {
 		parent: this.widget
 	}));
+
+
 	
 
-	this.FrameSlider.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
+	
+	this.FrameSlider.addSlideCallback(function() {
 
-		//console.log("event 1");
 		var subtractor = (that.FrameSlider.getMaximum() > 0) ? that.FrameSlider.getMinimum()  : 0;
 		var val = Math.round(that.FrameSlider.getValue());
 		

@@ -28,7 +28,7 @@ Modal.prototype.modalDims = function (conversion) {
 	
 	
 	//	Get the number of scan viewers
-	var viewers = XV.Viewers();
+	var viewers = XV.ViewerManager();
 	var ViewerColumns = viewers[0].length;
 	var ViewerRows = viewers.length;
 	
@@ -92,7 +92,7 @@ Modal.prototype.modalDims = function (conversion) {
 	var ScrollGalleryDims = utils.css.dims(this.ScrollGallery.widget)
 	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims.left + GLOBALS.ViewerVerticalMargin;
 
-	XV.Viewers( function (Viewer, i, j) { 
+	XV.ViewerManager( function (Viewer, i, j) { 
 			
 		l = viewerStart + j * (ViewerWidth + GLOBALS.ViewerVerticalMargin);
 		

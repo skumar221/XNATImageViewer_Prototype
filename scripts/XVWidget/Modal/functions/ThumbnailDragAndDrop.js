@@ -38,7 +38,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 		
 		if (event.dragSourceItem.element.className.indexOf(GLOBALS.classNames.Thumbnail) > -1) {
 			var dragThumb, found, newViewer;
-			var dropViewer = XV.Viewers(event.dropTargetItem.element);
+			var dropViewer = XV.ViewerManager(event.dropTargetItem.element);
 			
 			
 			//
@@ -56,9 +56,11 @@ Modal.prototype.initThumbnailDragDrop = function() {
 			})
 		
 			
+			
 			if (dropViewer) {		
 
-				XV.Viewers.adaptAndLoad(dropViewer, dragThumb);
+				XV.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
+				
 				that.updateCSS();
 									
 			}
@@ -67,6 +69,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 				event.dropTargetItem.element.style.borderColor = event.dropTargetItem.element.prevBorder;	
 			}	
 					
+			
 		}		
 
 	}
@@ -102,7 +105,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 	//	
     // Set valid targets for this.draggableWidgets
 	//
-	XV.Viewers(function (viewer) {
+	XV.ViewerManager(function (viewer) {
 
 		utils.array.forEach(that.dragDropThumbnails, function(thumb) {
 			thumb.addTarget(viewer);	
@@ -173,8 +176,8 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			//
 			// Try setting target to empty scan viewers
 			//
-			XV.Viewers( function (Viewer) {
-				if (!inserted  && !Viewer.getDroppable()) {
+			XV.ViewerManager( function (Viewer) {
+				if (!inserted  && !Viewer.getThumbnail()) {
 					inserted = true;	
 					invokeDrop(Viewer, srcObj);												
 				}
@@ -190,16 +193,16 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 				// Find viewer that is lastClicked, cycle to next viewer set it as last clicked
 				//
 
-				XV.Viewers( function (Viewer) { 
+				XV.ViewerManager( function (Viewer) { 
 					if (!inserted) {
 						
 						var newTargetViewer;
 						
 						if (!GLOBALS.thumbClickTarget) {
-							newTargetViewer = XV.Viewers()[0][0];	
+							newTargetViewer = XV.ViewerManager()[0][0];	
 						}
 						else if (GLOBALS.thumbClickTarget === Viewer.widget.id) {
-							newTargetViewer = XV.Viewers({
+							newTargetViewer = XV.ViewerManager({
 								"viewerAfter" : Viewer
 							});
 						}

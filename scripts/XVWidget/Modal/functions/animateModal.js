@@ -45,7 +45,7 @@ Modal.prototype.animateModal  = function (callback) {
 		//-----------------------
 		// VIEWERS
 		//-----------------------
-		XV.Viewers( function (Viewer, i, j) { 
+		XV.ViewerManager( function (Viewer, i, j) { 
 
 			animQueue.add(slide(Viewer.widget, modalDims.Viewer.lefts[i][j], 
 								modalDims.Viewer.tops[i][j], GLOBALS.animMed));	
@@ -81,7 +81,7 @@ Modal.prototype.animateModal  = function (callback) {
 			//
 			// Fade in new viewers
 			//
-			XV.Viewers( function (Viewer, i, j) { 
+			XV.ViewerManager( function (Viewer, i, j) { 
 				if (Viewer.widget.style.opacity == 0) {
 					utils.fx.fadeIn(Viewer.widget, GLOBALS.animFast);
 				}

@@ -1,5 +1,6 @@
 
 goog.require('utils.gui.GenericSlider'); 
+goog.require('goog.ui.Component'); 
 
 goog.provide('FrameSlider');
 
@@ -9,11 +10,13 @@ goog.provide('FrameSlider');
  */
 FrameSlider = function (args) {	
 
+	
 	goog.base(this, args);	
-
+	
 	var that = this;
 	
 	
+
 	//******************************************************
 	//  Links the inputted slider (b)
 	//******************************************************
@@ -69,23 +72,25 @@ FrameSlider = function (args) {
   	}
   	
   	
- 	//----------------------------------
-	// linkedCallbacks - Caller
-	//---------------------------------- 	
-	this.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
+  	this.addSlideCallback(function() {
 
-		if (that.linkedCallbacks && that.linkedCallbacks.length > 0) {
+			
+		if (that.linkedCallbacks && that.linkedCallbacks.length > 0) {		
 			
 			utils.array.forEach(that.linkedCallbacks, function(callback) { 
 				callback(that);
 			})
-
+			
 		}	
+			
+		
 	});
-  	
+
+	
 
 }
 goog.inherits(FrameSlider, utils.gui.GenericSlider);
+
 
 
 FrameSlider.prototype.updateCSS = function(args) {

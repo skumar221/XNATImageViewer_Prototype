@@ -36,8 +36,9 @@ ScanViewer = function (args) {
 	 *  know of the currentScan when it's dropped in.
 	 */
 	this.FrameHolder.addOnloadCallback(function () {
-		if(that.FrameHolder.currDroppable.scanData) {
-			that.populateData(that.FrameHolder.currDroppable.scanData)
+		var t = that.getThumbnail();
+		if(t && t.scanData) {
+			that.populateData(t.scanData);
 		}
 	})
 
@@ -49,7 +50,6 @@ ScanViewer = function (args) {
 	//----------------------------------	
  	this.addViewPlaneMenu();
 	//this.addLinkMenu(); 	
-
 
 
 

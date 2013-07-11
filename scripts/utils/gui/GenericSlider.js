@@ -5,7 +5,6 @@
 goog.require('goog.dom');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
-
 goog.provide('utils.gui.GenericSlider');	
 
 /**
@@ -14,10 +13,10 @@ goog.provide('utils.gui.GenericSlider');
  */
 utils.gui.GenericSlider = function (args) {	 
 
-
+	
 	goog.ui.Slider.call(this)
 
-
+	
 	var args_ = (typeof args === 'object') ? args : {};
 	var that = this;	
 	var className = (args_['className']) ? args_['className'] : "GenericSlider";
@@ -116,13 +115,6 @@ utils.gui.GenericSlider = function (args) {
 	 */
 	this.widget_ = utils.dom.makeElement('div', args_['parent'], args_['className'], args_['widgetCSS']);
 
-	/**
-	 * @expose
-	 */	
-	this.getWidget = function () {
-		return this.widget_;
-	}
-
 
 	//----------------------------
 	// TRACK
@@ -168,20 +160,46 @@ utils.gui.GenericSlider = function (args) {
 	 * @expose
 	 */
 	this.enable = function(bool) {
-		this.superClass_.setEnabled.call(this, 'setEnabled', bool);
+		utils.gui.GenericSlider.superClass_.setEnabled.call(this, bool);
 	}
 
-	this.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
-		event.stopPropagation();
-		utils.dom.stopPropagation(event);
-	});	
-
+	goog.exportProperty(goog.ui.Slider, 'addEventListener', goog.ui.Slider.addEventListener);
+	
 	
 
 }
+
 goog.inherits(utils.gui.GenericSlider, goog.ui.Slider);		
 goog.exportSymbol('utils.gui.GenericSlider', utils.gui.GenericSlider);	 
 
+
+/**
+ * @expose
+ * @return {Element}
+ */	
+utils.gui.GenericSlider.prototype.getWidget = function () {
+	return this.widget_;
+}
+	
+	
+ /**
+ * @expose
+ * @override
+ */
+utils.gui.GenericSlider.prototype.getValue = function() {
+   return utils.gui.GenericSlider.superClass_.getValue.call(this);
+};
+
+
+
+ /**
+ * @expose
+ * @override
+ */
+utils.gui.GenericSlider.prototype.setValue = function(a) {
+   return utils.gui.GenericSlider.superClass_.setValue.call(this, a);
+};
+ 
 /**
  * @expose
  * @param {Element}
@@ -213,14 +231,14 @@ utils.gui.GenericSlider.prototype.bindToMouseWheel = function (element) {
  * @param {Object} args_
  */
 utils.gui.GenericSlider.prototype.addSlideCallback = function (callback, args_) {
-	//console.log("callback: ", callback.toString())
 	var that = this;
-	if (callback) {
-
-		that.addEventListener(goog.ui.Component.EventType.CHANGE, function (event) {
-			event.stopPropagation();
-			utils.dom.stopPropagation(event);
-			callback(that, args_);
-		});		
-	}	
+	
+	utils.gui.GenericSlider.superClass_.addEventListener.call(this, goog.ui.Component.EventType.CHANGE, function (e) {
+		e.stopPropagation();
+		utils.dom.stopPropagation(e);
+		callback(that, args_, e);
+	});	
+	
 }
+
+//var megaSlider = new utils.gui.GenericSlider();

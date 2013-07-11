@@ -51,7 +51,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			});
 
 			
-			XV.Viewers({'swap' : [source, target]});
+			XV.ViewerManager({'swap' : [source, target]});
 		}
 		
 	}
@@ -96,7 +96,7 @@ Modal.prototype.initViewerDragDrop = function() {
 			//
 			//  set the 'oldDims'
 			//
-			XV.Viewers(function(viewer){
+			XV.ViewerManager(function(viewer){
 				viewer.widget.oldDims = utils.css.dims(viewer.widget);
 			})
 							
@@ -138,16 +138,16 @@ Modal.prototype.initViewerDragDrop = function() {
 Modal.prototype.setViewerDragAndDrop = function () {
 
 	var that = this;
-	var viewerLen = XV.Viewers("total");
+	var viewerLen = XV.ViewerManager("total");
 
 	if (viewerLen > 1) {
 		
 		//	
 	    // Set valid targets for this.draggableWidgets
 		//
-		XV.Viewers(function (viewer) {
+		XV.ViewerManager(function (viewer) {
 			
-			XV.Viewers(function (w) {
+			XV.ViewerManager(function (w) {
 				if (viewer !== w) { 
 					viewer.addTarget(w);
 				}
@@ -167,7 +167,7 @@ Modal.prototype.disableViewerDragAndDrop = function () {
 	
 	var that = this;
 	
-	XV.Viewers(function (viewer) {
+	XV.ViewerManager(function (viewer) {
 
 		goog.events.unlisten(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
 		goog.events.unlisten(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	
@@ -184,7 +184,7 @@ Modal.prototype.enableViewerDragAndDrop = function () {
 	
 	var that = this;
 
-	XV.Viewers(function (viewer) {
+	XV.ViewerManager(function (viewer) {
 		viewer.init();
 		goog.events.listen(viewer, 'drop', that.viewerBoxDragDrop['drop']);	
 		goog.events.listen(viewer, 'dragover', that.viewerBoxDragDrop['dragover']);	

@@ -57,6 +57,8 @@ ScanViewer.prototype.addAdjustSliders = function () {
 
 		sliderKey = SliderName + 'Slider';
 		
+		var bNum, bLabel;
+		
 		 /**
 		 * @type {utils.gui.GenericSlider}
 		 */
@@ -71,27 +73,30 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		}));
 	    
 	        
-		// Callback
-		this[sliderKey].addSlideCallback(function (_slider) {		
-			var sliderVal = _slider.getValue();
-			bNum.innerHTML = Math.round(sliderVal);		
-			that.FrameHolder.imageAdjust(SliderName.toLowerCase(), sliderVal);
-	    });  		
+		
 
 
-	    var bLabel = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
+	    bLabel = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
 	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - GLOBALS.fontSizeMed/2 + 2,
 	    	left: labelLeft
 	    }))
 	    bLabel.innerHTML = SliderName;
 	    
 
-	    var bNum = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
+	    bNum = utils.dom.makeElement("div", that.ScanTabs.getTab("Adjust"), "SliderLabel", utils.dom.mergeArgs(labelCSS, {
 	    	top: sliderMarginTop + (sliderVerticalSpacing * (i)) + imgProcSliderCSS.thumbCSS.height/2 - GLOBALS.fontSizeMed/2 - 2 + 3,
 	    	left: numLeft ,
 	    	fontSize: GLOBALS.fontSizeMed
 	    }))
 	    bNum.innerHTML = "0";
+
+		// Callback
+		this[sliderKey].addSlideCallback(function (_slider) {		
+			var sliderVal = _slider.getValue();
+			console.log("SLIDER VAL ",  sliderVal)
+			bNum.innerHTML = Math.round(sliderVal);		
+			that.FrameHolder.imageAdjust(SliderName.toLowerCase(), sliderVal);
+	    });  
 
 	})
 	

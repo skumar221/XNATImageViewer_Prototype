@@ -11,7 +11,7 @@ SliderLinker.prototype.setViewerClickListen = function (currViewer) {
 	this.showExisting();
 		
 
-	XV.Viewers( function (Viewer) {
+	XV.ViewerManager( function (Viewer) {
 				
 		//
 		//  Make a selector box if it doesn't exist'

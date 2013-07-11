@@ -20,20 +20,18 @@ Viewer = function (args) {
 	 * @type {string}
 	 * @private
 	 */
-	this.currDroppableId_ = undefined;
+	this.currThumbnail_ = undefined;
 	/**
 	 * @param {string}
 	 */	
-	this.setDroppable = function(dId) {
-		if (dId) {
-			this.currDroppableId_ = dId;			
-		}
+	this.setThumbnail = function(t) {
+		this.currThumbnail_ = t;			
 	}
 	/**
 	 * @return {string}
 	 */	
-	this.getDroppable = function() {
-		return this.currDroppableId_;
+	this.getThumbnail = function() {
+		return this.currThumbnail_;
 	}
 
 
@@ -163,6 +161,6 @@ Viewer.prototype.createDragElement = function(srcElt) {
  */
 Viewer.prototype.loadThumbnail = function (thumb) {
 
-	this.setDroppable(thumb.widget.id);
+	this.setThumbnail(thumb);
 	
 }

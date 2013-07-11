@@ -113,10 +113,10 @@ var SliderLinker = function (args) {
 		//
 		//  1. Add the Viewer to the last group
 		//
-		if (groups[groups.length - 1].Viewers.indexOf(Viewer) === -1) {
+		if (groups[groups.length - 1].ViewerManager.indexOf(Viewer) === -1) {
 		
 			//("HERE - last group: ", this.lastGroup().border)
-			groups[groups.length - 1].Viewers.push(Viewer);
+			groups[groups.length - 1].ViewerManager.push(Viewer);
 			
 			//
 			//  Set the border color
@@ -167,14 +167,14 @@ var SliderLinker = function (args) {
 			
 			if (!removed) {
 				
-				tempInd = group.Viewers.indexOf(viewerInGroup);	
+				tempInd = group.ViewerManager.indexOf(viewerInGroup);	
 				
 				if (tempInd > -1) {
 
 					if (clearSelectorBox) {
-						that.clearSelectorBox(group.Viewers[tempInd]);						
+						that.clearSelectorBox(group.ViewerManager[tempInd]);						
 					}					
-					group.Viewers.splice(tempInd, 1);		
+					group.ViewerManager.splice(tempInd, 1);		
 	
 					removed = true;	
 				}									
@@ -198,7 +198,7 @@ var SliderLinker = function (args) {
 			
 			before: function(group, groups) {
 				if (!removed) {
-					tempInd = group.Viewers.indexOf(viewerInGroup);					
+					tempInd = group.ViewerManager.indexOf(viewerInGroup);					
 				}
 			},
 			
@@ -215,7 +215,7 @@ var SliderLinker = function (args) {
 					if (i>0) {
 						groups.splice(findIndex, 1);
 					} else {
-						group.Viewers = [];
+						group.ViewerManager = [];
 					}
 					removed = true;
 				}				
@@ -252,7 +252,7 @@ var SliderLinker = function (args) {
 	this.clearAll_ = function () {
 			
 		
-		XV.Viewers( function (Viewer) {
+		XV.ViewerManager( function (Viewer) {
 				that.removeFromGroup(Viewer, true);
 		});
 
@@ -273,7 +273,7 @@ var SliderLinker = function (args) {
 			if (viewer.widget.id === ID) {
 				return {
 					viewer: viewer,
-					viewerset: group.Viewers
+					viewerset: group.ViewerManager
 				}
 			}
 			
@@ -412,7 +412,7 @@ var SliderLinker = function (args) {
 			}
 			
 			
-			utils.array.forEach(group.Viewers,  function(viewer){
+			utils.array.forEach(group.ViewerManager,  function(viewer){
 			
 				if (callbacks_.during) { 
 					callbacks_.during(viewer, group, groups);
@@ -443,7 +443,7 @@ var SliderLinker = function (args) {
 			},
 			
 			'after' : function(group) {
-				group.Viewers = groups[i].prevViewers;
+				group.ViewerManager = groups[i].prevViewers;
 				group.prevViewers = [];		
 				that.hideExisting();					
 			}
@@ -466,7 +466,7 @@ var SliderLinker = function (args) {
 		//
 		//  Clear all mouse-related events from selectorBoxes
 		//
-		XV.Viewers( function (Viewer) {
+		XV.ViewerManager( function (Viewer) {
 			
 			that.disableSelectorBox_(Viewer.selectorBox);
 			that.hideExisting(500);

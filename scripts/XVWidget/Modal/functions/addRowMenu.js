@@ -65,7 +65,7 @@ Modal.prototype.addRowMenu = function (rowPos, colPos) {
 		left: 0,
 		title: "Insert Row",
 		onclick: function () { 
-			XV.Viewers({"insert" : "row"}); 
+			XV.ViewerManager({"insert" : "row"}); 
 		}	
 	});
 
@@ -75,7 +75,7 @@ Modal.prototype.addRowMenu = function (rowPos, colPos) {
 		left: 23,
 		title: "Remove Row",
 		onclick: function () { 
-			XV.Viewers({"remove" : "row"});  
+			XV.ViewerManager({"remove" : "row"});  
 		}	
 	});
 

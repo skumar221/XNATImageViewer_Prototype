@@ -1,5 +1,6 @@
 goog.provide('utils.gui.ProgressBar');
 goog.require('goog.ui.ProgressBar')
+
 utils.gui.ProgressBar = function (parent, args) {
 
   
@@ -108,3 +109,11 @@ utils.gui.ProgressBar = function (parent, args) {
 }
 
 goog.exportSymbol('utils.gui.ProgressBar', utils.gui.ProgressBar);
+
+ /**
+ * @expose
+ * @override
+ */
+utils.gui.ProgressBar.prototype.hide = function() {
+   return utils.gui.ProgressBar.superClass_.hide.call(this);
+};
