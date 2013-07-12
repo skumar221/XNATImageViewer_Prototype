@@ -1,10 +1,11 @@
 goog.require('goog.fx')
 goog.require('utils.css.setCSS');
 goog.require('XVGlobals');
+goog.require('imageProcessing')
 
 goog.provide('xmiv');
-//xmiv = {};
-//goog.exportSymbol('xmiv', xmiv);
+xmiv = function(){};
+goog.exportSymbol('xmiv', xmiv);
 
 goog.provide('xmiv.start');
 xmiv.start = function () {
@@ -27,7 +28,7 @@ xmiv.start = function () {
 		parent : document.body
 	});	
 	
-		
+	IP = new imageProcessing();
 }
 
 goog.exportSymbol('xmiv.start', xmiv.start);

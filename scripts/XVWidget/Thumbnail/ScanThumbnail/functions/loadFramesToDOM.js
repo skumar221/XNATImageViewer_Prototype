@@ -1,6 +1,10 @@
 
+goog.require('ScanThumbnail');
+goog.require('Thumbnail');
+goog.require('goog.net.ImageLoader');
+goog.require('goog.events');
 
-
+goog.provide('ScanThumbnail.loadFramesToDOM');
 ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 
 	var that = this;
@@ -19,10 +23,12 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 		if (!this.frames[i]['img']) {
 			if (args['viewPlane'] && viewPlane === args['viewPlane']) {
 				loadQueue.push(this.frames[i]['src']);
+				
 			}		
 		} else {
 			//utils.dom.debug("image already loaded!: ", this.frames[i]['img'])
 		}
+		
 	}
 	
 
@@ -33,10 +39,16 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 	if (loadQueue.length === 0) {
 		
 		XV.ViewerManager( function (Viewer, i, j) { 
+			
+			
+			
+			
 			if (Viewer.FrameHolder.currDroppable === that) {
+				
 				utils.dom.debug("Using cached images for " + Viewer.FrameHolder.currViewPlane + " plane.");
 				Viewer.FrameHolder.loadCurrViewPlane();	
 			}	
+			
 		})
 		
 	} else {
@@ -56,17 +68,19 @@ ScanThumbnail.prototype.loadFramesToDOM = function (args) {
 			imageLoader.addImage(id, loadQueue[i]);	
 		}
 		
+		
 		imageLoader.start();
+		
 	}
 }
+goog.exportProperty(ScanThumbnail.prototype, 'loadFramesToDOM', ScanThumbnail.prototype.loadFramesToDOM);
 
+goog.provide('Thumbnail.pathSplitter');
 Thumbnail.prototype.pathSplitter = function (path) {	
 	
 	splitStrs = path.split("testscans");
 	
 }
+goog.exportProperty(Thumbnail.prototype, 'viewPlaneLoaded', Thumbnail.prototype.viewPlaneLoaded);
 
-Thumbnail.prototype.viewPlaneLoaded = function (viewPlane) {
-	
-	
-}
+

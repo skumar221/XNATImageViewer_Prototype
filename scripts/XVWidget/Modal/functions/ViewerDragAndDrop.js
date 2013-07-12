@@ -1,3 +1,8 @@
+goog.require('Modal');
+goog.provide('Modal.enableViewerDragAndDrop');
+goog.provide('Modal.setViewerDragAndDrop');
+goog.provide('Modal.disableViewerDragAndDrop');
+goog.provide('Modal.initViewerDragAndDrop');
 /**
  * @protected
  */
@@ -134,6 +139,7 @@ Modal.prototype.initViewerDragDrop = function() {
 
 /**
  * @protected
+ * @expose
  */
 Modal.prototype.setViewerDragAndDrop = function () {
 
@@ -194,3 +200,7 @@ Modal.prototype.enableViewerDragAndDrop = function () {
 	
 
 }
+goog.exportProperty(Modal.prototype, 'enableViewerDragAndDrop', Modal.prototype.enableViewerDragAndDrop);
+goog.exportProperty(Modal.prototype, 'disableViewerDragAndDrop', Modal.prototype.disableViewerDragAndDrop);
+goog.exportProperty(Modal.prototype, 'setViewerDragAndDrop', Modal.prototype.setViewerDragAndDrop);
+goog.exportProperty(Modal.prototype, 'initViewerDragAndDrop', Modal.prototype.initViewerDragAndDrop);

@@ -13,7 +13,7 @@ ScanViewer = function (args) {
 						
 	Viewer.call(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
 	//goog.base(this, utils.dom.mergeArgs(ScanViewer.prototype.defaultArgs, args));
-	
+		
 
 	var that = this;
 	
@@ -29,11 +29,14 @@ ScanViewer = function (args) {
 	 	"borderWidth": 0
 	 });
 	this.FrameHolder.Viewer = this;
-
+	
  	
 	/*
 	 *	Modify the FrameHolder such that it lets "this"
 	 *  know of the currentScan when it's dropped in.
+	 */
+	/**
+	 * @protected
 	 */
 	this.FrameHolder.addOnloadCallback(function () {
 		var t = that.getThumbnail();
@@ -42,7 +45,7 @@ ScanViewer = function (args) {
 		}
 	})
 
-
+	
 
 
 	//----------------------------------
@@ -51,7 +54,7 @@ ScanViewer = function (args) {
  	this.addViewPlaneMenu();
 	//this.addLinkMenu(); 	
 
-
+	
 
 	 //----------------------------------
 	 // SLIDER
@@ -59,7 +62,7 @@ ScanViewer = function (args) {
 	this.addFrameSlider();
 
 
-
+	
 
 	//----------------------------------
 	// CONTENT DIVIDER
@@ -75,7 +78,7 @@ ScanViewer = function (args) {
 	});
 
 
-
+	
 
 	
 	//----------------------------------
@@ -94,10 +97,12 @@ ScanViewer = function (args) {
 		}
 		
 	});
+	
+	
 	this.linkContentDividerToScanTabs();
 	
 
-
+	
 	
 	//----------------------------------
 	// ADJUST / IMAGE PROCESSING SLIDERS
@@ -194,6 +199,7 @@ ScanViewer.prototype.loadThumbnail = function (thumb) {
 	
 	ScanViewer.superClass_.loadThumbnail.call(this, thumb);
 	this.FrameHolder.loadThumbnail(thumb); 
+	
 	
 }
 

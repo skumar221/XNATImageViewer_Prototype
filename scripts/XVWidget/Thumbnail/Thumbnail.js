@@ -102,6 +102,7 @@ Thumbnail = function (args) {
 }
 goog.inherits(Thumbnail, XVWidget);
 goog.inherits(Thumbnail, goog.fx.DragDrop);
+goog.exportSymbol('Thumbnail', Thumbnail);
 
 
 /**

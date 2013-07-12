@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.animateModal');
 //goog.provide('goog.fx.dom');
 //goog.provide('goog.fx.AnimationQueue');
 
@@ -99,3 +101,4 @@ Modal.prototype.animateModal  = function (callback) {
 		
 		animQueue.play();
 }
+goog.exportProperty(Modal.prototype, 'animateModal', Modal.prototype.animateModal);

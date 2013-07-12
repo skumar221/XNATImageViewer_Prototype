@@ -5,6 +5,7 @@
 
 goog.require('XVWidget');
 goog.require('XVGlobals');
+goog.require('goog.fx.DragDrop');
 goog.provide('Viewer');
 
 
@@ -25,9 +26,12 @@ Viewer = function (args) {
 	this.currThumbnail_ = undefined;
 	/**
 	 * @param {string}
+	 * @private
 	 */	
 	this.setThumbnail = function(t) {
-		this.currThumbnail_ = t;			
+		
+		this.currThumbnail_ = t;		
+			
 	}
 	/**
 	 * @return {string}
@@ -159,7 +163,6 @@ Viewer.prototype.createDragElement = function(srcElt) {
 
 /**
  * @param {Element}
- * @protected
  */
 Viewer.prototype.loadThumbnail = function (thumb) {
 

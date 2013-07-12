@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.populateData');
 //******************************************************
 //  Fill in metadata -- this will likely change as it gets 
 //  deployed to the web...
@@ -68,3 +70,5 @@ ScanViewer.prototype.populateData = function (data) {
 	// NOTE:  Ajax query would be here
 	makeSessionInfoData(data.sessionInfo);
 }
+
+goog.exportProperty(ScanViewer.prototype, 'populateData', ScanViewer.prototype.populateData);

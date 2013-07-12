@@ -1,3 +1,5 @@
+goog.require('FrameHolder');
+goog.provide('FrameHolder.updateCSS');
 //******************************************************
 //  updateCSS
 //
@@ -25,3 +27,4 @@ FrameHolder.prototype.updateCSS = function (args) {
 	//
 	this.drawFrame(this.currFrame); 
 }
+goog.exportProperty(FrameHolder.prototype, 'updateCSS', FrameHolder.prototype.updateCSS);

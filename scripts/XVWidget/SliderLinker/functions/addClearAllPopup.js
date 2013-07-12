@@ -1,3 +1,6 @@
+goog.require('SliderLinker')
+
+goog.provide('SliderLinker.addClearAllPopup');
 SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	
 	this.takeSnapshot_();	
@@ -38,3 +41,4 @@ SliderLinker.prototype.addClearAllPopup = function (currViewer, message) {
 	});
 		
 }
+goog.exportProperty(SliderLinker.prototype, 'addClearAllPopup', SliderLinker.prototype.addClearAllPopup);

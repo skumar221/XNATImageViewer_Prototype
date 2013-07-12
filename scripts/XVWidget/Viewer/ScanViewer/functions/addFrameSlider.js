@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.addFrameSlider');
 /**
  * @protected
  */	
@@ -66,3 +68,4 @@ ScanViewer.prototype.addFrameSlider = function () {
 
 
 }
+goog.exportProperty(ScanViewer.prototype, 'addFrameSlider', ScanViewer.prototype.addFrameSlider);

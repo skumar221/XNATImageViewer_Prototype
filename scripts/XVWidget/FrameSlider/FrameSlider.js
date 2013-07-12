@@ -87,11 +87,9 @@ FrameSlider = function (args) {
 		
 	});
 
-	
-
 }
 goog.inherits(FrameSlider, utils.gui.GenericSlider);
-
+goog.exportSymbol('FrameSlider', FrameSlider);
 
 
 FrameSlider.prototype.updateCSS = function(args) {

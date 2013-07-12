@@ -1,3 +1,6 @@
+goog.require('ScanTabs');
+goog.provide('ScanTabs.addTabs');
+
 ScanTabs.prototype.addTabs = function() {
 	
 	var that = this;
@@ -87,3 +90,5 @@ ScanTabs.prototype.addTabs = function() {
 
 	})
 }
+
+goog.exportProperty(ScanTabs.prototype, 'addTabs', ScanTabs.prototype.addTabs);

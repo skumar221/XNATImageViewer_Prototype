@@ -1,3 +1,5 @@
+goog.require('SliderLinker')
+goog.provide('SliderLinker.addLinkMenuPopup');
 SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	
 	this.takeSnapshot_();
@@ -40,3 +42,4 @@ SliderLinker.prototype.addLinkMenuPopup = function (currViewer, message) {
 	});
 
 }
+goog.exportProperty(SliderLinker.prototype, 'addLinkMenuPopup', SliderLinker.prototype.addLinkMenuPopup);

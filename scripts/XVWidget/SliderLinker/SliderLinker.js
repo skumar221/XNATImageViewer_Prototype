@@ -505,7 +505,6 @@ SliderLinker.prototype.processGroups = function () {
  * @private
  */
 SliderLinker.prototype.sliderlink_mouseover = function (event) {	
-	console.log('sliderlink - mouseover', event);	
 	//
 	//  Get the linked set based on the event.currentTarget.id
 	//
@@ -535,7 +534,6 @@ SliderLinker.prototype.sliderlink_mouseover = function (event) {
  * @private
  */
 SliderLinker.prototype.sliderlink_mouseout =  function (event) {	
-	console.log('sliderlink - mouseout: ', event);				
 	var set = XVGlobals.SliderLinker.getViewerSetFromID(event.currentTarget.id);
 	
 	if (set) {				

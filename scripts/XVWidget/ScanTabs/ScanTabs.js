@@ -5,6 +5,7 @@
 //
 //******************************************************
 goog.require('XVWidget');
+goog.require('goog.ui.TabPane');
 goog.require('XVGlobals');
 
 goog.provide('ScanTabs');
@@ -93,7 +94,7 @@ ScanTabs = function (args) {
 
 }
 goog.inherits(ScanTabs, XVWidget);
-
+goog.exportSymbol('ScanTabs', ScanTabs)
 
 
 

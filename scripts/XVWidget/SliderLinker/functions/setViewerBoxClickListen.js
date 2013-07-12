@@ -1,3 +1,5 @@
+goog.require('SliderLinker')
+goog.provide('SliderLinker.setViewerClickListen');
 //******************************************************
 //  
 //
@@ -59,3 +61,4 @@ SliderLinker.prototype.setViewerClickListen = function (currViewer) {
 	});
 
 }
+goog.exportProperty(SliderLinker.prototype, 'setViewerClickListen', SliderLinker.prototype.setViewerClickListen);

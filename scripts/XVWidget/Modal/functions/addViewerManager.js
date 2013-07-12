@@ -1,3 +1,9 @@
+goog.require('ScanThumbnail');
+goog.require('ScanViewer');
+//goog.require('SlicerThumbnail');
+//goog.require('SlicerViewer');
+goog.require('Modal');
+goog.provide('Modal.addViewerManager');
 
 
 Modal.prototype.addViewerManager = function () {
@@ -18,9 +24,13 @@ Modal.prototype.addViewerManager = function () {
 		
 		
 		function runViewersChangedCallbacks() {
+			
 			if (ViewersChangedCallbacks.length > 0) {
-				utils.array.forEach(ViewersChangedCallbacks, function(item) {
-					item();					
+				
+				utils.array.forEach(ViewersChangedCallbacks, function(a) {
+					
+					a();
+										
 				});
 			}	
 		}
@@ -267,38 +277,39 @@ Modal.prototype.addViewerManager = function () {
 					var newColumn = [];
 					var columnLen = (viewers.length) ? viewers.length : 1;
 					var i;
-	
+					
 					for (var i = 0; i < columnLen; i++) {					
 						newColumn.push(makeViewer());						
 					}
 					
 					if (viewers.length === 0) {
-
+							
 						viewers.push([newColumn[0]]);
-						
+					
 					} else {
-						
+							
 						utils.array.forEach(viewers, function(ViewerRow, i) {
 							ViewerRow.push(newColumn[i]);
 						})			
-									
+								
 					}
 					
 					newSet = newColumn;
 				}	
 				
 				if (!animOff) {
-
+						
 					utils.array.forEach(newSet, function(newSetViewer) {
 						newSetViewer.widget.style.opacity = 0;
 					})
-					
+						
 					this.animateModal();	
+						
 										
 				} else {
-					
+						
 					that.updateCSS();
-					
+						
 				}	
 			}
 			
@@ -348,6 +359,7 @@ Modal.prototype.addViewerManager = function () {
 				}	
 			}
 			
+			
 			loop(function(viewer){
 				viewer.hoverOut();
 			})
@@ -357,7 +369,7 @@ Modal.prototype.addViewerManager = function () {
 		if (isInsert || isRemove) {
 			
 			runViewersChangedCallbacks();
-		
+			
 		}
 
 					
@@ -393,17 +405,24 @@ Modal.prototype.addViewerManager = function () {
 			loop(function (viewer, i, j) {
 				
 				if (viewer === oldViewer) {
+					
 					viewers[i][j] = newViewer;
 					oldViewer.widget.parentNode.removeChild(oldViewer.widget);
 					delete oldViewer;	
+					
 				}
 				
 			})
+			
 			newViewer.loadThumbnail(Thumbnail);
+			
 			that.manageActiveThumbs(newViewer, Thumbnail);	
+			
 			runViewersChangedCallbacks();
+			
 		}
 	
 	}
 
 }
+goog.exportProperty(Modal.prototype, 'addViewerManager', Modal.prototype.addViewerManager);

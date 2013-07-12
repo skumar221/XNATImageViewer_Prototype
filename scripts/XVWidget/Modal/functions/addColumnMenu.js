@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.addColumnMenu');
 //******************************************************
 //  Expand button
 //
@@ -77,3 +79,5 @@ Modal.prototype.addColumnMenu = function () {
 		}	
 	});
 }
+
+goog.exportProperty(Modal.prototype, 'addColumnMenu', Modal.prototype.addColumnMenu);

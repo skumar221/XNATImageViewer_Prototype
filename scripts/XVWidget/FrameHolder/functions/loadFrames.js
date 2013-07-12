@@ -1,3 +1,5 @@
+goog.require('FrameHolder');
+goog.provide('FrameHolder.loadFrames');
 //******************************************************
 //  Loads all of the frames as Image objects, and stores
 //  them in an array.
@@ -17,7 +19,7 @@ FrameHolder.prototype.loadFrames = function (frames) {
 
 	
 	// Need to get the appropriate contrast threshold for the data set.
-	this.args.contrastThreshold = thresholdAutoDetect(imageData.data);
+	this.args.contrastThreshold = IP.thresholdAutoDetect(imageData.data);
 
 	
 	// Run any callbacks once everything is loaded
@@ -25,3 +27,4 @@ FrameHolder.prototype.loadFrames = function (frames) {
 		callback(this.widget);
 	})		    		
 }
+goog.exportProperty(FrameHolder.prototype, 'loadFrames', FrameHolder.prototype.loadFrames);

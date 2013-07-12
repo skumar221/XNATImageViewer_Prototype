@@ -124,7 +124,7 @@ ContentDivider = function (args) {
 	this.updateCSS();	
 }
 goog.inherits(ContentDivider, XVWidget);
-
+goog.exportSymbol('ContentDivider', ContentDivider);
 
 
 /**

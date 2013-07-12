@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.linkContentDividerToScanTabs');
 ScanViewer.prototype.linkContentDividerToScanTabs = function () {
 	
 	var that = this;
@@ -23,3 +25,4 @@ ScanViewer.prototype.linkContentDividerToScanTabs = function () {
 
 		
 }
+goog.exportProperty(ScanViewer.prototype, 'linkContentDividerToScanTabs', ScanViewer.prototype.linkContentDividerToScanTabs);

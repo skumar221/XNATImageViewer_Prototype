@@ -5,6 +5,7 @@
 goog.require('XVGlobals');
 goog.require('XVWidget');
 
+
 goog.provide('Modal');
 
 /**
@@ -88,29 +89,27 @@ Modal = function (args) {
 	 */
 	this.dragDropThumbnails = [];
 	
-	console.log("addScrollGallery: ", this.addScrollGallery)
+	
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
-	this.addScrollGallery();	
+	that.addScrollGallery();	
 	
-	console.log("addRowMenu")
-
 	//----------------------------------
 	//	ROW MENU
 	//----------------------------------	
-	this.addRowMenu();
+	that.addRowMenu();
 
 	
 	//----------------------------------
 	//	COLUMN MENU
 	//----------------------------------
-	this.addColumnMenu();
+	that.addColumnMenu();
 	
 
 
-	this.initThumbnailDragDrop();
-	this.initViewerDragDrop();
+	that.initThumbnailDragDrop();
+	that.initViewerDragDrop();
 	
 
 	
@@ -119,30 +118,29 @@ Modal = function (args) {
 	//----------------------------------
 	//	SCAN VIEWERS
 	//----------------------------------	
-	this.addViewerManager();
-	this.ViewerManager({
+	that.addViewerManager();
+	that.ViewerManager({
 		'addViewersChangedCallback' : function() {
 			that.setThumbnailDragAndDrop();
 			that.setViewerDragAndDrop();
 		}
 	})
-
-	this.ViewerManager({
+	that.ViewerManager({
 		"insert" : "column",
 		"animate" : "off"
 	});
-
-	this.ViewerManager({
+	that.ViewerManager({
 		"insert" : "column",
 		"animate" : "off"
 	});
 	
-	
 
 	
 	
 	
-	this.updateCSS();
+	that.updateCSS();
+	
+	
 }
 
 goog.inherits(Modal, XVWidget);

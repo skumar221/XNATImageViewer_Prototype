@@ -1,3 +1,5 @@
+goog.require('FrameHolder');
+goog.provide('FrameHolder.loadFramesByViewPlane');
 //******************************************************
 //  Method for handling objects that are "Droppable".
 //  In this case, they are the Thumbnails.
@@ -16,3 +18,4 @@ FrameHolder.prototype.loadFramesByViewPlane = function (viewPlane) {
 	this.loadFrames(frames);
 	
 }
+goog.exportProperty(FrameHolder.prototype, 'loadFramesByViewPlane', FrameHolder.prototype.loadFramesByViewPlane);

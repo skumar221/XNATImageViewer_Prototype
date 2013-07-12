@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.manageActiveThumbs');
 //******************************************************
 //  Manage Active Thumbs
 //******************************************************
@@ -35,3 +37,4 @@ Modal.prototype.manageActiveThumbs = function () {
 
 	
 }
+goog.exportProperty(Modal.prototype, 'manageActiveThumbs', Modal.prototype.manageActiveThumbs);

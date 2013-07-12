@@ -17,7 +17,7 @@ FrameHolder = function(args) {
 	goog.base(this, utils.dom.mergeArgs(FrameHolder.prototype.defaultArgs, args));
 	//XVWidget.call(this, utils.dom.mergeArgs(this.prototype.defaultArgs, args));
 	
-	//console.log(this.prototype.defaultArgs)	
+		
 	
 	this.currFrame = this.args.onloadFrame;
 	
@@ -78,7 +78,7 @@ FrameHolder = function(args) {
 
 }
 goog.inherits(FrameHolder, XVWidget);
-
+goog.exportSymbol('FrameHolder', FrameHolder)
 
 
 /**
@@ -278,10 +278,10 @@ FrameHolder.prototype.imageAdjust = function (methodType, value) {
 		for (var i in this.adjustMethods) {
 			switch (i) {
 				case "brightness":
-					imageData.data = linearBrightness(imageData.data, this.adjustMethods[i]);
+					imageData.data = IP.linearBrightness(imageData.data, this.adjustMethods[i]);
 					break;
 				case "contrast":
-					imageData.data = linearContrast(imageData.data, this.adjustMethods[i], this.defaultArgs.contrastThreshold);
+					imageData.data = IP.linearContrast(imageData.data, this.adjustMethods[i], this.defaultArgs.contrastThreshold);
 					break;
 			}
 		}

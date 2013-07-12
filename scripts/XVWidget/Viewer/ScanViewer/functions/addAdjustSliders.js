@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.addAdjustSliders');
 //******************************************************
 //  
 //
@@ -93,7 +95,7 @@ ScanViewer.prototype.addAdjustSliders = function () {
 		// Callback
 		this[sliderKey].addSlideCallback(function (_slider) {		
 			var sliderVal = _slider.getValue();
-			console.log("SLIDER VAL ",  sliderVal)
+			
 			bNum.innerHTML = Math.round(sliderVal);		
 			that.FrameHolder.imageAdjust(SliderName.toLowerCase(), sliderVal);
 	    });  
@@ -101,3 +103,4 @@ ScanViewer.prototype.addAdjustSliders = function () {
 	})
 	
 }
+goog.exportProperty(ScanViewer.prototype, 'addAdjustSliders', ScanViewer.prototype.addAdjustSliders);

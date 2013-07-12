@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.addRowMenu');
 //******************************************************
 //  Expand button
 //
@@ -80,3 +82,5 @@ Modal.prototype.addRowMenu = function (rowPos, colPos) {
 	});
 
 }
+
+goog.exportProperty(Modal.prototype, 'addRowMenu', Modal.prototype.addRowMenu);

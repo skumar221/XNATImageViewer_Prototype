@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.addViewPlaneMenu');
 //******************************************************
 //  
 //
@@ -273,3 +275,4 @@ ScanViewer.prototype.addViewPlaneMenu = function () {
 	setHoverEvents();
 
 }
+goog.exportProperty(ScanViewer.prototype, 'addViewPlaneMenu', ScanViewer.prototype.addViewPlaneMenu);

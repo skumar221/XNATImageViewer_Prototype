@@ -3,11 +3,13 @@
 //
 //******************************************************
 
+goog.provide('ScrollGallery');
 
 goog.require('XVWidget');
 goog.require('XVGlobals');
+goog.require('goog.ui.AnimatedZippy');
 
-goog.provide('ScrollGallery');
+
 /**
  * @constructor
  * @extends {XVWidget}
@@ -54,7 +56,9 @@ ScrollGallery = function (args) {
 	//-------------------------------
 	// THE SLIDER
 	//-------------------------------	
-		 
+	/**
+	 * @protected
+	 */
 	this.ContentSlider = new utils.gui.GenericSlider({
 		parent: this.widget,
 		className: "ContentSlider",
@@ -71,11 +75,12 @@ ScrollGallery = function (args) {
 		}
 	});
 	
-
+	
 	this.ContentSlider.addSlideCallback(that.moveContents, that);  
 	this.ContentSlider.bindToMouseWheel(that.widget);
 
 	this.updateCSS();
+
 }
 goog.inherits(ScrollGallery, XVWidget);
 goog.exportSymbol('ScrollGallery', ScrollGallery)
@@ -185,6 +190,9 @@ ScrollGallery.prototype.moveContents = function (Slider, that) {
 //******************************************************
 //  Sets contents.
 //******************************************************
+/**
+ * @expose
+ */
 ScrollGallery.prototype.addContentToZippy = function (header, contents) {
   
 	var that = this;
@@ -204,6 +212,9 @@ ScrollGallery.prototype.addContentToZippy = function (header, contents) {
 //******************************************************
 //  UpdateCSS
 //******************************************************
+/**
+ * @expose
+ */
 ScrollGallery.prototype.updateCSS = function (args) {
 
 
@@ -223,14 +234,19 @@ ScrollGallery.prototype.updateCSS = function (args) {
 
 
 
-
-ScrollGallery.prototype.getScrollables = function(h1, h2) {
-	return this.Scrollables[h1][h2];	
+/**
+ * @expose
+ */
+ScrollGallery.prototype.getScrollables = function(a, b) {
+	
+	return this.Scrollables[a][b];	
 }
 
 
 
-
+/**
+ * @expose
+ */
 ScrollGallery.prototype.addZippy = function(zKey) {
 
 
@@ -325,11 +341,12 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 	// CREATE ZIPPY
 	//	
 	zippy = new goog.ui.AnimatedZippy(header, content, false);
+	
 	this.Scrollables[zKey]['zippy'] = zippy;
 
 
 
-
+	
 	//
 	// SET EXPAND METHOD
 	//	

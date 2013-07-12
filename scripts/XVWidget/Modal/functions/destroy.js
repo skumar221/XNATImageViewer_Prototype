@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.destroy');
 //*******************************a***********************
 //  Clears the modal out of the DOM.
 //
@@ -14,3 +16,4 @@ Modal.prototype.destroy = function (fadeOut) {
 		}
 	});
 }
+goog.exportProperty(Modal.prototype, 'destroy', Modal.prototype.destroy);

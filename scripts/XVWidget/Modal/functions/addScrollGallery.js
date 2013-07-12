@@ -1,38 +1,44 @@
-goog.require('Modal')
+goog.require('Modal');
 goog.provide('Modal.addScrollGallery')
 
 /**
  * @private
+ * @expose
  */
-Modal.prototype.addScrollGallery = function (rowPos) {	
-	console.log("here")
+Modal.prototype.addScrollGallery = function () {	
 	var that = this;
 
 
 	//----------------------------------
 	//	SCROLL GALLERY
 	//----------------------------------
-	
+	/**
+	 * @expose
+	 */
 	this.ScrollGallery = new ScrollGallery({
-		parent: this.modal,
+		parent: that.modal,
 		orientation: "vertical",
 		widgetCSS: {
 			left: 0,
-			top: this.args.marginTop,
+			top: that.args.marginTop,
 			height: 700
 		}
 	});	
 
-
+	
 	
 	//----------------------------------
 	//	SCAN THUMBNAIL
 	//----------------------------------
 	// AJAX HERE
 	var scanKey = 'Scans';
-	this.ScrollGallery.addZippy(scanKey);
-	var thumbContents = this.ScrollGallery.getScrollables(scanKey , 'content');
+	
+	that.ScrollGallery.addZippy(scanKey);
+	
+	var thumbContents = that.ScrollGallery.getScrollables(scanKey , 'content');
 	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
+	
+	
 	
 	
 	utils.array.forEach(that.scanDataPaths, function(dataPath) { 
@@ -61,8 +67,8 @@ Modal.prototype.addScrollGallery = function (rowPos) {
 	//--------------------------------
 	// AJAX HERE
 	var slicerKey = 'Slicer'
-	this.ScrollGallery.addZippy(slicerKey);
-	var thumbContents = this.ScrollGallery.getScrollables(slicerKey , 'content');
+	that.ScrollGallery.addZippy(slicerKey);
+	var thumbContents = that.ScrollGallery.getScrollables(slicerKey , 'content');
 	var thumbContentsWidth = utils.css.dims(thumbContents, 'width');
 	
 						//

@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.updateCSS');
 //******************************************************
 //  UpdateCSS
 //
@@ -145,3 +147,4 @@ ScanViewer.prototype.updateCSS = function (args) {
 		});				
 	} 	
 }
+goog.exportProperty(ScanViewer.prototype, 'updateCSS', ScanViewer.prototype.updateCSS);

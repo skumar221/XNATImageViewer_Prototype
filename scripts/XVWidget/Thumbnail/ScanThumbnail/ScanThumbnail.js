@@ -4,7 +4,8 @@
 //
 //*******************************************************
 
-//goog.require('goog.array');
+goog.require('goog.dom');
+goog.require('goog.events');
 goog.require('Thumbnail');
 
 
@@ -18,8 +19,6 @@ goog.provide('ScanThumbnail');
  * @extends {Thumbnail}
  */
 ScanThumbnail = function (scanData, args) {
-	
-
 
 	Thumbnail.call(this, utils.dom.mergeArgs(ScanThumbnail.prototype.defaultArgs, args));
 
@@ -40,7 +39,8 @@ ScanThumbnail = function (scanData, args) {
 	* @protected
 	*/	
 
-	this.ThumbnailImage.src = this.scanData.sagittalPaths[Math.round(this.scanData.sagittalPaths.length/2)]; 
+
+	this.ThumbnailImage.src = this.scanData['sagittalPaths'][Math.round(that.scanData['sagittalPaths'].length/2)]; 
 	
 	
 	
@@ -53,12 +53,12 @@ ScanThumbnail = function (scanData, args) {
 	* @type {function(string)}
 	*/		
 	function populateFramesObject(viewPlane) {
-		
+
 		var pathNames = that.getFrameList(viewPlane);
 
 		that[viewPlane + "FrameCount"] = pathNames.length;
 		that[viewPlane + "LoadCount"] = 0;
-		
+
 		utils.array.forEach(pathNames, function(pathName){			
 			that.frames[that.pathMolder(pathName)] = {
 				'viewPlane': viewPlane, 
@@ -68,6 +68,9 @@ ScanThumbnail = function (scanData, args) {
 
 	}
 
+	/**
+	 * @expose
+	 */
 	this.getFrames = function (args1) {
 
 		var isObject = (typeof args1 === 'object');
@@ -114,11 +117,11 @@ ScanThumbnail = function (scanData, args) {
 	populateFramesObject("sagittal");
 	populateFramesObject("coronal");
 	populateFramesObject("transverse");
-
+	
 
 	this.ThumbnailCanvas.metaText = [];
-	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData.sessionInfo["Scan"].value);
-	this.ThumbnailCanvas.metaText[1] = this.scanData.sessionInfo["type"].value.toString().toLowerCase();
+	this.ThumbnailCanvas.metaText[0] = utils.convert.toInt(this.scanData['sessionInfo']["Scan"].value);
+	this.ThumbnailCanvas.metaText[1] = this.scanData['sessionInfo']["type"].value.toString().toLowerCase();
 	this.ThumbnailCanvas.metaText[2] = this.scanData["sagittalPaths"].length.toString().toLowerCase();
 	
 	
@@ -135,7 +138,7 @@ ScanThumbnail = function (scanData, args) {
 
 }
 goog.inherits(ScanThumbnail, Thumbnail);
-
+goog.exportSymbol('ScanThumbnail', ScanThumbnail)
 
 
 
@@ -194,10 +197,11 @@ ScanThumbnail.prototype.defaultArgs = {
 
 /**
 * @type {function(string)}
+* @expose
 */
 ScanThumbnail.prototype.getFrameList = function (type) {
 
-	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
+	return (type === "sagittal") ? this.scanData['sagittalPaths'] : (type === "transverse") ? this.scanData['axialPaths'] : this.scanData['coronalPaths'];
 }
 
 
@@ -206,6 +210,9 @@ ScanThumbnail.prototype.getFrameList = function (type) {
 //*****************************************
 // WINDOW RESIZING
 //*****************************************
+/**
+ * @expose
+ */
 ScanThumbnail.prototype.updateCSS = function () {
 
 }
@@ -231,6 +238,6 @@ ScanThumbnail.prototype.addActivatedCallback = function (callback) {
 */
 Thumbnail.prototype.getFrameList = function (type) {
 
-	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
+	return (type === "sagittal") ? this.scanData['sagittalPaths'] : (type === "transverse") ? this.scanData['axialPaths'] : this.scanData['coronalPaths'];
 }
 

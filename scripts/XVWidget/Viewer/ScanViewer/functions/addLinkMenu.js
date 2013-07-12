@@ -1,3 +1,5 @@
+goog.require('ScanViewer');
+goog.provide('ScanViewer.addLinkMenu');
 
 
 
@@ -257,3 +259,4 @@ ScanViewer.prototype.addLinkMenu = function () {
 
 
 }
+goog.exportProperty(ScanViewer.prototype, 'addLinkMenu', ScanViewer.prototype.addLinkMenu);

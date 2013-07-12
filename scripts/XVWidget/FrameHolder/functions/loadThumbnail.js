@@ -1,3 +1,7 @@
+goog.require('FrameHolder');
+goog.require('utils.fx.fadeOut');
+goog.require('utils.fx.fadeIn');
+goog.provide('FrameHolder.loadCurrViewPlane');
 FrameHolder.prototype.loadCurrViewPlane = function () {
 	
 	var that = this;
@@ -20,19 +24,19 @@ FrameHolder.prototype.loadCurrViewPlane = function () {
 		that.loadFramesByViewPlane(that.currViewPlane);				
 	}		
 }
+goog.exportProperty(FrameHolder.prototype, 'loadCurrViewPlane', FrameHolder.prototype.loadCurrViewPlane);
 
-
-
+goog.provide('FrameHolder.loadThumbnail');
 FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 
 	var that = this;
-
+	
 	if (droppable.frames) {
 
 		var that = this;		
 		this.currDroppable = droppable;		
 		this.currViewPlane = (viewPlane) ? viewPlane : "sagittal";
-
+		
 	 	
 		//---------------------------------
 		// asyc Image loading
@@ -56,23 +60,23 @@ FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 				});
 				utils.fx.fadeOut(that.canvas, 0);
 				that.progBar.show();	
-							
+				
 			},
 			
 			"load" : function (img) {
 			
 				var mPath = that.currDroppable.pathMolder(img.src);
-				//utils.dom.debug("preload")
+				console.log("preload")
 				
 				var preload = that.currDroppable.getFrames({
 					'viewPlane' : that.currViewPlane,
 					'filter' : 'img'
 				});
 				
-				//utils.dom.debug(preload[0])
+				console.log("During load", preload[0])
 				var viewPlaneStr = "<b>" + that.currViewPlane.charAt(0).toUpperCase() + that.currViewPlane.slice(1) + "</b>";	
-				var loadStr = "<br> Scan " + (that.currDroppable.scanData.sessionInfo["Scan"].value).toString() + " - " + viewPlaneStr + "<br>";
-						
+				var loadStr = "<br> Scan " + (that.currDroppable.scanData['sessionInfo']["Scan"]['value']).toString() + " - " + viewPlaneStr + "<br>";
+					
 				//---------------------------------
 				// Update progress bar
 				//---------------------------------
@@ -83,17 +87,19 @@ FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 				// this makes sure that we're putting the image back
 				// with the correct scanThumbnail
 				if (that.currDroppable.frames[mPath]) {
-
+					console.log("here?")
 					// increments
 					that.currDroppable.frames[mPath]['img'] = img;			
 					that.progBar.update({"add": 1});
-
+					console.log("does it not like here?")
 				}
-
+				
 			},
 			
 			"complete" : function () {
+				
 				that.loadCurrViewPlane();
+				
 			}
 		})
 	}
@@ -102,3 +108,5 @@ FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 	}
 
 }
+goog.exportProperty(FrameHolder.prototype, 'loadThumbnail', FrameHolder.prototype.loadThumbnail);
+

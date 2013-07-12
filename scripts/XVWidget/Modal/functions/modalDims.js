@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.modalDims');
 //******************************************************
 //  Calculates the modal dimensions based on pixed values.
 //  translates them to other representaions accordingly.
@@ -77,8 +79,8 @@ Modal.prototype.modalDims = function (conversion) {
 	// SCROLL GALLERY DIMS
 	//-------------------------	
 	var ScrollGalleryCSS = {
-		height: Math.round(modalHeight) - XVGlobals.expandButtonWidth*2,
-		top: XVGlobals.expandButtonWidth
+		'height': Math.round(modalHeight) - XVGlobals.expandButtonWidth*2,
+		'top': XVGlobals.expandButtonWidth
 	}
 		
 		
@@ -90,7 +92,7 @@ Modal.prototype.modalDims = function (conversion) {
 	var ViewerLefts = [];
 	var ViewerTops = [];
 	var ScrollGalleryDims = utils.css.dims(this.ScrollGallery.widget)
-	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims.left + XVGlobals.ViewerVerticalMargin;
+	var viewerStart = ScrollGalleryDims.width +  ScrollGalleryDims['left'] + XVGlobals.ViewerVerticalMargin;
 
 	that.ViewerManager( function (Viewer, i, j) { 
 			
@@ -116,46 +118,48 @@ Modal.prototype.modalDims = function (conversion) {
 
 	return  {
 		
-		width: Math.round(modalWidth),
-		left: Math.round(_l),
-		height: Math.round(modalHeight),
-		top: Math.round(_t),
-		Viewer: {
+		'width': Math.round(modalWidth),
+		'left': Math.round(_l),
+		'height': Math.round(modalHeight),
+		'top': Math.round(_t),
+		'Viewer': {
 			
-			width: Math.round(ViewerWidth),
-			height: Math.round(ViewerHeight),
-			lefts: ViewerLefts,
-			tops: ViewerTops	
+			'width': Math.round(ViewerWidth),
+			'height': Math.round(ViewerHeight),
+			'lefts': ViewerLefts,
+			'tops': ViewerTops	
 			
 		},
-		ScrollGallery: {
+		'ScrollGallery': {
 			
-			widgetCSS: ScrollGalleryCSS
+			'widgetCSS': ScrollGalleryCSS
 		
 		},
-		closeButton: {
+		'closeButton': {
 			
-			left: Math.round(_l) + Math.round(modalWidth) - (utils.convert.toInt(that.closeButton.style.width)) - 13,
-			top: Math.round(_t) + 10
-			
-		},
-		ColumnMenu: {
-			
-			left: Math.round(modalWidth) - XVGlobals.expandButtonWidth,
-			top: ViewerTops[0][0] + Math.round(modalHeight)/2 - XVGlobals.expandButtonWidth - 20,
-			width: XVGlobals.expandButtonWidth - 1,
-			height: 40
+			'left': Math.round(_l) + Math.round(modalWidth) - (utils.convert.toInt(that.closeButton.style.width)) - 13,
+			'top': Math.round(_t) + 10
 			
 		},
-		RowMenu: {
+		'ColumnMenu': {
 			
-			left: ViewerLefts[0][0] + (Math.round(modalWidth) - ViewerLefts[0][0] - XVGlobals.expandButtonWidth)/2 - 17,
-			top: Math.round(modalHeight) - XVGlobals.expandButtonWidth,
-			width: 40,
-			height: XVGlobals.expandButtonWidth - 1
+			'left': Math.round(modalWidth) - XVGlobals.expandButtonWidth,
+			'top': ViewerTops[0][0] + Math.round(modalHeight)/2 - XVGlobals.expandButtonWidth - 20,
+			'width': XVGlobals.expandButtonWidth - 1,
+			'height': 40
+			
+		},
+		'RowMenu': {
+			
+			'left': ViewerLefts[0][0] + (Math.round(modalWidth) - ViewerLefts[0][0] - XVGlobals.expandButtonWidth)/2 - 17,
+			'top': Math.round(modalHeight) - XVGlobals.expandButtonWidth,
+			'width': 40,
+			'height': XVGlobals.expandButtonWidth - 1
 			
 		}
 
 	}
 
 }
+
+goog.exportProperty(Modal.prototype, 'modalDims', Modal.prototype.modalDims);

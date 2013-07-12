@@ -1,3 +1,5 @@
+goog.require('Modal');
+goog.provide('Modal.setThumbnailDragAndDrop');
 /**
  * @type {function()}
  * @protected
@@ -58,7 +60,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 			
 			
 			if (dropViewer) {		
-
+				
 				that.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
 				
 				that.updateCSS();
@@ -96,6 +98,7 @@ Modal.prototype.initThumbnailDragDrop = function() {
 /**
  * @type {function()}
  * @protected
+ * @expose
  */
 Modal.prototype.setThumbnailDragAndDrop = function () {
 
@@ -105,15 +108,18 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 	//	
     // Set valid targets for this.draggableWidgets
 	//
+	
+	
 	that.ViewerManager(function (viewer) {
 
+		
 		utils.array.forEach(that.dragDropThumbnails, function(thumb) {
 			thumb.addTarget(viewer);	
 		});
-
 		goog.events.listen(viewer, 'dragover', that.thumbnailDragDrop['dragOver']);
 		goog.events.listen(viewer, 'dragout', that.thumbnailDragDrop['dragOut']);
 		goog.events.listen(viewer, 'drop', that.thumbnailDragDrop['drop']);
+		
 
 	})
   	
@@ -154,6 +160,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	// SET CLICK EVENT
  	//
  	utils.array.forEach(that.dragDropThumbnails, function(srcObj) {
+ 		
 		goog.events.listen(srcObj.widget, goog.events.EventType.CLICK, function(){
 
 			var d = new Date();
@@ -220,3 +227,4 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 		});
 	});
 }
+goog.exportProperty(Modal.prototype, 'setThumbnailDragAndDrop', Modal.prototype.setThumbnailDragAndDrop);
