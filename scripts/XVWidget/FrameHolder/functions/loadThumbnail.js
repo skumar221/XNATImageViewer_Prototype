@@ -1,8 +1,10 @@
 goog.require('FrameHolder');
 goog.require('utils.fx.fadeOut');
 goog.require('utils.fx.fadeIn');
+
 goog.provide('FrameHolder.loadCurrViewPlane');
 FrameHolder.prototype.loadCurrViewPlane = function () {
+	
 	
 	var that = this;
 	var cCount = that.currDroppable[that.currViewPlane + "FrameCount"];
@@ -14,15 +16,18 @@ FrameHolder.prototype.loadCurrViewPlane = function () {
 	//utils.dom.debug(cCount, preload.length, that.loaded)
 	
 	if ((preload.length >= cCount ) && !that.loaded) {
-
+		
 		that.loaded = true;
 		// Show canvas
 		that.progBar.hide();	
 		utils.fx.fadeIn(that.canvas, XVGlobals.animFast);
 		
 		// Load Frames By ViewPlane
-		that.loadFramesByViewPlane(that.currViewPlane);				
+		
+		that.loadFramesByViewPlane(that.currViewPlane);		
+				
 	}		
+	
 }
 goog.exportProperty(FrameHolder.prototype, 'loadCurrViewPlane', FrameHolder.prototype.loadCurrViewPlane);
 
@@ -66,14 +71,14 @@ FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 			"load" : function (img) {
 			
 				var mPath = that.currDroppable.pathMolder(img.src);
-				console.log("preload")
+				
 				
 				var preload = that.currDroppable.getFrames({
 					'viewPlane' : that.currViewPlane,
 					'filter' : 'img'
 				});
 				
-				console.log("During load", preload[0])
+				
 				var viewPlaneStr = "<b>" + that.currViewPlane.charAt(0).toUpperCase() + that.currViewPlane.slice(1) + "</b>";	
 				var loadStr = "<br> Scan " + (that.currDroppable.scanData['sessionInfo']["Scan"]['value']).toString() + " - " + viewPlaneStr + "<br>";
 					
@@ -87,11 +92,11 @@ FrameHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
 				// this makes sure that we're putting the image back
 				// with the correct scanThumbnail
 				if (that.currDroppable.frames[mPath]) {
-					console.log("here?")
+					
 					// increments
 					that.currDroppable.frames[mPath]['img'] = img;			
 					that.progBar.update({"add": 1});
-					console.log("does it not like here?")
+					
 				}
 				
 			},

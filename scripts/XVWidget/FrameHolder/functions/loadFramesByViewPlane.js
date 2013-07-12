@@ -14,8 +14,10 @@ FrameHolder.prototype.loadFramesByViewPlane = function (viewPlane) {
 		'viewPlane' : this.currViewPlane,
 		'filter' : 'img'
 	});
-				
+	
+		
 	this.loadFrames(frames);
+	
 	
 }
 goog.exportProperty(FrameHolder.prototype, 'loadFramesByViewPlane', FrameHolder.prototype.loadFramesByViewPlane);

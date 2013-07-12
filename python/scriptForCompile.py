@@ -73,7 +73,10 @@ def main():
                lines = [line for line in open(os.path.join(root, f))]
                for l in lines:
                    if ("goog.exportSymbol" in l) and (not "//" in l):
-                       nameSpaces.append(l.split(",")[1].split(")")[0].strip())
+                       print l
+                       v = l.split(",")[1].split(")")[0].strip();
+                       print v
+                       nameSpaces.append(v)
     
 
     namespaceStr = ""
@@ -81,8 +84,15 @@ def main():
     for n in nameSpaces:
         namespaceStr += '--n="' + n + '" '
     
+    for root, dirs, files in os.walk(namespaceDir):
+       for f in files:
+           #if (root.endswith('functions')) and (not f.startswith(".")):
+           if (not f.startswith(".")):
+               s = ' --i=' + os.path.join(root, f).split("../")[1]
+               print s
+               namespaceStr += " " + s + " "
     #namespaceStr += '--n="utils.init" 'scr
-    namespaceStr += ' --i=scripts/XVWidget/Modal/functions/addScrollGallery.js '
+    #namespaceStr += ' --i=scripts/XVWidget/Modal/functions/addScrollGallery.js '
     print namespaceStr
     
     
@@ -91,9 +101,6 @@ def main():
     endStr = "--output_mode=compiled --compiler_jar=../GoogleClosure/compiler.jar --output_file=utils-compiled.js"
     advancedStr = ' --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" '
 
-    for t in textArr:
-        if ("utils" in t and not "jquery" in t):
-            midStr += "--i=" + t.replace("./", "") + " "
 
     print midStr    
     #print startStr + namespaceStr + midStr + endStr

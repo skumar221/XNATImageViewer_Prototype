@@ -87,8 +87,12 @@ imageProcessing.prototype.linearContrast = function(data, value, threshold) {
  */
 imageProcessing.prototype.objArrContains = function(objArr, key, value) {
 	var match = -1;
-	for (var i = 0, len = objArr.length; i < len; i++) {	   if (objArr[i][key] === value) 
-	        match = i;
+	for (i in objArr) {	 
+		////console.log("oaC2")    
+		if (objArr[i][key] === value) {
+			match = i;	
+		}
+	 	////console.log("oaC")   
 	}
 	return match;
 }
@@ -99,34 +103,55 @@ imageProcessing.prototype.objArrContains = function(objArr, key, value) {
  * Histogram for contrast algorithm
  ***********************/
 imageProcessing.prototype.histogram = function(data) {
+	//console.log("as1, ", data.length)
 	var histArr = [];
-	for (var i = 0, len = data.length; i < len; i += 4) {		var red = data[i];
+	for (var i = 0, len = data.length; i < len; i += 4) {		
+		
+		var red = data[i];
 		var green = data[i + 1];
 		var blue = data[i + 2];	
+		////console.log("asA")
 		// Average all three colors
 		var currIntensity = Math.round((red + green + blue)/3);
+		
+		
 		if (histArr.length > 0) {
+			////console.log("asB")
 			var inArr = this.objArrContains(histArr, "intensity", currIntensity);
 			// if found, up the value count
+			////console.log("asC")
 			if (inArr !== -1) {
+				////console.log("as3")
 				histArr[inArr]["count"] +=1; 
 				continue;
+				////console.log("as8-")
 			}
 		}
+		////console.log("asD")
 		// Add object to array if not found
-		histArr.push({count: 1, intensity: currIntensity});
+		histArr.push({
+			'count': 1, 
+			'intensity': currIntensity
+		});
+		////console.log("asE")
 	}	
+	//console.log("as2")
 	// sort the array of objects by value in ascending order
 	histArr = histArr.sort(function (a, b) {
 	    return ((a.intensity < b.intensity) ? -1 : ((a.intensity === b.intensity) ? 0 : 1));
 	});
-	
+	//console.log("as3")
 	var countArr = [];
 	var intensityArr = [];
 	for (var i = 0, len = histArr.length; i < len; i++) {		countArr.push(histArr[i].count);
 		intensityArr.push(histArr[i].intensity);
 	}
-	return {objArr: histArr, 'countArr': countArr, 'intensityArr': intensityArr};
+	//console.log("as4")
+	return { 
+		'objArr': histArr, 
+		'countArr': countArr, 
+		'intensityArr': intensityArr
+	};
 }
 
 
@@ -174,10 +199,12 @@ Washinton University Neuroinformatics Research Group
  * @expose
  */
 imageProcessing.prototype.thresholdAutoDetect = function(data) {
+	//console.log("his1")
 	var hist = this.histogram(data);
-	var count = hist.countArr;
-	var intensity = hist.intensityArr;	
+	var count = hist['countArr'];
+	var intensity = hist['intensityArr'];	
 //	utils.dom.debug(hist)
+	//console.log("his2")
 	if (count.length > 1 && intensity.length > 1) {
 		//utils.dom.debug("count: " + count);
 		//utils.dom.debug("intensity: " + intensity)		
@@ -186,19 +213,25 @@ imageProcessing.prototype.thresholdAutoDetect = function(data) {
 		T[0] = Math.round(sigmaMult(count, intensity)/sigma(count));	
 		var delta = 1;
 		var i = 0;	
+		//console.log("his3")
 		while ((delta !== 0) && (i<numIters)) {		
 			var TInds = [];
-			for (var k = 0, len = intensity.length; k < len; k++) {				if (intensity[k] > T[i]) {
+			for (var k = 0, len = intensity.length; k < len; k++) {				
+				if (intensity[k] > T[i]) {
 					TInds.push(k);	
 				}
 			}
+			////console.log("his4")
 			var Ti = TInds[0];			
 			var mbt = sigmaMult(count.slice(0, Ti) , intensity.slice(0, Ti)) / sigma(count.slice(0, Ti));
 			var mat = sigmaMult(count.slice(Ti, count.length-1) , intensity.slice(Ti, count.length-1)) / sigma(count.slice(Ti, count.length-1));
 			i+=1;
+			////console.log("his5")
 			T[i] = Math.round(Math.sqrt(mbt*mat));
 			delta = T[i] - T[i-1];
+			////console.log("his6")
 		}
+		//console.log("his4")
 		return T[i]/255;	
 	}
 }
