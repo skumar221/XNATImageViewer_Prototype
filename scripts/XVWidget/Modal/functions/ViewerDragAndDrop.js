@@ -87,24 +87,24 @@ Modal.prototype.initViewerDragDrop = function() {
 		
 		event.dragSourceItem.element.isCloneable = true;
 		
-		if (event.dragSourceItem.currentDragElement_.className.toLowerCase().indexOf('slider') > -1) {
-		
-			that.disableViewerDragAndDrop();	
-			event.dragSourceItem.element.isCloneable = false;
-			
-		}
-		else {
-			
-			that.enableViewerDragAndDrop();
+		if (event.dragSourceItem.currentDragElement_.className.toLowerCase().indexOf('viewer') > -1 ||
+            event.dragSourceItem.currentDragElement_.className.toLowerCase().indexOf('twod') > -1 ||
+            goog.dom.getParentElement(event.dragSourceItem.currentDragElement_).className.toLowerCase().indexOf('twod') > -1) {
+        
+            that.enableViewerDragAndDrop();
 			utils.fx.fadeOut(event.dragSourceItem.element, XVGlobals.animFast);
 
 			//
 			//  set the 'oldDims'
 			//
-			that.ViewerManager(function(viewer){
+			XV.ViewerManager(function(viewer){
 				viewer.widget.oldDims = utils.css.dims(viewer.widget);
 			})
-							
+			
+		}
+		else {
+			that.disableViewerDragAndDrop();	
+			event.dragSourceItem.element.isCloneable = false;
 		}
 	}	
 	

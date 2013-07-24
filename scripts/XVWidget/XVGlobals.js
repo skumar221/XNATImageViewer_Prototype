@@ -337,6 +337,12 @@ XVGlobals.classNames = {
 	Viewer : 'Viewer',
 	ScanViewer : 'ScanViewer',
 	SlicerViewer : 'SlicerViewer',		
+    
+    ThreeDHolder: 'ThreeDHolder',
+    
+    PlaneHolder: 'PlaneHolder',
+    
+    Menu: 'Menu',
 	
 	FrameHolder: 'FrameHolder',
 	FrameHolderCanvas: 'FrameHolderCanvas',

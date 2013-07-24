@@ -106,8 +106,8 @@ goog.exportSymbol('ScanTabs', ScanTabs)
 ScanTabs.prototype.defaultArgs = {
 	parent: document.body,
 	className: XVGlobals.classNames.ScanTabs,
-	tabTitles: ["Info", "Adjust"],
-	tabIconSrc: ["./icons/InfoIcon.png", "./icons/Adjust.png"],
+	tabTitles: ["Info", "Adjust", "Menu"],
+	tabIconSrc: ["./icons/InfoIcon.png", "./icons/Adjust.png", "./icons/Menu.png"],
 	widgetCSS: {
 		position: 'absolute',
 		top: 400,

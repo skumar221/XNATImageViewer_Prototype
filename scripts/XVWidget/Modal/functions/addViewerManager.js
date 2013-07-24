@@ -399,6 +399,14 @@ Modal.prototype.addViewerManager = function () {
 					})
 					
 					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
+                    break;
+                
+                case XVGlobals.classNames.SlicerThumbnail:
+                    newViewer = new SlicerViewer({
+						parent: oldViewer.widget.parentNode,
+					})
+					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
+                    break;
 
 			}
 			
@@ -421,6 +429,13 @@ Modal.prototype.addViewerManager = function () {
 			runViewersChangedCallbacks();
 			
 		}
+        
+        
+        this.ViewerManager.keepAndLoad = function(oldViewer, Thumbnail) {
+            oldViewer.loadThumbnail(Thumbnail);
+			that.manageActiveThumbs(oldViewer, Thumbnail);
+			runViewersChangedCallbacks();
+        }
 	
 	}
 

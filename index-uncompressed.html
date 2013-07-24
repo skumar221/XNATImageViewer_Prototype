@@ -5,9 +5,10 @@
   <meta charset="utf-8" />
   <title>XNAT Image Viewer (Prototype)</title>
 
-	<script type="text/javascript" src="closure-library/closure/goog/base.js"></script>
+    <script type="text/javascript" src="./scripts/utils/lib/X/lib/google-closure-library/closure/goog/base.js"></script>
+	<script type="text/javascript" src="./scripts/utils/lib/X/xtk-deps.js"></script>
 
-<script src="./scripts/utils/utils.js"></script>	
+    <script src="./scripts/utils/utils.js"></script>	
 
 
 	<script type="text/javascript" src="./scripts/utils/includes.js"></script>
@@ -24,7 +25,16 @@
 	<script src="./demoscans/SCAN_21_Defaced.js"></script>
 	<script src="./demoscans/SCAN_24_Defaced.js"></script>	
 	<script src="./demoscans/demoScanData.js"></script>	
-
+    
+    <script src="./demoscans/3D/UCLA_1131.js"></script>
+    <script src="./demoscans/3D/UCLA_1189.js"></script>
+    <script src="./demoscans/3D/UCLA_1337.js"></script>
+    <script src="./demoscans/3D/UCLA_1404.js"></script>
+    <script src="./demoscans/3D/UCLA_1491.js"></script>
+    <script src="./demoscans/3D/LeftHemi.js"></script>
+    <script src="./demoscans/3D/PartialFibers.js"></script>
+	<script src="./demoscans/demoSlicerData.js"></script>
+    
 	
 	<script src="./scripts/utils/globals/globals.js"></script>
 	
@@ -92,6 +102,14 @@
 	<script src="./scripts/XVWidget/FrameHolder/functions/updateCSS.js"></script>
 	<script src="./scripts/XVWidget/FrameHolder/functions/loadThumbnail.js"></script>
 	<script src="./scripts/XVWidget/FrameHolder/functions/loadFramesByViewPlane.js"></script>
+    
+	<script src="./scripts/XVWidget/ThreeDHolder/ThreeDHolder.js"></script>
+	<script src="./scripts/XVWidget/ThreeDHolder/functions/initSliceSliders.js"></script>
+	<script src="./scripts/XVWidget/ThreeDHolder/functions/loadThumbnail.js"></script>
+	<script src="./scripts/XVWidget/ThreeDHolder/functions/updateCSS.js"></script>
+	
+    <script src="./scripts/XVWidget/PlaneHolder/PlaneHolder.js"></script>
+    <script src="./scripts/XVWidget/PlaneHolder/updateCSS.js"></script>
 	
 	
 	
@@ -103,21 +121,33 @@
 	
 	<script src="./scripts/XVWidget/Thumbnail/ScanThumbnail/ScanThumbnail.js"></script>
 	<script src="./scripts/XVWidget/Thumbnail/ScanThumbnail/functions/loadFramesToDOM.js"></script>
+    
+    <script src="./scripts/XVWidget/Thumbnail/SlicerThumbnail/SlicerThumbnail.js"></script>
 	
 	
 	<script src="./scripts/XVWidget/Viewer/Viewer.js"></script>
+	<script src="./scripts/XVWidget/Viewer/functions/addAdjustSliders.js"></script>
+	<script src="./scripts/XVWidget/Viewer/functions/addViewPlaneMenu.js"></script>
+	<script src="./scripts/XVWidget/Viewer/functions/linkContentDividerToScanTabs.js"></script>
+	<script src="./scripts/XVWidget/Viewer/functions/populateData.js"></script>
 	
-	
-
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/ScanViewer.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addLinkMenu.js"></script>
-	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addViewPlaneMenu.js"></script>
-	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/populateData.js"></script>
-	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addAdjustSliders.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/addFrameSlider.js"></script>
-	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/linkContentDividerToScanTabs.js"></script>
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/updateCSS.js"></script>
 	
+    <script src="./scripts/XVWidget/Viewer/SlicerViewer/SlicerViewer.js"></script>
+	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/fileHandling.js"></script>
+	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/handleViewChange.js"></script>
+	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/updateCSS.js"></script>
+	
+    <script src="./scripts/XVWidget/Menu/Menu.js"></script>
+    <script src="./scripts/XVWidget/Menu/functions/MenuCSS.js"></script>
+    <script src="./scripts/XVWidget/Menu/functions/addFileToFolder.js"></script>
+    <script src="./scripts/XVWidget/Menu/functions/volumes.js"></script>
+    
+	<link rel="stylesheet" href="./scripts/XVWidget/Viewer/SlicerViewer/functions/viewer.css" />
+    
 	<script src="./scripts/XVWidget/ScrollGallery/ScrollGallery.js"></script>
 	
 	

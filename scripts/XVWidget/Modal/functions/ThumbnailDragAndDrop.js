@@ -60,11 +60,14 @@ Modal.prototype.initThumbnailDragDrop = function() {
 			
 			
 			if (dropViewer) {		
-				
-				that.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
-				
-				that.updateCSS();
-									
+				if (!event.isClick &&
+                    event.dragSourceItem.element.className === XVGlobals.classNames.SlicerThumbnail &&
+                    event.dropTargetItem.element.className === XVGlobals.classNames.SlicerViewer) {
+                    XV.ViewerManager.keepAndLoad(dropViewer, dragThumb);
+                } else {
+                    XV.ViewerManager.adaptAndLoad(dropViewer, dragThumb);
+                }
+                that.updateCSS();
 			}
 			
 			if (event.dropTargetItem.element.prevBorder) {
@@ -150,7 +153,8 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			},
 			dragSourceItem : {
 				element : srcObj.widget
-			}
+			},
+            isClick : true,
 		}) 		
  	}
  	
