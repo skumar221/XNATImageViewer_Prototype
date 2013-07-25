@@ -31,7 +31,8 @@ Viewer.prototype.addViewPlaneMenu = function () {
 		top: iconStartTop,
 		height: iconDimSmall , 
 		width: iconDimSmall,
-		cursor: "pointer"
+		cursor: "pointer",
+		'z-index': '10',
 	});
 	this.ViewPlaneMenu.title  = "Select View Plane";	
 	
