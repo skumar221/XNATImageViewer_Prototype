@@ -2,11 +2,12 @@
 //******************************************************
 //  Init
 //******************************************************
-goog.provide('PlaneDHolder');
+goog.provide('PlaneHolder');
 
 goog.require('X.renderer3D');
 goog.require('X.renderer2D');
 goog.require('XVWidget');
+
 /**
  * @constructor
  * @extends {XVWidget}
@@ -21,7 +22,7 @@ PlaneHolder = function(id, args) {
     
     this.widget.id = id + '_' + this.widget.id;
     goog.dom.classes.add(this.widget, id + 'Plane');
-    
+
     
     //----------------------------------
     // CREATE RENDERER
@@ -31,6 +32,7 @@ PlaneHolder = function(id, args) {
         this.Renderer.orientation = id.toUpperCase();
         this.addSliderAndFrameNum(id);
     } else {
+ 
         this.Renderer = new X.renderer3D();
     }
     
