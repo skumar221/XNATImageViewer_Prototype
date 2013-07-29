@@ -1,20 +1,4 @@
 
-.outerFileDiv {
-    position: relative;
-}
-
-.innerFileDiv {
-    position: absolute;
-    top: 3px;
-    height: 100%;
-    width: 85%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-}
-
-
 
 .sliceSlider .goog-slider-thumb {
 	position: absolute;
@@ -25,6 +9,7 @@
     border: 0px;
     border-radius: 4px;
 }
+
 
 .Menu .goog-slider-thumb,
 .Menu .goog-twothumbslider-value-thumb,
@@ -38,10 +23,7 @@
     border-radius: 4px;
 }
 
-.Menu .goog-twothumbslider-rangehighlight {
-    position: absolute;
-    height: 3px;
-    background-color: #999;
+.Menu .goog-slider-disabled,
+.Menu .goog-twothumbslider-disabled {
+    opacity: 0.5;
 }
-
-

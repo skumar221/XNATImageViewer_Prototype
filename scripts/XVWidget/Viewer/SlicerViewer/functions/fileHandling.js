@@ -10,6 +10,8 @@ goog.require('X.fibers');
  * @return {String} Extension of file in all lowercase
  */
 function getFileExt(file) {
+    if (file[0].length > 1) file = file[0];
+    
     // extract all letters following last period
     var ext = file.slice(file.lastIndexOf(".") + 1, file.length);
     // .nii.gz files will be wrongly stripped to .gz, check and correct for it
@@ -61,7 +63,7 @@ function getXTKObjName(ext) {
             break;
         */
         default:
-            window.alert("haven't added support for ." + ext + " files yet");
+            console.log("haven't added support for ." + ext + " files yet");
             break;
     }
     return obj;

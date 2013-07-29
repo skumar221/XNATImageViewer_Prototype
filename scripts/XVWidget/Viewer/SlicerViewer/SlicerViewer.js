@@ -29,6 +29,9 @@ SlicerViewer = function (args) {
 	 *	Modify the ThreeDHolder such that it lets "this"
 	 *  know of the currentScan when it's dropped in.
 	 */
+	/**
+	 * @protected
+	 */
 	this.ThreeDHolder.addOnloadCallback(function () {
 		var t = that.getThumbnail();
 		if(t && t.scanData) {
@@ -76,13 +79,6 @@ SlicerViewer = function (args) {
 	this.linkContentDividerToScanTabs();
 	
     
-    
-    //----------------------------------
-	// ADJUST / IMAGE PROCESSING SLIDERS
-	//----------------------------------
-//	this.addAdjustSliders();
-    
-    
 	
 	//----------------------------------
 	// METADATA, A.K.A. DISPLAYABLE DATA
@@ -110,8 +106,11 @@ SlicerViewer = function (args) {
     //----------------------------------
     // TOGGLE MENU
     //----------------------------------
-    this.Menu = new Menu(this.ThreeDHolder, {
-        parent: this.ScanTabs.getTab('Menu'),
+	/**
+	 * @type {Menu}
+	 */
+    this.Menu = new Menu({
+        parent: that.ScanTabs.getTab("Menu")
     });
     
     

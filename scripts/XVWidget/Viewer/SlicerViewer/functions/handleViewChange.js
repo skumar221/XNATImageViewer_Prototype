@@ -1,6 +1,4 @@
 
-goog.require('goog.fx');
-goog.require('goog.fx.dom');
 
 function getPlaneFromTitle(viewer, title) {
     switch (title) {
