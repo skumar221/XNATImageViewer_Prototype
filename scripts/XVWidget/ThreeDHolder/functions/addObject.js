@@ -25,7 +25,10 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
     }
     
     var isVol = filetype == 'volume';
-    if (isVol) this.currentVolObject = newObj;
+    if (isVol) {
+//        if (this.currentVolObject) this.currentVolObject.visible = false;  /////////////
+        this.currentVolObject = newObj;
+    }
     
     this.currentObjects.push(newObj);
     this.addToMenu(newObj);

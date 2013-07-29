@@ -99,6 +99,7 @@ ThreeDHolder.prototype.initSliceSliders = function() {
     //----------------------------------
     that.PlaneHolderX.Renderer.xy2ijkOverwrite = function() {
         var cvo = that.currentVolObject;    // this MUST be inside the function!
+        
         that.ySlider.setValue(cvo.indexY);
         that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
         that.zSlider.setValue(cvo.indexZ);

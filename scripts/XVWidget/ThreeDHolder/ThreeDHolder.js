@@ -192,7 +192,7 @@ ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
  * @param {Object} X object to be added
  * @return {undefined}
  */
-ThreeDHolder.prototype.update2Drenderers = function(newObj) {
+ThreeDHolder.prototype.update2Drenderers = function() {
     
     
     this.PlaneHolderX.Renderer.add(this.currentVolObject);
@@ -207,14 +207,19 @@ ThreeDHolder.prototype.update2Drenderers = function(newObj) {
     this.currentVolObject.modified();
     this.updateSlices();
     
-//    console.log(this.PlaneHolderX.Renderer._topLevelObjects[0]);
+    /*
+    console.log('renderers displaying ' + this.PlaneHolderX.Renderer._topLevelObjects[0]._id);
+    console.log('current volume object ' + this.currentVolObject._id);
+    console.log(this.PlaneHolderX.Renderer._topLevelObjects[0] == this.currentVolObject);
+    */
     
     /*
     console.log(newObj._slicesX);
     utils.array.forEach(newObj._slicesX._children, function(s) {
         s.visible = false;
-    });*/
+    });
 //    this.currentVolObject._slicesX._children[this.currentVolObject.indexX].visible = false;
+    */
 }
 
 

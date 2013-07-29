@@ -2,6 +2,9 @@ goog.require('ThreeDHolder');
 goog.provide('ThreeDHolder.reloadObj');
 
 ThreeDHolder.prototype.reloadObj = function(droppedObj, file, filetype) {
+
+    console.log('got here');
+    
     // set to be visible
     if (filetype == 'volume' && this.currentVolObject != droppedObj) {
         this.currentVolObject = newObj;
