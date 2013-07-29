@@ -46,6 +46,7 @@ PlaneHolder = function(id, Holder, args) {
     //	this.updateCSS();
 }
 goog.inherits(PlaneHolder, XVWidget);
+goog.exportSymbol('PlaneHolder', PlaneHolder);
 
 
 

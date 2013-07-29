@@ -1,8 +1,7 @@
-goog.require('goog.dom');
-
+goog.require('SlicerViewer');
+goog.provide('SlicerViewer.updateCSS');
 //******************************************************
 //  UpdateCSS
-//
 //******************************************************
 SlicerViewer.prototype.updateCSS = function (args) {
 	SlicerViewer.superClass_.updateCSS.call(this, args);
@@ -111,3 +110,4 @@ SlicerViewer.prototype.updateCSS = function (args) {
 		});				
 	} 	
 }
+goog.exportProperty(SlicerViewer.prototype, 'updateCSS', SlicerViewer.prototype.updateCSS);

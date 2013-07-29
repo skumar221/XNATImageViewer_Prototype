@@ -1,5 +1,5 @@
-
-goog.require('goog.events');
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.loadThumbnail');
 
 ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     this.currDroppable = droppable;
@@ -41,4 +41,5 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     })
 
 };
+goog.exportProperty(ThreeDHolder.prototype, 'loadThumbnail', ThreeDHolder.prototype.loadThumbnail);
 

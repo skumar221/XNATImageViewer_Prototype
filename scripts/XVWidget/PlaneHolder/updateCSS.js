@@ -1,3 +1,6 @@
+goog.require('PlaneHolder');
+goog.provide('PlaneHolder.updateCSS');
+
 //******************************************************
 //  updateCSS
 //******************************************************
@@ -13,3 +16,4 @@ PlaneHolder.prototype.updateCSS = function (args) {
         this.Renderer.onResize_();
     }
 }
+goog.exportProperty(PlaneHolder.prototype, 'updateCSS', PlaneHolder.prototype.updateCSS);

@@ -10,6 +10,9 @@ goog.require('XVWidget');
 Menu = function(args) {
     goog.base(this, utils.dom.mergeArgs(Menu.prototype.defaultArgs, args));
     
+    /**
+	 * @type {ScrollGallery}
+	 */
     this.Content = new ScrollGallery({
         parent: this.widget,
         className: 'Menu_ScrollGallery',
@@ -28,6 +31,7 @@ Menu = function(args) {
     
 }
 goog.inherits(Menu, XVWidget);
+goog.exportSymbol('Menu', Menu);
 
 
 Menu.prototype.defaultArgs = {

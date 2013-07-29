@@ -1,3 +1,5 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.addToMenu');
 
 ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
 
@@ -78,3 +80,4 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
         this.objOpacityPairs.push([newObj, opacity]);
     }
 }
+goog.exportProperty(ThreeDHolder.prototype, 'addToMenu', ThreeDHolder.prototype.addToMenu);

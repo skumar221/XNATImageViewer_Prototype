@@ -1,3 +1,9 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.setListenerRadio');
+goog.provide('ThreeDHolder.setListenerVisible');
+goog.provide('ThreeDHolder.setListenerRender');
+goog.provide('ThreeDHolder.setListenerOpacity');
+goog.provide('ThreeDHolder.setListenerThresh');
 
 
 ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
@@ -7,6 +13,7 @@ ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
         that.update2Drenderers(newObj);
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerRadio', ThreeDHolder.prototype.setListenerRadio);
 
 
 ThreeDHolder.prototype.setListenerVisible = function(newObj, visible, toggle) {
@@ -24,6 +31,7 @@ ThreeDHolder.prototype.setListenerVisible = function(newObj, visible, toggle) {
         });
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerVisible', ThreeDHolder.prototype.setListenerVisible);
 
 
 ThreeDHolder.prototype.setListenerRender = function(newObj, render) {
@@ -31,6 +39,7 @@ ThreeDHolder.prototype.setListenerRender = function(newObj, render) {
         newObj.volumeRendering = this.checked;
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerRender', ThreeDHolder.prototype.setListenerRender);
 
 
 ThreeDHolder.prototype.setListenerOpacity = function(newObj, opacity) {
@@ -38,6 +47,7 @@ ThreeDHolder.prototype.setListenerOpacity = function(newObj, opacity) {
         newObj.opacity = opacity.getValue();
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerOpacity', ThreeDHolder.prototype.setListenerOpacity);
 
 
 ThreeDHolder.prototype.setListenerThresh = function(newObj, thresh) {
@@ -46,5 +56,6 @@ ThreeDHolder.prototype.setListenerThresh = function(newObj, thresh) {
         newObj.upperThreshold = thresh.getValue() + thresh.getExtent();
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerThresh', ThreeDHolder.prototype.setListenerThresh);
 
 

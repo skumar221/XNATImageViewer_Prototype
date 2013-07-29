@@ -1,3 +1,7 @@
+goog.require('Menu');
+goog.provide('Menu.addToMenu');
+
+
 Menu.prototype.addFolder = function(title) {
     var folder = utils.dom.makeElement('div', this.Scrollarea, 'Folder', this.folderCSS);
     var fHeader = utils.dom.makeElement('div', folder, 'FolderHeader', this.folderHeaderCSS);
@@ -7,6 +11,7 @@ Menu.prototype.addFolder = function(title) {
     
     return fContent;
 }
+goog.exportProperty(Menu.prototype, 'addFolder', Menu.prototype.addFolder);
 
 
 // guiObject (string) slider, ttslider, checkbox, radio
@@ -47,6 +52,7 @@ Menu.prototype.add = function(guiObject, folder, label, values, file) {
     
     return newGuiObject;
 }
+goog.exportProperty(Menu.prototype, 'add', Menu.prototype.add);
 
 Menu.prototype.addInputButton = function(guiObject, folder, label, file, initialValue) {
     var toCheck = (initialValue) ? 'checked' : '';

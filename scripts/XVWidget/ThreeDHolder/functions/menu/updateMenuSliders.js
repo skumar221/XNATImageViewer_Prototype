@@ -1,3 +1,5 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.updateMenuSliders');
 
 
 ThreeDHolder.prototype.updateMenuSliders = function() {
@@ -25,4 +27,5 @@ ThreeDHolder.prototype.updateMenuSliders = function() {
     });
     
 }
+goog.exportProperty(ThreeDHolder.prototype, 'updateMenuSliders', ThreeDHolder.prototype.updateMenuSliders);
 

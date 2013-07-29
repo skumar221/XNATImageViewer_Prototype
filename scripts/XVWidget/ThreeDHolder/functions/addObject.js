@@ -1,4 +1,5 @@
-
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.addObject');
 
 ThreeDHolder.prototype.addObject = function(file, attributes) {
     var newObj = createXObject(file);
@@ -33,3 +34,4 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
     this.PlaneHolder3.Renderer.add(newObj);
     this.setOnShowtime(isVol, newObj);
 }
+goog.exportProperty(ThreeDHolder.prototype, 'addObject', ThreeDHolder.prototype.addObject);

@@ -2,9 +2,10 @@
 //******************************************************
 //  Init
 //******************************************************
-goog.provide('ThreeDHolder');
 
+goog.require('XVGlobals');
 goog.require('XVWidget');
+goog.provide('ThreeDHolder');
 /**
  * @constructor
  * @extends {XVWidget}
@@ -46,6 +47,7 @@ ThreeDHolder = function(args) {
 
 }
 goog.inherits(ThreeDHolder, XVWidget);
+goog.exportSymbol('ThreeDHolder', ThreeDHolder);
 
 
 

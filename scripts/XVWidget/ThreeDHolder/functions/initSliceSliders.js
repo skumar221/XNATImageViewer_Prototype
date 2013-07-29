@@ -1,6 +1,6 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.initSliceSliders');
 
-goog.require('goog.ui.Component');
-goog.require('goog.ui.Slider');
 
 /**
  * Set properties and starting values of x/y/zSliders and x/y/zIndexBoxes.
@@ -74,7 +74,22 @@ ThreeDHolder.prototype.initSliceSliders = function() {
     //----------------------------------
     // ADD SCROLL LISTENERS
     //----------------------------------
-    this.addScrollListeners();
+    that.PlaneHolderX.Renderer.onScroll = function() {
+        var cvo = that.currentVolObject;    // this MUST be inside the function!
+        that.xSlider.setValue(cvo.indexX);
+        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
+        
+    };
+    that.PlaneHolderY.Renderer.onScroll = function() {
+        var cvo = that.currentVolObject;
+        that.ySlider.setValue(cvo.indexY);
+        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+    };
+    that.PlaneHolderZ.Renderer.onScroll = function() {
+        var cvo = that.currentVolObject;
+        that.zSlider.setValue(cvo.indexZ);
+        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+    };
     
     
     
@@ -82,12 +97,33 @@ ThreeDHolder.prototype.initSliceSliders = function() {
     //----------------------------------
     // ADD SHIFT/MOVE LISTENERS
     //----------------------------------
-    this.addShiftMoveListeners();
+    that.PlaneHolderX.Renderer.xy2ijkOverwrite = function() {
+        var cvo = that.currentVolObject;    // this MUST be inside the function!
+        that.ySlider.setValue(cvo.indexY);
+        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+        that.zSlider.setValue(cvo.indexZ);
+        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+    };
+    that.PlaneHolderY.Renderer.xy2ijkOverwrite = function() {
+        var cvo = that.currentVolObject;
+        that.xSlider.setValue(cvo.indexX);
+        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
+        that.zSlider.setValue(cvo.indexZ);
+        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+    };
+    that.PlaneHolderZ.Renderer.xy2ijkOverwrite = function() {
+        var cvo = that.currentVolObject;
+        that.xSlider.setValue(cvo.indexX);
+        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
+        that.ySlider.setValue(cvo.indexY);
+        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+    };
     
     
     
 //    addIndexBoxListeners(viewer);
 };
+goog.exportProperty(ThreeDHolder.prototype, 'initSliceSliders', ThreeDHolder.prototype.initSliceSliders);
 
 
 ThreeDHolder.prototype.updateSlices = function() {
@@ -124,56 +160,6 @@ ThreeDHolder.prototype.updateSlices = function() {
     
     
 };
-
-
-ThreeDHolder.prototype.addScrollListeners = function() {
-    var that = this;
-    
-    that.PlaneHolderX.Renderer.onScroll = function() {
-        var cvo = that.currentVolObject;    // this MUST be inside the function!
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        
-    };
-    that.PlaneHolderY.Renderer.onScroll = function() {
-        var cvo = that.currentVolObject;
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
-    };
-    that.PlaneHolderZ.Renderer.onScroll = function() {
-        var cvo = that.currentVolObject;
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
-    };
-};
-
-
-
-ThreeDHolder.prototype.addShiftMoveListeners = function() {
-    var that = this;
-    
-    that.PlaneHolderX.Renderer.xy2ijkOverwrite = function() {
-        var cvo = that.currentVolObject;    // this MUST be inside the function!
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
-    };
-    that.PlaneHolderY.Renderer.xy2ijkOverwrite = function() {
-        var cvo = that.currentVolObject;
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
-    };
-    that.PlaneHolderZ.Renderer.xy2ijkOverwrite = function() {
-        var cvo = that.currentVolObject;
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
-    };
-};
-
+goog.exportProperty(ThreeDHolder.prototype, 'updateSlices', ThreeDHolder.prototype.updateSlices);
 
 
