@@ -2,6 +2,7 @@
 goog.require('X.volume');
 goog.require('X.mesh');
 goog.require('X.fibers');
+goog.require('X.sphere');
 
 
 /** 
@@ -98,6 +99,7 @@ function isVolume(file) {
 function getFileObjectType(file) {
     var ext = getFileExt(file);
     
+    if (ext == 'mrml') return 'slicer';
     if (ext == 'trk') return 'fiber';
     if (isVolume(file)) return 'volume';
     else return 'mesh';

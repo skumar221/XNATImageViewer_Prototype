@@ -35,12 +35,17 @@ SlicerThumbnail = function (scanData, args) {
     // Amanda - set up thumbnail image for 3D data
     // use a placeholder in the meantime
     // use Master Scene View (from mrb) ultimately
-	this.ThumbnailImage.src = "./demoscans/3D/placeholder.jpg";
 	
-	
-	
-    // Amanda - xtk doesn't deal with frames, just with a single file.
-    // so, got rid of frames
+//    if (this.scanData.filePath.slice(-3, this.scanData.filePath.length) === 'dcm')
+//        this.ThumbnailImage.src = this.scanData.filePath.slice(0, -4) + '80.dcm';
+    
+    
+    var file = this.scanData.filePath;
+    
+    if (this.scanData.filePath.split('slicer')[1])
+        this.ThumbnailImage.src = file.slice(0, file.lastIndexOf('/')) + '/Data/' + this.scanData.sceneName + '.png';
+    else
+        this.ThumbnailImage.src = "./demoscans/3D/placeholder.jpg";
 
 	this.ThumbnailCanvas.metaText = [];
 	this.ThumbnailCanvas.metaText[0] = this.scanData.sessionInfo["SessionID"].value;
