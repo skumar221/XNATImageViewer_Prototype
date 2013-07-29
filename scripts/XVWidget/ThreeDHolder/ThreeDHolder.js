@@ -1,9 +1,3 @@
-/**
- * ThreeDHolder is contained within the Slicer Viewer. Its siblings include the
- * View Plan Menu, Content Divider, and Scan Tabs. Its children are 4 Plane Holders
- * which hold the renderers.
- */
-
 
 //******************************************************
 //  Init
@@ -20,12 +14,18 @@ ThreeDHolder = function(args) {
 	goog.base(this, utils.dom.mergeArgs(ThreeDHolder.prototype.defaultArgs, args));
 	
     // viewer-specific properties
-    this.hasLoaded = false;
     this.firstVolObject = true;
+    
+    this.fadeOnHoverOut = [];
     
     this.xSlider, this.ySlider, this.zSlider;
     this.xBox, this.yBox, this.zBox;
     
+    this.currentVolObject;
+    this.currentObjects = [];
+    
+    this.objOpacityPairs = [];
+    this.objThreshPairs = [];
     
     
     //----------------------------------
@@ -89,59 +89,8 @@ ThreeDHolder.prototype.addOnloadCallback = function (callback) {
 
 
 
-//******************************************************
-//  
-//******************************************************
-ThreeDHolder.prototype.applyImageAdjustments = function () {
-	
-	for (var i in this.adjustMethods) {
-		this.imageAdjust(i, this.adjustMethods[i]);	
-	}
-}
-
-
-//******************************************************
-//  Handles any pixel-related ajustment of the frame.
-//  In this case, brightness and contrast.
-//******************************************************
-ThreeDHolder.prototype.imageAdjust = function (methodType, value) {
-
-	// Arguments are needed only when initializing the adjustMethods
-	if (methodType !== 'undefined' && value) {
-		
-		
-		
-		/*
-		 * ! This particular variable is to account for image adjustments
-		 * where both sliders are applied.
-		 * Without it, only one slider's methods get applied as opposed
-		 * to all of them.
-		 */
-		this.adjustMethods[methodType] = value;
-		
-		
-
-		//
-		// Apply image adjustment methods
-		//
-		for (var i in this.adjustMethods) {
-			switch (i) {
-				case "brightness":
-					console.log('adjust brightness');
-					break;
-				case "contrast":
-					console.log('adjust contrast');
-					break;
-			}
-		}
-		
-
-	}
-}
-
-
 ThreeDHolder.prototype.addViewPanes = function () {
-    this.PlaneHolderX = new PlaneHolder('x', {
+    this.PlaneHolderX = new PlaneHolder('x', this, {
 		parent: this.widget,
         CSS: {
             left: '0%',
@@ -149,7 +98,7 @@ ThreeDHolder.prototype.addViewPanes = function () {
         }
 	});
     
-    this.PlaneHolderY = new PlaneHolder('y', {
+    this.PlaneHolderY = new PlaneHolder('y', this, {
 		parent: this.widget,
         CSS: {
             left: '50%',
@@ -157,7 +106,7 @@ ThreeDHolder.prototype.addViewPanes = function () {
         }
 	});
     
-    this.PlaneHolderZ = new PlaneHolder('z', {
+    this.PlaneHolderZ = new PlaneHolder('z', this, {
 		parent: this.widget,
         CSS: {
             left: '0%',
@@ -165,13 +114,30 @@ ThreeDHolder.prototype.addViewPanes = function () {
         }
 	});
     
-    this.PlaneHolder3 = new PlaneHolder('v', {
+    this.PlaneHolder3 = new PlaneHolder('v', this, {
 		parent: this.widget,
         CSS: {
             left: '50%',
             top: '50%',
         }
 	});
+}
+
+
+
+ThreeDHolder.prototype.getObjFromList = function(f) {
+    var ext = getFileExt(f);
+    
+    if (ext === 'dcm' || ext === 'dicom') {
+        for (var i = 0; i < this.currentObjects.length; ++i) {
+            if (this.currentObjects[i].file[0].indexOf(f.slice(0,-9)) > -1)
+                return this.currentObjects[i];
+        }
+    } else {
+        for (var i = 0; i < this.currentObjects.length; ++i) {
+            if (this.currentObjects[i].file == f) return this.currentObjects[i];
+        }
+    }
 }
 
 
@@ -182,37 +148,39 @@ ThreeDHolder.prototype.addViewPanes = function () {
  * @param {boolean} show2D True if we want to show 2D renderers
  * @return {undefined}
  */
-ThreeDHolder.prototype.setOnShowtime3D = function (show2D, newObj) {
+ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
     var that = this;
-    if (show2D) { // volume being added
-        var m = that.Viewer.Menu;
-        m.currentVolObject = newObj;
-        that.PlaneHolder3.Renderer.onShowtime = function() {
-            if (that.firstVolObject) {
-                m.initVolumeOptions();
-                that.initSliceSliders();
-                that.firstVolObject = false;
-                
-                m.volOpacitySlider.setVisible(true);
-                
-                that.fadeOnHoverOut = [that.xSlider.element_,
-                                       that.ySlider.element_,
-                                       that.zSlider.element_,
-                                       that.xBox, that.yBox, that.zBox];
-            }
-            that.update2Drenderers();
-            that.updateSlices();
+    
+    if (isVol && this.firstVolObject) {
+        this.PlaneHolder3.Renderer.onShowtime = function() {
+            that.firstVolObject = false;
+            that.currentVolObject = newObj; // must be set first time
             
-            if (show2D && m.volRenderButton.checked) {
-                m.currentVolObject.volumeRendering = true;
-                m.currentVolObject.lowerThreshold = m.volThreshSlider.getValue();
-                m.currentVolObject.upperThreshold = m.volThreshSlider.getValue() + m.volThreshSlider.getExtent();
-            }
-            
+            that.initSliceSliders();
+            that.update2Drenderers(newObj);
+            that.updateMenuSliders();
         };
-    } else { // nonvolume being added
-        that.PlaneHolder3.Renderer.onShowtime = function() { };
     }
+    
+    else if (isVol) {
+        this.PlaneHolder3.Renderer.onShowtime = function() {
+            that.currentVolObject = newObj;
+            that.update2Drenderers(newObj);
+            that.updateMenuSliders();
+        };
+    }
+    
+    else {
+        this.PlaneHolder3.Renderer.onShowtime = function() {
+            if (that.currentVolObject) {
+                that.initSliceSliders();
+                that.update2Drenderers(newObj);
+            }
+            that.updateMenuSliders();
+        };
+    }
+    
+    
 }
 
 
@@ -222,17 +190,29 @@ ThreeDHolder.prototype.setOnShowtime3D = function (show2D, newObj) {
  * @param {Object} X object to be added
  * @return {undefined}
  */
-ThreeDHolder.prototype.update2Drenderers = function() {
-    this.PlaneHolderX.Renderer.add(this.Viewer.Menu.currentVolObject);
+ThreeDHolder.prototype.update2Drenderers = function(newObj) {
+    
+    
+    this.PlaneHolderX.Renderer.add(this.currentVolObject);
     this.PlaneHolderX.Renderer.render();
     
-    this.PlaneHolderY.Renderer.add(this.Viewer.Menu.currentVolObject);
+    this.PlaneHolderY.Renderer.add(this.currentVolObject);
     this.PlaneHolderY.Renderer.render();
     
-    this.PlaneHolderZ.Renderer.add(this.Viewer.Menu.currentVolObject);
+    this.PlaneHolderZ.Renderer.add(this.currentVolObject);
     this.PlaneHolderZ.Renderer.render();
     
-    this.Viewer.Menu.currentVolObject.modified();
+    this.currentVolObject.modified();
+    this.updateSlices();
+    
+//    console.log(this.PlaneHolderX.Renderer._topLevelObjects[0]);
+    
+    /*
+    console.log(newObj._slicesX);
+    utils.array.forEach(newObj._slicesX._children, function(s) {
+        s.visible = false;
+    });*/
+//    this.currentVolObject._slicesX._children[this.currentVolObject.indexX].visible = false;
 }
 
 

@@ -3,61 +3,42 @@ goog.require('goog.events');
 
 ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     this.currDroppable = droppable;
-
+    
     var m = this.Viewer.Menu;
     var file = droppable.scanData.filePath;
     var filetype = getFileObjectType(file);
     
-    
-    
-    var droppedObj = m.getObjFromList(file);
-    
-    if (droppedObj) { // dropped file is already in viewer
-        this.dontReloadObj(droppedObj, file, filetype);
-    } else {          // dropped file is new, create it and add it
-        this.createAndLoadObj(file, filetype);
+    // activate correct view plane menu
+    // if slicer, show 3D plane only
+    if (filetype == 'slicer') {
+        this.currViewPlane = '3D';
+        this.Viewer.ViewPlaneMenu.activateIcon('3D', true);
+        handle3Dto2D(this.Viewer, '3D');
     }
     
-    if (m.currentObjects.length < 2) {
+    // if not slicer, show all planes only if this is the first object,
+    // otherwise keep view pane the same
+    else if (this.currentObjects.length < 2) {
         this.currViewPlane = "All";
         this.Viewer.ViewPlaneMenu.activateIcon('All', true);
+    }
+    
+    // add new object or bring up existing one
+    var droppedObj = this.getObjFromList(file);
+    if (droppedObj) {
+        // need to deal with enabling other parts
+//        this.reloadObj(droppedObj, file, filetype);
+    } else {
+        if (filetype == 'slicer') this.openSlicerScene(file, droppable);
+        else {
+            this.addObject(file);
+        }
     }
     
     // Run any callbacks once everything is loaded
     utils.array.forEach(this.onloadCallbacks, function(callback) {
         callback(this.widget);
-    })	
-    
+    })
 
 };
 
-
-ThreeDHolder.prototype.dontReloadObj = function(droppedObj, file, filetype) {
-    // set to be visible
-    if (filetype == 'volume' && this.Viewer.Menu.currentVolObject != droppedObj) {
-        this.Viewer.Menu.toggleVolumeVisibility(droppedObj);
-    } else {
-        droppedObj.visible = true;
-    }
-    // make it 'selected'
-    this.Viewer.Menu.findAndSelectCheckbox(file, filetype);
-};
-
-
-ThreeDHolder.prototype.createAndLoadObj = function(file, filetype) {
-    var that = this;
-    var m = this.Viewer.Menu;
-	
-    var show2D = filetype == 'volume';
-    var newObj = createXObject(file);
-    
-    m.currentObjects.push(newObj);
-    m.addFileToFolder(newObj, file, filetype);
-    
-    
-    that.PlaneHolder3.Renderer.add(newObj);
-    that.setOnShowtime3D(show2D, newObj);
-};
-
-
-// http://jsfiddle.net/QpAcf/
