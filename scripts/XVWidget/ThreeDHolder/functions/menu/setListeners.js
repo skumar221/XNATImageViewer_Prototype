@@ -9,7 +9,7 @@ goog.provide('ThreeDHolder.setListenerThresh');
 ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
     var that = this;
     goog.events.listen(radio, goog.ui.Component.EventType.CHANGE, function(event) {
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+//        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 //        that.currentVolObject.visible = false;  ////////////////
 //        newObj.visible = true;  /////////////////////
         that.currentVolObject = newObj;
