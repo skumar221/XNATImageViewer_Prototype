@@ -1,0 +1,52 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Test Login</title>
+
+	
+	
+</head>
+
+
+
+	
+<body> 
+
+<script>
+var user = "username here",
+	pass = "password here";
+
+var authURL = 'https://central.xnat.org/app/template/Login.vm';
+
+var data = new FormData();
+data.append('username', 'sunilk');
+data.append('password', 'ambuSa5t');
+//data.append('organization', 'place');
+//data.append('requiredkey', 'key');
+
+var xhr = new XMLHttpRequest();
+
+xhr.open('POST', authURL, true, 'sunilk', 'ambuSa5t');
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+console.log(xhr)
+xhr.onload = function () {
+    // do something to response
+    // console.log(this.responseText);
+    console.log("onload?")
+    alert(this.responseText);
+    document.location = "http://central.xnat.org"
+};
+
+xhr.send("username=sunilk");
+//xhr.send("username=sunilk");
+</script>
+
+	
+</body>
+
+
+
+</html>
