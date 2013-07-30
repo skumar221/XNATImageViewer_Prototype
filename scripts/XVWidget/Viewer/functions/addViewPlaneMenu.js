@@ -26,13 +26,13 @@ Viewer.prototype.addViewPlaneMenu = function () {
 	// MAIN MENU
 	//------------------------------	
 	this.ViewPlaneMenu = utils.dom.makeElement("div", this.widget, "ViewPlaneMenu",{
-		position: "absolute",
-		left: iconStartLeft,
-		top: iconStartTop,
-		height: iconDimSmall , 
-		width: iconDimSmall,
-		cursor: "pointer",
-		'z-index': '10',
+		'position': "absolute",
+		'left': iconStartLeft,
+		'top': iconStartTop,
+		'height': iconDimSmall , 
+		'width': iconDimSmall,
+		'cursor': "pointer",
+		'z-index': '10'
 	});
 	this.ViewPlaneMenu.title  = "Select View Plane";	
 	

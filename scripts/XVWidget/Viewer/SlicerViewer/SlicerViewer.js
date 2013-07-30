@@ -120,7 +120,7 @@ SlicerViewer = function (args) {
 }
 goog.inherits(SlicerViewer, Viewer);
 
-/*
+/**
  * @type {object}
  * @protected
  */

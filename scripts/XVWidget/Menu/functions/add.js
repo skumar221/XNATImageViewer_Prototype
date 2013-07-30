@@ -33,15 +33,15 @@ Menu.prototype.add = function(guiObject, folder, label, values, file) {
         
         case 'newline':
             newGuiObject = utils.dom.makeElement('div', folder, 'Newline', {
-                width: '100%',
-                height: '1px',
+                'width': '100%',
+                'height': '1px'
             });
             break;
         
         case 'spacer':
             newGuiObject = utils.dom.makeElement('div', folder, 'Spacer', {
-                width: '100%',
-                height: '20px'
+                'width': '100%',
+                'height': '20px'
             });
             break;
         
@@ -64,7 +64,7 @@ Menu.prototype.addInputButton = function(guiObject, folder, label, file, initial
     b.setAttribute('name', guiObject + 'Button' + this.widget.id);
     b.checked = toCheck;
     
-    var l = utils.dom.makeElement('label', folder, 'Label', utils.dom.mergeArgs(this.labelCSS, {'width': width,}));
+    var l = utils.dom.makeElement('label', folder, 'Label', utils.dom.mergeArgs(this.labelCSS, {'width': width}));
     if (label && label.split('/')[1])
         l.innerHTML = label.slice(label.lastIndexOf('/') + 1, label.length);
     else

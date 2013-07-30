@@ -51,7 +51,7 @@ goog.exportSymbol('ThreeDHolder', ThreeDHolder);
 
 
 
-/*
+/**
  * @type {object}
  * @protected
  */
@@ -95,32 +95,32 @@ ThreeDHolder.prototype.addViewPanes = function () {
     this.PlaneHolderX = new PlaneHolder('x', this, {
 		parent: this.widget,
         CSS: {
-            left: '0%',
-            top: '0%',
+            'left': '0%',
+            'top': '0%'
         }
 	});
     
     this.PlaneHolderY = new PlaneHolder('y', this, {
 		parent: this.widget,
         CSS: {
-            left: '50%',
-            top: '0%',
+            'left': '50%',
+            'top': '0%'
         }
 	});
     
     this.PlaneHolderZ = new PlaneHolder('z', this, {
 		parent: this.widget,
         CSS: {
-            left: '0%',
-            top: '50%',
+            'left': '0%',
+            'top': '50%'
         }
 	});
     
     this.PlaneHolder3 = new PlaneHolder('v', this, {
 		parent: this.widget,
         CSS: {
-            left: '50%',
-            top: '50%',
+            'left': '50%',
+            'top': '50%'
         }
 	});
 }

@@ -1,9 +1,13 @@
 import sys
 import os
 import shutil
+import subprocess
 from datetime import datetime
 
         
+def callCommand(cmd):
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    (out, err) = proc.communicate()
         
 def main():
     
@@ -39,17 +43,17 @@ def main():
                    l = l.strip()
                    if ("goog.exportSymbol" in l) and ("(" in l):
                        currLine = l
-                       print "\n\nBEGIN STREAM: ", l
+                       #print "\n\nBEGIN STREAM: ", l
                        beginLine = True
                    if beginLine:
                        if (l != currLine):
-                           print "\tADDING: ", l, "to", currLine
+                           #print "\tADDING: ", l, "to", currLine
                            currLine += l
-                           print "\tCURRLINE: ", currLine
+                           #print "\tCURRLINE: ", currLine
                        if (")" in l):
                            v = currLine.split(",")[1].split(")")[0].strip();
-                           print "FINAL LINE: ", currLine
-                           print "END STREAM: ", v
+                           #print "FINAL LINE: ", currLine
+                           #print "END STREAM: ", v
                            nameSpaces.append(v)
                            beginLine = False
 
@@ -120,15 +124,43 @@ def main():
     #for a in cleanArr:
     #    print a, (cleanArr.count(a))
         
-    #print 
-    advancedfinalStr = startStr + namespaceStr + endStr + advancedStr + " > /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/build.txt"
+    buildOrderFile = "/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/build.txt"
+    advancedfinalStr = startStr + namespaceStr + endStr + advancedStr + " > " + buildOrderFile
     uncompiledfinalStr = startStr + namespaceStr + "> /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/build.txt"
+    
+    
+    callCommand(uncompiledfinalStr)
     #print advancedfinalStr
     #print uncompiledfinalStr
 
     #os.system(finalStr)
-    os.system(advancedfinalStr)
+    #try:
+        #a = os.system(advancedfinalStr)
 
+    #
+    # The lines "-Xms200m -Xmx200m" are to give the jvm more virtual memory
+    #
+    javaCmd = "java -d32 -Xms200m -Xmx200m -client -jar /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/utils/lib/X/lib/google-closure-compiler/compiler.jar "
+    advCmd = "--compilation_level=ADVANCED_OPTIMIZATIONS > TESTCOMPILE.js"
+    depLines = []
+    culledLines = []
+    for line in open(buildOrderFile):
+        depLines.append(line.strip())
+    
+    for depLine in depLines:
+        dCount =  depLines.count(depLine)
+        if not depLine in culledLines:
+            culledLines.append(depLine)
+        else:
+            print "***********Found duplicate dependency: %s\n\t\tRemoving from list!"%(depLine)
+
+    cmdVal = javaCmd
+    for line in culledLines:
+        cmdVal += " --js " + line
+    
+    cmdVal += " " + advCmd
+    print cmdVal
+    callCommand(cmdVal)
     
 if __name__ == "__main__":
     main()
