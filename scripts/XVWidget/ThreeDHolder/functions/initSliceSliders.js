@@ -50,22 +50,25 @@ ThreeDHolder.prototype.initSliceSliders = function() {
 
     goog.events.listen(that.xSlider, goog.ui.Component.EventType.CHANGE, function() {
         var cvo = that.currentVolObject;    // must be inside the function!!!
-        cvo.indexX = that.xSlider.getValue();
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
+        var index = cvo.getIndexOrientation_('sagittal');
+        cvo[index] = that.xSlider.getValue();
+        that.xBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[0];
         cvo.modified();
     });
     
     goog.events.listen(that.ySlider, goog.ui.Component.EventType.CHANGE, function() {
         var cvo = that.currentVolObject;
-        cvo.indexY = that.ySlider.getValue();
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+        var index = cvo.getIndexOrientation_('coronal');
+        cvo[index] = that.ySlider.getValue();
+        that.yBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[1];
         cvo.modified();
     });
     
     goog.events.listen(that.zSlider, goog.ui.Component.EventType.CHANGE, function() {
         var cvo = that.currentVolObject;
-        cvo.indexZ = that.zSlider.getValue();
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+        var index = cvo.getIndexOrientation_('axial');
+        cvo[index] = that.zSlider.getValue();
+        that.zBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[2];
         cvo.modified();
     });
     
@@ -76,19 +79,23 @@ ThreeDHolder.prototype.initSliceSliders = function() {
     //----------------------------------
     that.PlaneHolderX.Renderer.onScroll = function() {
         var cvo = that.currentVolObject;    // this MUST be inside the function!
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        
+        var index = cvo.getIndexOrientation_('sagittal');
+        that.xSlider.setValue(cvo[index]);
+        that.xBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[0];
     };
+    
     that.PlaneHolderY.Renderer.onScroll = function() {
         var cvo = that.currentVolObject;
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+        var index = cvo.getIndexOrientation_('coronal');
+        that.ySlider.setValue(cvo[index]);
+        that.yBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[1];
     };
+    
     that.PlaneHolderZ.Renderer.onScroll = function() {
         var cvo = that.currentVolObject;
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+        var index = cvo.getIndexOrientation_('axial');
+        that.zSlider.setValue(cvo[index]);
+        that.zBox.innerHTML = 'Frame: ' + (cvo[index]) + ' / ' + cvo._dimensionsRAS[2];
     };
     
     
@@ -99,68 +106,35 @@ ThreeDHolder.prototype.initSliceSliders = function() {
     //----------------------------------
     that.PlaneHolderX.Renderer.xy2ijkOverwrite = function() {
         var cvo = that.currentVolObject;    // this MUST be inside the function!
+        var indexPA = cvo.getIndexOrientation_('coronal');
+        var indexIS = cvo.getIndexOrientation_('axial');
         
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+        that.ySlider.setValue(cvo[indexPA]);
+        that.yBox.innerHTML = 'Frame: ' + (cvo[indexPA]) + ' / ' + cvo._dimensionsRAS[1];
+        that.zSlider.setValue(cvo[indexIS]);
+        that.zBox.innerHTML = 'Frame: ' + (cvo[indexIS]) + ' / ' + cvo._dimensionsRAS[2];
     };
     that.PlaneHolderY.Renderer.xy2ijkOverwrite = function() {
         var cvo = that.currentVolObject;
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        that.zSlider.setValue(cvo.indexZ);
-        that.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
+        var indexIS = cvo.getIndexOrientation_('axial');
+        var indexLR = cvo.getIndexOrientation_('sagittal');
+        
+        that.xSlider.setValue(cvo[indexLR]);
+        that.xBox.innerHTML = 'Frame: ' + (cvo[indexLR]) + ' / ' + cvo._dimensionsRAS[0];
+        that.zSlider.setValue(cvo[indexIS]);
+        that.zBox.innerHTML = 'Frame: ' + (cvo[indexIS]) + ' / ' + cvo._dimensionsRAS[2];
     };
     that.PlaneHolderZ.Renderer.xy2ijkOverwrite = function() {
         var cvo = that.currentVolObject;
-        that.xSlider.setValue(cvo.indexX);
-        that.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-        that.ySlider.setValue(cvo.indexY);
-        that.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
+        var indexPA = cvo.getIndexOrientation_('coronal');
+        var indexLR = cvo.getIndexOrientation_('sagittal');
+        
+        that.xSlider.setValue(cvo[indexLR]);
+        that.xBox.innerHTML = 'Frame: ' + (cvo[indexLR]) + ' / ' + cvo._dimensionsRAS[0];
+        that.ySlider.setValue(cvo[indexPA]);
+        that.yBox.innerHTML = 'Frame: ' + (cvo[indexPA]) + ' / ' + cvo._dimensionsRAS[1];
     };
     
-    
-    
-//    addIndexBoxListeners(viewer);
 };
 goog.exportProperty(ThreeDHolder.prototype, 'initSliceSliders', ThreeDHolder.prototype.initSliceSliders);
-
-
-ThreeDHolder.prototype.updateSlices = function() {
-    var cvo = this.currentVolObject;
-    var m = this.currentObjects;
-    
-//    console.log(cvo);
-//    console.log(m);
-    
-//    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    
-    for (var i = 0; i < m.length; ++i) {
-//        console.log('before ' + i + ' current indices: ' + m[i].indexX + ' ' + m[i].indexY + ' ' + m[i].indexZ);
-    }
-    
-    cvo.indexX = Math.round(cvo.indexX);
-    cvo.indexY = Math.round(cvo.indexY);
-    cvo.indexZ = Math.round(cvo.indexZ);
-    
-    this.xSlider.setMaximum(cvo.dimensions[2]-1);
-    this.ySlider.setMaximum(cvo.dimensions[1]-1);
-    this.zSlider.setMaximum(cvo.dimensions[0]-1);
-    
-    this.xSlider.setValue(cvo.indexX);
-    this.ySlider.setValue(cvo.indexY);
-    this.zSlider.setValue(cvo.indexZ);
-    for (var i = 0; i < m.length; ++i) {
-//        console.log('after ' + i + ' current indices: ' + m[i].indexX + ' ' + m[i].indexY + ' ' + m[i].indexZ);
-    }
-    
-    this.xBox.innerHTML = 'Frame: ' + (cvo.indexX) + ' / ' + cvo.dimensions[2];
-    this.yBox.innerHTML = 'Frame: ' + (cvo.indexY) + ' / ' + cvo.dimensions[1];
-    this.zBox.innerHTML = 'Frame: ' + (cvo.indexZ) + ' / ' + cvo.dimensions[0];
-    
-    
-};
-goog.exportProperty(ThreeDHolder.prototype, 'updateSlices', ThreeDHolder.prototype.updateSlices);
-
 

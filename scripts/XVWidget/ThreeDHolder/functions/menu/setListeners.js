@@ -12,7 +12,6 @@ ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
 //        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 //        that.currentVolObject.visible = false;  ////////////////
 //        newObj.visible = true;  /////////////////////
-        that.currentVolObject = newObj;
         that.update2Drenderers(newObj);
     });
 }
@@ -21,6 +20,7 @@ goog.exportProperty(ThreeDHolder.prototype, 'setListenerRadio', ThreeDHolder.pro
 
 ThreeDHolder.prototype.setListenerVisible = function(newObj, visible, toggle) {
     goog.events.listen(visible, goog.ui.Component.EventType.CHANGE, function(event) {
+        
         newObj.visible = this.checked;
         var checked = this.checked;
         

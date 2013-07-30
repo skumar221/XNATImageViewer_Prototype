@@ -1,4 +1,5 @@
-
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.addAnnotations');
 
 ThreeDHolder.prototype.addAnnotations = function(annotations) {
     var that = this;
@@ -26,3 +27,4 @@ ThreeDHolder.prototype.addAnnotations = function(annotations) {
         
     });
 }
+goog.exportProperty(ThreeDHolder.prototype, 'addAnnotations', ThreeDHolder.prototype.addAnnotations);

@@ -1,7 +1,0 @@
-
-ThreeDHolder.prototype.slicerCallback = function() {
-    
-    
-    
-}
-

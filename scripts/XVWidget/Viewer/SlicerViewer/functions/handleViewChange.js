@@ -18,17 +18,17 @@ function getPlaneFromTitle(viewer, title) {
     return planeHolder;
 }
 
-function handle3Dto2D(viewer, newIcon) {
+function changeViewManyToOne(viewer, newIcon) {
     var twoD = getPlaneFromTitle(viewer, newIcon);
     expandPanel(twoD);
 }
 
-function handle2Dto3D(viewer, oldIcon) {
+function changeViewOneToMany(viewer, oldIcon) {
     var twoD = getPlaneFromTitle(viewer, oldIcon);
     closePanel(twoD);
 }
 
-function handle2Dto2D(viewer, oldIcon, newIcon) {
+function changeViewOneToOne(viewer, oldIcon, newIcon) {
     var o = getPlaneFromTitle(viewer, oldIcon);
     var n = getPlaneFromTitle(viewer, newIcon);
     closePanel(o);

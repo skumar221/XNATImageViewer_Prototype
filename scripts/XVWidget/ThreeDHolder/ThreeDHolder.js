@@ -1,4 +1,12 @@
 
+/**
+ * PlaneHolderX -- always sagittal (not necessarily always X)
+ * PlaneHolderY -- always coronal (not necessarily always Y)
+ * PlaneHolderZ -- always axial (not necessarily always Z)
+ */
+
+
+
 //******************************************************
 //  Init
 //******************************************************
@@ -25,6 +33,9 @@ ThreeDHolder = function(args) {
     this.currentVolObject;
     this.currentObjects = [];
     
+    this.objRadioPairs = [];
+    this.objVisiblePairs = [];
+    this.objRenderPairs = [];
     this.objOpacityPairs = [];
     this.objThreshPairs = [];
     
@@ -152,55 +163,23 @@ ThreeDHolder.prototype.getObjFromList = function(f) {
  * @param {boolean} show2D True if we want to show 2D renderers
  * @return {undefined}
  */
-ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
+ThreeDHolder.prototype.setOnShowtime = function (newObj) {
     var that = this;
     
-    if (isVol && this.firstVolObject) {
-        this.PlaneHolder3.Renderer.onShowtime = function() {
-            that.firstVolObject = false;
-            that.currentVolObject = newObj; // must be set first time
-            
-            // run slicer callbacks once everything is loaded
-            utils.array.forEach(this.slicerCallbacks, function(callback) {
-                callback();
-            })
-            
-            that.initSliceSliders();
-            that.update2Drenderers(newObj);
-            that.updateMenuSliders();
-        };
-    }
-    
-    else if (isVol) {
+    // there is a volume to set up
+    if (newObj) {
         this.PlaneHolder3.Renderer.onShowtime = function() {
             that.currentVolObject = newObj;
-            
-            // run slicer callbacks once everything is loaded
-            utils.array.forEach(this.slicerCallbacks, function(callback) {
-                callback();
-            })
-            
-            that.update2Drenderers(newObj);
+            that.initSliceSliders();
+            that.update2Drenderers();
             that.updateMenuSliders();
+            
         };
     }
     
     else {
-        this.PlaneHolder3.Renderer.onShowtime = function() {
-            if (that.currentVolObject) {
-                
-                // run slicer callbacks once everything is loaded
-                utils.array.forEach(this.slicerCallbacks, function(callback) {
-                    callback();
-                })
-                
-                that.initSliceSliders();
-                that.update2Drenderers(newObj);
-            }
-            that.updateMenuSliders();
-        };
+        this.PlaneHolder3.Renderer.onShowtime = function() { that.updateMenuSliders(); };
     }
-    
     
 }
 
@@ -211,8 +190,8 @@ ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
  * @param {Object} X object to be added
  * @return {undefined}
  */
-ThreeDHolder.prototype.update2Drenderers = function() {
-    
+ThreeDHolder.prototype.update2Drenderers = function(newObj) {
+    if (newObj) this.currentVolObject = newObj;
     
     this.PlaneHolderX.Renderer.add(this.currentVolObject);
     this.PlaneHolderX.Renderer.render();
@@ -223,17 +202,15 @@ ThreeDHolder.prototype.update2Drenderers = function() {
     this.PlaneHolderZ.Renderer.add(this.currentVolObject);
     this.PlaneHolderZ.Renderer.render();
     
-    this.currentVolObject.modified();
     this.updateSlices();
     
     
-    
     /*
-    console.log(newObj._slicesX);
-    utils.array.forEach(newObj._slicesX._children, function(s) {
-        s.visible = false;
+    console.log(this.currentVolObject._slicesX);
+    utils.array.forEach(this.currentVolObject._slicesX._children, function(s) {
+        s['visible'] = false;
     });
-//    this.currentVolObject._slicesX._children[this.currentVolObject.indexX].visible = false;
+//    this.currentVolObject._slicesX._children[this.currentVolObject.indexX]['visible'] = false;
     */
 }
 

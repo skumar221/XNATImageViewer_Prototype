@@ -147,6 +147,7 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	//
  	
  	function invokeDrop(Viewer, srcObj) {
+//        console.log('clicked');
 		that.thumbnailDragDrop['drop']({
 			dropTargetItem : {
 				element : Viewer.widget
@@ -166,7 +167,6 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	utils.array.forEach(that.dragDropThumbnails, function(srcObj) {
  		
 		goog.events.listen(srcObj.widget, goog.events.EventType.CLICK, function(){
-
 			var d = new Date();
 			var n = d.getTime();
 			var p = (srcObj.clickTime) ? srcObj.clickTime : undefined;
@@ -175,11 +175,11 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 			srcObj.clickTime = n;
 
 			
-			
 			//
 			//  Weird double click events sent out...
 			//
-			if (p  && ((n-p) < 1000)) {
+			if (p  && ((n-p) < 1500)) {
+//                console.log('double click thing');
 				return;
 			}
 
@@ -227,7 +227,8 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
 					}
 				})
 
-			}										
+			}
+            
 		});
 	});
 }

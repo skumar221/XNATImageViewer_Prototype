@@ -54,6 +54,7 @@ Menu.prototype.add = function(guiObject, folder, label, values, file) {
 }
 goog.exportProperty(Menu.prototype, 'add', Menu.prototype.add);
 
+
 Menu.prototype.addInputButton = function(guiObject, folder, label, file, initialValue) {
     var toCheck = (initialValue) ? 'checked' : '';
     var width = (guiObject === 'radio') ? '85%' : '28%';//'45%';
@@ -73,6 +74,7 @@ Menu.prototype.addInputButton = function(guiObject, folder, label, file, initial
     
     return b;
 }
+
 
 Menu.prototype.addSlider = function(folder, label, values) {
     // must set tab pane visibility to 'block' in order for sliders to init properly

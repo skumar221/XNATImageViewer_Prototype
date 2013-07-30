@@ -8,30 +8,50 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     var file = droppable.scanData.filePath;
     var filetype = getFileObjectType(file);
     
-    // activate correct view plane menu
+    //----------------------------------
+    // SET VIEW PLANE MENU
+    //----------------------------------
+    
     // if slicer, show 3D plane only
     if (filetype == 'slicer') {
         this.currViewPlane = '3D';
         this.Viewer.ViewPlaneMenu.activateIcon('3D', true);
-        handle3Dto2D(this.Viewer, '3D');
+        changeViewManyToOne(this.Viewer, '3D');
     }
     
     // if not slicer, show all planes only if this is the first object,
     // otherwise keep view pane the same
-    else if (this.currentObjects.length < 2) {
+    else if (this.currentObjects.length == 0) {
         this.currViewPlane = "All";
         this.Viewer.ViewPlaneMenu.activateIcon('All', true);
     }
     
-    // add new object or bring up existing one
-    var droppedObj = this.getObjFromList(file);
-    if (droppedObj) {
-        // need to deal with enabling other parts
-//        this.reloadObj(droppedObj, file, filetype);
-    } else {
-        if (filetype == 'slicer') this.openSlicerScene(file, droppable);
+    
+    //----------------------------------
+    // ADD OBJECT TO RENDERER(S)
+    //----------------------------------
+    
+    // we're opening a whole slicer scene
+    if (filetype == 'slicer') {
+        this.openSlicerScene(file, droppable);
+    }
+    
+    
+    // we're just opening a single file
+    else {
+        
+        // if object has already been loaded, don't recreate it, just reload it
+        var droppedObj = this.getObjFromList(file);
+        if (droppedObj) {
+            this.reloadObj(droppedObj, filetype);
+        }
+        
+        // object has not been created yet, let's create it and load it
         else {
-            this.addObject(file);
+            var newObj = this.addObject(file);
+            
+            if (filetype == 'volume') this.setOnShowtime(newObj);
+            else this.setOnShowtime();
         }
     }
     

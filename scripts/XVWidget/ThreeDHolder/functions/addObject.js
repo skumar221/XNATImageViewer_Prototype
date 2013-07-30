@@ -2,9 +2,11 @@ goog.require('ThreeDHolder');
 goog.provide('ThreeDHolder.addObject');
 
 ThreeDHolder.prototype.addObject = function(file, attributes) {
+    // create object
     var newObj = createXObject(file);
     filetype = getFileObjectType(file);
     
+    // set attributes if there are preset values (from slicer scenes)
     if (attributes) {
         // color -- volumes: .maxColor, meshes: .color
         var colors = attributes['color'].split(' ');
@@ -13,8 +15,9 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
         
         // color table (if exists)
         if (attributes['colorTable']) {
-//            console.log(file + attributes['colorTable']);
-//            newObj.labelmap.colortable.file = file + attributes['colorTable'];
+            console.log(file.split('/Data/')[0] + '/' + attributes['colorTable']);
+            newObj.labelmap.file = file;
+            newObj.labelmap.colortable.file = file.split('/Data/')[0] + '/' + attributes['colorTable'];
         }
         
         // opacity
@@ -24,17 +27,21 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
         newObj.visible = attributes['visibility'] == 'true';
     }
     
-    var isVol = filetype == 'volume';
-    if (isVol) {
+    if (filetype == 'volume') {
 //        if (this.currentVolObject) this.currentVolObject.visible = false;  /////////////
-        this.currentVolObject = newObj;
+//        this.currentVolObject = newObj;
     }
     
+    // add to collection of objects, add to menu, and add to viewer!
     this.currentObjects.push(newObj);
     this.addToMenu(newObj);
-    
-    this.PlaneHolder3.widget.style.background = '#000';//(isSlicer) ? '#aae' : '#000';
     this.PlaneHolder3.Renderer.add(newObj);
-    this.setOnShowtime(isVol, newObj);
+    
+    return newObj;
 }
 goog.exportProperty(ThreeDHolder.prototype, 'addObject', ThreeDHolder.prototype.addObject);
+
+
+
+
+//    this.PlaneHolder3.widget.style.background = (isSlicer) ? '#aae' : '#000';

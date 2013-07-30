@@ -11,6 +11,7 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
     
     // annotation
     if (filetype === 'sphere') {
+        // create folder if it doesn't exist
         if (! this.annotations) this.annotations = this.Viewer.Menu.addFolder('Annotations');
         folder = this.annotations;
         
@@ -25,6 +26,7 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
     
     // volume
     else if (filetype === 'volume') {
+        // create folder if it doesn't exist
         if (! this.voluContent) this.voluContent = this.Viewer.Menu.addFolder('Volumes');
         folder = this.voluContent;
         var file = file.split('/3D/')[1];
@@ -49,6 +51,9 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
         this.setListenerThresh (newObj, thresh);
         
         // save pairs
+        this.objRadioPairs.push([newObj, radio]);
+        this.objVisiblePairs.push([newObj, visible]);
+        this.objRenderPairs.push([newObj, render]);
         this.objOpacityPairs.push([newObj, opacity]);
         this.objThreshPairs.push([newObj, thresh]);
     }
@@ -56,6 +61,7 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
     
     // mesh or fiber
     else {
+        // create folder if it doesn't exist
         if (filetype === 'mesh') {
             if (! this.meshContent) this.meshContent = this.Viewer.Menu.addFolder('Meshes');
             folder = this.meshContent;
@@ -69,7 +75,6 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
         // add components
         var visible = m.add('checkbox', folder, file, newObj.visible, file);
         var opacity = m.add('slider', folder, 'Opacity', [0, 1, 0.01, newObj.opacity]);
-        //m.add('spacer', folder);
         m.add('newline', folder);
         
         // set listeners
@@ -77,6 +82,7 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
         this.setListenerOpacity(newObj, opacity);
         
         // save pairs
+        this.objVisiblePairs.push([newObj, visible]);
         this.objOpacityPairs.push([newObj, opacity]);
     }
 }

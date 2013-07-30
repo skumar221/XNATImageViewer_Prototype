@@ -11,6 +11,7 @@ goog.require('X.sphere');
  * @return {String} Extension of file in all lowercase
  */
 function getFileExt(file) {
+    if(!file) throw file;
     if (file[0].length > 1) file = file[0];
     
     // extract all letters following last period

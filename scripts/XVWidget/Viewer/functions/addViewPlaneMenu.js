@@ -137,16 +137,16 @@ Viewer.prototype.addViewPlaneMenu = function () {
                 if (newIcon === 'All') {}
                     // do nothing
                 else
-                    handle3Dto2D(that, newIcon);
+                    changeViewManyToOne(that, newIcon);
             }
             else {
                 if (newIcon === 'All')
-                    handle2Dto3D(that, oldIcon);
+                    changeViewOneToMany(that, oldIcon);
                 else {
                     if (that.FrameHolder)
                         that.FrameHolder.loadDroppable(that.FrameHolder.currDroppable, event.currentTarget.axis.toLowerCase());
                     else
-                        handle2Dto2D(that, oldIcon, newIcon);
+                        changeViewOneToOne(that, oldIcon, newIcon);
                 }
             }
         });
