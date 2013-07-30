@@ -31,5 +31,12 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     // set up camera
     var cameraPosition = extractCamera(scene);
     this.PlaneHolder3.Renderer.camera.position = cameraPosition;
+    
+    if (selectedVolumeFile) {
+        this.slicerCallbacks.push(function(selectedVolumeFile) {
+            that.currentVolObject = that.getObjFromList(selectedVolumeFile);
+            that.update2Drenderers(that.currentVolObject);
+        });
+    }
 }
 

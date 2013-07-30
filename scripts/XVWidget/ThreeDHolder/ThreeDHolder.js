@@ -28,6 +28,8 @@ ThreeDHolder = function(args) {
     this.objOpacityPairs = [];
     this.objThreshPairs = [];
     
+    this.slicerCallbacks = [];
+    
     
     //----------------------------------
     // VIEW PANES FOR RENDERERS
@@ -158,6 +160,11 @@ ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
             that.firstVolObject = false;
             that.currentVolObject = newObj; // must be set first time
             
+            // run slicer callbacks once everything is loaded
+            utils.array.forEach(this.slicerCallbacks, function(callback) {
+                callback();
+            })
+            
             that.initSliceSliders();
             that.update2Drenderers(newObj);
             that.updateMenuSliders();
@@ -167,6 +174,12 @@ ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
     else if (isVol) {
         this.PlaneHolder3.Renderer.onShowtime = function() {
             that.currentVolObject = newObj;
+            
+            // run slicer callbacks once everything is loaded
+            utils.array.forEach(this.slicerCallbacks, function(callback) {
+                callback();
+            })
+            
             that.update2Drenderers(newObj);
             that.updateMenuSliders();
         };
@@ -175,6 +188,12 @@ ThreeDHolder.prototype.setOnShowtime = function (isVol, newObj) {
     else {
         this.PlaneHolder3.Renderer.onShowtime = function() {
             if (that.currentVolObject) {
+                
+                // run slicer callbacks once everything is loaded
+                utils.array.forEach(this.slicerCallbacks, function(callback) {
+                    callback();
+                })
+                
                 that.initSliceSliders();
                 that.update2Drenderers(newObj);
             }
@@ -207,11 +226,7 @@ ThreeDHolder.prototype.update2Drenderers = function() {
     this.currentVolObject.modified();
     this.updateSlices();
     
-    /*
-    console.log('renderers displaying ' + this.PlaneHolderX.Renderer._topLevelObjects[0]._id);
-    console.log('current volume object ' + this.currentVolObject._id);
-    console.log(this.PlaneHolderX.Renderer._topLevelObjects[0] == this.currentVolObject);
-    */
+    
     
     /*
     console.log(newObj._slicesX);
