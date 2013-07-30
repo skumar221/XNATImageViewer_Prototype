@@ -1,3 +1,6 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.updateCSS');
+
 //******************************************************
 //  updateCSS
 //
@@ -15,3 +18,4 @@ ThreeDHolder.prototype.updateCSS = function (args) {
     // update slider thumb positions?
 //    if (this.xSlider) this.xSlider.setValue(this.currentVolObject.indexX);
 }
+goog.exportProperty(ThreeDHolder.prototype, 'updateCSS', ThreeDHolder.prototype.updateCSS);
