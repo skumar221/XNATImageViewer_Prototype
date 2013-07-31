@@ -34,7 +34,7 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     //----------------------------------
     
     // shorten filepath to exclude the mrml file -- now it is path to scene directory
-    file = droppable.scanData.filePath.slice(0, file.lastIndexOf('/')) + '/';
+    file = droppable['scanData']['filePath'].slice(0, file.lastIndexOf('/')) + '/';
     
     // use extracted info to make objects, load each into viewer
     var selectedVolume;
@@ -47,7 +47,7 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
         }
         
         // if there's a colortable, choose that if there isn't a selection
-        if (!selectedVolume && o['colorTable']) {
+        if (!selectedVolume && o['attributes']['colorTable']) {
             console.log('picking the color table');
             selectedVolume = obj;
         }

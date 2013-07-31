@@ -14,8 +14,14 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
         newObj.color = colors;
         
         // color table (if exists)
+        /*
+        if (attributes['colorVolume']) {
+            newObj.labelmap.file = file.split('/Data/')[0] + '/' + attributes['colorVolume'];
+            if (attributes['colorTable'])
+                newObj.labelmap.colortable.file = file.split('/Data/')[0] + '/' + attributes['colorTable'];
+        }
+        /*/
         if (attributes['colorTable']) {
-            console.log(file.split('/Data/')[0] + '/' + attributes['colorTable']);
             newObj.labelmap.file = file;
             newObj.labelmap.colortable.file = file.split('/Data/')[0] + '/' + attributes['colorTable'];
         }
