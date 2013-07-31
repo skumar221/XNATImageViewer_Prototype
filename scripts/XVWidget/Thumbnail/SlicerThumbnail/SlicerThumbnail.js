@@ -40,20 +40,20 @@ SlicerThumbnail = function (scanData, args) {
 //        this.ThumbnailImage.src = this.scanData.filePath.slice(0, -4) + '80.dcm';
     
     
-    var file = this.scanData.filePath;
+    var file = this.scanData['filePath'];
     
-    if (this.scanData.filePath.split('slicer')[1])
-        this.ThumbnailImage.src = file.slice(0, file.lastIndexOf('/')) + '/Data/' + this.scanData.sceneName + '.png';
+    if (this.scanData['filePath'].split('slicer')[1])
+        this.ThumbnailImage.src = file.slice(0, file.lastIndexOf('/')) + '/Data/' + this.scanData['sceneName'] + '.png';
     else
         this.ThumbnailImage.src = "./demoscans/3D/placeholder.jpg";
 
 	this.ThumbnailCanvas.metaText = [];
-	this.ThumbnailCanvas.metaText[0] = this.scanData.sessionInfo["SessionID"].value;
-	this.ThumbnailCanvas.metaText[1] = this.scanData.sessionInfo["Format"].value.toString().toUpperCase();
-    if (this.scanData.filePath.split('/3D/')[1])
-        this.ThumbnailCanvas.metaText[2] = this.scanData.filePath.split('/3D/')[1];
+	this.ThumbnailCanvas.metaText[0] = this.scanData['sessionInfo']["SessionID"]['value'];
+	this.ThumbnailCanvas.metaText[1] = this.scanData['sessionInfo']["Format"]['value'].toString().toUpperCase();
+    if (this.scanData['filePath'].split('/3D/')[1])
+        this.ThumbnailCanvas.metaText[2] = this.scanData['filePath'].split('/3D/')[1];
 	else
-        this.ThumbnailCanvas.metaText[2] = this.scanData.filePath;
+        this.ThumbnailCanvas.metaText[2] = this.scanData['filePath'];
         
 	
 	this.TextElement.innerHTML += "<b><font size = '3'>" + this.ThumbnailCanvas.metaText[0]  + "</font></b><br>";
@@ -110,7 +110,7 @@ SlicerThumbnail.prototype.createDragElement = function(srcElt) {
 * @protected
 */
 SlicerThumbnail.prototype.defaultArgs = {
-	className: XVGlobals.classNames.SlicerThumbnail
+	'className': XVGlobals.classNames.SlicerThumbnail
 }
 
 //*****************************************
@@ -132,12 +132,4 @@ SlicerThumbnail.prototype.addActivatedCallback = function (callback) {
 	
 	this.activatedCallbacks.push(callback)
 }
-
-/**
-* @type {function(string)}
-* /
-Thumbnail.prototype.getFrameList = function (type) {
-
-	return (type === "sagittal") ? this.scanData.sagittalPaths : (type === "transverse") ? this.scanData.axialPaths : this.scanData.coronalPaths;
-}*/
 

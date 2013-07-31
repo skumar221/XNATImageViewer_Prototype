@@ -78,7 +78,7 @@ extractFileInfo = function(scene, tagName, storageNodeType) {
                 'color':        displayNode.getAttribute('color'),
                 'colorTable':   colorTableFile,
                 'opacity':      displayNode.getAttribute('opacity'),
-                'visibility':   visibility,
+                'visibility':   visibility
             }
         });
         

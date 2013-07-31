@@ -20,14 +20,14 @@ Viewer.prototype.populateData = function (data) {
 		var className = "SessionData_ScrollGallery";
 		
 		that.sessionInfo = new ScrollGallery({
-			parent: that.ScanTabs.getTab("Info"),
-			className: className,
-			orientation: "vertical",
-			widgetCSS: {
-				left: 0,
-				height: '80%',
-				width: 440,
-				top: XVGlobals.scanTabLabelHeight + 10
+			'parent': that.ScanTabs.getTab("Info"),
+			'className': className,
+			'orientation': "vertical",
+			'widgetCSS': {
+				'left': '0',
+				'height': '80%',
+				'width': '440',
+				'top': XVGlobals.scanTabLabelHeight + 10
 			}
 		});	
 		var contents = utils.dom.makeElement("div", that.sessionInfo.getScrollArea(), className + "_MetadataContents", {});
@@ -43,8 +43,8 @@ Viewer.prototype.populateData = function (data) {
 
 			that.displayableData[noSpace] = utils.dom.makeElement("div", contents, className + "Data_" + noSpace);
 			utils.css.setCSS( that.displayableData[noSpace], utils.dom.mergeArgs(that.textCSS_small,{
-				top: currTop,
-				left: 15
+				'top': currTop,
+				'left': '15'
 			}));
 			that.displayableData[noSpace].innerHTML = labelObj[i].label + ":";		
 
@@ -52,8 +52,8 @@ Viewer.prototype.populateData = function (data) {
 
 			that.displayableData[noSpace + "_value"] = utils.dom.makeElement("div", contents, className + "Value_" + noSpace);
 			utils.css.setCSS( that.displayableData[noSpace + "_value"], utils.dom.mergeArgs(that.textCSS_small,{
-				top: currTop,
-				left: 160
+				'top': currTop,
+				'left': '160'
 			}));	
 			that.displayableData[noSpace + "_value"].innerHTML = labelObj[i]["value"][0];
 			
@@ -64,7 +64,7 @@ Viewer.prototype.populateData = function (data) {
 		
 
 		utils.css.setCSS(contents, {
-			height: currTop
+			'height': currTop
 		})
 	}
 	// NOTE:  Ajax query would be here

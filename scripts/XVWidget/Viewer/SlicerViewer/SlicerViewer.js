@@ -20,8 +20,8 @@ SlicerViewer = function (args) {
 	  * @type {ThreeDHolder}
 	  */
 	this.ThreeDHolder = new ThreeDHolder({
-		parent: this.widget,
-		"border-width": 0
+		'parent': this.widget,
+		"border-width": '0'
 	});
 	this.ThreeDHolder.Viewer = this;
     
@@ -34,8 +34,8 @@ SlicerViewer = function (args) {
 	 */
 	this.ThreeDHolder.addOnloadCallback(function () {
 		var t = that.getThumbnail();
-		if(t && t.scanData) {
-			that.populateData(t.scanData)
+		if(t && t['scanData']) {
+			that.populateData(t['scanData'])
 		}
 	})
 
@@ -53,9 +53,9 @@ SlicerViewer = function (args) {
 	 * @type {ContentDivider}
 	 */	
 	this.ContentDivider = new ContentDivider( {	
-		parent: this.widget,
-		widgetCSS: {
-			backgroundColor: "rgb(35,35,35)" 
+		'parent': this.widget,
+		'widgetCSS': {
+			'backgroundColor': "rgb(35,35,35)" 
 		}
 	});
 	
@@ -68,11 +68,11 @@ SlicerViewer = function (args) {
 	 */	
 	this.ScanTabs = new ScanTabs({
 
-		parent: this.widget,
-		tabTitles: ["Info", "Menu"],
-		widgetCSS: {
-			height: XVGlobals.minScanTabHeight,
-			width: '100%'
+		'parent': this.widget,
+		'tabTitles': ["Info", "Menu"],
+		'widgetCSS': {
+			'height': XVGlobals.minScanTabHeight,
+			'width': '100%'
 		}
 		
 	});
@@ -92,14 +92,14 @@ SlicerViewer = function (args) {
 	 * @private
 	 */
 	this.textCSS_small = {
-		color: "rgba(255,255,255,1)",
-		position: "absolute",
-		top: 0,
-		left: 0,
-		fontSize: XVGlobals.fontSizeMed,
-		textAlign: "left",
+		'color': "rgba(255,255,255,1)",
+		'position': "absolute",
+		'top': '0',
+		'left': '0',
+		'fontSize': XVGlobals.fontSizeMed,
+		'textAlign': "left",
 		//border: "solid 1px rgb(255,255,255)",
-		width: 140
+		'width': 140
 	};
     
     
@@ -125,7 +125,7 @@ goog.inherits(SlicerViewer, Viewer);
  * @protected
  */
 SlicerViewer.prototype.defaultArgs = {
-	className: XVGlobals.classNames.SlicerViewer
+	'className': XVGlobals.classNames.SlicerViewer
 }
 
 
@@ -216,7 +216,7 @@ SlicerViewer.prototype.createDragElement = function(srcElt) {
 	
 		
 		utils.css.setCSS(returner, {
-			cursor: 'move',
+			'cursor': 'move',
 	        '-moz-user-select': 'none'
 		})
 	

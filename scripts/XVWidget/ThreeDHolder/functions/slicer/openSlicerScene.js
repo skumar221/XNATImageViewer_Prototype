@@ -19,7 +19,7 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     var mrml = loadXMLDoc(file);
     
     // get specific scene
-    var scene = extractScene(mrml, droppable.scanData.sceneName);
+    var scene = extractScene(mrml, droppable['scanData']['sceneName']);
     
     // extract info about objects to load
     var objects = [];

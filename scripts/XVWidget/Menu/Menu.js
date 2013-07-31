@@ -35,9 +35,9 @@ goog.exportSymbol('Menu', Menu);
 
 
 Menu.prototype.defaultArgs = {
-	className: XVGlobals.classNames.Menu,
-	parent: document.body,
-	CSS: {
+	'className': XVGlobals.classNames.Menu,
+	'parent': document.body,
+	'CSS': {
         'position': 'absolute',
 		'height': '100%',
 		'width': '100%',

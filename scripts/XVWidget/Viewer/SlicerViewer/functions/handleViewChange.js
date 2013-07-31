@@ -41,7 +41,7 @@ function expandPanel(plane) {
     ++elt.style.zIndex;
 
     // refresh size of canvas and sliders w/in twoD
-    plane.updateCSS({ left: 0, top: 0, width: '100%', height: '100%' });
+    plane.updateCSS({ 'left': '0', 'top': '0', 'width': '100%', 'height': '100%' });
 }
 
 function closePanel(plane) {
@@ -66,7 +66,7 @@ function closePanel(plane) {
     --elt.style.zIndex;
     
     // refresh size of canvas and sliders
-    plane.updateCSS({ left: px, top: py, width: '50%', height: '50%' });
+    plane.updateCSS({ 'left': px, 'top': py, 'width': '50%', 'height': '50%' });
 }
 
 

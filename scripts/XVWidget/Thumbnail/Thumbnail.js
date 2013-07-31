@@ -185,8 +185,8 @@ Thumbnail.prototype.makeThumbnailCanvas = function (idAppend) {
 	var that = this;
 	
 	var elt = utils.dom.makeElement("canvas", this.widget, idAppend, utils.dom.mergeArgs(this.args.ThumbnailImageCSS,{
-		top: XVGlobals.ThumbnailImageMarginY,
-		left: XVGlobals.ThumbnailImageMarginX
+		'top': XVGlobals.ThumbnailImageMarginY,
+		'left': XVGlobals.ThumbnailImageMarginX
 		 //color: "rgb(255,255,255)"
 	}));
 
@@ -219,16 +219,16 @@ Thumbnail.prototype.addHoverMethods = function () {
 		
 		var hText = (that.isActive_) ? that.args.textHighlight : that.args.textDefault;
 		utils.css.setCSS(that.TextElement, {
-			color: hText
+			'color': hText
 		})		
 
 		
 		utils.css.setCSS(that.ThumbnailCanvas, {
-			borderColor: hText
+			'borderColor': hText
 		})	
 		
 		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgDefault
+			'backgroundColor': that.args.bgDefault
 		})			
 	}
 	
@@ -237,16 +237,16 @@ Thumbnail.prototype.addHoverMethods = function () {
 	this.hoverMethods.highlight = function() {
 
 		utils.css.setCSS(that.widget, {
-			backgroundColor: that.args.bgHighlight
+			'backgroundColor': that.args.bgHighlight
 		})			
 
 
 		utils.css.setCSS(that.TextElement, {
-			color: that.args.textHighlight
+			'color': that.args.textHighlight
 		})	
 		
 		utils.css.setCSS(that.ThumbnailCanvas, {
-			borderColor: that.args.textHighlight
+			'borderColor': that.args.textHighlight
 		})			
 	}
 	
@@ -279,29 +279,29 @@ Thumbnail.prototype.addHoverMethods = function () {
 * @protected
 */
 Thumbnail.prototype.defaultArgs = {
-	className: XVGlobals.classNames.Thumbnail,
-	parent: document.body,
-	draggableParent: document.body,
-	activated: false,
-	bgDefault : "rgb(0,0,0)",
-	bgHighlight: "rgb(50, 50, 50)",
-	textDefault : "rgb(120,120,120)",
-	textHighlight: "rgb(230, 230, 230)",
-	widgetCSS: {
-		position: "absolute",
-		width: XVGlobals.ThumbnailWidgetWidth,
-		height: XVGlobals.ThumbnailWidgetHeight,
-		top: 0,
-		left: 0,			 
+	'className': XVGlobals.classNames.Thumbnail,
+	'parent': document.body,
+	'draggableParent': document.body,
+	'activated': 'false',
+	'bgDefault' : "rgb(0,0,0)",
+	'bgHighlight': "rgb(50, 50, 50)",
+	'textDefault' : "rgb(120,120,120)",
+	'textHighlight': "rgb(230, 230, 230)",
+	'widgetCSS': {
+		'position': "absolute",
+		'width': XVGlobals.ThumbnailWidgetWidth,
+		'height': XVGlobals.ThumbnailWidgetHeight,
+		'top': '0',
+		'left': '0',
 	  	"cursor": "pointer",
-	  	backgroundColor: "rgb(0,0,0)"
+	  	'backgroundColor': "rgb(0,0,0)"
 	},
 	ThumbnailImageCSS: {
-		position: "absolute",
-		width: XVGlobals.ThumbnailImageWidth - 2,
-		height: XVGlobals.ThumbnailImageHeight - 2,
-		top: 0,
-		left: 0,	
+		'position': "absolute",
+		'width': XVGlobals.ThumbnailImageWidth - 2,
+		'height': XVGlobals.ThumbnailImageHeight - 2,
+		'top': '0',
+		'left': '0',	
 		"overflow-y": "hidden",
 		"overflow-x": "hidden",
 	    "border" : "solid",

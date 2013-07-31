@@ -43,10 +43,10 @@ Viewer.prototype.addViewPlaneMenu = function () {
 	// MAIN MENU ICON
 	//------------------------------	
 	this.ViewPlaneMenu.mainIcon = utils.dom.makeElement("img", this.ViewPlaneMenu, "menuIcon",{
-		position: "absolute",
-		height: iconDimSmall, 
-		width: iconDimSmall,
-		cursor: "pointer" 
+		'position': "absolute",
+		'height': iconDimSmall, 
+		'width': iconDimSmall,
+		'cursor': "pointer" 
 	});	
 	this.ViewPlaneMenu.mainIcon.src = "./icons/ViewPlaneMenu/Sagittal.png";
 	this.ViewPlaneMenu.mainIcon.axis = 'Sagittal';
@@ -59,11 +59,11 @@ Viewer.prototype.addViewPlaneMenu = function () {
 	// SUB MENU
 	//------------------------------	
 	this.ViewPlaneMenu.subMenu = utils.dom.makeElement("div", this.ViewPlaneMenu, "subMenu",{
-		position: "relative",
-		left: iconDimSmall * 1.5,
-		height: iconDimSmall, 
-		width: spacer * iconVals.length,
-		cursor: "pointer"
+		'position': "relative",
+		'left': iconDimSmall * 1.5,
+		'height': iconDimSmall, 
+		'width': spacer * iconVals.length,
+		'cursor': "pointer"
 		//backgroundColor: 'rgba(200,100,100,.5)'
 	});	
 	// For onclick purposes
@@ -85,12 +85,12 @@ Viewer.prototype.addViewPlaneMenu = function () {
 			// Icons
 			//	
 			var icon = utils.dom.makeElement("img", that.ViewPlaneMenu.subMenu, "Icon" , {
-				position: "absolute",
-				top: 0,
-				left: startI * iconDimSmall * 1.2,
-				height: iconDimSmall , 
-				width: iconDimSmall ,
-				cursor: "pointer" 
+				'position': "absolute",
+				'top': '0',
+				'left': startI * iconDimSmall * 1.2,
+				'height': iconDimSmall , 
+				'width': iconDimSmall ,
+				'cursor': "pointer" 
 			});	
 			
 			icon.src = "./icons/ViewPlaneMenu/" + iconVal + ".png";
@@ -264,17 +264,17 @@ Viewer.prototype.addViewPlaneMenu = function () {
 		
 		var tempObj = {};
 		
-		tempObj.src = that.ViewPlaneMenu.mainIcon.src;
-		tempObj.axis = that.ViewPlaneMenu.mainIcon.axis;
-		tempObj.title = that.ViewPlaneMenu.mainIcon.title;
+		tempObj['src'] = that.ViewPlaneMenu.mainIcon['src'];
+		tempObj['axis'] = that.ViewPlaneMenu.mainIcon['axis'];
+		tempObj['title'] = that.ViewPlaneMenu.mainIcon['title'];
 
-		that.ViewPlaneMenu.mainIcon.src = icon.src;
-		that.ViewPlaneMenu.mainIcon.axis = icon.axis;
-		that.ViewPlaneMenu.mainIcon.title = icon.title;		
+		that.ViewPlaneMenu.mainIcon['src'] = icon['src'];
+		that.ViewPlaneMenu.mainIcon['axis'] = icon['axis'];
+		that.ViewPlaneMenu.mainIcon['title'] = icon['title'];		
 		
-		icon.src = tempObj.src;
-		icon.axis = tempObj.axis;
-		icon.title = tempObj.title;
+		icon['src'] = tempObj['src'];
+		icon['axis'] = tempObj['axis'];
+		icon['title'] = tempObj['title'];
 		
 		allIcons.push(that.ViewPlaneMenu.mainIcon);		
 	}
