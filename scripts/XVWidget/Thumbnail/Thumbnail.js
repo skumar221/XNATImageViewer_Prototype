@@ -61,16 +61,16 @@ Thumbnail = function (args) {
 	* @protected
 	*/	
 	this.TextElement = utils.dom.makeElement("div", this.widget, "TextElement", {
-		position: "absolute",
-		height: this.args.ThumbnailImageCSS.height,
-		width: this.args.ThumbnailImageCSS.width,
-		top: XVGlobals.ThumbnailImageMarginX*1,
-		left: this.args.ThumbnailImageCSS.width + XVGlobals.ThumbnailImageMarginX*2,
-		fontSize: 11,		
-	    fontFamily: 'Helvetica,"Helvetica neue", Arial, sans-serif',
-        overflow: 'hidden',         // these make the
-        textOverflow: 'ellipsis',   // displayed name
-        whiteSpace: 'nowrap',       // have ... if too long
+		'position': "absolute",
+		'height': this.args.ThumbnailImageCSS.height,
+		'width': this.args.ThumbnailImageCSS.width,
+		'top': XVGlobals.ThumbnailImageMarginX*1,
+		'left': this.args.ThumbnailImageCSS.width + XVGlobals.ThumbnailImageMarginX*2,
+		'fontSize': 11,		
+	    'fontFamily': 'Helvetica,"Helvetica neue", Arial, sans-serif',
+        'overflow': 'hidden',         // these make the
+        'textOverflow': 'ellipsis',   // displayed name
+        'whiteSpace': 'nowrap'       // have ... if too long
 	});
 	utils.dom.addClass(this.ThumbnailCanvas, XVGlobals.classNames.ThumbnailCanvas);
 

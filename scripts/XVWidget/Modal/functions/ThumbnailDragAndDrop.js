@@ -149,13 +149,13 @@ Modal.prototype.setThumbnailDragAndDrop = function () {
  	function invokeDrop(Viewer, srcObj) {
 //        console.log('clicked');
 		that.thumbnailDragDrop['drop']({
-			dropTargetItem : {
+			'dropTargetItem' : {
 				element : Viewer.widget
 			},
-			dragSourceItem : {
+			'dragSourceItem' : {
 				element : srcObj.widget
 			},
-            isClick : true,
+            'isClick' : true
 		}) 		
  	}
  	

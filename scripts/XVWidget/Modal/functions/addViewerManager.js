@@ -403,7 +403,7 @@ Modal.prototype.addViewerManager = function () {
                 
                 case XVGlobals.classNames.SlicerThumbnail:
                     newViewer = new SlicerViewer({
-						parent: oldViewer.widget.parentNode,
+						'parent': oldViewer.widget.parentNode
 					})
 					newViewer.updateCSS(utils.css.dims(oldViewer.widget));
                     break;

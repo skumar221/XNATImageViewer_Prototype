@@ -14,14 +14,14 @@ Menu = function(args) {
 	 * @type {ScrollGallery}
 	 */
     this.Content = new ScrollGallery({
-        parent: this.widget,
-        className: 'Menu_ScrollGallery',
-        orientation: 'vertical',
-        widgetCSS: {
-            left: 0,
-            height: '90%',
-            width: '100%',
-            top: XVGlobals.scanTabLabelHeight + 10,
+        'parent': this.widget,
+        'className': 'Menu_ScrollGallery',
+        'orientation': 'vertical',
+        'widgetCSS': {
+            'left': 0,
+            'height': '90%',
+            'width': '100%',
+            'top': XVGlobals.scanTabLabelHeight + 10
         }
     });
     this.Content.getScrollArea().style.position = 'absolute';
@@ -38,64 +38,64 @@ Menu.prototype.defaultArgs = {
 	className: XVGlobals.classNames.Menu,
 	parent: document.body,
 	CSS: {
-        position: 'absolute',
-		height: '100%',
-		width: '100%',
-        top: '0%',
-        left: '0%',
-        'display': 'inline',
+        'position': 'absolute',
+		'height': '100%',
+		'width': '100%',
+        'top': '0%',
+        'left': '0%',
+        'display': 'inline'
 //        'margin': '20px',
   	}
 }
 
 Menu.prototype.defaultSliderCSS = {
-    position: 'relative',
+    'position': 'relative',
 //    width: '35%',
-    width: '40%',
-    height: '3px',
+    'width': '40%',
+    'height': '3px',
     'border-radius': '4px',
-    background: '#444',
-    display: 'inline-block',
-    'margin-right': '20px',
+    'background': '#444',
+    'display': 'inline-block',
+    'margin-right': '20px'
 }
 
 Menu.prototype.folderHeaderCSS = {
     'font-weight': 'bold',
     'letter-spacing': '2px',
-    background: '#999',
-    color: '#000',
-    fontSize: XVGlobals.fontSizeMed,
+    'background': '#999',
+    'color' : '#000',
+    'fontSize': XVGlobals.fontSizeMed
 }
 
 Menu.prototype.folderCSS = {
-    color: '#222',
-    background: '#fff',
-    opacity: '0.3',
-    fontSize: XVGlobals.fontSizeSmall,
-    fontFamily: XVGlobals.fontFamily,
-    width: '100% - 42px',
-    border: '1px solid #999',
-    margin: '20px',
+    'color': '#222',
+    'background': '#fff',
+    'opacity': '0.3',
+    'fontSize': XVGlobals.fontSizeSmall,
+    'fontFamily': XVGlobals.fontFamily,
+    'width': '100% - 42px',
+    'border': '1px solid #999',
+    'margin': '20px'
 }
 
 Menu.prototype.labelCSS = {
-    top: '3px',
-    width: '45%',
+    'top': '3px',
+    'width': '45%',
     'overflow': 'hidden',
     'text-overflow': 'ellipsis',
     'white-space': 'nowrap',
-    display: 'inline-block',
-    'margin-right': '20px',
+    'display': 'inline-block',
+    'margin-right': '20px'
 }
 
 
 Menu.prototype.buttonCSS = {
     'vertical-align': 'bottom',
-    margin: '3px 3px 0px 3px',
+    'margin': '3px 3px 0px 3px'
 }
 
 Menu.prototype.sliderLabelCSS = {
     'margin-right': '3px',
-    display: 'inline-block',
-    width: '50px',
+    'display': 'inline-block',
+    'width': '50px'
 }
