@@ -6,7 +6,7 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     
     var m = this.Viewer.Menu;
     var file = droppable['scanData']['filePath'];
-    var filetype = this.SlicerFileHandler_.getFileObjectType(file);
+    var filetype = this.SlicerParser.getFileObjectType(file);
     
     //----------------------------------
     // SET VIEW PLANE MENU
@@ -16,7 +16,7 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     if (filetype == 'slicer') {
         this.currViewPlane = '3D';
         this.Viewer.ViewPlaneMenu.activateIcon('3D', true);
-        changeViewManyToOne(this.Viewer, '3D');
+        this.changeViewManyToOne(this.Viewer, '3D');
     }
     
     // if not slicer, show all planes only if this is the first object,

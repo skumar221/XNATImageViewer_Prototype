@@ -1,50 +1,72 @@
+goog.require('ThreeDHolder');
+goog.provide('ThreeDHolder.getPlaneFromTitle');
+goog.provide('ThreeDHolder.changeViewManyToOne');
+goog.provide('ThreeDHolder.changeViewOneToMany');
+goog.provide('ThreeDHolder.changeViewOneToOne');
+goog.provide('ThreeDHolder.expandPanel');
+goog.provide('ThreeDHolder.closePanel');
 
-
-var getPlaneFromTitle = function(viewer, title) {
+ThreeDHolder.prototype.getPlaneFromTitle = function(viewer, title) {
     switch (title) {
         case 'Sagittal':    // x
-            planeHolder = viewer.ThreeDHolder.PlaneHolderX;
+            planeHolder = this.PlaneHolderX;
             break;
         case 'Coronal':     // y
-            planeHolder = viewer.ThreeDHolder.PlaneHolderY;
+            planeHolder = this.PlaneHolderY;
             break;
         case 'Transverse':  // z
-            planeHolder = viewer.ThreeDHolder.PlaneHolderZ;
+            planeHolder = this.PlaneHolderZ;
             break;
         case '3D':
-            planeHolder = viewer.ThreeDHolder.PlaneHolder3;
+            planeHolder = this.PlaneHolder3;
             break;
     }
     return planeHolder;
 }
+goog.exportProperty(ThreeDHolder.prototype, 'getPlaneFromTitle', ThreeDHolder.prototype.getPlaneFromTitle);
 
-function changeViewManyToOne(viewer, newIcon) {
-    var twoD = getPlaneFromTitle(viewer, newIcon);
-    expandPanel(twoD);
+
+
+ThreeDHolder.prototype.changeViewManyToOne = function(viewer, newIcon) {
+    var twoD = this.getPlaneFromTitle(viewer, newIcon);
+    this.expandPanel(twoD);
 }
+goog.exportProperty(ThreeDHolder.prototype, 'changeViewManyToOne', ThreeDHolder.prototype.changeViewManyToOne);
 
-function changeViewOneToMany(viewer, oldIcon) {
-    var twoD = getPlaneFromTitle(viewer, oldIcon);
-    closePanel(twoD);
+
+
+ThreeDHolder.prototype.changeViewOneToMany = function(viewer, oldIcon) {
+    var twoD = this.getPlaneFromTitle(viewer, oldIcon);
+    this.closePanel(twoD);
 }
+goog.exportProperty(ThreeDHolder.prototype, 'changeViewOneToMany', ThreeDHolder.prototype.changeViewOneToMany);
 
-function changeViewOneToOne(viewer, oldIcon, newIcon) {
-    var o = getPlaneFromTitle(viewer, oldIcon);
-    var n = getPlaneFromTitle(viewer, newIcon);
-    closePanel(o);
-    expandPanel(n);
+
+
+ThreeDHolder.prototype.changeViewOneToOne = function(viewer, oldIcon, newIcon) {
+    var o = this.getPlaneFromTitle(viewer, oldIcon);
+    var n = this.getPlaneFromTitle(viewer, newIcon);
+    this.closePanel(o);
+    this.expandPanel(n);
 }
+goog.exportProperty(ThreeDHolder.prototype, 'changeViewOneToOne', ThreeDHolder.prototype.changeViewOneToOne);
 
-function expandPanel(plane) {
+
+
+ThreeDHolder.prototype.expandPanel = function(plane) {
     var elt = plane.widget;
     
     ++elt.style.zIndex;
 
     // refresh size of canvas and sliders w/in twoD
     plane.updateCSS({ 'left': '0', 'top': '0', 'width': '100%', 'height': '100%' });
+    this.updateCSS();
 }
+goog.exportProperty(ThreeDHolder.prototype, 'expandPanel', ThreeDHolder.prototype.expandPanel);
 
-function closePanel(plane) {
+
+
+ThreeDHolder.prototype.closePanel = function(plane) {
     var elt = plane.widget;
     var px, py;
     
@@ -67,7 +89,9 @@ function closePanel(plane) {
     
     // refresh size of canvas and sliders
     plane.updateCSS({ 'left': px, 'top': py, 'width': '50%', 'height': '50%' });
+    this.updateCSS();
 }
+goog.exportProperty(ThreeDHolder.prototype, 'closePanel', ThreeDHolder.prototype.closePanel);
 
 
 

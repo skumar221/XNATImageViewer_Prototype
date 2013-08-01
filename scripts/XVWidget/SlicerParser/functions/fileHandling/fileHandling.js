@@ -4,16 +4,12 @@ goog.require('X.mesh');
 goog.require('X.fibers');
 goog.require('X.sphere');
 
-goog.provide('SlicerFileHandler');
-/**
- * @constructor
- */
-SlicerFileHandler = function () {
-	
-}
-goog.exportSymbol('SlicerFileHandler', SlicerFileHandler);
-
-
+goog.require('SlicerParser');
+goog.provide('SlicerParser.getFileExt');
+goog.provide('SlicerParser.getXTKObjName');
+goog.provide('SlicerParser.isVolume');
+goog.provide('SlicerParser.getFileObjectType');
+goog.provide('SlicerParser.createXObject');
 
 
 /** 
@@ -21,8 +17,7 @@ goog.exportSymbol('SlicerFileHandler', SlicerFileHandler);
  * @param {String} file Filename / filepath
  * @return {String} Extension of file in all lowercase
  */
-
-SlicerFileHandler.prototype.getFileExt = function(file) {
+SlicerParser.prototype.getFileExt = function(file) {
     if(!file) throw file;
     if (file[0].length > 1) file = file[0];
     
@@ -32,7 +27,7 @@ SlicerFileHandler.prototype.getFileExt = function(file) {
     if (ext == "gz") ext = "nii." + ext;
     return ext.toLowerCase();
 }
-goog.exportProperty(SlicerFileHandler.prototype, 'getFileExt', SlicerFileHandler.prototype.getFileExt);
+goog.exportProperty(SlicerParser.prototype, 'getFileExt', SlicerParser.prototype.getFileExt);
 
 
 
@@ -44,7 +39,7 @@ goog.exportProperty(SlicerFileHandler.prototype, 'getFileExt', SlicerFileHandler
  * @param {String} ext Extension of file, all lowercase
  * @return {Object} New X object
  */
-SlicerFileHandler.prototype.getXTKObjName = function(ext) {
+SlicerParser.prototype.getXTKObjName = function(ext) {
     var obj;
     switch(ext) {
         // surface models / mesh files
@@ -87,7 +82,7 @@ SlicerFileHandler.prototype.getXTKObjName = function(ext) {
     }
     return obj;
 };
-goog.exportProperty(SlicerFileHandler.prototype, 'getXTKObjName', SlicerFileHandler.prototype.getXTKObjName);
+goog.exportProperty(SlicerParser.prototype, 'getXTKObjName', SlicerParser.prototype.getXTKObjName);
 
 
 
@@ -97,7 +92,7 @@ goog.exportProperty(SlicerFileHandler.prototype, 'getXTKObjName', SlicerFileHand
  * @param {String} file Filename / filepath
  * @return {boolean} T iff file ext = volume object
  */
-SlicerFileHandler.prototype.isVolume = function(file) {
+SlicerParser.prototype.isVolume = function(file) {
     var ext = this.getFileExt(file);
     var volumeExts = ['nrrd', 'nii', 'nii.gz', 'mgh', 'mgz', 'dicom', 'dcm'];
     
@@ -111,7 +106,7 @@ SlicerFileHandler.prototype.isVolume = function(file) {
     
     return isVol;
 };
-goog.exportProperty(SlicerFileHandler.prototype, 'isVolume', SlicerFileHandler.prototype.isVolume);
+goog.exportProperty(SlicerParser.prototype, 'isVolume', SlicerParser.prototype.isVolume);
 
 
 
@@ -123,7 +118,7 @@ goog.exportProperty(SlicerFileHandler.prototype, 'isVolume', SlicerFileHandler.p
  * @return {String} Type of object
  */
 
-SlicerFileHandler.prototype.getFileObjectType = function(file) {
+SlicerParser.prototype.getFileObjectType = function(file) {
     var ext = this.getFileExt(file);
     
     if (ext == 'mrml') return 'slicer';
@@ -131,7 +126,7 @@ SlicerFileHandler.prototype.getFileObjectType = function(file) {
     if (this.isVolume(file)) return 'volume';
     else return 'mesh';
 }
-goog.exportProperty(SlicerFileHandler.prototype, 'getFileObjectType', SlicerFileHandler.prototype.getFileObjectType);
+goog.exportProperty(SlicerParser.prototype, 'getFileObjectType', SlicerParser.prototype.getFileObjectType);
 
 
 
@@ -140,7 +135,7 @@ goog.exportProperty(SlicerFileHandler.prototype, 'getFileObjectType', SlicerFile
  * @param {string} file File name or path
  * @return {Object} X object
  */
-SlicerFileHandler.prototype.createXObject = function(file) {
+SlicerParser.prototype.createXObject = function(file) {
 	var ext = this.getFileExt(file);
     obj = this.getXTKObjName(ext);
     
@@ -164,4 +159,4 @@ SlicerFileHandler.prototype.createXObject = function(file) {
     
     return obj;
 }
-goog.exportProperty(SlicerFileHandler.prototype, 'createXObject', SlicerFileHandler.prototype.createXObject);
+goog.exportProperty(SlicerParser.prototype, 'createXObject', SlicerParser.prototype.createXObject);

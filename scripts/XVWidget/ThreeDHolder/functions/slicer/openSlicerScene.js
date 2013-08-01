@@ -16,16 +16,16 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     //----------------------------------
     
     // load MRML file
-    var mrml = loadXMLDoc(file);
+    var mrml = this.SlicerParser.loadXMLDoc(file);
     
     // get specific scene
-    var scene = extractScene(mrml, droppable['scanData']['sceneName']);
+    var scene = this.SlicerParser.extractScene(mrml, droppable['scanData']['sceneName']);
     
     // extract info about objects to load
     var objects = [];
-    objects = objects.concat(extractFileInfo(scene, 'Volume', 'VolumeArchetypeStorage'));
-    objects = objects.concat(extractFileInfo(scene, 'Model', 'ModelStorage'));
-    objects = objects.concat(extractFileInfo(scene, 'FiberBundle', 'FiberBundleStorage'));
+    objects = objects.concat(this.SlicerParser.extractFileInfo(scene, 'Volume', 'VolumeArchetypeStorage'));
+    objects = objects.concat(this.SlicerParser.extractFileInfo(scene, 'Model', 'ModelStorage'));
+    objects = objects.concat(this.SlicerParser.extractFileInfo(scene, 'FiberBundle', 'FiberBundleStorage'));
     
     
     
@@ -82,11 +82,11 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     //----------------------------------
     
     // access each annotation component and load into viewer
-    var annotations = extractAnnotations(scene);
+    var annotations = this.SlicerParser.extractAnnotations(scene);
     this.addAnnotations(annotations);
     
     // set up camera
-    var cameraPosition = extractCamera(scene);
+    var cameraPosition = this.SlicerParser.extractCamera(scene);
     this.PlaneHolder3.Renderer.camera.position = cameraPosition;
     
 }

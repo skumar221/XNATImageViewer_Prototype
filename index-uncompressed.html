@@ -6,7 +6,8 @@
   <title>XNAT Image Viewer (Prototype)</title>
 
 	
-    <script type="text/javascript" src="./closure-library/closure/goog/base.js"></script>
+    <!--script type="text/javascript" src="./closure-library/closure/goog/base.js"></script-->
+    <script type="text/javascript" src="./scripts/utils/lib/X/lib/google-closure-library/closure/goog/base.js"></script>
 	<script type="text/javascript" src="./scripts/utils/lib/X/xtk-deps.js"></script>
 
     <script src="./scripts/utils/utils.js"></script>	
@@ -37,9 +38,6 @@
     <script src="./demoscans/3D/LeftHemi.js"></script>
     <script src="./demoscans/3D/PartialFibers.js"></script>
 	<script src="./demoscans/demoSlicerData.js"></script>
-    
-	
-	<script src="./scripts/utils/globals/globals.js"></script>
 	
 	
 	<script src="./scripts/utils/array/forEach.js"></script>
@@ -111,8 +109,10 @@
 	<script src="./scripts/XVWidget/FrameHolder/functions/loadThumbnail.js"></script>
 	<script src="./scripts/XVWidget/FrameHolder/functions/loadFramesByViewPlane.js"></script>
     
+    
 	<script src="./scripts/XVWidget/ThreeDHolder/ThreeDHolder.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/addObject.js"></script>
+	<script src="./scripts/XVWidget/ThreeDHolder/functions/handleViewChange.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/initSliceSliders.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/loadThumbnail.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/reloadObj.js"></script>
@@ -123,19 +123,22 @@
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/menu/setListeners.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/menu/updateMenuSliders.js"></script>
     
-	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/extractAnnotations.js"></script>
-	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/extractCamera.js"></script>
-	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/extractFileInfo.js"></script>
-	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/extractScene.js"></script>
-    
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/addAnnotations.js"></script>
-	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/loadXMLDoc.js"></script>
 	<script src="./scripts/XVWidget/ThreeDHolder/functions/slicer/openSlicerScene.js"></script>
     
 	
     <script src="./scripts/XVWidget/PlaneHolder/PlaneHolder.js"></script>
     <script src="./scripts/XVWidget/PlaneHolder/updateCSS.js"></script>
 	
+    
+	<script src="./scripts/XVWidget/SlicerParser/SlicerParser.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/fileHandling/fileHandling.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/scenes/extractAnnotations.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/scenes/extractCamera.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/scenes/extractFileInfo.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/scenes/extractScene.js"></script>
+	<script src="./scripts/XVWidget/SlicerParser/functions/scenes/loadXMLDoc.js"></script>
+    
 	
 	
 	<script src="./scripts/XVWidget/ScanTabs/ScanTabs.js"></script>
@@ -162,8 +165,6 @@
 	<script src="./scripts/XVWidget/Viewer/ScanViewer/functions/updateCSS.js"></script>
 	
     <script src="./scripts/XVWidget/Viewer/SlicerViewer/SlicerViewer.js"></script>
-	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/fileHandling.js"></script>
-	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/handleViewChange.js"></script>
 	<script src="./scripts/XVWidget/Viewer/SlicerViewer/functions/updateCSS.js"></script>
 	
     <script src="./scripts/XVWidget/Menu/Menu.js"></script>

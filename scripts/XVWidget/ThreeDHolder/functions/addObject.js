@@ -3,8 +3,8 @@ goog.provide('ThreeDHolder.addObject');
 
 ThreeDHolder.prototype.addObject = function(file, attributes) {
     // create object
-    var newObj = this.SlicerFileHandler_.createXObject(file);
-    filetype = this.SlicerFileHandler_.getFileObjectType(file);
+    var newObj = this.SlicerParser.createXObject(file);
+    filetype = this.SlicerParser.getFileObjectType(file);
     
     // set attributes if there are preset values (from slicer scenes)
     if (attributes) {

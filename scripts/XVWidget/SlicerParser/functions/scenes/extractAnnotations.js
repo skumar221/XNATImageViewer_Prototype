@@ -1,6 +1,7 @@
+goog.require('SlicerParser');
+goog.provide('SlicerParser.extractAnnotations');
 
-
-extractAnnotations = function(scene) {
+SlicerParser.prototype.extractAnnotations = function(scene) {
     var annotations = [];
     
     utils.array.forEach(scene.getElementsByTagName('AnnotationFiducials'), function(a) {
@@ -26,3 +27,4 @@ extractAnnotations = function(scene) {
     return annotations;
     
 }
+goog.exportProperty(SlicerParser.prototype, 'extractAnnotations', SlicerParser.prototype.extractAnnotations);

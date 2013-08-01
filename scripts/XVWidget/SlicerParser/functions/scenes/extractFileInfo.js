@@ -1,4 +1,7 @@
-extractFileInfo = function(scene, tagName, storageNodeType) {
+goog.require('SlicerParser');
+goog.provide('SlicerParser.extractFileInfo');
+
+SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeType) {
     var objects = [];
     
     // volume to display in 2D renderers
@@ -126,3 +129,4 @@ extractFileInfo = function(scene, tagName, storageNodeType) {
     
     return objects;
 }
+goog.exportProperty(SlicerParser.prototype, 'extractFileInfo', SlicerParser.prototype.extractFileInfo);

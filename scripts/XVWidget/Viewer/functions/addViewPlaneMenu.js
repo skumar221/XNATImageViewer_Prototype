@@ -130,6 +130,8 @@ Viewer.prototype.addViewPlaneMenu = function () {
             var oldIcon = that.ViewPlaneMenu.mainIcon.title;
             var newIcon = event.currentTarget.title;
             
+            
+            
             utils.dom.stopPropagation(event);
             that.ViewPlaneMenu.activateIcon(newIcon);
             
@@ -137,16 +139,16 @@ Viewer.prototype.addViewPlaneMenu = function () {
                 if (newIcon === 'All') {}
                     // do nothing
                 else
-                    changeViewManyToOne(that, newIcon);
+                    that.ThreeDHolder.changeViewManyToOne(that, newIcon);
             }
             else {
                 if (newIcon === 'All')
-                    changeViewOneToMany(that, oldIcon);
+                    that.ThreeDHolder.changeViewOneToMany(that, oldIcon);
                 else {
                     if (that.FrameHolder)
                         that.FrameHolder.loadDroppable(that.FrameHolder.currDroppable, event.currentTarget.axis.toLowerCase());
                     else
-                        changeViewOneToOne(that, oldIcon, newIcon);
+                        that.ThreeDHolder.changeViewOneToOne(that, oldIcon, newIcon);
                 }
             }
         });

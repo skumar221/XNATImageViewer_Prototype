@@ -1,5 +1,8 @@
+goog.require('SlicerParser');
+goog.provide('SlicerParser.loadXMLDoc');
+
 // http://www.w3schools.com/dom/dom_loadxmldoc.asp
-function loadXMLDoc(dname) {
+SlicerParser.prototype.loadXMLDoc = function(dname) {
     var xhttp;
     
     if (window.XMLHttpRequest) {
@@ -19,3 +22,4 @@ function loadXMLDoc(dname) {
     
     return xmldoc;
 }
+goog.exportProperty(SlicerParser.prototype, 'loadXMLDoc', SlicerParser.prototype.loadXMLDoc);
