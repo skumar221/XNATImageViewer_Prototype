@@ -2,6 +2,8 @@
 //  
 //******************************************************
 
+goog.require('utils.dom');
+
 goog.provide('utils.gui.DialogBox');
 
 /**

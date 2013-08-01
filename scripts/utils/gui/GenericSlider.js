@@ -2,10 +2,16 @@
 //  
 //******************************************************
 
+
+
 goog.require('goog.dom');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
-goog.require('goog.events.EventTarget')
+goog.require('goog.events.EventTarget');
+goog.require('goog.events');
+goog.require('utils.dom.makeElement');
+
+
 goog.provide('utils.gui.GenericSlider');	
 
 /**
@@ -22,7 +28,7 @@ utils.gui.GenericSlider = function (args) {
 	var that = this;	
 	var className = (args_['className']) ? args_['className'] : "GenericSlider";
 
-	this.id = className + "_" + utils.dom.uniqueId();
+	this.id = className + "_" + goog.events.getUniqueId('GenericSlider');
 
 	/**
 	 * @expose
@@ -158,7 +164,7 @@ utils.gui.GenericSlider = function (args) {
 
 
 	
-	/*
+	/**
 	 * @expose
 	 */
 	this.enable = function(bool) {

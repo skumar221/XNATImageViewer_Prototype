@@ -2,7 +2,7 @@
 //  
 //******************************************************
 goog.provide('utils.fx.fadeTo');
-
+goog.require('utils.fx');
 goog.require('goog.fx.dom')
 
 utils.fx.fadeTo = function (element, time, opacity, callback) {

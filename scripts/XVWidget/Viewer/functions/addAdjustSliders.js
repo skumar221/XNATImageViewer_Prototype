@@ -1,5 +1,7 @@
 goog.require('Viewer');
+goog.require('utils.dom.mergeArgs');
 goog.provide('Viewer.addAdjustSliders');
+
 //******************************************************
 //  
 //

@@ -8,7 +8,7 @@ goog.provide('ScrollGallery');
 goog.require('XVWidget');
 goog.require('XVGlobals');
 goog.require('goog.ui.AnimatedZippy');
-
+goog.require('utils.dom.mergeArgs');
 
 /**
  * @constructor

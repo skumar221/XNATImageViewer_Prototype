@@ -12,8 +12,6 @@ goog.require('Thumbnail');
 
 goog.provide('ScanThumbnail');
 
-
-
 /**
  * @constructor
  * @extends {Thumbnail}

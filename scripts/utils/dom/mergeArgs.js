@@ -1,6 +1,7 @@
 //******************************************************
 //  Merges two javaScript objects, giving obj2 the priority
 //******************************************************
+goog.require('utils.dom')
 goog.provide('utils.dom.mergeArgs');
 
 

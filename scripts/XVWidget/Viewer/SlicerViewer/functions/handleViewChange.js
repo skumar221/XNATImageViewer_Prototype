@@ -1,6 +1,6 @@
 
 
-function getPlaneFromTitle(viewer, title) {
+var getPlaneFromTitle = function(viewer, title) {
     switch (title) {
         case 'Sagittal':    // x
             planeHolder = viewer.ThreeDHolder.PlaneHolderX;

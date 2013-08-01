@@ -1,7 +1,7 @@
 // source: http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
 
 goog.provide('utils.dom.uniqueId');
-
+goog.require('utils.dom');
 
 utils.dom.uniqueId = function () {
 	

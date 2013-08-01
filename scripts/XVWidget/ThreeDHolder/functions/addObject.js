@@ -3,8 +3,8 @@ goog.provide('ThreeDHolder.addObject');
 
 ThreeDHolder.prototype.addObject = function(file, attributes) {
     // create object
-    var newObj = createXObject(file);
-    filetype = getFileObjectType(file);
+    var newObj = this.SlicerFileHandler_.createXObject(file);
+    filetype = this.SlicerFileHandler_.getFileObjectType(file);
     
     // set attributes if there are preset values (from slicer scenes)
     if (attributes) {
@@ -33,10 +33,10 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
         newObj.visible = attributes['visibility'] == 'true';
     }
     
-    if (filetype == 'volume') {
+//    if (filetype == 'volume') {
 //        if (this.currentVolObject) this.currentVolObject.visible = false;  /////////////
 //        this.currentVolObject = newObj;
-    }
+//    }
     
     // add to collection of objects, add to menu, and add to viewer!
     this.currentObjects.push(newObj);

@@ -5,7 +5,7 @@ ThreeDHolder.prototype.addToMenu = function(newObj, label, filetype) {
 
     var m = this.Viewer.Menu;
     var file = label || newObj.file;
-    var filetype = filetype || getFileObjectType(file);
+    var filetype = filetype || this.SlicerFileHandler_.getFileObjectType(file);
     if (file[0].length > 1) file = file[0].slice(0, -5) + '.dcm';
     var folder;
     

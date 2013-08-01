@@ -4,9 +4,9 @@
 //*******************************************************
 
 goog.require('goog.array');
-goog.require(XVGlobals.classNames.Thumbnail);
+goog.require('Thumbnail');
 
-goog.provide(XVGlobals.classNames.SlicerThumbnail);
+goog.provide('SlicerThumbnail');
 
 /**
  * @constructor
@@ -64,6 +64,7 @@ SlicerThumbnail = function (scanData, args) {
 
 }
 goog.inherits(SlicerThumbnail, Thumbnail);
+goog.exportSymbol('SlicerThumbnail', SlicerThumbnail)
 
 
 /**

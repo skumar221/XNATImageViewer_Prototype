@@ -2,6 +2,7 @@
 //  Init
 //	
 //******************************************************
+goog.require('utils.dom.mergeArgs');
 goog.require('Viewer');
 
 goog.provide('ScanViewer');
