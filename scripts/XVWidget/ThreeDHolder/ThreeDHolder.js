@@ -67,7 +67,6 @@ ThreeDHolder = function(args) {
 	 */ 
     this.zBox;
  	/**
-	 * @type {Object}
 	 * @protected
 	 */    
     this.currentVolObject;
@@ -209,6 +208,7 @@ ThreeDHolder.prototype.setOnShowtime = function (newObj) {
     // there is a volume to set up
     if (newObj) {
         this.PlaneHolder3.Renderer.onShowtime = function() {
+        	console.log(newObj)
             that.currentVolObject = newObj;
             that.initSliceSliders();
             that.update2Drenderers();
