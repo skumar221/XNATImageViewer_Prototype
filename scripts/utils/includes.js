@@ -13,6 +13,14 @@ goog.require('goog.fx.DragDropGroup');
 
 goog.require('goog.ui.Component');
 
-//goog.require('utils');
 
+goog.require('utils'); 
+goog.require('utils.array'); 
+goog.require('utils.convert'); 
+goog.require('utils.css'); 
+goog.require('utils.dom'); 
+goog.require('utils.fx'); 
+goog.require('utils.globals'); 
+goog.require('utils.gui'); 
+goog.require('utils.oo'); 
 

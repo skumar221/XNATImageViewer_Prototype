@@ -6,7 +6,8 @@
 //******************************************************
 goog.provide('utils.css.setCSS');
 goog.require('goog.style');
-
+goog.require('utils.convert.px');
+goog.require('utils.convert.toInt');
 utils.css.setCSS = function (elt, cssObj) {
 
 	if (!elt || !cssObj) { return; }

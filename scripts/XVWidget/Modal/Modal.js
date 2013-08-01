@@ -17,7 +17,7 @@ Modal = function (args) {
 	var that = this;
 	XVWidget.call(this, utils.dom.mergeArgs(Modal.prototype.defaultArgs, args));
 
-	
+
 	//----------------------------------
 	//	WIDGET
 	//----------------------------------			

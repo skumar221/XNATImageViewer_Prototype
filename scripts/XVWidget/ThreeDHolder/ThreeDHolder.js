@@ -26,10 +26,50 @@ ThreeDHolder = function(args) {
     this.firstVolObject = true;
     
     this.fadeOnHoverOut = [];
+
+
+ 	/**
+	 * @type {SlicerFileHandler}
+	 * @private
+	 */   
+    this.SlicerFileHandler_ = new SlicerFileHandler();
     
-    this.xSlider, this.ySlider, this.zSlider;
-    this.xBox, this.yBox, this.zBox;
+        
+ 	/**
+	 * @type {goog.ui.Slider}
+	 * @protected
+	 */   
+    this.xSlider;
+ 	/**
+	 * @type {goog.ui.Slider}
+	 * @protected
+	 */  
+    this.ySlider;
+ 	/**
+	 * @type {goog.ui.Slider}
+	 * @protected
+	 */  
+    this.zSlider;
     
+	/**
+	 * @type {Element}
+	 * @protected
+	 */ 
+    this.xBox;
+	/**
+	 * @type {Element}
+	 * @protected
+	 */ 
+    this.yBox;
+	/**
+	 * @type {Element}
+	 * @protected
+	 */ 
+    this.zBox;
+ 	/**
+	 * @type {Object}
+	 * @protected
+	 */    
     this.currentVolObject;
     this.currentObjects = [];
     
@@ -141,7 +181,7 @@ ThreeDHolder.prototype.addViewPanes = function () {
 
 
 ThreeDHolder.prototype.getObjFromList = function(f) {
-    var ext = getFileExt(f);
+    var ext = this.SlicerFileHandler_.getFileExt(f);
     
     if (ext === 'dcm' || ext === 'dicom') {
         for (var i = 0; i < this.currentObjects.length; ++i) {

@@ -1,8 +1,13 @@
 //******************************************************
 //  Returns an element based on the given parameters.
 //******************************************************
-goog.provide('utils.dom.makeElement');
+goog.require('utils.dom');
+goog.require('utils.dom.debug');
+goog.require('utils.dom.uniqueId');
 
+goog.require('utils.dom.addClass');
+
+goog.provide('utils.dom.makeElement');
 utils.dom.makeElement = function (type, parent, className, css) {
 	
 	if (!type) {

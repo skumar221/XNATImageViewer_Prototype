@@ -1,3 +1,4 @@
+console.log("here")
 goog.require('goog.fx')
 goog.require('utils.css.setCSS');
 goog.require('XVGlobals');
@@ -9,7 +10,7 @@ goog.exportSymbol('xmiv', xmiv);
 
 goog.provide('xmiv.start');
 xmiv.start = function () {
-
+		
 	
 	// Prevents Webkit-based browsers
 	// from responding to page scrolling, two finger gestures
@@ -17,7 +18,7 @@ xmiv.start = function () {
 
 	document.body.style.overflow = 'hidden';
 
-	XVGlobals.ModalID = "thuravingal";
+	XVGlobals.ModalID = "TestModalID";
 	/**
 	 * @const
 	 * @type {SliderLinker}

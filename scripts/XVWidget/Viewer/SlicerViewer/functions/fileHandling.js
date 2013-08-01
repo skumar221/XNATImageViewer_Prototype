@@ -4,13 +4,25 @@ goog.require('X.mesh');
 goog.require('X.fibers');
 goog.require('X.sphere');
 
+goog.provide('SlicerFileHandler');
+/**
+ * @constructor
+ */
+SlicerFileHandler = function () {
+	
+}
+goog.exportSymbol('SlicerFileHandler', SlicerFileHandler);
+
+
+
 
 /** 
  * Returns file extension.
  * @param {String} file Filename / filepath
  * @return {String} Extension of file in all lowercase
  */
-function getFileExt(file) {
+
+SlicerFileHandler.prototype.getFileExt = function(file) {
     if(!file) throw file;
     if (file[0].length > 1) file = file[0];
     
@@ -20,6 +32,11 @@ function getFileExt(file) {
     if (ext == "gz") ext = "nii." + ext;
     return ext.toLowerCase();
 }
+goog.exportProperty(SlicerFileHandler.prototype, 'getFileExt', SlicerFileHandler.prototype.getFileExt);
+
+
+
+
 
 /**
  * Returns XTK object (mesh, volume, ...) to be created, as determined by
@@ -27,7 +44,7 @@ function getFileExt(file) {
  * @param {String} ext Extension of file, all lowercase
  * @return {Object} New X object
  */
-function getXTKObjName(ext) {
+SlicerFileHandler.prototype.getXTKObjName = function(ext) {
     var obj;
     switch(ext) {
         // surface models / mesh files
@@ -70,14 +87,18 @@ function getXTKObjName(ext) {
     }
     return obj;
 };
+goog.exportProperty(SlicerFileHandler.prototype, 'getXTKObjName', SlicerFileHandler.prototype.getXTKObjName);
+
+
+
 
 /**
  * Returns T iff file extension is associated with volume object.
  * @param {String} file Filename / filepath
  * @return {boolean} T iff file ext = volume object
  */
-function isVolume(file) {
-    var ext = getFileExt(file);
+SlicerFileHandler.prototype.isVolume = function(file) {
+    var ext = this.getFileExt(file);
     var volumeExts = ['nrrd', 'nii', 'nii.gz', 'mgh', 'mgz', 'dicom', 'dcm'];
     
     var isVol = false;
@@ -90,6 +111,10 @@ function isVolume(file) {
     
     return isVol;
 };
+goog.exportProperty(SlicerFileHandler.prototype, 'isVolume', SlicerFileHandler.prototype.isVolume);
+
+
+
 
 /**
  * Returns the type of the object associated with the given file type. Will be
@@ -97,14 +122,17 @@ function isVolume(file) {
  * @param {String} file Filename / filepath
  * @return {String} Type of object
  */
-function getFileObjectType(file) {
-    var ext = getFileExt(file);
+
+SlicerFileHandler.prototype.getFileObjectType = function(file) {
+    var ext = this.getFileExt(file);
     
     if (ext == 'mrml') return 'slicer';
     if (ext == 'trk') return 'fiber';
-    if (isVolume(file)) return 'volume';
+    if (this.isVolume(file)) return 'volume';
     else return 'mesh';
 }
+goog.exportProperty(SlicerFileHandler.prototype, 'getFileObjectType', SlicerFileHandler.prototype.getFileObjectType);
+
 
 
 /**
@@ -112,9 +140,9 @@ function getFileObjectType(file) {
  * @param {string} file File name or path
  * @return {Object} X object
  */
-function createXObject(file) {
-	var ext = getFileExt(file);
-    obj = getXTKObjName(ext);
+SlicerFileHandler.prototype.createXObject = function(file) {
+	var ext = this.getFileExt(file);
+    obj = this.getXTKObjName(ext);
     
     // associate file 
     if (ext == "dcm" || ext == "dicom") {
@@ -136,4 +164,4 @@ function createXObject(file) {
     
     return obj;
 }
-
+goog.exportProperty(SlicerFileHandler.prototype, 'createXObject', SlicerFileHandler.prototype.createXObject);

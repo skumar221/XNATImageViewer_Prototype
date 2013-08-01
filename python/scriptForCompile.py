@@ -8,6 +8,7 @@ from datetime import datetime
 def callCommand(cmd):
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
+    print "DONE: ", err
         
 def main():
     
@@ -105,7 +106,8 @@ def main():
     #
     # Define surrounding strings
     #
-    startStr = "python /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/utils/lib/X/lib/google-closure-library/closure/bin/build/closurebuilder.py --root=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/ "
+   # startStr = "python /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/utils/lib/X/lib/google-closure-library/closure/bin/build/closurebuilder.py --root=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/ "
+    startStr = "python /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/closure-library/closure/bin/build/closurebuilder.py --root=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/ --root=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/closure-library/ "
     midStr = ""
     endStr = "--output_mode=compiled --compiler_jar=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/utils/lib/X/lib/google-closure-compiler/compiler.jar --output_file=/Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/TESTCOMPILE.js"
     advancedStr = ' --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" '
@@ -140,15 +142,16 @@ def main():
     #
     # The lines "-Xms200m -Xmx200m" are to give the jvm more virtual memory
     #
-    javaCmd = "java -d32 -Xms200m -Xmx200m -client -jar /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/scripts/utils/lib/X/lib/google-closure-compiler/compiler.jar "
-    advCmd = "--compilation_level=ADVANCED_OPTIMIZATIONS > TESTCOMPILE.js"
+    javaCmd = "java -d32 -Xms200m -Xmx200m -client -jar /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/closure-compiler/compiler.jar "
+    advCmd = "--compilation_level=ADVANCED_OPTIMIZATIONS"
+    outputFile = "--js_output_file /Users/sunilkumar/Desktop/Work/XNATImageViewerTesting/TESTCOMPILE.js"
     depLines = []
     culledLines = []
     for line in open(buildOrderFile):
         depLines.append(line.strip())
     
     for depLine in depLines:
-        dCount =  depLines.count(depLine)
+        #culledLines.append(depLine)
         if not depLine in culledLines:
             culledLines.append(depLine)
         else:
@@ -158,8 +161,11 @@ def main():
     for line in culledLines:
         cmdVal += " --js " + line
     
-    cmdVal += " " + advCmd
-    print cmdVal
+    #cmdVal += " " + advCmd
+    cmdVal += " " + outputFile
+    
+    print "CALLING: ", cmdVal
+    
     callCommand(cmdVal)
     
 if __name__ == "__main__":

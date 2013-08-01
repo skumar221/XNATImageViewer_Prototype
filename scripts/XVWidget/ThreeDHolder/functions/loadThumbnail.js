@@ -6,7 +6,7 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     
     var m = this.Viewer.Menu;
     var file = droppable['scanData']['filePath'];
-    var filetype = getFileObjectType(file);
+    var filetype = this.SlicerFileHandler_.getFileObjectType(file);
     
     //----------------------------------
     // SET VIEW PLANE MENU
