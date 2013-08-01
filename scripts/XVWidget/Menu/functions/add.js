@@ -1,17 +1,38 @@
+goog.require('goog.ui.Zippy');
 goog.require('Menu');
 goog.provide('Menu.addToMenu');
 
 
 Menu.prototype.addFolder = function(title) {
+    
+    this.Content.addZippy(title);
+    var fContent = this.Content.getScrollables(title, 'content');
+    
+    /*
     var folder = utils.dom.makeElement('div', this.Scrollarea, 'Folder', this.folderCSS);
     var fHeader = utils.dom.makeElement('div', folder, 'FolderHeader', this.folderHeaderCSS);
     var fContent = utils.dom.makeElement('div', folder, 'FolderContent');
     
+    var fHeaderIndicator = utils.dom.makeElement('div', fHeader, 'FolderIndicator', { 'width': '16px', 'right': '0', 'top': '0' });
+    fHeaderIndicator.innerHTML = '+';
+    
     fHeader.innerHTML = title;
+    goog.dom.appendChild(fHeader, fHeaderIndicator);
+    new goog.ui.AnimatedZippy(fHeader, fContent, true);
+    */
+    
+    fContent.style.width = '';
+    fContent.style.right = '0px';
+    fContent.style.color = '#000';
+    fContent.style.opacity = '0.35';
+    fContent.style.backgroundColor = 'white';
+    fContent.style.fontSize = '10px';//XVGlobals.fontSizeSmall;
     
     return fContent;
+    
 }
 goog.exportProperty(Menu.prototype, 'addFolder', Menu.prototype.addFolder);
+
 
 
 // guiObject (string) slider, ttslider, checkbox, radio

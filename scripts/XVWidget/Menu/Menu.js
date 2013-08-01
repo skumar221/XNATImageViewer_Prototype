@@ -27,7 +27,8 @@ Menu = function(args) {
     this.Content.getScrollArea().style.position = 'absolute';
     this.Content.getScrollArea().style.height = '100%';
     this.Content.getScrollArea().style.right = '0';
-    this.Scrollarea = utils.dom.makeElement('div', this.Content.getScrollArea(), 'Menu_ScrollGallery_MetadataContents', {overflow: 'auto', height: '100%'});
+    this.Content.getScrollArea().style.paddingRight = '10px';
+//    this.Scrollarea = utils.dom.makeElement('div', this.Content.getScrollArea(), 'Menu_ScrollGallery_MetadataContents', {overflow: 'auto', height: '100%'});
     
 }
 goog.inherits(Menu, XVWidget);
@@ -60,6 +61,8 @@ Menu.prototype.defaultSliderCSS = {
 }
 
 Menu.prototype.folderHeaderCSS = {
+    'left': '0',
+    'right': '16px',
     'font-weight': 'bold',
     'letter-spacing': '2px',
     'background': '#999',
@@ -68,7 +71,7 @@ Menu.prototype.folderHeaderCSS = {
 }
 
 Menu.prototype.folderCSS = {
-    'color': '#222',
+    'color': '#000',
     'background': '#fff',
     'opacity': '0.3',
     'fontSize': XVGlobals.fontSizeSmall,

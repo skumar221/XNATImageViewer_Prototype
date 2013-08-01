@@ -278,7 +278,8 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 		backgroundColor: "rgb(70,70,70)",
 		//top: -5,
 		//left: headerLeft,
-		width: utils.css.dims(this.ScrollArea, 'width'),
+//		width: utils.css.dims(this.ScrollArea, 'width'),
+        right: '0px',
 		height: '1.5em',
 		color: 'rgb(0, 0, 0)',
 		fontSize: XVGlobals.fontSizeMed,
@@ -312,11 +313,12 @@ ScrollGallery.prototype.addZippy = function(zKey) {
 	//-----------------------------------	
 	expandIcon = utils.dom.makeElement("div", header, "ExpandIcon_" + zKey, {
 		position: "absolute",
-		left: utils.css.dims(this.ScrollArea, 'width'), 
+//		left: utils.css.dims(this.ScrollArea, 'width'), 
+        right: '.5em',
 		marginTop: '.25em',
 		marginLeft: '-1em'
 	})
-	expandIcon.innerHTML = "-";
+	expandIcon.innerHTML = "+";
 	this.Scrollables[zKey]['expandIcon'] = expandIcon;
 	
 	

@@ -6,7 +6,8 @@ goog.provide('ThreeDHolder.changeViewOneToOne');
 goog.provide('ThreeDHolder.expandPanel');
 goog.provide('ThreeDHolder.closePanel');
 
-ThreeDHolder.prototype.getPlaneFromTitle = function(viewer, title) {
+ThreeDHolder.prototype.getPlaneFromTitle = function(title) {
+    var planeHolder;
     switch (title) {
         case 'Sagittal':    // x
             planeHolder = this.PlaneHolderX;
@@ -27,25 +28,25 @@ goog.exportProperty(ThreeDHolder.prototype, 'getPlaneFromTitle', ThreeDHolder.pr
 
 
 
-ThreeDHolder.prototype.changeViewManyToOne = function(viewer, newIcon) {
-    var twoD = this.getPlaneFromTitle(viewer, newIcon);
+ThreeDHolder.prototype.changeViewManyToOne = function(newIcon) {
+    var twoD = this.getPlaneFromTitle(newIcon);
     this.expandPanel(twoD);
 }
 goog.exportProperty(ThreeDHolder.prototype, 'changeViewManyToOne', ThreeDHolder.prototype.changeViewManyToOne);
 
 
 
-ThreeDHolder.prototype.changeViewOneToMany = function(viewer, oldIcon) {
-    var twoD = this.getPlaneFromTitle(viewer, oldIcon);
+ThreeDHolder.prototype.changeViewOneToMany = function(oldIcon) {
+    var twoD = this.getPlaneFromTitle(oldIcon);
     this.closePanel(twoD);
 }
 goog.exportProperty(ThreeDHolder.prototype, 'changeViewOneToMany', ThreeDHolder.prototype.changeViewOneToMany);
 
 
 
-ThreeDHolder.prototype.changeViewOneToOne = function(viewer, oldIcon, newIcon) {
-    var o = this.getPlaneFromTitle(viewer, oldIcon);
-    var n = this.getPlaneFromTitle(viewer, newIcon);
+ThreeDHolder.prototype.changeViewOneToOne = function(oldIcon, newIcon) {
+    var o = this.getPlaneFromTitle(oldIcon);
+    var n = this.getPlaneFromTitle(newIcon);
     this.closePanel(o);
     this.expandPanel(n);
 }

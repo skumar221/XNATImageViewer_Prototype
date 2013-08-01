@@ -16,7 +16,7 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     if (filetype == 'slicer') {
         this.currViewPlane = '3D';
         this.Viewer.ViewPlaneMenu.activateIcon('3D', true);
-        this.changeViewManyToOne(this.Viewer, '3D');
+        this.changeViewManyToOne('3D');
     }
     
     // if not slicer, show all planes only if this is the first object,

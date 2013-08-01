@@ -139,16 +139,16 @@ Viewer.prototype.addViewPlaneMenu = function () {
                 if (newIcon === 'All') {}
                     // do nothing
                 else
-                    that.ThreeDHolder.changeViewManyToOne(that, newIcon);
+                    that.ThreeDHolder.changeViewManyToOne(newIcon);
             }
             else {
                 if (newIcon === 'All')
-                    that.ThreeDHolder.changeViewOneToMany(that, oldIcon);
+                    that.ThreeDHolder.changeViewOneToMany(oldIcon);
                 else {
                     if (that.FrameHolder)
                         that.FrameHolder.loadDroppable(that.FrameHolder.currDroppable, event.currentTarget.axis.toLowerCase());
                     else
-                        that.ThreeDHolder.changeViewOneToOne(that, oldIcon, newIcon);
+                        that.ThreeDHolder.changeViewOneToOne(oldIcon, newIcon);
                 }
             }
         });
