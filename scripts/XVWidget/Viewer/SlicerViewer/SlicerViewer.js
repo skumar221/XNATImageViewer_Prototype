@@ -13,6 +13,8 @@ SlicerViewer = function (args) {
 
 	var that = this;
     
+    this.fadeOnHoverOut = [];
+    
 	//----------------------------------
 	// 3D VIEWER
 	//----------------------------------
@@ -24,6 +26,7 @@ SlicerViewer = function (args) {
 		"border-width": '0'
 	});
 	this.ThreeDHolder.Viewer = this;
+    this.ThreeDHolder.addViewPanes();
     
 	/*
 	 *	Modify the ThreeDHolder such that it lets "this"
@@ -69,7 +72,7 @@ SlicerViewer = function (args) {
 	this.ScanTabs = new ScanTabs({
 
 		'parent': this.widget,
-		'tabTitles': ["Info", "Menu"],
+		'tabTitles': ["Info", "2D Menu", '3D Menu'],
 		'widgetCSS': {
 			'height': XVGlobals.minScanTabHeight,
 			'width': '100%'
@@ -104,14 +107,23 @@ SlicerViewer = function (args) {
     
     
     //----------------------------------
-    // TOGGLE MENU
+    // TOGGLE MENUS
     //----------------------------------
 	/**
 	 * @type {Menu}
 	 */
-    this.Menu = new Menu({
-        parent: that.ScanTabs.getTab("Menu")
+    this.Menu2D = new Menu({
+        parent: that.ScanTabs.getTab("2D Menu")
     });
+    
+	/**
+	 * @type {Menu}
+	 */
+    this.Menu3D = new Menu({
+        parent: that.ScanTabs.getTab("3D Menu")
+    });
+    
+    
     
     
 
@@ -157,8 +169,8 @@ SlicerViewer.prototype.setHoverEvents = function () {
             
 		});
         
-        if (this.ThreeDHolder && this.ThreeDHolder.fadeOnHoverOut) {
-            utils.array.forEach(that.ThreeDHolder.fadeOnHoverOut, function(node) {
+        if (this.ThreeDHolder && this.fadeOnHoverOut) {
+            utils.array.forEach(that.fadeOnHoverOut, function(node) {
                 utils.fx.fadeOut(node, 0);
             });
         }
@@ -168,8 +180,8 @@ SlicerViewer.prototype.setHoverEvents = function () {
 		utils.array.forEach(that.widget.childNodes, function (node) { 
 			utils.fx.fadeIn(node, 0);
 		});
-        if (this.ThreeDHolder && this.ThreeDHolder.fadeOnHoverOut) {
-            utils.array.forEach(that.ThreeDHolder.fadeOnHoverOut, function(node) {
+        if (this.ThreeDHolder && this.fadeOnHoverOut) {
+            utils.array.forEach(that.fadeOnHoverOut, function(node) {
                 utils.fx.fadeIn(node, 0);
             });
         }

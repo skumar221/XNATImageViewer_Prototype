@@ -1,6 +1,6 @@
 
 
-.sliceSlider .goog-slider-thumb {
+.SliceSlider .goog-slider-thumb {
 	position: absolute;
     margin-top: -3px;
 	width: 6px;
@@ -26,4 +26,5 @@
 .Menu .goog-slider-disabled,
 .Menu .goog-twothumbslider-disabled {
     opacity: 0.5;
+    display: none;
 }

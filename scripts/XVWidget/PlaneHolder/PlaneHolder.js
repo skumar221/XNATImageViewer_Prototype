@@ -15,8 +15,33 @@ goog.require('XVWidget');
 PlaneHolder = function(id, Holder, args) {
 	goog.base(this, utils.dom.mergeArgs(PlaneHolder.prototype.defaultArgs, args));
 	
+    /**
+     * @type {ThreeDHolder}
+	 * @protected
+     */
     this.ThreeDHolder = Holder;
-	
+    
+    /**
+	 * @type {goog.ui.Slider}
+	 * @protected
+	 */  
+    this.slider;
+    
+    /**
+	 * @type {Element}
+	 * @protected
+	 */
+    this.indexBox;
+    
+    
+	this.id = id;   // x, y, or z
+    this.indexPlane = (id === 'x') ? 'indexLR' :
+                      (id === 'y') ? 'indexPA' :
+                                     'indexIS';
+    this.indexNumber = (id === 'x') ? 0 :
+                       (id === 'y') ? 1 :
+                                      2;
+    
 	//----------------------------------
 	//	ONLOAD CALLBACKS
 	//----------------------------------
@@ -29,12 +54,12 @@ PlaneHolder = function(id, Holder, args) {
     //----------------------------------
     // CREATE RENDERER
     //----------------------------------
-    if (id !== 'v') {
+    if (id !== 'v') {   // id = x, y, or z
         this.Renderer = new X.renderer2D();
         this.Renderer.orientation = id.toUpperCase();
-        this.addSliderAndFrameNum(id);
+        this.addSliderAndFrameNum();
+//        this.addLabels();
     } else {
- 
         this.Renderer = new X.renderer3D();
     }
     
@@ -101,28 +126,26 @@ PlaneHolder.prototype.labelDefaultArgs = {
     'text-transform': 'uppercase'
 }
 
-PlaneHolder.prototype.addSliderAndFrameNum = function(id) {
-    var color = (id === 'x') ? 'rgba(255,255,0,1)' :
-                (id === 'y') ? 'rgba(0,  255,0,1)' :
-                               'rgba(255,0,  0,1)';
+PlaneHolder.prototype.addSliderAndFrameNum = function() {
+    var color = (this.id === 'x') ? 'rgba(255,255,0,1)' :
+                (this.id === 'y') ? 'rgba(0,  255,0,1)' :
+                                    'rgba(255,0,  0,1)';
     
     
-    var s = utils.dom.makeElement('div', this.widget, 'sliceSlider',
+    var s = utils.dom.makeElement('div', this.widget, 'SliceSlider',
         utils.dom.mergeArgs(this.sliderDefaultArgs, {background: color}));
-    goog.dom.classes.add(s, id + 'Slice');
     
-    var b = utils.dom.makeElement('div', this.widget, 'box', this.frameNumDefaultArgs );
-    goog.dom.classes.add(b, id + 'Box');
+    var b = utils.dom.makeElement('div', this.widget, 'IndexBox', this.frameNumDefaultArgs );
     
     // allow sliders and indexes to disappear on hover out
-    this.ThreeDHolder.fadeOnHoverOut.push(s);
-    this.ThreeDHolder.fadeOnHoverOut.push(b);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(s);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(b);
 }
 
-PlaneHolder.prototype.addLabels = function(id) {
+PlaneHolder.prototype.addLabels = function() {
     var n, s, w, e;
     
-    switch (id) {
+    switch (this.id) {
         case 'x': n = 's', s = 'i', w = 'a', e = 'p'; break;
         case 'y': n = 's', s = 'i', w = 'r', e = 'l'; break;
         case 'z': n = 'a', s = 'p', w = 'r', e = 'l'; break;
@@ -140,6 +163,11 @@ PlaneHolder.prototype.addLabels = function(id) {
     south.innerHTML = s;
     west.innerHTML = w;
     east.innerHTML = e;
+    
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(north);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(south);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(east);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(west);
 }
 
 

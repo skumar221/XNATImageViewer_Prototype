@@ -31,6 +31,14 @@ goog.exportProperty(ThreeDHolder.prototype, 'getPlaneFromTitle', ThreeDHolder.pr
 ThreeDHolder.prototype.changeViewManyToOne = function(newIcon) {
     var twoD = this.getPlaneFromTitle(newIcon);
     this.expandPanel(twoD);
+    /*
+    if (newIcon == '3D') {
+        if (this.ScanTabs) this.ScanTabs.getTab("3D Menu").setActive(2);
+//        this.deactivate2D();
+    } else {
+        if (this.ScanTabs) this.ScanTabs.getTab("2D Menu").setActive(1);
+//        this.deactivate3D();
+    }*/
 }
 goog.exportProperty(ThreeDHolder.prototype, 'changeViewManyToOne', ThreeDHolder.prototype.changeViewManyToOne);
 
@@ -39,16 +47,37 @@ goog.exportProperty(ThreeDHolder.prototype, 'changeViewManyToOne', ThreeDHolder.
 ThreeDHolder.prototype.changeViewOneToMany = function(oldIcon) {
     var twoD = this.getPlaneFromTitle(oldIcon);
     this.closePanel(twoD);
+    /*
+    if (oldIcon == '3D') {
+//        this.activate2D();
+    } else {
+//        this.activate3D();
+    }*/
 }
 goog.exportProperty(ThreeDHolder.prototype, 'changeViewOneToMany', ThreeDHolder.prototype.changeViewOneToMany);
 
 
 
 ThreeDHolder.prototype.changeViewOneToOne = function(oldIcon, newIcon) {
+    // only care about changing when old and new icons are different
+    if (oldIcon == newIcon) return;
+    
     var o = this.getPlaneFromTitle(oldIcon);
     var n = this.getPlaneFromTitle(newIcon);
     this.closePanel(o);
     this.expandPanel(n);
+    /*
+    if (newIcon == '3D') {
+        if (this.ScanTabs) this.ScanTabs.getTab("3D Menu").setActive(2);
+//        this.deactivate2D();
+//        this.activate3D();
+    } else if (newIcon != '3D' && oldIcon != '3D') {
+        // don't need to change what's visible in menu
+    } else {
+        if (this.ScanTabs) this.ScanTabs.getTab("2D Menu").setActive(1);
+//        this.deactivate3D();
+//        this.activate2D();
+    }*/
 }
 goog.exportProperty(ThreeDHolder.prototype, 'changeViewOneToOne', ThreeDHolder.prototype.changeViewOneToOne);
 
@@ -94,52 +123,3 @@ ThreeDHolder.prototype.closePanel = function(plane) {
 }
 goog.exportProperty(ThreeDHolder.prototype, 'closePanel', ThreeDHolder.prototype.closePanel);
 
-
-
-
-
-
-
-    /*
-    
-    var par = goog.dom.getParentElement(elt);
-    
-    var slide = new goog.fx.dom.Slide(elt, [elt.offsetLeft, elt.offsetTop],
-            [0, 0], 500, goog.fx.easing.easeOut);
-    
-    var resize = new goog.fx.dom.Resize(elt, [elt.offsetWidth, elt.offsetHeight],
-            [par.offsetWidth, par.offsetHeight], 500, goog.fx.easing.easeOut);
-    
-    slide.play();
-    resize.play();
-    */
-
-    /*
-        switch (elt.id[0]) {
-        case 'x':
-            ox = 0, oy = 0;
-            px = '0%', py = '0%';
-            break;
-        case 'y':
-            ox = par.offsetWidth*0.5, oy = 0;
-            px = '50%', py = '0%';
-            break;
-        case 'z':
-            ox = 0, oy = par.offsetHeight*0.5;
-            px = '0%', py = '50%';
-            break;
-        case 'v':
-            ox = par.offsetWidth*0.5, oy = par.offsetHeight*0.5;
-            px = '50%', py = '50%';
-            break;
-    }
-    
-    var slide = new goog.fx.dom.Slide(elt, [elt.offsetLeft, elt.offsetTop],
-            [ox, oy], 500, goog.fx.easing.easeOut);
-    
-    var resize = new goog.fx.dom.Resize(elt, [elt.offsetWidth, elt.offsetHeight],
-            [par.offsetWidth*0.5, par.offsetHeight*0.5], 500, goog.fx.easing.easeOut);
-    
-    slide.play();
-    resize.play();
-    */

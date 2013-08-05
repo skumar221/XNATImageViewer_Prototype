@@ -55,31 +55,11 @@ Menu.prototype.defaultSliderCSS = {
     'width': '40%',
     'height': '3px',
     'border-radius': '4px',
-    'background': '#444',
+    'background': '#888',
     'display': 'inline-block',
     'margin-right': '20px'
 }
 
-Menu.prototype.folderHeaderCSS = {
-    'left': '0',
-    'right': '16px',
-    'font-weight': 'bold',
-    'letter-spacing': '2px',
-    'background': '#999',
-    'color' : '#000',
-    'fontSize': XVGlobals.fontSizeMed
-}
-
-Menu.prototype.folderCSS = {
-    'color': '#000',
-    'background': '#fff',
-    'opacity': '0.3',
-    'fontSize': XVGlobals.fontSizeSmall,
-    'fontFamily': XVGlobals.fontFamily,
-    'width': '100% - 42px',
-    'border': '1px solid #999',
-    'margin': '20px'
-}
 
 Menu.prototype.labelCSS = {
     'top': '3px',

@@ -22,7 +22,7 @@ SlicerParser.prototype.getFileExt = function(file) {
     if (file[0].length > 1) file = file[0];
     
     // extract all letters following last period
-    var ext = file.slice(file.lastIndexOf(".") + 1, file.length);
+    var ext = file.slice(file.lastIndexOf(".") + 1);
     // .nii.gz files will be wrongly stripped to .gz, check and correct for it
     if (ext == "gz") ext = "nii." + ext;
     return ext.toLowerCase();
@@ -43,30 +43,30 @@ SlicerParser.prototype.getXTKObjName = function(ext) {
     var obj;
     switch(ext) {
         // surface models / mesh files
-        case ("stl"):       // tested - link supported, UNKNOWN local
-        case ("vtk"):       // tested - link supported, not local supported
-        case ("obj"):       // tested - UNKNOWN link, local supported
-        case ("fsm"):       //    // freesurfer
-        case ("inflated"):  //    // freesurfer
-        case ("smoothwm"):  // tested - link supported // freesurfer
-        case ("pial"):      //    // freesurfer
-        case ("orig"):      //    // freesurfer
+        case ("stl"):
+        case ("vtk"):
+        case ("obj"):
+        case ("fsm"):
+        case ("inflated"):
+        case ("smoothwm"):
+        case ("pial"):
+        case ("orig"):
             obj = new X.mesh();
             break;
         
         // DICOM / volume files
-        case ("nrrd"):      // tested - file supported
-        case ("nii"):       // tested - file supported
-        case ("nii.gz"):    // tested - failed: Uncaught Error: Unsupported NII data type: 4096 (xtk.js:370)
-        case ("mgh"):       // tested - file supported
-        case ("mgz"):       // tested - file supported
-        case ("dicom"):     // 
-        case ("dcm"):       // tested - file supported
+        case ("nrrd"):
+        case ("nii"):
+        case ("nii.gz"):
+        case ("mgh"):
+        case ("mgz"):
+        case ("dicom"):
+        case ("dcm"):
             obj = new X.volume();
             break;
         
         // tractography files
-        case ("trk"):       // tested - file supported
+        case ("trk"):
             obj = new X.fibers();
             break;
         /*
@@ -139,19 +139,29 @@ SlicerParser.prototype.createXObject = function(file) {
 	var ext = this.getFileExt(file);
     obj = this.getXTKObjName(ext);
     
+    // Here we set the object's file. For DICOM data, all of the files must be
+    // set as an array. All of the files should be read into the array 'dicomFiles'
+    
     // associate file 
     if (ext == "dcm" || ext == "dicom") {
         var dicomFiles = [];
-        var numFiles = 160;     // TODO read this in at some point
+        
+        // REST CALL TODO
+        // set dicomFiles to contain all of the .dcm files from the folder
+        
+        // from here...
+        var numFiles = 160;
         for (var i=1; i <= numFiles; ++i) {
-//            var p;
-//            if (i < 10) p = '00' + i; 
-//            else if (i < 100) p = '0' + i;
-//            else p = i;
             dicomFiles.push(i);
         }
+        // ...until here is a workaround while we're outside of XNAT.
+        
         obj.file = dicomFiles.sort().map(function(obj) {
             return file.slice(0, -4) + obj + ".dcm";
+            
+            // refer to http://jsfiddle.net/gh/get/toolkit/edge/xtk/lessons/tree/master/15/#run .
+            // when making REST calls, use the following line instead:
+            // return obj;  // (I think)
         });
     } else {
         obj.file = file;

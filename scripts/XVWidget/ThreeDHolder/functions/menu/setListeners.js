@@ -1,9 +1,18 @@
 goog.require('ThreeDHolder');
 goog.provide('ThreeDHolder.setListenerRadio');
+goog.provide('ThreeDHolder.setListenerDropdown');
 goog.provide('ThreeDHolder.setListenerVisible');
 goog.provide('ThreeDHolder.setListenerRender');
 goog.provide('ThreeDHolder.setListenerOpacity');
 goog.provide('ThreeDHolder.setListenerThresh');
+
+
+ThreeDHolder.prototype.setListenerMaster = function(master) {
+    goog.events.listen(master, goog.ui.Component.EventType.CHANGE, function(event) {
+        console.log('setting all to be ' + this.checked);
+    });
+    
+};
 
 
 ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
@@ -12,29 +21,39 @@ ThreeDHolder.prototype.setListenerRadio = function(newObj, radio) {
 //        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 //        that.currentVolObject.visible = false;  ////////////////
 //        newObj.visible = true;  /////////////////////
+        
         that.update2Drenderers(newObj);
     });
 }
-goog.exportProperty(ThreeDHolder.prototype, 'setListenerRadio', ThreeDHolder.prototype.setListenerRadio);
 
 
 ThreeDHolder.prototype.setListenerVisible = function(newObj, visible, toggle) {
+    var that = this;
     goog.events.listen(visible, goog.ui.Component.EventType.CHANGE, function(event) {
         
         newObj.visible = this.checked;
+        newObj.modified();
         var checked = this.checked;
         
         // disable/enable other options
         utils.array.forEach(toggle, function(e) {
             // if js component
-            if (e.nodeType == 1) e.disabled = (checked) ? '' : 'disabled';
+            if (e.nodeType == 1) {
+                if (e.getAttribute('class') == 'Newline') {
+                    e.style.display = '';
+                }
+                else
+                    e.style.display = (checked) ? 'inline-block' : 'none';
+            }
             
             // if goog component
-            else e.setEnabled(checked);
+            else {
+                e.setVisible(checked);
+                e.getElement().style.display = (checked) ? 'inline-block' : 'none';
+            }
         });
     });
 }
-goog.exportProperty(ThreeDHolder.prototype, 'setListenerVisible', ThreeDHolder.prototype.setListenerVisible);
 
 
 ThreeDHolder.prototype.setListenerRender = function(newObj, render) {
@@ -42,7 +61,6 @@ ThreeDHolder.prototype.setListenerRender = function(newObj, render) {
         newObj.volumeRendering = this.checked;
     });
 }
-goog.exportProperty(ThreeDHolder.prototype, 'setListenerRender', ThreeDHolder.prototype.setListenerRender);
 
 
 ThreeDHolder.prototype.setListenerOpacity = function(newObj, opacity) {
@@ -50,7 +68,6 @@ ThreeDHolder.prototype.setListenerOpacity = function(newObj, opacity) {
         newObj.opacity = opacity.getValue();
     });
 }
-goog.exportProperty(ThreeDHolder.prototype, 'setListenerOpacity', ThreeDHolder.prototype.setListenerOpacity);
 
 
 ThreeDHolder.prototype.setListenerThresh = function(newObj, thresh) {
@@ -59,6 +76,11 @@ ThreeDHolder.prototype.setListenerThresh = function(newObj, thresh) {
         newObj.upperThreshold = thresh.getValue() + thresh.getExtent();
     });
 }
+
+
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerRadio', ThreeDHolder.prototype.setListenerRadio);
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerDropdown', ThreeDHolder.prototype.setListenerDropdown);
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerVisible', ThreeDHolder.prototype.setListenerVisible);
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerRender', ThreeDHolder.prototype.setListenerRender);
+goog.exportProperty(ThreeDHolder.prototype, 'setListenerOpacity', ThreeDHolder.prototype.setListenerOpacity);
 goog.exportProperty(ThreeDHolder.prototype, 'setListenerThresh', ThreeDHolder.prototype.setListenerThresh);
-
-

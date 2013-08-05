@@ -12,14 +12,14 @@ ThreeDHolder.prototype.loadThumbnail = function (droppable, viewPlane) {
     // SET VIEW PLANE MENU
     //----------------------------------
     
-    // if slicer, show 3D plane only
-    if (filetype == 'slicer') {
+    // if slicer, mesh, or fiber show 3D plane only
+    if (filetype != 'volume') {
         this.currViewPlane = '3D';
         this.Viewer.ViewPlaneMenu.activateIcon('3D', true);
         this.changeViewManyToOne('3D');
     }
     
-    // if not slicer, show all planes only if this is the first object,
+    // if a volume, show all planes only if this is the first object,
     // otherwise keep view pane the same
     else if (this.currentObjects.length == 0) {
         this.currViewPlane = "All";

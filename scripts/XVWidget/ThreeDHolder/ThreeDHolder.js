@@ -24,48 +24,14 @@ ThreeDHolder = function(args) {
 	
     // viewer-specific properties
     this.firstVolObject = true;
-    
-    this.fadeOnHoverOut = [];
 
 
     /**
-     * @type {SlicerFileHandler}
+     * @type {SlicerParser}
 	 * @protected
      */
     this.SlicerParser = new SlicerParser();
     
-        
- 	/**
-	 * @type {goog.ui.Slider}
-	 * @protected
-	 */   
-    this.xSlider;
- 	/**
-	 * @type {goog.ui.Slider}
-	 * @protected
-	 */  
-    this.ySlider;
- 	/**
-	 * @type {goog.ui.Slider}
-	 * @protected
-	 */  
-    this.zSlider;
-    
-	/**
-	 * @type {Element}
-	 * @protected
-	 */ 
-    this.xBox;
-	/**
-	 * @type {Element}
-	 * @protected
-	 */ 
-    this.yBox;
-	/**
-	 * @type {Element}
-	 * @protected
-	 */ 
-    this.zBox;
  	/**
 	 * @protected
 	 */    
@@ -80,12 +46,6 @@ ThreeDHolder = function(args) {
     
     this.slicerCallbacks = [];
     
-    
-    //----------------------------------
-    // VIEW PANES FOR RENDERERS
-    //----------------------------------
-    this.addViewPanes();
-    
 	
 	//----------------------------------
 	//	ONLOAD CALLBACKS
@@ -93,10 +53,6 @@ ThreeDHolder = function(args) {
 	this.onloadCallbacks = [];
 	this.adjustMethods = {};
     
-    
-//	this.updateCSS();
-	
-
 }
 goog.inherits(ThreeDHolder, XVWidget);
 goog.exportSymbol('ThreeDHolder', ThreeDHolder);
@@ -208,9 +164,9 @@ ThreeDHolder.prototype.setOnShowtime = function (newObj) {
     // there is a volume to set up
     if (newObj) {
         this.PlaneHolder3.Renderer.onShowtime = function() {
-        	console.log(newObj)
             that.currentVolObject = newObj;
-            that.initSliceSliders();
+            
+            that.initPlaneSliders();
             that.update2Drenderers();
             that.updateMenuSliders();
             
@@ -234,15 +190,16 @@ ThreeDHolder.prototype.update2Drenderers = function(newObj) {
     if (newObj) this.currentVolObject = newObj;
     
     this.PlaneHolderX.Renderer.add(this.currentVolObject);
+    this.PlaneHolderX.updatePlaneSlider();
     this.PlaneHolderX.Renderer.render();
     
     this.PlaneHolderY.Renderer.add(this.currentVolObject);
+    this.PlaneHolderY.updatePlaneSlider();
     this.PlaneHolderY.Renderer.render();
     
     this.PlaneHolderZ.Renderer.add(this.currentVolObject);
+    this.PlaneHolderZ.updatePlaneSlider();
     this.PlaneHolderZ.Renderer.render();
-    
-    this.updateSlices();
     
     
     /*

@@ -425,6 +425,6 @@ ScrollGallery.prototype.addZippy = function(zKey) {
    		}
    }));	
 
-
+    return zippy;
 
 }
