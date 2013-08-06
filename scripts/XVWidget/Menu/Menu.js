@@ -49,17 +49,12 @@ Menu.prototype.defaultArgs = {
   	}
 }
 
-Menu.prototype.defaultSliderCSS = {
-    'position': 'relative',
-//    width: '35%',
-    'width': '40%',
-    'height': '3px',
-    'border-radius': '4px',
-    'background': '#888',
-    'display': 'inline-block',
-    'margin-right': '20px'
-}
 
+
+Menu.prototype.buttonCSS = {
+//    'vertical-align': 'bottom',
+    'margin': '3px 3px 0px 3px'
+}
 
 Menu.prototype.labelCSS = {
     'top': '3px',
@@ -67,18 +62,21 @@ Menu.prototype.labelCSS = {
     'overflow': 'hidden',
     'text-overflow': 'ellipsis',
     'white-space': 'nowrap',
-    'display': 'inline-block',
-    'margin-right': '20px'
+    'display': 'inline-block'
 }
 
-
-Menu.prototype.buttonCSS = {
-    'vertical-align': 'bottom',
-    'margin': '3px 3px 0px 3px'
+Menu.prototype.defaultSliderCSS = {
+    'position': 'relative',
+    'width': '15%',
+    'height': '3px',
+    'border-radius': '4px',
+    'background': '#888',
+    'display': 'inline-block'
 }
 
 Menu.prototype.sliderLabelCSS = {
-    'margin-right': '3px',
+    'margin-right': '5px',
     'display': 'inline-block',
-    'width': '50px'
+    'width': '80px',
+    'text-align': 'right'
 }

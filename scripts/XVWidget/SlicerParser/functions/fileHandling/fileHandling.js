@@ -18,7 +18,6 @@ goog.provide('SlicerParser.createXObject');
  * @return {String} Extension of file in all lowercase
  */
 SlicerParser.prototype.getFileExt = function(file) {
-    if(!file) throw file;
     if (file[0].length > 1) file = file[0];
     
     // extract all letters following last period
@@ -119,6 +118,9 @@ goog.exportProperty(SlicerParser.prototype, 'isVolume', SlicerParser.prototype.i
  */
 
 SlicerParser.prototype.getFileObjectType = function(file) {
+    // annotations (spheres) won't have files
+    if (!file) return 'sphere';
+    
     var ext = this.getFileExt(file);
     
     if (ext == 'mrml') return 'slicer';

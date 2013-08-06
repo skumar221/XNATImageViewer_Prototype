@@ -97,8 +97,6 @@ SlicerViewer.prototype.updateCSS = function (args) {
 	});	 
     
     
-    
-    
 	
 	if (this.selectorBox) {
 		

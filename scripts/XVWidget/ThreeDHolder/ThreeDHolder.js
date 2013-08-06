@@ -22,10 +22,7 @@ ThreeDHolder = function(args) {
 	
 	goog.base(this, utils.dom.mergeArgs(ThreeDHolder.prototype.defaultArgs, args));
 	
-    // viewer-specific properties
-    this.firstVolObject = true;
-
-
+    
     /**
      * @type {SlicerParser}
 	 * @protected
@@ -38,11 +35,15 @@ ThreeDHolder = function(args) {
     this.currentVolObject;
     this.currentObjects = [];
     
-    this.objRadioPairs = [];
-    this.objVisiblePairs = [];
-    this.objRenderPairs = [];
-    this.objOpacityPairs = [];
-    this.objThreshPairs = [];
+    this.voluMaster;
+    this.meshMaster;
+    this.fibrMaster;
+    this.annoMaster;
+    
+    this.volumeMenuComponents = [];
+    this.meshMenuComponents = [];
+    this.fiberMenuComponents = [];
+    this.annotationMenuComponents = [];
     
     this.slicerCallbacks = [];
     

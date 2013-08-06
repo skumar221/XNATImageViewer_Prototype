@@ -27,38 +27,30 @@ goog.exportProperty(Menu.prototype, 'addFolder', Menu.prototype.addFolder);
 
 // guiObject (string) slider, ttslider, checkbox, radio, dropdown
 Menu.prototype.add = function(guiObject, folder, label, values, file) {
-    var newGuiObject;
+    var objAndLabel;
     switch (guiObject) {
         case 'checkbox':
         case 'radio':
-            newGuiObject = this.addInputButton(guiObject, folder, label, file, values);
-            break;
-        
-        case 'newDropdown':
-            newGuiObject = this.makeDropDownMenu(folder, label);
-            break;
-        
-        case 'dropdown':
-            newGuiObject = this.addToDropDownMenu(file, label, values);
+            objAndLabel = this.addInputButton(guiObject, folder, label, values, file);
             break;
         
         case 'slider':
-            newGuiObject = this.addSlider(folder, label, values);
+            objAndLabel = this.addSlider(folder, label, values);
             break;
         
         case 'ttslider':
-            newGuiObject = this.addTTSlider(folder, label, values);
+            objAndLabel = this.addTTSlider(folder, label, values);
             break;
         
         case 'newline':
-            newGuiObject = utils.dom.makeElement('div', folder, 'Newline', {
+            objAndLabel = utils.dom.makeElement('div', folder, 'Newline', {
                 'width': '100%',
                 'height': '1px'
             });
             break;
         
         case 'spacer':
-            newGuiObject = utils.dom.makeElement('div', folder, 'Spacer', {
+            objAndLabel = utils.dom.makeElement('div', folder, 'Spacer', {
                 'width': '100%',
                 'height': '10px'
             });
@@ -69,54 +61,39 @@ Menu.prototype.add = function(guiObject, folder, label, values, file) {
             break;
     }
     
-    return newGuiObject;
+    return objAndLabel;
 }
 goog.exportProperty(Menu.prototype, 'add', Menu.prototype.add);
 
 
-Menu.prototype.addInputButton = function(guiObject, folder, label, file, initialValue) {
+Menu.prototype.addInputButton = function(guiObject, folder, label, initialValue, file) {
     var toCheck = (initialValue) ? 'checked' : '';
     var width = (guiObject === 'radio') ? '85%' : '28%';
     
     var b = utils.dom.makeElement('input', folder, 'Checkbox', this.buttonCSS);
+    b.setAttribute('file', label);
+    
+    // shorten 'file' to exclude filepath info before /3D/
+    if (label.split('/3D/')[1]) label = label.split('/3D/')[1];
+    
     b.setAttribute('id', guiObject + 'ButtonFor' + label + file + this.widget.id);
     b.setAttribute('type', guiObject);
     b.setAttribute('name', guiObject + 'Button' + this.widget.id);
     b.checked = toCheck;
     
     var l = utils.dom.makeElement('label', folder, 'Label', utils.dom.mergeArgs(this.labelCSS, {'width': width}));
-    if (label && label.split('/')[1])
+    l.setAttribute('for', guiObject + 'ButtonFor' + label + file + this.widget.id);
+    
+    // shorten 'file' to be just the name of the file, not whole path
+    // easier to read and fits better in the menu
+    if (label.split('/')[1])
         l.innerHTML = '<b>' + label.slice(label.lastIndexOf('/') + 1) + '</b>';
     else
         l.innerHTML = label;
-    l.setAttribute('for', guiObject + 'ButtonFor' + label + file + this.widget.id);
     
     return [b, l];
 }
 
-Menu.prototype.makeDropDownMenu = function(folder, label) {
-    // create label
-    var l = utils.dom.makeElement('div', folder, 'Label', utils.dom.mergeArgs(this.labelCSS, {'fontSize': XVGlobals.fontSizeMed, 'width': ''}));
-    l.innerHTML = label;
-    
-    // create combo box
-    var cb = utils.dom.makeElement('select', folder, 'DropDown', { 'fontSize': XVGlobals.fontSizeMed });
-    
-    return [cb, l];
-}
-
-Menu.prototype.addToDropDownMenu = function(file, label, comboBox) {
-    
-    // add file as an option
-    var f = utils.dom.makeElement('option', comboBox, 'DropDownOption', {});
-    f.value = file;
-    if (label && label.split('/')[1])
-        f.innerHTML = label.slice(label.lastIndexOf('/') + 1);
-    else
-        f.innerHTML = label;
-    
-//    comboBox.addItem(new goog.ui.ComboBoxItem(file));
-}
 
 Menu.prototype.addSlider = function(folder, label, values) {
     // must set tab pane visibility to 'block' in order for sliders to init properly

@@ -12,9 +12,16 @@ goog.provide('ThreeDHolder.reloadObj');
 ThreeDHolder.prototype.reloadObj = function(droppedObj, filetype) {
     
     // set radio button to match
-    utils.array.forEach(this.objRadioPairs, function(pair) {
-        if (pair[0] === droppedObj) {
-            pair[1].checked = 'checked';
+    var radiobuttons = goog.dom.getElementsByClass('Checkbox', this.Viewer.Menu2D.widget);
+    utils.array.forEach(radiobuttons, function(b) {
+        var droppedFile;
+        if (droppedObj.file[0].length > 1) // it's dicom
+            droppedFile = droppedObj.file[0];
+        else
+            droppedFile = droppedObj.file;
+        
+        if (b.getAttribute('file') === droppedFile) {
+            b.checked = 'checked';
         }
     });
     

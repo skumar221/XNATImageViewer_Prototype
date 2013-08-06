@@ -65,10 +65,16 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     }
     
     // also need to set radio buttons to match
-    utils.array.forEach(this.objRadioPairs, function(pair) {
-        if (pair[0] === selectedVolume) {
-//            pair[0].visible = true;
-            pair[1].checked = 'checked';
+    var radiobuttons = goog.dom.getElementsByClass('Checkbox', this.Viewer.Menu2D.widget);
+    utils.array.forEach(radiobuttons, function(b) {
+        var droppedFile;
+        if (selectedVolume.file[0].length > 1) // it's dicom
+            droppedFile = selectedVolume.file[0];
+        else
+            droppedFile = selectedVolume.file;
+        
+        if (b.getAttribute('file') === droppedFile) {
+            b.checked = 'checked';
         }
     });
     
