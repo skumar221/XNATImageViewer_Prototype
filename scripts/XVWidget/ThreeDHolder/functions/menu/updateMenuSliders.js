@@ -29,6 +29,7 @@ ThreeDHolder.prototype.updateMenuSliders = function() {
                             o.upperThreshold - o.lowerThreshold);
         s.getElement().style.display = o.visible ? 'inline-block' : 'none';
         l.style.display = o.visible ? 'inline-block' : 'none';
+        
     }
     
     

@@ -97,17 +97,6 @@ PlaneHolder.prototype.defaultArgs = {
   	}
 }
 
-PlaneHolder.prototype.sliderDefaultArgs = {
-    'position': 'absolute',
-    'left': '5%',
-    'bottom': '10px',
-    'width': '90%',
-    'height': '3px',
-    'border-radius': '4px',
-    'background': '#4AA',
-    'opacity': '0'
-}
-
 PlaneHolder.prototype.frameNumDefaultArgs = {
     'position': 'absolute',
     'width': '90%',
@@ -127,19 +116,46 @@ PlaneHolder.prototype.labelDefaultArgs = {
 }
 
 PlaneHolder.prototype.addSliderAndFrameNum = function() {
+
     var color = (this.id === 'x') ? 'rgba(255,255,0,1)' :
                 (this.id === 'y') ? 'rgba(0,  255,0,1)' :
                                     'rgba(255,0,  0,1)';
     
+    // create slider
+    this.slider = new utils.gui.GenericSlider({
+		'parent': this.widget,
+		'className': "SliceSlider",
+		'orientation': 'horizontal',
+		'widgetCSS': {
+            'position': 'absolute',
+            'left': '5%',
+            'top': '',
+            'bottom': '10px',
+            'width': '90%',
+            'height': '3px',
+            'border-radius': '4px',
+            'background': color,
+            'opacity': '0'
+		},
+		'thumbCSS': {
+            'position': 'absolute',
+            'margin-top': '-3px',
+            'width': '6px',
+            'height': '9px',
+            'background': '#888',
+            'border': '0px',
+            'border-radius': '4px'
+		}
+	});
     
-    var s = utils.dom.makeElement('div', this.widget, 'SliceSlider',
-        utils.dom.mergeArgs(this.sliderDefaultArgs, {background: color}));
     
-    var b = utils.dom.makeElement('div', this.widget, 'IndexBox', this.frameNumDefaultArgs );
+    // create frame index labels
+    this.indexBox = utils.dom.makeElement('div', this.widget, 'IndexBox', this.frameNumDefaultArgs);
+    
     
     // allow sliders and indexes to disappear on hover out
-    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(s);
-    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(b);
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(this.slider.getWidget());
+    this.ThreeDHolder.Viewer.fadeOnHoverOut.push(this.indexBox);
 }
 
 PlaneHolder.prototype.addLabels = function() {

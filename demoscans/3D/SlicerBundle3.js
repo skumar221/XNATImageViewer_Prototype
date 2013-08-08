@@ -1,3 +1,8 @@
+// REST CALL TODO (FOR ALL)
+// filePath: the MRML for the whole scene
+// sceneName: the name of the .png images within the Data folder
+// sessionID: the scene name
+
 var Slicer7 = {
     'filePath': "./demoscans/3D/slicer/2012-09-13-PerthThalamicTumor/2012-09-13-PerthThalamicTumor.mrml",
     'sceneName': 'Deep brain',

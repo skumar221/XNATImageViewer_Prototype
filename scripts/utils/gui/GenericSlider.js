@@ -22,7 +22,6 @@ utils.gui.GenericSlider = function (args) {
 
 	
 	goog.ui.Slider.call(this)
-
 	
 	var args_ = (typeof args === 'object') ? args : {};
 	var that = this;	

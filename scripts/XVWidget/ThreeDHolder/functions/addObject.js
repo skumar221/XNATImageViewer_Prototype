@@ -6,6 +6,7 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
     var newObj = this.SlicerParser.createXObject(file);
     filetype = this.SlicerParser.getFileObjectType(file);
     
+    
     // set attributes if there are preset values (from slicer scenes)
     if (attributes) {
         // color -- volumes: .maxColor, meshes: .color
@@ -31,6 +32,26 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
         
         // visibility
         newObj.visible = attributes['visibility'] == 'true';
+        
+        // center
+        if (attributes['center']) {
+            var center = attributes['center'].split(' ');
+            for (var i = 0; i < center.length; ++i) center[i] = parseFloat(center[i], 10);
+            newObj.center = center;
+            
+            var array = attributes['transform'].split(' ');
+            var newarray = [];
+            var counter = 0;
+            for (var i = 0; i < array.length; ++i) {
+                var temp = parseFloat(array[i], 10);
+                if (! isNaN(temp)) {
+                    newarray[counter] = temp;
+                    ++counter;
+                }
+            }
+            console.log(newarray);
+            newObj.transform.matrix = new Float32Array(newarray);
+        }
     }
     
     /*
@@ -50,6 +71,3 @@ ThreeDHolder.prototype.addObject = function(file, attributes) {
 goog.exportProperty(ThreeDHolder.prototype, 'addObject', ThreeDHolder.prototype.addObject);
 
 
-
-
-//    this.PlaneHolder3.widget.style.background = (isSlicer) ? '#aae' : '#000';

@@ -74,6 +74,16 @@ Menu.prototype.defaultSliderCSS = {
     'display': 'inline-block'
 }
 
+Menu.prototype.sliderThumbCSS = {
+    'position': 'absolute',
+    'margin-top': '-2px',
+	'width': '4px',
+	'height': '6px',
+	'background': '#eee',
+    'border': '1px solid #333',
+    'border-radius': '4px'
+}
+
 Menu.prototype.sliderLabelCSS = {
     'margin-right': '5px',
     'display': 'inline-block',

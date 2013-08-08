@@ -1,3 +1,8 @@
+// REST CALL TODO (FOR ALL)
+// filePath: the MRML for the whole scene
+// sceneName: the name of the .png images within the Data folder
+// sessionID: the scene name
+
 var Slicer1 = {
     'filePath': "./demoscans/3D/slicer/2013-02-14-Final/2013-02-14-Final.mrml",
     'sceneName': 'Handmotor Area',

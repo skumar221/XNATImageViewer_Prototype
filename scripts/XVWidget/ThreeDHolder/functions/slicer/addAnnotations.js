@@ -16,7 +16,7 @@ ThreeDHolder.prototype.addAnnotations = function(annotations) {
         
         var point = new X.sphere();
         point.center = center;
-        point.radius = 4;
+        point.radius = 3;
         point.caption = a.getAttribute('name');
         point.color = colors;
         point.opacity = parseFloat(pointDisplay.getAttribute('opacity'), 10);

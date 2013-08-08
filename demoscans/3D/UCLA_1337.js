@@ -1,3 +1,5 @@
+// REST CALL TODO
+
 var UCLA_1337 = {
     'filePath': "./demoscans/3D/dicom/1337/ICBM_UCLA_1337_.dcm",
     'sessionInfo':{

@@ -246,9 +246,9 @@ ScrollGallery.prototype.getScrollables = function(a, b) {
 
 /**
  * @expose
+ * @return {goog.ui.AnimatedZippy}
  */
 ScrollGallery.prototype.addZippy = function(zKey) {
-
 
 	var that = this;
 	var headerHeight = XVGlobals.fontSizeMed * 2;

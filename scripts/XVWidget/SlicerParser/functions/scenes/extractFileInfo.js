@@ -46,28 +46,88 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
     // EXTRACT INFO 
     //----------------------------------
     utils.array.forEach(scene.getElementsByTagName(tagName), function(i) {
-//        console.log(i.getAttribute('id'));
+        
+        //----------------------------------
+        // STORAGE INFO 
+        //----------------------------------
         var storageNodeRef = i.getAttribute('storageNodeRef');
-        var displayNodeRef = i.getAttribute('displayNodeRef').split(' ')[0];
-        var displayNodeType = displayNodeRef.split('vtkMRML')[1].split('Node')[0];
-        
-        if (displayNodeType == 'ScalarVolumeDisplay') displayNodeType = 'VolumeDisplay';
-        if (displayNodeType.split('Fiber')[1]) displayNodeType += 'Node';
-        
-        var displayNode;
         var storageNode;
-        
-        // find corresponding tagName display component
-        utils.array.forEach(scene.getElementsByTagName(displayNodeType), function(itemDisplay) {
-            if (itemDisplay.getAttribute('id') == displayNodeRef) displayNode = itemDisplay;
-        });
-        
         // find corresponding tagName storage component
         utils.array.forEach(scene.getElementsByTagName(storageNodeType), function(itemStorage) {
             if (itemStorage.getAttribute('id') == storageNodeRef) storageNode = itemStorage;
         });
         
         
+        
+        //----------------------------------
+        // DISPLAY INFO 
+        //----------------------------------
+        var displayNode;
+        
+        // fiber bundles are special... they have multiple display nodes (3)
+        // one or more of them may have the visibility set to true.
+        // if any are set to true, we want to display the fibers.
+        if (tagName == 'FiberBundle') {
+            var displayNodeRefs = i.getAttribute('displayNodeRef').split(' ');
+            var displayNodeTypes = [];
+            visibility = 'false';
+            for (var j = 0; j < displayNodeRefs.length; ++j) {
+                // strip away the vtkMRML and the Node##, but then we still need 'Node'
+                displayNodeTypes[j] = displayNodeRefs[j].split('vtkMRML')[1].split('Node')[0] + 'Node';
+                
+                utils.array.forEach(scene.getElementsByTagName(displayNodeTypes[j]), function(itemDisplay) {
+                    if (itemDisplay.getAttribute('id') == displayNodeRefs[j]) {
+                        // set the color to be the line display node's color
+                        if (!color) color = itemDisplay.getAttribute('color');
+                        
+                        // if there is no displayNode yet, set one just so we have one
+                        if (!displayNode) displayNode = itemDisplay;
+                        
+                        // ok, now set visibility
+                        if (itemDisplay.getAttribute('visibility') == 'true') {
+                            visibility = 'true';
+                            var colorMode = itemDisplay.getAttribute('colorMode');
+                            // if colorMode = 0, regular color
+                            // if colorMode = 1, fancy multicolors
+                            if (colorMode == '1') {
+                                var fancyColors = itemDisplay.getAttribute('DiffusionTensorDisplayPropertiesNodeRef');
+                                console.log(fancyColors);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // volumes, meshes (models)
+        else {
+            var displayNodeRef = i.getAttribute('displayNodeRef').split(' ')[0];
+            var displayNodeType = displayNodeRef.split('vtkMRML')[1].split('Node')[0];
+            
+            if (displayNodeType == 'ScalarVolumeDisplay')
+                displayNodeType = 'VolumeDisplay';
+            if (displayNodeType == 'NCIRayCastVolumeRenderingDisplay')
+                displayNodeType = 'NCIRayCastVolumeRendering';
+            
+            // find corresponding tagName display component
+            utils.array.forEach(scene.getElementsByTagName(displayNodeType), function(itemDisplay) {
+                
+                if (itemDisplay.getAttribute('id') == displayNodeRef) {
+                    displayNode = itemDisplay;
+                    color = itemDisplay.getAttribute('color');
+                    visibility = itemDisplay.getAttribute('visibility');
+                }
+            });
+        }
+        
+        
+        
+        
+        
+        
+        //----------------------------------
+        // COLORTABLE INFO 
+        //----------------------------------
         // find corresponding tagName color table (if exists)
         var colorTableFile;
         if (displayNode.getAttribute('colorNodeID')) {
@@ -89,16 +149,21 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
         }
         
         
-        // want relative path (full paths are incorrect)
+        
+        //----------------------------------
+        // MISCELLANEOUS STUFF TO DO
+        //----------------------------------
+        
+        // we want relative path (full paths are incorrect)
         var fileName = storageNode.getAttribute('fileName');
         if (fileName.split('/Data/')[1])
             fileName = 'Data/' + fileName.split('/Data/')[1];
         
         
-        // only selected volume should be visible
-        var visibility = displayNode.getAttribute('visibility');
+        // only the selected volume should be visible (or none)
         var isSelectedVolume;
         if (tagName == 'Volume') {
+            visibility = displayNode.getAttribute('visibility');
             if (selectedVolumeID != i.getAttribute('id')) {
                 visibility = false;
                 isSelectedVolume = false;
@@ -109,6 +174,12 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
             isSelectedVolume = false;
         }
         
+        
+        
+        //----------------------------------
+        // STORE ALL THE IMPORTANT STUFF
+        //----------------------------------
+        
         // only add if it's a 'data' volume (not just a volume used for coloring)
 //        if (displayNode !== labelMapVolumeDisplay) {
             // add info to be returned
@@ -117,7 +188,7 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
                 'isSelectedVolume': isSelectedVolume,
                 
                 'attributes':   {
-                    'color':        displayNode.getAttribute('color'),
+                    'color':        color,
 //                    'colorVolume':  colorVolumeFile,
                     'colorTable':   colorTableFile,
                     'opacity':      displayNode.getAttribute('opacity'),

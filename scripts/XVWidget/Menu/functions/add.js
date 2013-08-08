@@ -1,5 +1,3 @@
-goog.require('goog.ui.Zippy');
-goog.require('goog.ui.ComboBox');
 goog.require('Menu');
 goog.provide('Menu.addToMenu');
 
@@ -105,11 +103,18 @@ Menu.prototype.addSlider = function(folder, label, values) {
     var step = values[2];
     var init = values[3];
     
+    // make label
     var l = utils.dom.makeElement('div', folder, 'SliderLabel', this.sliderLabelCSS);
     l.innerHTML = label;
     
-    var s = new goog.ui.Slider;
-    s.decorate(utils.dom.makeElement('div', folder, label, this.defaultSliderCSS));
+    // make slider
+    var s = new utils.gui.GenericSlider({
+		'parent': folder,
+		'className': 'Opacity',
+		'orientation': 'horizontal',
+		'widgetCSS': this.defaultSliderCSS,
+		'thumbCSS': this.sliderThumbCSS
+	});
     s.setMinimum(lb);
     s.setMaximum(ub);
     s.setStep(step);
@@ -118,17 +123,36 @@ Menu.prototype.addSlider = function(folder, label, values) {
     return [s, l];
 }
 
+
 Menu.prototype.addTTSlider = function(folder, label, values) {
     var lb = values[0];
     var ub = values[1];
     var initlb = values[2];
     var initub = values[3];
     
+    // make label
     var l = utils.dom.makeElement('div', folder, 'SliderLabel', this.sliderLabelCSS);
     l.innerHTML = label;
     
+    // make slider
     var s = new goog.ui.TwoThumbSlider;
     s.decorate(utils.dom.makeElement('div', folder, 'Threshold', this.defaultSliderCSS));
+    // can't use generic slider to make twothumbslider
+    // we no longer have a css file so we need to set the thumb css
+    // (calling utils.css.setCSS didn't work)
+    utils.array.forEach(goog.dom.getChildren(s.element_), function(child) {
+		if (child.className === 'goog-twothumbslider-value-thumb' ||
+            child.className === 'goog-twothumbslider-extent-thumb') {
+			child.style.position = 'absolute';
+            child.style.marginTop = '-2px';
+            child.style.width = '4px';
+            child.style.height = '6px';
+            child.style.background = '#eee';
+            child.style.border = '1px solid #333';
+            child.style.borderRadius = '4px';
+		}		
+	})
+    
     s.setMinimum(lb);
     s.setMaximum(ub);
     s.setStep(1);

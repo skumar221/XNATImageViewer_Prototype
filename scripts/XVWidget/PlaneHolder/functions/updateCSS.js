@@ -19,7 +19,7 @@ PlaneHolder.prototype.updateCSS = function (args) {
     // update so slider thumb is at correct position
     if (this.slider) {
         var pos = this.slider.getValue();
-        if (pos < this.slider.getMaximum()) this.slider.setValue(pos + 1);
+        if (pos < this.slider.getMax()) this.slider.setValue(pos + 1);
         else this.slider.setValue(pos - 1);
         this.slider.setValue(pos);
     }

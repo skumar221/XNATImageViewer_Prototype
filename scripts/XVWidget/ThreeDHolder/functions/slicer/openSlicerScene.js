@@ -10,6 +10,10 @@ goog.provide('ThreeDHolder.openSlicerScene');
  */
 ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     var that = this;
+
+    // if we want the background to be the purple...
+//    this.PlaneHolder3.widget.style.background = '#cce';
+    
     
     //----------------------------------
     // PARSE MRML FILE
@@ -84,7 +88,7 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     
     
     //----------------------------------
-    // PARSE MRML FILE
+    // ADD ANNOTATIONS AND SET CAMERA
     //----------------------------------
     
     // access each annotation component and load into viewer
@@ -92,8 +96,11 @@ ThreeDHolder.prototype.openSlicerScene = function(file, droppable) {
     this.addAnnotations(annotations);
     
     // set up camera
-    var cameraPosition = this.SlicerParser.extractCamera(scene);
+    var cameraInfo = this.SlicerParser.extractCamera(scene);
+    var cameraPosition = cameraInfo[0];
+    var cameraViewUp = cameraInfo[1];
     this.PlaneHolder3.Renderer.camera.position = cameraPosition;
+    this.PlaneHolder3.Renderer.camera.up = cameraViewUp;
     
 }
 goog.exportProperty(ThreeDHolder.prototype, 'openSlicerScene', ThreeDHolder.prototype.openSlicerScene);

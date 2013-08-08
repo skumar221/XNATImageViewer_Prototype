@@ -1,3 +1,8 @@
+// REST CALL TODO (FOR ALL)
+// filePath: the MRML for the whole scene
+// sceneName: the name of the .png images within the Data folder
+// sessionID: the scene name
+
 var Slicer5 = {
     'filePath': "./demoscans/3D/slicer/2012-09-30-HN-Atlas-preliminary/2012-09-30-HN-Atlas-preliminary.mrml",
     'sceneName': 'Master Scene View',

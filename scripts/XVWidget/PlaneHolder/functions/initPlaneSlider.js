@@ -6,12 +6,6 @@ PlaneHolder.prototype.initPlaneSlider = function() {
     var plane = that.indexPlane;
     var num = that.indexNumber;
     
-    // create slider
-    this.slider = new goog.ui.Slider;
-    this.slider.decorate(goog.dom.getElementByClass('SliceSlider', this.widget));
-    
-    // create frame index labels
-    this.indexBox = goog.dom.getElementByClass('IndexBox', this.widget);
     
     // update slider
     this.updatePlaneSlider();
