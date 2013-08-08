@@ -65,8 +65,7 @@ goog.exportProperty(Menu.prototype, 'add', Menu.prototype.add);
 
 
 Menu.prototype.addInputButton = function(guiObject, folder, label, initialValue, file) {
-    var toCheck = (initialValue) ? 'checked' : '';
-    var width = (guiObject === 'radio') ? '85%' : '28%';
+    var width = (guiObject === 'radio') ? "85%" : "28%";
     
     var b = utils.dom.makeElement('input', folder, 'Checkbox', this.buttonCSS);
     b.setAttribute('file', label);
@@ -77,7 +76,7 @@ Menu.prototype.addInputButton = function(guiObject, folder, label, initialValue,
     b.setAttribute('id', guiObject + 'ButtonFor' + label + file + this.widget.id);
     b.setAttribute('type', guiObject);
     b.setAttribute('name', guiObject + 'Button' + this.widget.id);
-    b.checked = toCheck;
+    b.checked = initialValue;
     
     var l = utils.dom.makeElement('label', folder, 'Label', utils.dom.mergeArgs(this.labelCSS, {'width': width}));
     l.setAttribute('for', guiObject + 'ButtonFor' + label + file + this.widget.id);
