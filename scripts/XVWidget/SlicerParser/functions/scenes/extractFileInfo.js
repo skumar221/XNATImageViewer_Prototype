@@ -6,8 +6,13 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
     
     // volume to display in 2D renderers
     var selectedVolumeID = scene.getElementsByTagName('Selection')[0].getAttribute('activeVolumeID');
-    /*
+    
     // colormap information
+    /*
+    // this was an attempt to stick the labelmapped volume onto the "main"
+    // volume... it *sort of* worked -- the background became a bright pink,
+    // possibly because of the color table values
+
     var labelMapVolumeDisplay = scene.getElementsByTagName('LabelMapVolumeDisplay')[0];
     var colorTableFile;     // we want the color table...
     var colorVolumeFile;    // ...and the volume file it goes with
@@ -165,7 +170,7 @@ SlicerParser.prototype.extractFileInfo = function(scene, tagName, storageNodeTyp
         if (tagName == 'Volume') {
             visibility = displayNode.getAttribute('visibility');
             if (selectedVolumeID != i.getAttribute('id')) {
-                visibility = false;
+                visibility = 'false';
                 isSelectedVolume = false;
             } else {
                 isSelectedVolume = true;

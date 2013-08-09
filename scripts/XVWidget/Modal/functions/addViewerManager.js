@@ -90,7 +90,6 @@ Modal.prototype.addViewerManager = function () {
 
 
 		function swap(v1, v2) {
-
 			var arrLoc = loop ( function (v, i, j) { 
 				
 				var byObj = (v === v1) || (v === v2);

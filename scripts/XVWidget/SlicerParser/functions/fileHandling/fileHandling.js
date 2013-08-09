@@ -159,7 +159,7 @@ SlicerParser.prototype.createXObject = function(file) {
         // ...until here is a workaround while we're outside of XNAT.
         
         obj.file = dicomFiles.sort().map(function(obj) {
-            return file.slice(0, -4) + obj + ".dcm";
+            return file.slice(0, -5) + obj + ".dcm";
             
             // refer to http://jsfiddle.net/gh/get/toolkit/edge/xtk/lessons/tree/master/15/#run .
             // when making REST calls, use the following line instead:

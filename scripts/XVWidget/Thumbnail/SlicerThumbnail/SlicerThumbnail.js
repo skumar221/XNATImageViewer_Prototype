@@ -32,10 +32,6 @@ SlicerThumbnail = function (scanData, args) {
 	* @type {Image}
 	* @protected
 	*/
-    // Amanda - set up thumbnail image for 3D data
-    // use a placeholder in the meantime
-    // use Master Scene View (from mrb) ultimately
-	
 //    if (this.scanData.filePath.slice(-3, this.scanData.filePath.length) === 'dcm')
 //        this.ThumbnailImage.src = this.scanData.filePath.slice(0, -4) + '80.dcm';
     

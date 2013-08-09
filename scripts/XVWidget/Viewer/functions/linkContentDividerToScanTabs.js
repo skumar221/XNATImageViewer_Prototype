@@ -16,7 +16,7 @@ Viewer.prototype.linkContentDividerToScanTabs = function () {
 		'activate' : function() {
 			var ul = that.ContentDivider.getUpperLimit();
 			
-			that.ContentDivider.slideTo(ul + .5 * ul, animate);
+			that.ContentDivider.slideTo(2 * ul, animate);
 		},
 		'deactivate' : function() {
 			that.ContentDivider.slideTo(that.ContentDivider.getLowerLimit(), animate);		

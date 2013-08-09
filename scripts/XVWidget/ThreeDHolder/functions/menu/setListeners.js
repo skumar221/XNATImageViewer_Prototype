@@ -9,6 +9,7 @@ goog.provide('ThreeDHolder.setListenerThresh');
 
 
 ThreeDHolder.prototype.setListenerMaster = function(master, collection, slider) {
+    var that = this;
     goog.events.listen(master[0], goog.ui.Component.EventType.CHANGE, function(event) {
         var checked = this.checked;
         
@@ -49,6 +50,7 @@ ThreeDHolder.prototype.setListenerMaster = function(master, collection, slider) 
                 item['spacer'][1].style.display = checked ? '' : 'none';
             }
         });
+        
     });
     
 };

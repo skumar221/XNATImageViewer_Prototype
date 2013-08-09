@@ -1,7 +1,7 @@
 // REST CALL TODO
 
 var UCLA_1404 = {
-    'filePath': "./demoscans/3D/dicom/1404/ICBM_UCLA_1404_.dcm",
+    'filePath': "./demoscans/3D/dicom/1404/ICBM_UCLA_1404_1.dcm",
     'sessionInfo':{
         "SessionID": {'label': "Session ID", 'value': ["1404"]},
         "Accession #": {'label':"Accession #", 'value': ["CENTRAL_S00563"]},
